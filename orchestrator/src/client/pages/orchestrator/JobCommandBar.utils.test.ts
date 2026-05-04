@@ -9,7 +9,7 @@ describe("JobCommandBar score helpers", () => {
   it("returns zero when no title, employer, or location matches", () => {
     const score = computeJobMatchScore(
       createJob({
-        title: "Backend Engineer",
+        title: "返回end Engineer",
         employer: "Acme",
         location: "London",
       }),
@@ -30,13 +30,13 @@ describe("JobCommandBar score helpers", () => {
         }),
         createJob({
           id: "fuzzy",
-          title: "Backender Engineer",
+          title: "返回ender Engineer",
           employer: "Platform Co",
           discoveredAt: "2025-01-02T00:00:00Z",
         }),
         createJob({
           id: "exact",
-          title: "Backend",
+          title: "返回end",
           employer: "Infra Co",
           discoveredAt: "2025-01-01T00:00:00Z",
         }),
@@ -52,7 +52,7 @@ describe("JobCommandBar score helpers", () => {
       [
         createJob({
           id: "weak-fuzzy",
-          title: "Backend Engineer",
+          title: "返回end Engineer",
           employer: "Platform Co",
           discoveredAt: "2025-01-02T00:00:00Z",
         }),

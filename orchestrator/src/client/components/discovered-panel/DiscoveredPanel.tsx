@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { showErrorToast } from "@/client/lib/error-toast";
 import { trackProductEvent } from "@/lib/analytics";
-import { JobDetailsEditDrawer } from "../JobDetailsEditDrawer";
+import { JobDetails编辑Drawer } from "../JobDetails编辑Drawer";
 import { DecideMode } from "./DecideMode";
 import { EmptyState } from "./EmptyState";
 import { ProcessingState } from "./ProcessingState";
@@ -17,24 +17,24 @@ type PanelMode = "decide" | "tailor";
 
 interface DiscoveredPanelProps {
   job: Job | null;
-  onJobUpdated: () => void | Promise<void>;
+  onJob更新d: () => void | Promise<void>;
   onJobMoved: (jobId: string) => void;
   onTailoringDirtyChange?: (isDirty: boolean) => void;
 }
 
 export const DiscoveredPanel: React.FC<DiscoveredPanelProps> = ({
   job,
-  onJobUpdated,
+  onJob更新d,
   onJobMoved,
   onTailoringDirtyChange,
 }) => {
   const [mode, setMode] = useState<PanelMode>("decide");
   const [isSkipping, setIsSkipping] = useState(false);
   const [isFinalizing, setIsFinalizing] = useState(false);
-  const [isEditDetailsOpen, setIsEditDetailsOpen] = useState(false);
+  const [is编辑DetailsOpen, setIs编辑DetailsOpen] = useState(false);
   const previousJobIdRef = useRef<string | null>(null);
   const skipJobMutation = useSkipJobMutation();
-  const { isRescoring, rescoreJob } = useRescoreJob(onJobUpdated);
+  const { isRescoring, rescoreJob } = useRescoreJob(onJob更新d);
 
   useEffect(() => {
     const currentJobId = job?.id ?? null;
@@ -43,7 +43,7 @@ export const DiscoveredPanel: React.FC<DiscoveredPanelProps> = ({
     setMode("decide");
     setIsSkipping(false);
     setIsFinalizing(false);
-    setIsEditDetailsOpen(false);
+    setIs编辑DetailsOpen(false);
     onTailoringDirtyChange?.(false);
   }, [job?.id, onTailoringDirtyChange]);
 
@@ -70,7 +70,7 @@ export const DiscoveredPanel: React.FC<DiscoveredPanelProps> = ({
       });
       toast.message("Job skipped");
       onJobMoved(job.id);
-      await onJobUpdated();
+      await onJob更新d();
     } catch (error) {
       trackProductEvent("jobs_job_action_completed", {
         action: "skip",
@@ -101,7 +101,7 @@ export const DiscoveredPanel: React.FC<DiscoveredPanelProps> = ({
       });
 
       onJobMoved(job.id);
-      await onJobUpdated();
+      await onJob更新d();
     } catch (error) {
       trackProductEvent("jobs_job_action_completed", {
         action: "process_job",
@@ -126,7 +126,7 @@ export const DiscoveredPanel: React.FC<DiscoveredPanelProps> = ({
   }
 
   return (
-    <div className="h-full">
+    <div class名称="h-full">
       {mode === "decide" ? (
         <DecideMode
           job={job}
@@ -135,7 +135,7 @@ export const DiscoveredPanel: React.FC<DiscoveredPanelProps> = ({
           isSkipping={isSkipping}
           onRescore={handleRescore}
           isRescoring={isRescoring}
-          onEditDetails={() => setIsEditDetailsOpen(true)}
+          on编辑Details={() => setIs编辑DetailsOpen(true)}
           onCheckSponsor={async () => {
             try {
               await api.checkSponsor(job.id);
@@ -144,7 +144,7 @@ export const DiscoveredPanel: React.FC<DiscoveredPanelProps> = ({
                 result: "success",
                 from_status: job.status,
               });
-              await onJobUpdated();
+              await onJob更新d();
             } catch (error) {
               trackProductEvent("jobs_job_action_completed", {
                 action: "check_sponsor",
@@ -158,18 +158,18 @@ export const DiscoveredPanel: React.FC<DiscoveredPanelProps> = ({
       ) : (
         <TailorMode
           job={job}
-          onBack={() => setMode("decide")}
+          on返回={() => setMode("decide")}
           onFinalize={handleFinalize}
           isFinalizing={isFinalizing}
           onDirtyChange={onTailoringDirtyChange}
         />
       )}
 
-      <JobDetailsEditDrawer
-        open={isEditDetailsOpen}
-        onOpenChange={setIsEditDetailsOpen}
+      <JobDetails编辑Drawer
+        open={is编辑DetailsOpen}
+        onOpenChange={setIs编辑DetailsOpen}
         job={job}
-        onJobUpdated={onJobUpdated}
+        onJob更新d={onJob更新d}
       />
     </div>
   );

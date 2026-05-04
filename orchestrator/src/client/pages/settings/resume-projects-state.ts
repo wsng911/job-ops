@@ -1,12 +1,12 @@
-import type { ResumeProjectsSettings } from "@shared/types.js";
+import type { ResumeProjects设置 } from "@shared/types.js";
 import { clampInt } from "@/lib/utils";
 
 export function toggleMustInclude(args: {
-  settings: ResumeProjectsSettings;
+  settings: ResumeProjects设置;
   projectId: string;
   checked: boolean;
   maxProjectsTotal: number;
-}): ResumeProjectsSettings {
+}): ResumeProjects设置 {
   const { settings, projectId, checked, maxProjectsTotal } = args;
   const lockedIds = settings.lockedProjectIds.slice();
   const selectableIds = settings.aiSelectableProjectIds.slice();
@@ -36,10 +36,10 @@ export function toggleMustInclude(args: {
 }
 
 export function toggleAiSelectable(args: {
-  settings: ResumeProjectsSettings;
+  settings: ResumeProjects设置;
   projectId: string;
   checked: boolean;
-}): ResumeProjectsSettings {
+}): ResumeProjects设置 {
   const { settings, projectId, checked } = args;
   const selectableIds = settings.aiSelectableProjectIds.slice();
   const nextSelectable = checked

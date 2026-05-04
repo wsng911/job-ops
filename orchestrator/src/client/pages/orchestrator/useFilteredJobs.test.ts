@@ -11,7 +11,7 @@ const baseJob = createJob({
   title: "Engineer",
   employer: "Acme",
   location: "London",
-  jobDescription: "Desc",
+  job描述: "Desc",
   status: "ready",
 });
 

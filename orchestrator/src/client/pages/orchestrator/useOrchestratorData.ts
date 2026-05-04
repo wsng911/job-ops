@@ -3,7 +3,7 @@ import { subscribeToEventSource } from "@client/lib/sse";
 import type {
   Job,
   JobListItem,
-  JobStatus,
+  Job状态,
   PipelineProgressStep,
 } from "@shared/types";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,7 +11,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { showErrorToast } from "@/client/lib/error-toast";
 import { queryKeys } from "@/client/lib/queryKeys";
 
-const initialStats: Record<JobStatus, number> = {
+const initialStats: Record<Job状态, number> = {
   discovered: 0,
   processing: 0,
   ready: 0,
@@ -31,16 +31,16 @@ type PipelineProgressEvent = {
   error?: string;
 };
 
-type PipelineTerminalStatus = "completed" | "cancelled" | "failed";
+type PipelineTerminal状态 = "completed" | "cancelled" | "failed";
 
 type PipelineTerminalEvent = {
-  status: PipelineTerminalStatus;
+  status: PipelineTerminal状态;
   errorMessage: string | null;
   token: number;
 };
 
 type PipelineTerminalSnapshot = {
-  status: PipelineTerminalStatus;
+  status: PipelineTerminal状态;
   errorMessage: string | null;
   signature: string;
 };
@@ -65,7 +65,7 @@ const buildTerminalSignature = ({
   completedAt,
   runId,
 }: {
-  status: PipelineTerminalStatus;
+  status: PipelineTerminal状态;
   startedAt?: string | null;
   completedAt?: string | null;
   runId?: string | null;
@@ -80,7 +80,7 @@ export const useOrchestratorData = (selectedJobId: string | null) => {
   const queryClient = useQueryClient();
   const [jobListItems, setJobListItems] = useState<JobListItem[]>([]);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
-  const [stats, setStats] = useState<Record<JobStatus, number>>(initialStats);
+  const [stats, setStats] = useState<Record<Job状态, number>>(initialStats);
   const [isLoading, setIsLoading] = useState(true);
   const [isPipelineRunning, setIsPipelineRunning] = useState(false);
   const [isPipelineSseConnected, setIsPipelineSseConnected] = useState(false);
@@ -101,7 +101,7 @@ export const useOrchestratorData = (selectedJobId: string | null) => {
   const terminalEventTokenRef = useRef(0);
 
   const publishPipelineTerminal = useCallback(
-    (status: PipelineTerminalStatus, errorMessage: string | null) => {
+    (status: PipelineTerminal状态, errorMessage: string | null) => {
       terminalEventTokenRef.current += 1;
       setPipelineTerminalEvent({
         status,
@@ -194,7 +194,7 @@ export const useOrchestratorData = (selectedJobId: string | null) => {
       if (seq >= latestAppliedSeqRef.current) {
         latestAppliedSeqRef.current = seq;
         setJobListItems(data.jobs);
-        setStats(data.byStatus);
+        setStats(data.by状态);
         lastRevisionRef.current = data.revision;
       }
     } catch (error) {
@@ -210,14 +210,14 @@ export const useOrchestratorData = (selectedJobId: string | null) => {
     }
   }, [queryClient]);
 
-  const checkPipelineStatus = useCallback(async () => {
+  const checkPipeline状态 = useCallback(async () => {
     try {
       const status = await queryClient.fetchQuery({
         queryKey: queryKeys.pipeline.status(),
-        queryFn: () => api.getPipelineStatus(),
+        queryFn: () => api.getPipeline状态(),
         staleTime: 0,
       });
-      const terminalStatus = status.lastRun?.status;
+      const terminal状态 = status.lastRun?.status;
 
       if (status.isRunning) {
         observePipelineState({ isRunning: true, terminal: null });
@@ -225,14 +225,14 @@ export const useOrchestratorData = (selectedJobId: string | null) => {
       }
 
       if (
-        !terminalStatus ||
-        !TERMINAL_PIPELINE_STEPS.has(terminalStatus as PipelineProgressStep)
+        !terminal状态 ||
+        !TERMINAL_PIPELINE_STEPS.has(terminal状态 as PipelineProgressStep)
       ) {
         observePipelineState({ isRunning: false, terminal: null });
         return;
       }
 
-      const terminal = terminalStatus as PipelineTerminalStatus;
+      const terminal = terminal状态 as PipelineTerminal状态;
       observePipelineState({
         isRunning: false,
         terminal: {
@@ -277,8 +277,8 @@ export const useOrchestratorData = (selectedJobId: string | null) => {
 
   useEffect(() => {
     void loadJobs();
-    void checkPipelineStatus();
-  }, [checkPipelineStatus, loadJobs]);
+    void checkPipeline状态();
+  }, [checkPipeline状态, loadJobs]);
 
   useEffect(() => {
     if (!isPipelineRunning) return;
@@ -367,7 +367,7 @@ export const useOrchestratorData = (selectedJobId: string | null) => {
 
           if (TERMINAL_PIPELINE_STEPS.has(typedStep)) {
             const eventPayload = payload as PipelineProgressEvent;
-            const terminal = typedStep as PipelineTerminalStatus;
+            const terminal = typedStep as PipelineTerminal状态;
             observePipelineState({
               isRunning: false,
               terminal: {
@@ -399,11 +399,11 @@ export const useOrchestratorData = (selectedJobId: string | null) => {
 
     const interval = setInterval(() => {
       if (!isDocumentVisible() || isRefreshPaused) return;
-      void checkPipelineStatus();
+      void checkPipeline状态();
     }, 30000);
 
     return () => clearInterval(interval);
-  }, [checkPipelineStatus, isPipelineSseConnected, isRefreshPaused]);
+  }, [checkPipeline状态, isPipelineSseConnected, isRefreshPaused]);
 
   useEffect(() => {
     if (!selectedJobId) {
@@ -440,6 +440,6 @@ export const useOrchestratorData = (selectedJobId: string | null) => {
     setIsRefreshPaused,
     loadJobs,
     checkForJobChanges,
-    checkPipelineStatus,
+    checkPipeline状态,
   };
 };

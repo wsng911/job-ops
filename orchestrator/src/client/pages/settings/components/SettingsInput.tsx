@@ -2,18 +2,18 @@ import type React from "react";
 
 import { Input } from "@/components/ui/input";
 
-type SettingsInputProps = {
+type 设置InputProps = {
   label: string;
   inputProps: React.InputHTMLAttributes<HTMLInputElement>;
   placeholder?: string;
   type?: React.HTMLInputTypeAttribute;
   disabled?: boolean;
   error?: string;
-  helper?: React.ReactNode;
+  helper?: React.React否de;
   current?: string;
 };
 
-export const SettingsInput: React.FC<SettingsInputProps> = ({
+export const 设置Input: React.FC<设置InputProps> = ({
   label,
   inputProps,
   placeholder,
@@ -26,9 +26,9 @@ export const SettingsInput: React.FC<SettingsInputProps> = ({
   const id = inputProps.id || inputProps.name;
 
   return (
-    <div className="space-y-2">
+    <div class名称="space-y-2">
       {label && (
-        <label htmlFor={id} className="text-sm font-medium">
+        <label htmlFor={id} class名称="text-sm font-medium">
           {label}
         </label>
       )}
@@ -39,11 +39,11 @@ export const SettingsInput: React.FC<SettingsInputProps> = ({
         placeholder={placeholder}
         disabled={disabled}
       />
-      {error && <p className="text-xs text-destructive">{error}</p>}
+      {error && <p class名称="text-xs text-destructive">{error}</p>}
       {current && (
-        <div className="text-xs text-muted-foreground">{current}</div>
+        <div class名称="text-xs text-muted-foreground">{current}</div>
       )}
-      {helper && <div className="text-xs text-muted-foreground">{helper}</div>}
+      {helper && <div class名称="text-xs text-muted-foreground">{helper}</div>}
     </div>
   );
 };

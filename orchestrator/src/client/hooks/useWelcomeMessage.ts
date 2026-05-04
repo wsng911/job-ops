@@ -1,6 +1,6 @@
 import welcomeMessages from "@shared/messages/jobs-welcome.json";
 import { useMemo } from "react";
-import { useProfile } from "./useProfile";
+import { use个人资料 } from "./use个人资料";
 
 function hashCode(str: string): number {
   let hash = 0;
@@ -13,10 +13,10 @@ function hashCode(str: string): number {
 }
 
 export function useWelcomeMessage(): string {
-  const { personName } = useProfile();
+  const { person名称 } = use个人资料();
 
   return useMemo(() => {
-    const firstName = personName?.split(" ")[0] || "User";
+    const first名称 = person名称?.split(" ")[0] || "User";
     const today = new Date().toDateString();
 
     let isFirstDay = true;
@@ -37,7 +37,7 @@ export function useWelcomeMessage(): string {
 
     if (!isFirstDay) {
       // If it's not their first day, randomize consistently for the day
-      const seed = Math.abs(hashCode(`${firstName}-${today}`));
+      const seed = Math.abs(hashCode(`${first名称}-${today}`));
       selectedIndex = seed % lines.length;
     }
 
@@ -45,13 +45,13 @@ export function useWelcomeMessage(): string {
 
     switch (line.placement) {
       case "inline":
-        return line.text.replace("{name}", firstName);
+        return line.text.replace("{name}", first名称);
       case "prefix":
-        return `${firstName}, ${line.text}`;
+        return `${first名称}, ${line.text}`;
       case "suffix":
-        return `${line.text}, ${firstName}.`;
+        return `${line.text}, ${first名称}.`;
       default:
         return line.text;
     }
-  }, [personName]);
+  }, [person名称]);
 }

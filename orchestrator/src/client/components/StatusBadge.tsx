@@ -1,18 +1,18 @@
 /**
- * Status badge component.
+ * 状态 badge component.
  */
 
-import type { JobStatus } from "@shared/types.js";
+import type { Job状态 } from "@shared/types.js";
 import { Loader2 } from "lucide-react";
 import type React from "react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-interface StatusBadgeProps {
-  status: JobStatus;
+interface 状态BadgeProps {
+  status: Job状态;
 }
 
-const statusLabels: Record<JobStatus, string> = {
+const statusLabels: Record<Job状态, string> = {
   discovered: "Discovered",
   processing: "Processing",
   ready: "Ready",
@@ -23,10 +23,10 @@ const statusLabels: Record<JobStatus, string> = {
 };
 
 const statusStyles: Record<
-  JobStatus,
+  Job状态,
   {
     variant: "default" | "secondary" | "destructive" | "outline";
-    className?: string;
+    class名称?: string;
   }
 > = {
   discovered: { variant: "secondary" },
@@ -34,22 +34,22 @@ const statusStyles: Record<
   ready: { variant: "default" },
   applied: {
     variant: "outline",
-    className: "text-emerald-400 border-emerald-500/30",
+    class名称: "text-emerald-400 border-emerald-500/30",
   },
   in_progress: {
     variant: "outline",
-    className: "text-cyan-400 border-cyan-500/30",
+    class名称: "text-cyan-400 border-cyan-500/30",
   },
   skipped: { variant: "destructive" },
-  expired: { variant: "outline", className: "text-muted-foreground" },
+  expired: { variant: "outline", class名称: "text-muted-foreground" },
 };
 
-export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
-  const { variant, className } = statusStyles[status];
+export const 状态Badge: React.FC<状态BadgeProps> = ({ status }) => {
+  const { variant, class名称 } = statusStyles[status];
 
   return (
-    <Badge variant={variant} className={cn("gap-1", className)}>
-      {status === "processing" && <Loader2 className="h-3 w-3 animate-spin" />}
+    <Badge variant={variant} class名称={cn("gap-1", class名称)}>
+      {status === "processing" && <Loader2 class名称="h-3 w-3 animate-spin" />}
       {statusLabels[status]}
     </Badge>
   );

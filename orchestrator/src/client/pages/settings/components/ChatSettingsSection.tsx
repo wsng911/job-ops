@@ -1,12 +1,12 @@
 import { TokenizedInput } from "@client/pages/orchestrator/TokenizedInput";
-import { SettingsSectionFrame } from "@client/pages/settings/components/SettingsSectionFrame";
+import { 设置SectionFrame } from "@client/pages/settings/components/设置SectionFrame";
 import {
   getMatchingWritingStylePresetId,
   resolveWritingStyleDraft,
   WRITING_STYLE_PRESETS,
 } from "@client/pages/settings/constants";
 import type { ChatValues } from "@client/pages/settings/types";
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import {
   CHAT_STYLE_MANUAL_LANGUAGE_LABELS,
   CHAT_STYLE_MANUAL_LANGUAGE_VALUES,
@@ -28,7 +28,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 
-type ChatSettingsSectionProps = {
+type Chat设置SectionProps = {
   values: ChatValues;
   isLoading: boolean;
   isSaving: boolean;
@@ -55,7 +55,7 @@ function normalizeBlank(value: string | null | undefined): string | undefined {
   return value == null || value === "" ? undefined : value;
 }
 
-export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
+export const Chat设置Section: React.FC<Chat设置SectionProps> = ({
   values,
   isLoading,
   isSaving,
@@ -65,7 +65,7 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
     tone,
     formality,
     constraints,
-    doNotUse,
+    do否tUse,
     languageMode,
     manualLanguage,
     stopSlopEnabled,
@@ -78,13 +78,13 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
     register,
     setValue,
     formState: { errors },
-  } = useFormContext<UpdateSettingsInput>();
-  const [doNotUseDraft, setDoNotUseDraft] = useState("");
+  } = useFormContext<更新设置Input>();
+  const [do否tUseDraft, setDo否tUseDraft] = useState("");
   const [
     toneValue,
     formalityValue,
     constraintsValue,
-    doNotUseValue,
+    do否tUseValue,
     languageModeValue,
   ] = useWatch({
     control,
@@ -92,14 +92,14 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
       "chatStyleTone",
       "chatStyleFormality",
       "chatStyleConstraints",
-      "chatStyleDoNotUse",
+      "chatStyleDo否tUse",
       "chatStyleLanguageMode",
     ],
   });
   const toneDraft = normalizeBlank(toneValue);
   const formalityDraft = normalizeBlank(formalityValue);
   const constraintsDraft = normalizeBlank(constraintsValue);
-  const doNotUseDraftValue = normalizeBlank(doNotUseValue);
+  const do否tUseDraftValue = normalizeBlank(do否tUseValue);
   const resolvedLanguageMode =
     normalizeBlank(languageModeValue) ?? languageMode.default;
   const showManualLanguage = resolvedLanguageMode === "manual";
@@ -108,30 +108,30 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
       tone: toneDraft,
       formality: formalityDraft,
       constraints: constraintsDraft,
-      doNotUse: doNotUseDraftValue,
+      do否tUse: do否tUseDraftValue,
     },
     defaults: values,
   });
   const selectedPresetId =
     getMatchingWritingStylePresetId(resolvedStyle) ?? "custom";
-  const doNotUseTokens = parseStoredTerms(
-    doNotUseDraftValue ?? doNotUse.default,
+  const do否tUseTokens = parseStoredTerms(
+    do否tUseDraftValue ?? do否tUse.default,
   );
 
   return (
-    <SettingsSectionFrame
+    <设置SectionFrame
       mode={layoutMode}
       title="Writing Style & Language"
       value="chat"
     >
-      <div className="space-y-4">
-        <p className="text-sm text-muted-foreground">
+      <div class名称="space-y-4">
+        <p class名称="text-sm text-muted-foreground">
           These defaults shape AI-generated writing across Ghostwriter and
           resume tailoring.
         </p>
 
-        <div className="space-y-2">
-          <label htmlFor="writingStylePreset" className="text-sm font-medium">
+        <div class名称="space-y-2">
+          <label htmlFor="writingStylePreset" class名称="text-sm font-medium">
             Preset
           </label>
           <Select
@@ -153,7 +153,7 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
               setValue("chatStyleConstraints", preset.values.constraints, {
                 shouldDirty: true,
               });
-              setValue("chatStyleDoNotUse", preset.values.doNotUse, {
+              setValue("chatStyleDo否tUse", preset.values.do否tUse, {
                 shouldDirty: true,
               });
             }}
@@ -171,7 +171,7 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
               <SelectItem value="custom">Custom</SelectItem>
             </SelectContent>
           </Select>
-          <div className="text-xs text-muted-foreground">
+          <div class名称="text-xs text-muted-foreground">
             {selectedPresetId === "custom"
               ? "Your current values are custom."
               : (WRITING_STYLE_PRESETS.find(
@@ -180,7 +180,7 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
           </div>
         </div>
 
-        <div className="flex items-start space-x-3">
+        <div class名称="flex items-start space-x-3">
           <Controller
             name="ghostwriterStopSlopEnabled"
             control={control}
@@ -197,14 +197,14 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
               />
             )}
           />
-          <div className="flex flex-col gap-1.5">
+          <div class名称="flex flex-col gap-1.5">
             <label
               htmlFor="ghostwriterStopSlopEnabled"
-              className="cursor-pointer text-sm font-medium leading-none"
+              class名称="cursor-pointer text-sm font-medium leading-none"
             >
               Use Stop Slop for Ghostwriter
             </label>
-            <p className="text-xs text-muted-foreground">
+            <p class名称="text-xs text-muted-foreground">
               Applies extra Ghostwriter-only instructions to remove filler,
               formulaic AI phrasing, passive voice, vague claims, and em dashes.
             </p>
@@ -213,11 +213,11 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
 
         <Separator />
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="space-y-2">
+        <div class名称="grid gap-4 md:grid-cols-2">
+          <div class名称="space-y-2">
             <label
               htmlFor="chatStyleLanguageMode"
-              className="text-sm font-medium"
+              class名称="text-sm font-medium"
             >
               Output language
             </label>
@@ -255,16 +255,16 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
                 </Select>
               )}
             />
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Choose how AI picks the output language.
             </div>
           </div>
 
           {showManualLanguage ? (
-            <div className="space-y-2">
+            <div class名称="space-y-2">
               <label
                 htmlFor="chatStyleManualLanguage"
-                className="text-sm font-medium"
+                class名称="text-sm font-medium"
               >
                 Specific language
               </label>
@@ -297,16 +297,16 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
                   </Select>
                 )}
               />
-              <div className="text-xs text-muted-foreground">
+              <div class名称="text-xs text-muted-foreground">
                 Used when output language is set to a specific language.
               </div>
             </div>
           ) : null}
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="space-y-2">
-            <label htmlFor="chatStyleTone" className="text-sm font-medium">
+        <div class名称="grid gap-4 md:grid-cols-2">
+          <div class名称="space-y-2">
+            <label htmlFor="chatStyleTone" class名称="text-sm font-medium">
               Tone
             </label>
             <Controller
@@ -332,8 +332,8 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="chatStyleFormality" className="text-sm font-medium">
+          <div class名称="space-y-2">
+            <label htmlFor="chatStyleFormality" class名称="text-sm font-medium">
               Formality
             </label>
             <Controller
@@ -359,8 +359,8 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
           </div>
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="chatStyleConstraints" className="text-sm font-medium">
+        <div class名称="space-y-2">
+          <label htmlFor="chatStyleConstraints" class名称="text-sm font-medium">
             Constraints
           </label>
           <Textarea
@@ -369,69 +369,69 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
             disabled={isLoading || isSaving}
             {...register("chatStyleConstraints")}
           />
-          <div className="text-xs text-muted-foreground">
+          <div class名称="text-xs text-muted-foreground">
             Optional global writing constraints applied to Ghostwriter replies
             and resume tailoring.
           </div>
-          <div className="text-xs text-muted-foreground">
+          <div class名称="text-xs text-muted-foreground">
             Current:{" "}
-            <span className="font-mono">{constraints.effective || "—"}</span>
+            <span class名称="font-mono">{constraints.effective || "—"}</span>
           </div>
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="chatStyleDoNotUse" className="text-sm font-medium">
+        <div class名称="space-y-2">
+          <label htmlFor="chatStyleDo否tUse" class名称="text-sm font-medium">
             Do-not-use terms
           </label>
           <TokenizedInput
-            id="chatStyleDoNotUse"
-            values={doNotUseTokens}
-            draft={doNotUseDraft}
+            id="chatStyleDo否tUse"
+            values={do否tUseTokens}
+            draft={do否tUseDraft}
             parseInput={parseTokenizedTerms}
-            onDraftChange={setDoNotUseDraft}
+            onDraftChange={setDo否tUseDraft}
             onValuesChange={(nextValues) =>
-              setValue("chatStyleDoNotUse", nextValues.join(", "), {
+              setValue("chatStyleDo否tUse", nextValues.join(", "), {
                 shouldDirty: true,
               })
             }
             placeholder='e.g. "synergize", "leverage"'
             helperText="Optional words or phrases the AI should avoid when generating text. This is guidance to the model, not a guaranteed blocklist."
-            removeLabelPrefix="Remove do-not-use term"
+            removeLabelPrefix="移除 do-not-use term"
             disabled={isLoading || isSaving}
           />
-          <div className="text-xs text-muted-foreground">
+          <div class名称="text-xs text-muted-foreground">
             Current:{" "}
-            <span className="font-mono">{doNotUse.effective || "—"}</span>
+            <span class名称="font-mono">{do否tUse.effective || "—"}</span>
           </div>
         </div>
 
         <Separator />
 
-        <div className="grid gap-2 text-sm sm:grid-cols-2 lg:grid-cols-4">
+        <div class名称="grid gap-2 text-sm sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <div className="text-xs text-muted-foreground">Tone</div>
-            <div className="break-words font-mono text-xs">
+            <div class名称="text-xs text-muted-foreground">Tone</div>
+            <div class名称="break-words font-mono text-xs">
               Effective: {tone.effective} | Default: {tone.default}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">Formality</div>
-            <div className="break-words font-mono text-xs">
+            <div class名称="text-xs text-muted-foreground">Formality</div>
+            <div class名称="break-words font-mono text-xs">
               Effective: {formality.effective} | Default: {formality.default}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">Language mode</div>
-            <div className="break-words font-mono text-xs">
+            <div class名称="text-xs text-muted-foreground">Language mode</div>
+            <div class名称="break-words font-mono text-xs">
               Effective: {LANGUAGE_MODE_LABELS[languageMode.effective]} |
               Default: {LANGUAGE_MODE_LABELS[languageMode.default]}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Specific language
             </div>
-            <div className="break-words font-mono text-xs">
+            <div class名称="break-words font-mono text-xs">
               Effective:{" "}
               {CHAT_STYLE_MANUAL_LANGUAGE_LABELS[manualLanguage.effective]} |
               Default:{" "}
@@ -439,8 +439,8 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">Stop Slop</div>
-            <div className="break-words font-mono text-xs">
+            <div class名称="text-xs text-muted-foreground">Stop Slop</div>
+            <div class名称="break-words font-mono text-xs">
               Effective: {stopSlopEnabled.effective ? "Enabled" : "Disabled"} |
               Default: {stopSlopEnabled.default ? "Enabled" : "Disabled"}
             </div>
@@ -449,11 +449,11 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
 
         <Separator />
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="space-y-2">
+        <div class名称="grid gap-4 md:grid-cols-2">
+          <div class名称="space-y-2">
             <label
               htmlFor="chatStyleSummaryMaxWords"
-              className="text-sm font-medium"
+              class名称="text-sm font-medium"
             >
               Summary max words
             </label>
@@ -474,7 +474,7 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
                   min={1}
                   max={500}
                   step={1}
-                  placeholder="No limit"
+                  placeholder="否 limit"
                   disabled={isLoading || isSaving}
                   value={field.value ?? ""}
                   onChange={(e) => {
@@ -485,26 +485,26 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
               )}
             />
             {errors.chatStyleSummaryMaxWords && (
-              <div className="text-xs text-destructive">
+              <div class名称="text-xs text-destructive">
                 {errors.chatStyleSummaryMaxWords.message as string}
               </div>
             )}
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Limits words in the AI-generated summary. Overrides any word
               limits in Constraints.
             </div>
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Current:{" "}
-              <span className="font-mono">
+              <span class名称="font-mono">
                 {summaryMaxWords.effective ?? "—"}
               </span>
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div class名称="space-y-2">
             <label
               htmlFor="chatStyleMaxKeywordsPerSkill"
-              className="text-sm font-medium"
+              class名称="text-sm font-medium"
             >
               Max keywords per skill
             </label>
@@ -525,7 +525,7 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
                   min={1}
                   max={50}
                   step={1}
-                  placeholder="No limit"
+                  placeholder="否 limit"
                   disabled={isLoading || isSaving}
                   value={field.value ?? ""}
                   onChange={(e) => {
@@ -536,23 +536,23 @@ export const ChatSettingsSection: React.FC<ChatSettingsSectionProps> = ({
               )}
             />
             {errors.chatStyleMaxKeywordsPerSkill && (
-              <div className="text-xs text-destructive">
+              <div class名称="text-xs text-destructive">
                 {errors.chatStyleMaxKeywordsPerSkill.message as string}
               </div>
             )}
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Caps keywords per skill category. Overrides any keyword limits in
               Constraints.
             </div>
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Current:{" "}
-              <span className="font-mono">
+              <span class名称="font-mono">
                 {maxKeywordsPerSkill.effective ?? "—"}
               </span>
             </div>
           </div>
         </div>
       </div>
-    </SettingsSectionFrame>
+    </设置SectionFrame>
   );
 };

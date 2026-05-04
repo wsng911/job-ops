@@ -5,30 +5,30 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { LogEventModal } from "./LogEventModal";
 
 vi.mock("@/components/ui/alert-dialog", () => ({
-  AlertDialog: ({ children }: { children: React.ReactNode }) => (
+  AlertDialog: ({ children }: { children: React.React否de }) => (
     <div>{children}</div>
   ),
   AlertDialogContent: ({
     children,
     ...props
   }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>,
-  AlertDialogDescription: ({ children }: { children: React.ReactNode }) => (
+  AlertDialog描述: ({ children }: { children: React.React否de }) => (
     <div>{children}</div>
   ),
-  AlertDialogFooter: ({ children }: { children: React.ReactNode }) => (
+  AlertDialogFooter: ({ children }: { children: React.React否de }) => (
     <div>{children}</div>
   ),
-  AlertDialogHeader: ({ children }: { children: React.ReactNode }) => (
+  AlertDialogHeader: ({ children }: { children: React.React否de }) => (
     <div>{children}</div>
   ),
-  AlertDialogTitle: ({ children }: { children: React.ReactNode }) => (
+  AlertDialog标题: ({ children }: { children: React.React否de }) => (
     <div>{children}</div>
   ),
-  AlertDialogCancel: ({
+  AlertDialog取消: ({
     children,
     ...props
   }: {
-    children: React.ReactNode;
+    children: React.React否de;
   }) => (
     <button type="button" {...props}>
       {children}
@@ -42,7 +42,7 @@ vi.mock("@/components/ui/select", () => ({
     value,
     onValueChange,
   }: {
-    children: React.ReactNode;
+    children: React.React否de;
     value?: string;
     onValueChange?: (value: string) => void;
   }) => (
@@ -54,14 +54,14 @@ vi.mock("@/components/ui/select", () => ({
       {children}
     </select>
   ),
-  SelectContent: ({ children }: { children: React.ReactNode }) => (
+  SelectContent: ({ children }: { children: React.React否de }) => (
     <>{children}</>
   ),
   SelectItem: ({
     children,
     value,
   }: {
-    children: React.ReactNode;
+    children: React.React否de;
     value: string;
   }) => <option value={value}>{children}</option>,
   SelectTrigger: () => null,
@@ -75,9 +75,9 @@ describe("LogEventModal", () => {
 
   it("shows the rejection reason selector and submits the form", async () => {
     const onLog = vi.fn().mockResolvedValue(undefined);
-    const onClose = vi.fn();
+    const on关闭 = vi.fn();
 
-    render(<LogEventModal isOpen onClose={onClose} onLog={onLog} />);
+    render(<LogEventModal isOpen on关闭={on关闭} onLog={onLog} />);
 
     const stageSelect = screen.getAllByTestId("select")[0];
     fireEvent.change(stageSelect, { target: { value: "rejected" } });
@@ -99,21 +99,21 @@ describe("LogEventModal", () => {
 
   it("blocks submit when the title is cleared", async () => {
     const onLog = vi.fn().mockResolvedValue(undefined);
-    const onClose = vi.fn();
+    const on关闭 = vi.fn();
 
-    render(<LogEventModal isOpen onClose={onClose} onLog={onLog} />);
+    render(<LogEventModal isOpen on关闭={on关闭} onLog={onLog} />);
 
     const titleInput = screen.getByPlaceholderText("e.g. Recruiter Screen");
     fireEvent.change(titleInput, { target: { value: "" } });
 
     fireEvent.click(screen.getByRole("button", { name: /log event/i }));
 
-    expect(await screen.findByText("Title is required")).toBeInTheDocument();
+    expect(await screen.findByText("标题 is required")).toBeInTheDocument();
     expect(onLog).not.toHaveBeenCalled();
   });
 
   it("keeps the modal scrollable on small screens", () => {
-    render(<LogEventModal isOpen onClose={vi.fn()} onLog={vi.fn()} />);
+    render(<LogEventModal isOpen on关闭={vi.fn()} onLog={vi.fn()} />);
 
     expect(screen.getByTestId("log-event-modal")).toHaveClass(
       "max-h-[calc(100vh-2rem)]",

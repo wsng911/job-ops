@@ -1,5 +1,5 @@
 import {
-  getAuthBootstrapStatus,
+  getAuthBootstrap状态,
   hasAuthenticatedSession,
   restoreAuthSessionFromLegacyCredentials,
   setupFirstAdmin,
@@ -12,9 +12,9 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
+  Card描述,
   CardHeader,
-  CardTitle,
+  Card标题,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -33,9 +33,9 @@ function resolveNextPath(rawNext: string | null): string {
 export function SignInPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, set用户名] = useState("");
+  const [display名称, setDisplay名称] = useState("");
+  const [password, set密码] = useState("");
   const [setupRequired, setSetupRequired] = useState(false);
   const [isBusy, setIsBusy] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -44,16 +44,16 @@ export function SignInPage() {
   );
 
   const nextPath = useMemo(() => {
-    const params = new URLSearchParams(location.search);
+    const params = new URL搜索Params(location.search);
     return resolveNextPath(params.get("next"));
   }, [location.search]);
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const rememberedUsername = params.get("user")?.trim();
-    if (rememberedUsername) {
-      setUsername(rememberedUsername);
-      setPassword("");
+    const params = new URL搜索Params(location.search);
+    const remembered用户名 = params.get("user")?.trim();
+    if (remembered用户名) {
+      set用户名(remembered用户名);
+      set密码("");
     }
   }, [location.search]);
 
@@ -62,7 +62,7 @@ export function SignInPage() {
 
     void (async () => {
       try {
-        const bootstrap = await getAuthBootstrapStatus();
+        const bootstrap = await getAuthBootstrap状态();
         if (cancelled) return;
         setSetupRequired(bootstrap.setupRequired);
         if (bootstrap.setupRequired) return;
@@ -85,10 +85,10 @@ export function SignInPage() {
     };
   }, [navigate, nextPath]);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handle提交 = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const normalizedUsername = username.trim();
-    if (!normalizedUsername || !password) {
+    const normalized用户名 = username.trim();
+    if (!normalized用户名 || !password) {
       setErrorMessage("Enter both username and password.");
       return;
     }
@@ -99,21 +99,21 @@ export function SignInPage() {
     try {
       if (setupRequired) {
         const user = await setupFirstAdmin({
-          username: normalizedUsername,
+          username: normalized用户名,
           password,
-          displayName: displayName.trim() || normalizedUsername,
+          display名称: display名称.trim() || normalized用户名,
         });
         setRememberedUsers(
           rememberAuthUser({
             username: user.username,
-            displayName: user.displayName,
+            display名称: user.display名称,
           }),
         );
       } else {
-        await signInWithCredentials(normalizedUsername, password);
+        await signInWithCredentials(normalized用户名, password);
         setRememberedUsers(
           rememberAuthUser({
-            username: normalizedUsername,
+            username: normalized用户名,
           }),
         );
       }
@@ -127,24 +127,24 @@ export function SignInPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(120,119,198,0.08),_transparent_45%),linear-gradient(180deg,_rgba(15,23,42,0.02),_transparent_30%)] px-4 py-16">
-      <div className="mx-auto flex min-h-[70vh] max-w-md items-center">
-        <Card className="w-full border-border/60 bg-background/95 shadow-xl">
-          <CardHeader className="space-y-2">
-            <CardTitle className="text-2xl tracking-tight">Sign in</CardTitle>
-            <CardDescription>
+    <main class名称="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(120,119,198,0.08),_transparent_45%),linear-gradient(180deg,_rgba(15,23,42,0.02),_transparent_30%)] px-4 py-16">
+      <div class名称="mx-auto flex min-h-[70vh] max-w-md items-center">
+        <Card class名称="w-full border-border/60 bg-background/95 shadow-xl">
+          <CardHeader class名称="space-y-2">
+            <Card标题 class名称="text-2xl tracking-tight">登录</Card标题>
+            <Card描述>
               {setupRequired
-                ? "Create the first system admin for this JobOps instance."
+                ? "创建 the first system admin for this JobOps instance."
                 : "Enter your JobOps username and password."}
-            </CardDescription>
+            </Card描述>
           </CardHeader>
           <CardContent>
             {!setupRequired && rememberedUsers.length > 0 ? (
-              <div className="mb-5 space-y-2">
-                <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              <div class名称="mb-5 space-y-2">
+                <div class名称="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                   Remembered on this browser
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div class名称="flex flex-wrap gap-2">
                   {rememberedUsers.map((user) => (
                     <Button
                       key={user.username}
@@ -155,83 +155,83 @@ export function SignInPage() {
                           : "outline"
                       }
                       size="sm"
-                      className="h-8 max-w-full px-2.5"
+                      class名称="h-8 max-w-full px-2.5"
                       disabled={isBusy}
                       onClick={() => {
-                        setUsername(user.username);
-                        setPassword("");
+                        set用户名(user.username);
+                        set密码("");
                         setErrorMessage(null);
                       }}
                     >
-                      <span className="truncate">
-                        {user.displayName ?? user.username}
+                      <span class名称="truncate">
+                        {user.display名称 ?? user.username}
                       </span>
                     </Button>
                   ))}
                 </div>
               </div>
             ) : null}
-            <form className="space-y-4" onSubmit={handleSubmit}>
+            <form class名称="space-y-4" on提交={handle提交}>
               {setupRequired ? (
-                <div className="space-y-2">
+                <div class名称="space-y-2">
                   <label
-                    className="text-sm font-medium"
+                    class名称="text-sm font-medium"
                     htmlFor="auth-display-name"
                   >
-                    Name
+                    名称
                   </label>
                   <Input
                     id="auth-display-name"
                     autoComplete="name"
-                    value={displayName}
+                    value={display名称}
                     onChange={(event) =>
-                      setDisplayName(event.currentTarget.value)
+                      setDisplay名称(event.currentTarget.value)
                     }
                     placeholder="Your name"
                     disabled={isBusy}
                   />
                 </div>
               ) : null}
-              <div className="space-y-2">
-                <label className="text-sm font-medium" htmlFor="auth-username">
-                  Username
+              <div class名称="space-y-2">
+                <label class名称="text-sm font-medium" htmlFor="auth-username">
+                  用户名
                 </label>
                 <Input
                   id="auth-username"
                   autoComplete="username"
                   value={username}
-                  onChange={(event) => setUsername(event.currentTarget.value)}
+                  onChange={(event) => set用户名(event.currentTarget.value)}
                   placeholder="Enter username"
                   disabled={isBusy}
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium" htmlFor="auth-password">
-                  Password
+              <div class名称="space-y-2">
+                <label class名称="text-sm font-medium" htmlFor="auth-password">
+                  密码
                 </label>
                 <Input
                   id="auth-password"
                   type="password"
                   autoComplete="current-password"
                   value={password}
-                  onChange={(event) => setPassword(event.currentTarget.value)}
+                  onChange={(event) => set密码(event.currentTarget.value)}
                   placeholder="Enter password"
                   disabled={isBusy}
                 />
               </div>
               {errorMessage ? (
-                <p className="text-sm text-destructive" role="alert">
+                <p class名称="text-sm text-destructive" role="alert">
                   {errorMessage}
                 </p>
               ) : null}
-              <Button className="w-full" type="submit" disabled={isBusy}>
+              <Button class名称="w-full" type="submit" disabled={isBusy}>
                 {isBusy
                   ? setupRequired
                     ? "Creating account..."
                     : "Signing in..."
                   : setupRequired
-                    ? "Create workspace"
-                    : "Sign in"}
+                    ? "创建 workspace"
+                    : "登录"}
               </Button>
             </form>
           </CardContent>

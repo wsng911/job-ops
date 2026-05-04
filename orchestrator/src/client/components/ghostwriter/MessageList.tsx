@@ -18,7 +18,7 @@ type MessageListProps = {
   isStreaming: boolean;
   streamingMessageId: string | null;
   onRegenerate: (messageId: string) => void;
-  onEdit: (messageId: string, content: string) => void;
+  on编辑: (messageId: string, content: string) => void;
   onSwitchBranch: (messageId: string) => void;
 };
 
@@ -28,11 +28,11 @@ export const MessageList: React.FC<MessageListProps> = ({
   isStreaming,
   streamingMessageId,
   onRegenerate,
-  onEdit,
+  on编辑,
   onSwitchBranch,
 }) => {
-  const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
-  const [editContent, setEditContent] = useState("");
+  const [editingMessageId, set编辑ingMessageId] = useState<string | null>(null);
+  const [editContent, set编辑Content] = useState("");
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
   const copiedTimeoutRef = useRef<number | null>(null);
 
@@ -41,22 +41,22 @@ export const MessageList: React.FC<MessageListProps> = ({
     branchMap.set(branch.messageId, branch);
   }
 
-  const startEditing = (message: JobChatMessage) => {
-    setEditingMessageId(message.id);
-    setEditContent(message.content);
+  const start编辑ing = (message: JobChatMessage) => {
+    set编辑ingMessageId(message.id);
+    set编辑Content(message.content);
   };
 
-  const cancelEditing = () => {
-    setEditingMessageId(null);
-    setEditContent("");
+  const cancel编辑ing = () => {
+    set编辑ingMessageId(null);
+    set编辑Content("");
   };
 
-  const submitEdit = (messageId: string) => {
+  const submit编辑 = (messageId: string) => {
     const content = editContent.trim();
     if (!content) return;
-    onEdit(messageId, content);
-    setEditingMessageId(null);
-    setEditContent("");
+    on编辑(messageId, content);
+    set编辑ingMessageId(null);
+    set编辑Content("");
   };
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export const MessageList: React.FC<MessageListProps> = ({
   };
 
   return (
-    <div className="space-y-3">
+    <div class名称="space-y-3">
       {messages.length > 0 &&
         messages.map((message) => {
           const isUser = message.role === "user";
@@ -99,7 +99,7 @@ export const MessageList: React.FC<MessageListProps> = ({
             isStreaming &&
             message.role === "assistant" &&
             streamingMessageId === message.id;
-          const isEditing = editingMessageId === message.id;
+          const is编辑ing = editingMessageId === message.id;
           const canCopyResponse =
             message.role === "assistant" &&
             message.status === "complete" &&
@@ -110,14 +110,14 @@ export const MessageList: React.FC<MessageListProps> = ({
           return (
             <div
               key={message.id}
-              className={`group rounded-lg border p-3 ${
+              class名称={`group rounded-lg border p-3 ${
                 isUser
                   ? "border-primary/30 bg-primary/5"
                   : "border-border/60 bg-background"
               }`}
             >
-              <div className="mb-1 flex items-center gap-2">
-                <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+              <div class名称="mb-1 flex items-center gap-2">
+                <span class名称="text-[10px] uppercase tracking-wide text-muted-foreground">
                   {isUser ? "You" : "Ghostwriter"}
                 </span>
                 {branch && (
@@ -126,16 +126,16 @@ export const MessageList: React.FC<MessageListProps> = ({
                     onSwitch={onSwitchBranch}
                   />
                 )}
-                <div className="ml-auto flex items-center gap-1 opacity-100 transition-opacity sm:pointer-events-none sm:opacity-0 sm:group-hover:pointer-events-auto sm:group-hover:opacity-100 sm:group-focus-within:pointer-events-auto sm:group-focus-within:opacity-100">
-                  {isUser && !isStreaming && !isEditing && (
+                <div class名称="ml-auto flex items-center gap-1 opacity-100 transition-opacity sm:pointer-events-none sm:opacity-0 sm:group-hover:pointer-events-auto sm:group-hover:opacity-100 sm:group-focus-within:pointer-events-auto sm:group-focus-within:opacity-100">
+                  {isUser && !isStreaming && !is编辑ing && (
                     <button
                       type="button"
-                      onClick={() => startEditing(message)}
-                      className="rounded p-1 text-muted-foreground hover:bg-muted/60 hover:text-foreground"
-                      aria-label="Edit message"
-                      title="Edit message"
+                      onClick={() => start编辑ing(message)}
+                      class名称="rounded p-1 text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                      aria-label="编辑 message"
+                      title="编辑 message"
                     >
-                      <Pencil className="h-3 w-3" />
+                      <Pencil class名称="h-3 w-3" />
                     </button>
                   )}
                   {!isUser && !isStreaming && !isActiveStreaming && (
@@ -146,14 +146,14 @@ export const MessageList: React.FC<MessageListProps> = ({
                           onClick={() =>
                             void copyMessage(message.id, message.content)
                           }
-                          className="inline-flex items-center gap-1 rounded px-1.5 py-1 text-[11px] text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                          class名称="inline-flex items-center gap-1 rounded px-1.5 py-1 text-[11px] text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                           aria-label="Copy response"
                           title="Copy response"
                         >
                           {copiedMessageId === message.id ? (
-                            <Check className="h-3 w-3" />
+                            <Check class名称="h-3 w-3" />
                           ) : (
-                            <Copy className="h-3 w-3" />
+                            <Copy class名称="h-3 w-3" />
                           )}
                           <span>
                             {copiedMessageId === message.id ? "Copied" : "Copy"}
@@ -163,53 +163,53 @@ export const MessageList: React.FC<MessageListProps> = ({
                       <button
                         type="button"
                         onClick={() => onRegenerate(message.id)}
-                        className="rounded p-1 text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                        class名称="rounded p-1 text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                         aria-label="Regenerate response"
                         title="Regenerate response"
                       >
-                        <RefreshCcw className="h-3 w-3" />
+                        <RefreshCcw class名称="h-3 w-3" />
                       </button>
                     </>
                   )}
                 </div>
               </div>
 
-              {isEditing ? (
-                <div className="space-y-2">
+              {is编辑ing ? (
+                <div class名称="space-y-2">
                   <Textarea
                     value={editContent}
-                    onChange={(e) => setEditContent(e.target.value)}
+                    onChange={(e) => set编辑Content(e.target.value)}
                     onKeyDown={(e) => {
                       if (e.key === "Escape") {
-                        cancelEditing();
+                        cancel编辑ing();
                       }
                     }}
-                    className="min-h-[60px]"
+                    class名称="min-h-[60px]"
                     autoFocus
                   />
-                  <div className="flex items-center justify-end gap-1">
-                    <Button size="sm" variant="ghost" onClick={cancelEditing}>
-                      Cancel
+                  <div class名称="flex items-center justify-end gap-1">
+                    <Button size="sm" variant="ghost" onClick={cancel编辑ing}>
+                      取消
                     </Button>
                     <Button
                       size="sm"
-                      onClick={() => submitEdit(message.id)}
+                      onClick={() => submit编辑(message.id)}
                       disabled={!editContent.trim()}
                     >
-                      Submit
+                      提交
                     </Button>
                   </div>
                 </div>
               ) : isActiveStreaming ? (
                 <StreamingMessage content={message.content} />
               ) : message.role === "assistant" ? (
-                <div className="text-sm leading-relaxed text-foreground [&_a]:text-primary [&_a]:underline [&_blockquote]:border-l [&_blockquote]:border-border [&_blockquote]:pl-3 [&_code]:rounded [&_code]:bg-muted/40 [&_code]:px-1 [&_h1]:mt-4 [&_h1]:text-base [&_h1]:font-semibold [&_h2]:mt-4 [&_h2]:text-sm [&_h2]:font-semibold [&_h3]:mt-3 [&_h3]:text-sm [&_h3]:font-semibold [&_li]:my-1 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:my-2 [&_pre]:my-3 [&_pre]:overflow-x-auto [&_pre]:rounded [&_pre]:bg-muted/40 [&_pre]:p-3 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5">
+                <div class名称="text-sm leading-relaxed text-foreground [&_a]:text-primary [&_a]:underline [&_blockquote]:border-l [&_blockquote]:border-border [&_blockquote]:pl-3 [&_code]:rounded [&_code]:bg-muted/40 [&_code]:px-1 [&_h1]:mt-4 [&_h1]:text-base [&_h1]:font-semibold [&_h2]:mt-4 [&_h2]:text-sm [&_h2]:font-semibold [&_h3]:mt-3 [&_h3]:text-sm [&_h3]:font-semibold [&_li]:my-1 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:my-2 [&_pre]:my-3 [&_pre]:overflow-x-auto [&_pre]:rounded [&_pre]:bg-muted/40 [&_pre]:p-3 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {message.content || "..."}
                   </ReactMarkdown>
                 </div>
               ) : (
-                <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
+                <div class名称="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
                   {message.content}
                 </div>
               )}

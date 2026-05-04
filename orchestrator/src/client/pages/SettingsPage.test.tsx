@@ -1,5 +1,5 @@
 import { getDefaultPromptTemplate } from "@shared/prompt-template-definitions.js";
-import { createAppSettings } from "@shared/testing/factories.js";
+import { createApp设置 } from "@shared/testing/factories.js";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { toast } from "sonner";
@@ -7,7 +7,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as api from "../api";
 import { _resetTracerReadinessCache } from "../hooks/useTracerReadiness";
 import { renderWithQueryClient } from "../test/renderWithQueryClient";
-import { SettingsPage } from "./SettingsPage";
+import { 设置Page } from "./设置Page";
 
 const originalScrollIntoView = HTMLElement.prototype.scrollIntoView;
 
@@ -15,14 +15,14 @@ const render = (ui: Parameters<typeof renderWithQueryClient>[0]) =>
   renderWithQueryClient(ui);
 
 vi.mock("../api", () => ({
-  getSettings: vi.fn(),
+  get设置: vi.fn(),
   getLlmModels: vi.fn().mockResolvedValue([]),
-  getCodexAuthStatus: vi.fn().mockResolvedValue({
+  getCodexAuth状态: vi.fn().mockResolvedValue({
     authenticated: false,
     username: null,
     validationMessage:
       "Codex is not authenticated in this container. Run `codex login` and try again.",
-    flowStatus: "idle",
+    flow状态: "idle",
     loginInProgress: false,
     verificationUrl: null,
     userCode: null,
@@ -35,7 +35,7 @@ vi.mock("../api", () => ({
     username: null,
     validationMessage:
       "Codex is not authenticated in this container. Run `codex login` and try again.",
-    flowStatus: "running",
+    flow状态: "running",
     loginInProgress: true,
     verificationUrl: "https://auth.openai.com/codex/device",
     userCode: "ABCD-EFGH",
@@ -45,30 +45,30 @@ vi.mock("../api", () => ({
       "Open the verification URL and enter the one-time code to finish login.",
   }),
   disconnectCodexAuth: vi.fn(),
-  updateSettings: vi.fn(),
+  update设置: vi.fn(),
   validateRxresume: vi.fn(),
   getRxResumeProjects: vi.fn(),
   clearDatabase: vi.fn(),
-  deleteJobsByStatus: vi.fn(),
+  deleteJobsBy状态: vi.fn(),
   getTracerReadiness: vi.fn(),
-  getBackups: vi.fn().mockResolvedValue({ backups: [], nextScheduled: null }),
-  createManualBackup: vi.fn(),
-  deleteBackup: vi.fn(),
+  get返回ups: vi.fn().mockResolvedValue({ backups: [], nextScheduled: null }),
+  createManual返回up: vi.fn(),
+  delete返回up: vi.fn(),
   getCurrentAuthUser: vi.fn().mockResolvedValue({
     id: "user-1",
     username: "test",
-    displayName: null,
+    display名称: null,
     isSystemAdmin: false,
     isDisabled: false,
     workspaceId: "tenant_default",
-    workspaceName: "JobOps",
+    workspace名称: "JobOps",
     createdAt: "2026-04-27T00:00:00.000Z",
     updatedAt: "2026-04-27T00:00:00.000Z",
   }),
   listWorkspaceUsers: vi.fn().mockResolvedValue([]),
   createWorkspaceUser: vi.fn(),
   setWorkspaceUserDisabled: vi.fn(),
-  resetWorkspaceUserPassword: vi.fn(),
+  resetWorkspaceUser密码: vi.fn(),
 }));
 
 vi.mock("sonner", () => ({
@@ -79,7 +79,7 @@ vi.mock("sonner", () => ({
   },
 }));
 
-const baseSettings = createAppSettings({
+const base设置 = createApp设置({
   profileProjects: [
     {
       id: "proj-1",
@@ -101,12 +101,12 @@ const baseSettings = createAppSettings({
 const renderPage = () => {
   return render(
     <MemoryRouter initialEntries={["/settings"]}>
-      <SettingsPage />
+      <设置Page />
     </MemoryRouter>,
   );
 };
 
-const getSaveButton = () =>
+const get保存Button = () =>
   screen.getByRole("button", { name: /save changes/i });
 
 const openNavGroup = async (name: RegExp) => {
@@ -114,7 +114,7 @@ const openNavGroup = async (name: RegExp) => {
   fireEvent.click(groupButton);
 };
 
-const clickLastButtonByName = async (name: RegExp) => {
+const clickLastButtonBy名称 = async (name: RegExp) => {
   const buttons = await screen.findAllByRole("button", { name });
   const target = buttons.at(-1);
   expect(target).toBeDefined();
@@ -123,45 +123,45 @@ const clickLastButtonByName = async (name: RegExp) => {
 
 const openModelSection = async () => {
   await openNavGroup(/^ai$/i);
-  await clickLastButtonByName(/models/i);
+  await clickLastButtonBy名称(/models/i);
 };
 
 const openWritingStyleSection = async () => {
   await openNavGroup(/^ai$/i);
-  await clickLastButtonByName(/writing style/i);
+  await clickLastButtonBy名称(/writing style/i);
 };
 
 const openPromptTemplatesSection = async () => {
   await openNavGroup(/^ai$/i);
-  await clickLastButtonByName(/prompt templates/i);
+  await clickLastButtonBy名称(/prompt templates/i);
 };
 
 const openReactiveResumeSection = async () => {
   await openNavGroup(/^integrations$/i);
-  await clickLastButtonByName(/reactive resume/i);
+  await clickLastButtonBy名称(/reactive resume/i);
 };
 
 const openDisplaySection = async () => {
   await openNavGroup(/^display$/i);
-  await clickLastButtonByName(/display preferences/i);
+  await clickLastButtonBy名称(/display preferences/i);
 };
 
 const openEnvironmentSection = async () => {
   await openNavGroup(/^workspaces & security$/i);
-  await clickLastButtonByName(/workspace access/i);
+  await clickLastButtonBy名称(/workspace access/i);
 };
 
 const openScoringSection = async () => {
   await openNavGroup(/^scoring$/i);
-  await clickLastButtonByName(/rules.*filters/i);
+  await clickLastButtonBy名称(/rules.*filters/i);
 };
 
 const openDangerZoneSection = async () => {
   await openNavGroup(/^danger zone$/i);
-  await clickLastButtonByName(/danger zone/i);
+  await clickLastButtonBy名称(/danger zone/i);
 };
 
-describe("SettingsPage", () => {
+describe("设置Page", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
@@ -194,12 +194,12 @@ describe("SettingsPage", () => {
   });
 
   it("saves trimmed model overrides", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
-    vi.mocked(api.updateSettings).mockResolvedValue({
-      ...baseSettings,
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
+    vi.mocked(api.update设置).mockResolvedValue({
+      ...base设置,
       model: {
         value: "gpt-4",
-        default: baseSettings.model.default,
+        default: base设置.model.default,
         override: "gpt-4",
       },
     });
@@ -211,23 +211,23 @@ describe("SettingsPage", () => {
     await waitFor(() => expect(modelInput).toBeEnabled());
     fireEvent.change(modelInput, { target: { value: "  gpt-4  " } });
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
 
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
-    expect(api.updateSettings).toHaveBeenCalledWith(
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
+    expect(api.update设置).toHaveBeenCalledWith(
       expect.objectContaining({
         model: "gpt-4",
       }),
     );
-    expect(toast.success).toHaveBeenCalledWith("Settings saved");
+    expect(toast.success).toHaveBeenCalledWith("设置 saved");
   });
 
   it("starts codex sign-in from model settings", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(
-      createAppSettings({
+    vi.mocked(api.get设置).mockResolvedValue(
+      createApp设置({
         llmProvider: {
           value: "codex",
           default: "codex",
@@ -239,7 +239,7 @@ describe("SettingsPage", () => {
     renderPage();
     await openModelSection();
 
-    await waitFor(() => expect(api.getCodexAuthStatus).toHaveBeenCalled());
+    await waitFor(() => expect(api.getCodexAuth状态).toHaveBeenCalled());
 
     const startButton = await screen.findByRole("button", {
       name: /start sign-in/i,
@@ -258,7 +258,7 @@ describe("SettingsPage", () => {
   });
 
   it("shows validation error for too long model override", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
 
     renderPage();
     await openModelSection();
@@ -276,14 +276,14 @@ describe("SettingsPage", () => {
       ),
     ).toBeInTheDocument();
 
-    // Save button should be disabled due to validation error (isValid will be false)
-    const saveButton = getSaveButton();
+    // 保存 button should be disabled due to validation error (isValid will be false)
+    const saveButton = get保存Button();
     expect(saveButton).toBeDisabled();
   });
 
   it("clears jobs by status and summarizes results", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
-    vi.mocked(api.deleteJobsByStatus).mockResolvedValue({
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
+    vi.mocked(api.deleteJobsBy状态).mockResolvedValue({
       message: "",
       count: 2,
     });
@@ -303,20 +303,20 @@ describe("SettingsPage", () => {
     fireEvent.click(confirmButton);
 
     await waitFor(() =>
-      expect(api.deleteJobsByStatus).toHaveBeenCalledWith("discovered"),
+      expect(api.deleteJobsBy状态).toHaveBeenCalledWith("discovered"),
     );
     expect(toast.success).toHaveBeenCalledWith(
       "Jobs cleared",
       expect.objectContaining({
-        description: "Deleted 2 jobs: 2 discovered",
+        description: "删除d 2 jobs: 2 discovered",
       }),
     );
   });
 
   it("enables save button when model is changed", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
     renderPage();
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     expect(saveButton).toBeDisabled();
     await openModelSection();
 
@@ -329,8 +329,8 @@ describe("SettingsPage", () => {
   });
 
   it("clears stale model overrides when the provider changes", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(
-      createAppSettings({
+    vi.mocked(api.get设置).mockResolvedValue(
+      createApp设置({
         model: {
           value: "google/gemini-3-flash-preview",
           default: "google/gemini-3-flash-preview",
@@ -348,7 +348,7 @@ describe("SettingsPage", () => {
         llmProvider: { value: "gemini", default: "gemini", override: "gemini" },
       }),
     );
-    vi.mocked(api.updateSettings).mockResolvedValue(baseSettings);
+    vi.mocked(api.update设置).mockResolvedValue(base设置);
 
     renderPage();
     await openModelSection();
@@ -356,12 +356,12 @@ describe("SettingsPage", () => {
     fireEvent.click(screen.getByRole("combobox", { name: /provider/i }));
     fireEvent.click(await screen.findByText("OpenAI"));
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
-    expect(api.updateSettings).toHaveBeenCalledWith(
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
+    expect(api.update设置).toHaveBeenCalledWith(
       expect.objectContaining({
         llmProvider: "openai",
         model: null,
@@ -373,12 +373,12 @@ describe("SettingsPage", () => {
   });
 
   it("does not mark model settings dirty on initial load when provider comes from effective settings", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
 
     renderPage();
     await openModelSection();
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeDisabled());
   });
 
@@ -397,8 +397,8 @@ describe("SettingsPage", () => {
         isVisibleInBase: true,
       },
     ]);
-    vi.mocked(api.getSettings).mockResolvedValue(
-      createAppSettings({
+    vi.mocked(api.get设置).mockResolvedValue(
+      createApp设置({
         rxresumeApiKeyHint: "rr-v5",
         rxresumeBaseResumeId: "resume-123",
         profileProjects: [
@@ -418,13 +418,13 @@ describe("SettingsPage", () => {
 
     await waitFor(() => expect(api.getRxResumeProjects).toHaveBeenCalled());
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeDisabled());
   });
 
   it("does not clear the model override when saving an unrelated setting", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(
-      createAppSettings({
+    vi.mocked(api.get设置).mockResolvedValue(
+      createApp设置({
         model: {
           value: "gpt-4.1-mini",
           default: "gpt-4o",
@@ -437,8 +437,8 @@ describe("SettingsPage", () => {
         },
       }),
     );
-    vi.mocked(api.updateSettings).mockResolvedValue(
-      createAppSettings({
+    vi.mocked(api.update设置).mockResolvedValue(
+      createApp设置({
         model: {
           value: "gpt-4.1-mini",
           default: "gpt-4o",
@@ -462,12 +462,12 @@ describe("SettingsPage", () => {
     await openDisplaySection();
     fireEvent.click(screen.getByLabelText(/show visa sponsor information/i));
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
-    expect(api.updateSettings).toHaveBeenCalledWith(
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
+    expect(api.update设置).toHaveBeenCalledWith(
       expect.objectContaining({
         model: "gpt-4.1-mini",
         showSponsorInfo: false,
@@ -476,7 +476,7 @@ describe("SettingsPage", () => {
   });
 
   it("hides pipeline tuning sections that moved to run modal", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
     renderPage();
 
     await openModelSection();
@@ -495,9 +495,9 @@ describe("SettingsPage", () => {
   });
 
   it("enables save button when display setting is changed", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
     renderPage();
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
 
     await openDisplaySection();
     const sponsorCheckbox = screen.getByLabelText(
@@ -508,11 +508,11 @@ describe("SettingsPage", () => {
   });
 
   it("allows saving when Reactive Resume credentials are present", async () => {
-    const settingsWithRxResumeAuth = createAppSettings({
+    const settingsWithRxResumeAuth = createApp设置({
       rxresumeApiKeyHint: "api_",
     });
-    vi.mocked(api.getSettings).mockResolvedValue(settingsWithRxResumeAuth);
-    vi.mocked(api.updateSettings).mockResolvedValue(settingsWithRxResumeAuth);
+    vi.mocked(api.get设置).mockResolvedValue(settingsWithRxResumeAuth);
+    vi.mocked(api.update设置).mockResolvedValue(settingsWithRxResumeAuth);
 
     renderPage();
 
@@ -522,11 +522,11 @@ describe("SettingsPage", () => {
     );
     fireEvent.click(sponsorCheckbox);
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
     expect(toast.error).not.toHaveBeenCalledWith(
       "Choose one Reactive Resume auth method",
       expect.anything(),
@@ -534,9 +534,9 @@ describe("SettingsPage", () => {
   });
 
   it("saves a shared RxResume URL from the Reactive Resume section", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
-    vi.mocked(api.updateSettings).mockResolvedValue({
-      ...baseSettings,
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
+    vi.mocked(api.update设置).mockResolvedValue({
+      ...base设置,
       rxresumeUrl: "https://resume.example.com",
     });
 
@@ -549,12 +549,12 @@ describe("SettingsPage", () => {
       target: { value: "https://resume.example.com" },
     });
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
-    expect(api.updateSettings).toHaveBeenCalledWith(
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
+    expect(api.update设置).toHaveBeenCalledWith(
       expect.objectContaining({
         rxresumeUrl: "https://resume.example.com",
       }),
@@ -562,7 +562,7 @@ describe("SettingsPage", () => {
   });
 
   it("blocks save and renders an inline alert when the v5 API key is invalid", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
 
     renderPage();
     await openReactiveResumeSection();
@@ -572,7 +572,7 @@ describe("SettingsPage", () => {
     vi.mocked(api.validateRxresume).mockResolvedValue({
       valid: false,
       message:
-        "Reactive Resume v5 API key is invalid. Update the API key and try again.",
+        "Reactive Resume v5 API key is invalid. 更新 the API key and try again.",
       status: 401,
     });
 
@@ -580,20 +580,20 @@ describe("SettingsPage", () => {
       target: { value: "invalid-v5-key" },
     });
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
     expect(
       await screen.findByText(/Reactive Resume v5 API key is invalid/i),
     ).toBeInTheDocument();
-    expect(api.updateSettings).not.toHaveBeenCalled();
+    expect(api.update设置).not.toHaveBeenCalled();
   });
 
   it("allows saving on RxResume availability warnings and keeps the inline warning visible", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
-    vi.mocked(api.updateSettings).mockResolvedValue({
-      ...baseSettings,
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
+    vi.mocked(api.update设置).mockResolvedValue({
+      ...base设置,
       rxresumeApiKeyHint: "rr-v",
     });
 
@@ -613,27 +613,27 @@ describe("SettingsPage", () => {
       target: { value: "rr-v5-warning-key" },
     });
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
     expect(
       await screen.findByText(/instance is unavailable right now/i),
     ).toBeInTheDocument();
-    expect(toast.success).toHaveBeenCalledWith("Settings saved");
+    expect(toast.success).toHaveBeenCalledWith("设置 saved");
     expect(toast.info).toHaveBeenCalledWith(
-      "Settings saved, but JobOps could not verify Reactive Resume because the instance is unavailable.",
+      "设置 saved, but JobOps could not verify Reactive Resume because the instance is unavailable.",
     );
   });
 
   it("does not run RxResume validation for unrelated settings saves", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
-    vi.mocked(api.updateSettings).mockResolvedValue({
-      ...baseSettings,
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
+    vi.mocked(api.update设置).mockResolvedValue({
+      ...base设置,
       model: {
         value: "new-model",
-        default: baseSettings.model.default,
+        default: base设置.model.default,
         override: "new-model",
       },
     });
@@ -647,16 +647,16 @@ describe("SettingsPage", () => {
       target: { value: "new-model" },
     });
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
     expect(api.validateRxresume).not.toHaveBeenCalled();
   });
 
   it("clears the previous RxResume warning when the key or URL changes", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
     vi.mocked(api.validateRxresume).mockResolvedValue({
       valid: false,
       message:
@@ -683,9 +683,9 @@ describe("SettingsPage", () => {
   });
 
   it("saves the writing language mode through the settings page", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
-    vi.mocked(api.updateSettings).mockResolvedValue(
-      createAppSettings({
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
+    vi.mocked(api.update设置).mockResolvedValue(
+      createApp设置({
         chatStyleLanguageMode: {
           value: "match-resume",
           default: "manual",
@@ -704,12 +704,12 @@ describe("SettingsPage", () => {
       screen.queryByRole("combobox", { name: /specific language/i }),
     ).not.toBeInTheDocument();
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
-    expect(api.updateSettings).toHaveBeenCalledWith(
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
+    expect(api.update设置).toHaveBeenCalledWith(
       expect.objectContaining({
         chatStyleLanguageMode: "match-resume",
         chatStyleManualLanguage: null,
@@ -718,9 +718,9 @@ describe("SettingsPage", () => {
   });
 
   it("saves the Ghostwriter Stop Slop toggle through the settings page", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
-    vi.mocked(api.updateSettings).mockResolvedValue(
-      createAppSettings({
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
+    vi.mocked(api.update设置).mockResolvedValue(
+      createApp设置({
         ghostwriterStopSlopEnabled: {
           value: true,
           default: false,
@@ -739,12 +739,12 @@ describe("SettingsPage", () => {
 
     fireEvent.click(stopSlopCheckbox);
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
-    expect(api.updateSettings).toHaveBeenCalledWith(
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
+    expect(api.update设置).toHaveBeenCalledWith(
       expect.objectContaining({
         ghostwriterStopSlopEnabled: true,
       }),
@@ -752,9 +752,9 @@ describe("SettingsPage", () => {
   });
 
   it("enables save button when the authentication toggle is changed", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
     renderPage();
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
 
     await openEnvironmentSection();
     const authCheckbox = screen.getByLabelText(/enable authentication/i);
@@ -764,14 +764,14 @@ describe("SettingsPage", () => {
 
   it("wipes auth credentials when the toggle is disabled and saved", async () => {
     // Initial state: authentication is active
-    const activeSettings = {
-      ...baseSettings,
+    const active设置 = {
+      ...base设置,
       basicAuthActive: true,
       basicAuthUser: "admin",
-      basicAuthPasswordHint: "pass",
+      basicAuth密码Hint: "pass",
     };
-    vi.mocked(api.getSettings).mockResolvedValue(activeSettings);
-    vi.mocked(api.updateSettings).mockResolvedValue(baseSettings);
+    vi.mocked(api.get设置).mockResolvedValue(active设置);
+    vi.mocked(api.update设置).mockResolvedValue(base设置);
 
     renderPage();
 
@@ -784,24 +784,24 @@ describe("SettingsPage", () => {
     fireEvent.click(authCheckbox);
     expect(authCheckbox).not.toBeChecked();
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     expect(saveButton).toBeEnabled();
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
-    expect(api.updateSettings).toHaveBeenCalledWith(
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
+    expect(api.update设置).toHaveBeenCalledWith(
       expect.objectContaining({
         basicAuthUser: null,
-        basicAuthPassword: null,
+        basicAuth密码: null,
       }),
     );
   });
 
   it("saves blocked company keywords from scoring settings", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
-    vi.mocked(api.updateSettings).mockResolvedValue({
-      ...baseSettings,
-      blockedCompanyKeywords: {
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
+    vi.mocked(api.update设置).mockResolvedValue({
+      ...base设置,
+      blocked公司Keywords: {
         value: ["staffing"],
         default: [],
         override: ["staffing"],
@@ -816,22 +816,22 @@ describe("SettingsPage", () => {
     fireEvent.change(input, { target: { value: "staffing" } });
     fireEvent.keyDown(input, { key: "Enter" });
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
-    expect(api.updateSettings).toHaveBeenCalledWith(
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
+    expect(api.update设置).toHaveBeenCalledWith(
       expect.objectContaining({
-        blockedCompanyKeywords: ["staffing"],
+        blocked公司Keywords: ["staffing"],
       }),
     );
   });
 
   it("saves auto-skip score threshold from scoring settings", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
-    vi.mocked(api.updateSettings).mockResolvedValue({
-      ...baseSettings,
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
+    vi.mocked(api.update设置).mockResolvedValue({
+      ...base设置,
       autoSkipScoreThreshold: {
         value: 42,
         default: null,
@@ -846,12 +846,12 @@ describe("SettingsPage", () => {
     const input = screen.getByLabelText(/auto-skip score threshold/i);
     fireEvent.change(input, { target: { value: "42" } });
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
-    expect(api.updateSettings).toHaveBeenCalledWith(
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
+    expect(api.update设置).toHaveBeenCalledWith(
       expect.objectContaining({
         autoSkipScoreThreshold: 42,
       }),
@@ -859,8 +859,8 @@ describe("SettingsPage", () => {
   });
 
   it("sends null for both numeric limit fields on reset-to-default", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(
-      createAppSettings({
+    vi.mocked(api.get设置).mockResolvedValue(
+      createApp设置({
         chatStyleSummaryMaxWords: {
           value: 35,
           default: null,
@@ -873,7 +873,7 @@ describe("SettingsPage", () => {
         },
       }),
     );
-    vi.mocked(api.updateSettings).mockResolvedValue(baseSettings);
+    vi.mocked(api.update设置).mockResolvedValue(base设置);
 
     renderPage();
 
@@ -882,8 +882,8 @@ describe("SettingsPage", () => {
     });
     fireEvent.click(resetButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
-    expect(api.updateSettings).toHaveBeenCalledWith(
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
+    expect(api.update设置).toHaveBeenCalledWith(
       expect.objectContaining({
         chatStyleSummaryMaxWords: null,
         chatStyleMaxKeywordsPerSkill: null,
@@ -892,9 +892,9 @@ describe("SettingsPage", () => {
   });
 
   it("saves scoring instructions from scoring settings", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(baseSettings);
-    vi.mocked(api.updateSettings).mockResolvedValue({
-      ...baseSettings,
+    vi.mocked(api.get设置).mockResolvedValue(base设置);
+    vi.mocked(api.update设置).mockResolvedValue({
+      ...base设置,
       scoringInstructions: {
         value:
           "Open to relocating, so do not mark down for location discrepancies.",
@@ -916,12 +916,12 @@ describe("SettingsPage", () => {
       },
     });
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
-    expect(api.updateSettings).toHaveBeenCalledWith(
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
+    expect(api.update设置).toHaveBeenCalledWith(
       expect.objectContaining({
         scoringInstructions:
           "Open to relocating, so do not mark down for location discrepancies.",
@@ -930,8 +930,8 @@ describe("SettingsPage", () => {
   });
 
   it("serializes prompt templates back to null when reset to defaults", async () => {
-    vi.mocked(api.getSettings).mockResolvedValue(
-      createAppSettings({
+    vi.mocked(api.get设置).mockResolvedValue(
+      createApp设置({
         ghostwriterSystemPromptTemplate: {
           value: "Custom Ghostwriter",
           default: getDefaultPromptTemplate("ghostwriterSystemPromptTemplate"),
@@ -939,7 +939,7 @@ describe("SettingsPage", () => {
         },
       }),
     );
-    vi.mocked(api.updateSettings).mockResolvedValue(baseSettings);
+    vi.mocked(api.update设置).mockResolvedValue(base设置);
 
     renderPage();
 
@@ -947,12 +947,12 @@ describe("SettingsPage", () => {
 
     fireEvent.click(screen.getAllByRole("button", { name: /^reset$/i })[0]);
 
-    const saveButton = getSaveButton();
+    const saveButton = get保存Button();
     await waitFor(() => expect(saveButton).toBeEnabled());
     fireEvent.click(saveButton);
 
-    await waitFor(() => expect(api.updateSettings).toHaveBeenCalled());
-    expect(api.updateSettings).toHaveBeenCalledWith(
+    await waitFor(() => expect(api.update设置).toHaveBeenCalled());
+    expect(api.update设置).toHaveBeenCalledWith(
       expect.objectContaining({
         ghostwriterSystemPromptTemplate: null,
       }),

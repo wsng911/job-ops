@@ -1,5 +1,5 @@
 import { BaseResumeSelection } from "@client/pages/settings/components/BaseResumeSelection";
-import { SettingsInput } from "@client/pages/settings/components/SettingsInput";
+import { 设置Input } from "@client/pages/settings/components/设置Input";
 import type React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { ValidationState } from "../types";
@@ -32,14 +32,14 @@ export const RxResumeStep: React.FC<{
   rxresumeUrl,
   rxresumeValidation,
 }) => (
-  <div className="space-y-6">
-    <div className="space-y-5">
-      <div className="rounded-lg border border-border/60 bg-muted/10 px-4 py-3 text-sm text-muted-foreground">
+  <div class名称="space-y-6">
+    <div class名称="space-y-5">
+      <div class名称="rounded-lg border border-border/60 bg-muted/10 px-4 py-3 text-sm text-muted-foreground">
         Use Reactive Resume if your current resume already lives there. Once
         connected, choose one of your existing resumes to import into Job Ops.
       </div>
 
-      <SettingsInput
+      <设置Input
         label="v5 API key"
         inputProps={{
           name: "rxresumeApiKey",
@@ -57,10 +57,10 @@ export const RxResumeStep: React.FC<{
         disabled={isBusy}
       />
 
-      <div className="rounded-lg border border-border/60 bg-muted/10 px-4 py-3">
+      <div class名称="rounded-lg border border-border/60 bg-muted/10 px-4 py-3">
         <label
           htmlFor="rxresume-self-hosted"
-          className="flex cursor-pointer items-start gap-3"
+          class名称="flex cursor-pointer items-start gap-3"
         >
           <Checkbox
             id="rxresume-self-hosted"
@@ -68,11 +68,11 @@ export const RxResumeStep: React.FC<{
             onCheckedChange={(checked) => onSelfHostedChange(Boolean(checked))}
             disabled={isBusy}
           />
-          <div className="space-y-1">
-            <div className="text-sm font-medium">
+          <div class名称="space-y-1">
+            <div class名称="text-sm font-medium">
               Self-hosted Reactive Resume?
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p class名称="text-xs text-muted-foreground">
               Turn this on only if you run your own instance and need a custom
               base URL.
             </p>
@@ -81,7 +81,7 @@ export const RxResumeStep: React.FC<{
       </div>
 
       {isSelfHosted ? (
-        <SettingsInput
+        <设置Input
           label="Custom URL"
           inputProps={{
             name: "rxresumeUrl",
@@ -96,10 +96,10 @@ export const RxResumeStep: React.FC<{
       ) : null}
 
       {rxresumeValidation.valid ? (
-        <div className="space-y-3 rounded-lg border border-border/60 bg-background/70 p-4">
-          <div className="space-y-1">
-            <div className="text-sm font-medium">Template resume</div>
-            <p className="text-xs text-muted-foreground">
+        <div class名称="space-y-3 rounded-lg border border-border/60 bg-background/70 p-4">
+          <div class名称="space-y-1">
+            <div class名称="text-sm font-medium">Template resume</div>
+            <p class名称="text-xs text-muted-foreground">
               Choose the resume Job Ops should treat as your imported base
               resume for this onboarding step.
             </p>
@@ -111,7 +111,7 @@ export const RxResumeStep: React.FC<{
             disabled={isBusy}
           />
           {isResumeReady ? (
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               You already have a usable resume source, so this selection stays
               optional.
             </div>

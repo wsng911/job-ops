@@ -9,24 +9,24 @@ const Sheet = SheetPrimitive.Root;
 
 const SheetTrigger = SheetPrimitive.Trigger;
 
-const SheetClose = SheetPrimitive.Close;
+const Sheet关闭 = SheetPrimitive.关闭;
 
 const SheetPortal = SheetPrimitive.Portal;
 
 const SheetOverlay = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
->(({ className, ...props }, ref) => (
+>(({ class名称, ...props }, ref) => (
   <SheetPrimitive.Overlay
-    className={cn(
+    class名称={cn(
       "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-      className,
+      class名称,
     )}
     {...props}
     ref={ref}
   />
 ));
-SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
+SheetOverlay.display名称 = SheetPrimitive.Overlay.display名称;
 
 const sheetVariants = cva(
   "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out",
@@ -54,85 +54,85 @@ interface SheetContentProps
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ side = "right", className, children, ...props }, ref) => (
+>(({ side = "right", class名称, children, ...props }, ref) => (
   <SheetPortal>
     <SheetOverlay />
     <SheetPrimitive.Content
       ref={ref}
-      className={cn(sheetVariants({ side }), className)}
+      class名称={cn(sheetVariants({ side }), class名称)}
       {...props}
     >
-      <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-        <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
-      </SheetPrimitive.Close>
+      <SheetPrimitive.关闭 class名称="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+        <X class名称="h-4 w-4" />
+        <span class名称="sr-only">关闭</span>
+      </SheetPrimitive.关闭>
       {children}
     </SheetPrimitive.Content>
   </SheetPortal>
 ));
-SheetContent.displayName = SheetPrimitive.Content.displayName;
+SheetContent.display名称 = SheetPrimitive.Content.display名称;
 
 const SheetHeader = ({
-  className,
+  class名称,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn(
+    class名称={cn(
       "flex flex-col space-y-2 text-center sm:text-left",
-      className,
+      class名称,
     )}
     {...props}
   />
 );
-SheetHeader.displayName = "SheetHeader";
+SheetHeader.display名称 = "SheetHeader";
 
 const SheetFooter = ({
-  className,
+  class名称,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn(
+    class名称={cn(
       "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
-      className,
+      class名称,
     )}
     {...props}
   />
 );
-SheetFooter.displayName = "SheetFooter";
+SheetFooter.display名称 = "SheetFooter";
 
-const SheetTitle = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Title
+const Sheet标题 = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.标题>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.标题>
+>(({ class名称, ...props }, ref) => (
+  <SheetPrimitive.标题
     ref={ref}
-    className={cn("text-lg font-semibold text-foreground", className)}
+    class名称={cn("text-lg font-semibold text-foreground", class名称)}
     {...props}
   />
 ));
-SheetTitle.displayName = SheetPrimitive.Title.displayName;
+Sheet标题.display名称 = SheetPrimitive.标题.display名称;
 
-const SheetDescription = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Description
+const Sheet描述 = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.描述>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.描述>
+>(({ class名称, ...props }, ref) => (
+  <SheetPrimitive.描述
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    class名称={cn("text-sm text-muted-foreground", class名称)}
     {...props}
   />
 ));
-SheetDescription.displayName = SheetPrimitive.Description.displayName;
+Sheet描述.display名称 = SheetPrimitive.描述.display名称;
 
 export {
   Sheet,
   SheetPortal,
   SheetOverlay,
   SheetTrigger,
-  SheetClose,
+  Sheet关闭,
   SheetContent,
   SheetHeader,
   SheetFooter,
-  SheetTitle,
-  SheetDescription,
+  Sheet标题,
+  Sheet描述,
 };

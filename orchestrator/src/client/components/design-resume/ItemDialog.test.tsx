@@ -4,25 +4,25 @@ import { ItemDialog, type ItemFieldConfig } from "./ItemDialog";
 
 describe("ItemDialog", () => {
   it("uses tokenized input for tags fields", () => {
-    const onSave = vi.fn();
+    const on保存 = vi.fn();
     const fields: ItemFieldConfig[] = [
       {
         key: "keywords",
         label: "Keywords",
         type: "tags",
-        placeholder: "Add keywords",
+        placeholder: "添加 keywords",
       },
     ];
 
     render(
       <ItemDialog
         open
-        title="Edit item"
+        title="编辑 item"
         description="Dialog description"
         item={{ id: "item-1", keywords: ["React"] }}
         fields={fields}
         onOpenChange={vi.fn()}
-        onSave={onSave}
+        on保存={on保存}
       />,
     );
 
@@ -35,9 +35,9 @@ describe("ItemDialog", () => {
     fireEvent.change(input, { target: { value: "TypeScript, Next.js" } });
     fireEvent.blur(input);
 
-    fireEvent.click(screen.getByRole("button", { name: "Save item" }));
+    fireEvent.click(screen.getByRole("button", { name: "保存 item" }));
 
-    expect(onSave).toHaveBeenCalledWith(
+    expect(on保存).toHaveBeenCalledWith(
       expect.objectContaining({
         keywords: ["React", "TypeScript", "Next.js"],
       }),
@@ -45,29 +45,29 @@ describe("ItemDialog", () => {
   });
 
   it("trims text input values before saving", () => {
-    const onSave = vi.fn();
+    const on保存 = vi.fn();
     const fields: ItemFieldConfig[] = [
-      { key: "name", label: "Name", type: "text" },
+      { key: "name", label: "名称", type: "text" },
     ];
 
     render(
       <ItemDialog
         open
-        title="Edit item"
+        title="编辑 item"
         description="Dialog description"
         item={{ id: "item-2", name: "" }}
         fields={fields}
         onOpenChange={vi.fn()}
-        onSave={onSave}
+        on保存={on保存}
       />,
     );
 
-    fireEvent.change(screen.getByLabelText("Name"), {
+    fireEvent.change(screen.getByLabelText("名称"), {
       target: { value: "  Python  " },
     });
-    fireEvent.click(screen.getByRole("button", { name: "Save item" }));
+    fireEvent.click(screen.getByRole("button", { name: "保存 item" }));
 
-    expect(onSave).toHaveBeenCalledWith(
+    expect(on保存).toHaveBeenCalledWith(
       expect.objectContaining({
         name: "Python",
       }),

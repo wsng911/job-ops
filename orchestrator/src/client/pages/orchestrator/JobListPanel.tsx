@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import type { FilterTab } from "./constants";
 import {
   appliedDuplicateIndicator,
-  defaultStatusToken,
+  default状态Token,
   emptyStateCopy,
   statusTokens,
 } from "./constants";
@@ -76,10 +76,10 @@ export const JobListPanel = forwardRef<VirtualListHandle, JobListPanelProps>(
 
     if (isLoading && jobs.length === 0) {
       return (
-        <div className="min-w-0 rounded-xl border border-border bg-card shadow-sm">
-          <div className="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center">
-            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-            <div className="text-sm text-muted-foreground">Loading jobs...</div>
+        <div class名称="min-w-0 rounded-xl border border-border bg-card shadow-sm">
+          <div class名称="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center">
+            <Loader2 class名称="h-8 w-8 animate-spin text-muted-foreground" />
+            <div class名称="text-sm text-muted-foreground">Loading jobs...</div>
           </div>
         </div>
       );
@@ -87,14 +87,14 @@ export const JobListPanel = forwardRef<VirtualListHandle, JobListPanelProps>(
 
     if (activeJobs.length === 0) {
       return (
-        <div className="min-w-0 rounded-xl border border-border bg-card shadow-sm">
-          <div className="flex flex-col items-center justify-center gap-4 px-6 py-12 text-center">
-            <div className="text-base font-semibold">No jobs found</div>
-            <p className="max-w-md text-sm text-muted-foreground">
+        <div class名称="min-w-0 rounded-xl border border-border bg-card shadow-sm">
+          <div class名称="flex flex-col items-center justify-center gap-4 px-6 py-12 text-center">
+            <div class名称="text-base font-semibold">否 jobs found</div>
+            <p class名称="max-w-md text-sm text-muted-foreground">
               {emptyStateMessage ?? emptyStateCopy[activeTab]}
             </p>
             {(primaryEmptyStateAction || secondaryEmptyStateAction) && (
-              <div className="flex flex-col items-center justify-center gap-2 sm:flex-row">
+              <div class名称="flex flex-col items-center justify-center gap-2 sm:flex-row">
                 {primaryEmptyStateAction && (
                   <Button size="sm" onClick={primaryEmptyStateAction.onClick}>
                     {primaryEmptyStateAction.label}
@@ -119,12 +119,12 @@ export const JobListPanel = forwardRef<VirtualListHandle, JobListPanelProps>(
     const virtualItems = virtualizer.getVirtualItems();
 
     return (
-      <div className="min-w-0 rounded-xl border border-border bg-card shadow-sm">
-        <div className="divide-y divide-border/40">
-          <div className="flex items-center justify-between gap-3 px-4 py-2 opacity-100 transition-opacity sm:opacity-50 sm:hover:opacity-100">
+      <div class名称="min-w-0 rounded-xl border border-border bg-card shadow-sm">
+        <div class名称="divide-y divide-border/40">
+          <div class名称="flex items-center justify-between gap-3 px-4 py-2 opacity-100 transition-opacity sm:opacity-50 sm:hover:opacity-100">
             <label
               htmlFor="job-list-select-all"
-              className="flex items-center gap-2 text-xs text-muted-foreground"
+              class名称="flex items-center gap-2 text-xs text-muted-foreground"
             >
               <Checkbox
                 id="job-list-select-all"
@@ -142,12 +142,12 @@ export const JobListPanel = forwardRef<VirtualListHandle, JobListPanelProps>(
               />
               Select all filtered
             </label>
-            <span className="text-xs text-muted-foreground tabular-nums">
+            <span class名称="text-xs text-muted-foreground tabular-nums">
               {selectedJobIds.size} selected
             </span>
           </div>
           <div
-            className="relative"
+            class名称="relative"
             style={{
               height: `${virtualizer.getTotalSize()}px`,
             }}
@@ -159,11 +159,11 @@ export const JobListPanel = forwardRef<VirtualListHandle, JobListPanelProps>(
               const isSelected = job.id === selectedJobId;
               const isChecked = selectedJobIds.has(job.id);
               const statusToken =
-                statusTokens[job.status] ?? defaultStatusToken;
-              const statusDotClassName = job.appliedDuplicateMatch
+                statusTokens[job.status] ?? default状态Token;
+              const statusDotClass名称 = job.appliedDuplicateMatch
                 ? appliedDuplicateIndicator.dot
                 : statusToken.dot;
-              const statusDotTitle = job.appliedDuplicateMatch
+              const statusDot标题 = job.appliedDuplicateMatch
                 ? appliedDuplicateIndicator.label
                 : statusToken.label;
 
@@ -174,7 +174,7 @@ export const JobListPanel = forwardRef<VirtualListHandle, JobListPanelProps>(
                   data-index={virtualRow.index}
                   data-job-id={job.id}
                   data-virtual-row="true"
-                  className={cn(
+                  class名称={cn(
                     "group absolute left-0 top-0 flex w-full items-center gap-3 border-l-2 border-b px-4 py-3 transition-colors cursor-pointer",
                     isChecked
                       ? "!border-l !border-l-primary !bg-muted/40"
@@ -188,23 +188,23 @@ export const JobListPanel = forwardRef<VirtualListHandle, JobListPanelProps>(
                     transform: `translateY(${virtualRow.start}px)`,
                   }}
                 >
-                  <div className="relative h-4 w-4 shrink-0">
+                  <div class名称="relative h-4 w-4 shrink-0">
                     <span
-                      className={cn(
+                      class名称={cn(
                         "absolute inset-0 m-auto h-2 w-2 rounded-full transition-opacity duration-150 ease-out",
-                        statusDotClassName,
+                        statusDotClass名称,
                         isChecked || isSelected
                           ? "opacity-0"
                           : "opacity-100 group-hover:opacity-0",
                       )}
-                      title={statusDotTitle}
+                      title={statusDot标题}
                     />
                     <Checkbox
                       checked={isChecked}
                       onCheckedChange={() => onToggleSelectJob(job.id)}
                       onClick={(event) => event.stopPropagation()}
                       aria-label={`Select ${job.title}`}
-                      className={cn(
+                      class名称={cn(
                         "absolute inset-0 m-0 border-border/80 cursor-pointer text-muted-foreground/70 transition-opacity duration-150 ease-out",
                         "data-[state=checked]:border-primary data-[state=checked]:bg-primary/20 data-[state=checked]:text-primary",
                         "data-[state=checked]:shadow-[0_0_0_1px_hsl(var(--primary)/0.35)]",
@@ -218,13 +218,13 @@ export const JobListPanel = forwardRef<VirtualListHandle, JobListPanelProps>(
                     type="button"
                     onClick={() => onSelectJob(job.id)}
                     data-testid={`select-${job.id}`}
-                    className="flex min-w-0 flex-1 cursor-pointer text-left"
+                    class名称="flex min-w-0 flex-1 cursor-pointer text-left"
                     aria-pressed={isSelected}
                   >
                     <JobRowContent
                       job={job}
                       isSelected={isSelected}
-                      showStatusDot={false}
+                      show状态Dot={false}
                     />
                   </button>
                 </div>
@@ -237,4 +237,4 @@ export const JobListPanel = forwardRef<VirtualListHandle, JobListPanelProps>(
   },
 );
 
-JobListPanel.displayName = "JobListPanel";
+JobListPanel.display名称 = "JobListPanel";

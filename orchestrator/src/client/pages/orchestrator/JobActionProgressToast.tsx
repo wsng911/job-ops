@@ -19,9 +19,9 @@ export function JobActionProgressToast({
   const progressValue = Math.round((safeCompleted / safeRequested) * 100);
 
   return (
-    <div className="mt-2 w-full space-y-1.5">
-      <Progress value={progressValue} className="h-1.5 w-full" />
-      <p className="tabular-nums text-xs text-muted-foreground">
+    <div class名称="mt-2 w-full space-y-1.5">
+      <Progress value={progressValue} class名称="h-1.5 w-full" />
+      <p class名称="tabular-nums text-xs text-muted-foreground">
         {succeeded} succeeded, {failed} failed
       </p>
     </div>

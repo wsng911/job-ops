@@ -1,4 +1,4 @@
-import type { JobStatus } from "@shared/types.js";
+import type { Job状态 } from "@shared/types.js";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -6,17 +6,17 @@ import { Accordion } from "@/components/ui/accordion";
 import { DangerZoneSection } from "./DangerZoneSection";
 
 const DangerZoneHarness = ({
-  initialStatuses = [] as JobStatus[],
+  initial状态es = [] as Job状态[],
   onClear,
 }: {
-  initialStatuses?: JobStatus[];
+  initial状态es?: Job状态[];
   onClear?: () => void;
 }) => {
-  const [statusesToClear, setStatusesToClear] =
-    useState<JobStatus[]>(initialStatuses);
+  const [statusesToClear, set状态esToClear] =
+    useState<Job状态[]>(initial状态es);
 
-  const toggleStatusToClear = (status: JobStatus) => {
-    setStatusesToClear((prev) =>
+  const toggle状态ToClear = (status: Job状态) => {
+    set状态esToClear((prev) =>
       prev.includes(status)
         ? prev.filter((s) => s !== status)
         : [...prev, status],
@@ -27,8 +27,8 @@ const DangerZoneHarness = ({
     <Accordion type="multiple" defaultValue={["danger-zone"]}>
       <DangerZoneSection
         statusesToClear={statusesToClear}
-        toggleStatusToClear={toggleStatusToClear}
-        handleClearByStatuses={onClear ?? (() => {})}
+        toggle状态ToClear={toggle状态ToClear}
+        handleClearBy状态es={onClear ?? (() => {})}
         handleClearDatabase={() => {}}
         isLoading={false}
         isSaving={false}
@@ -39,7 +39,7 @@ const DangerZoneHarness = ({
 
 describe("DangerZoneSection", () => {
   it("disables clear when no statuses are selected", () => {
-    render(<DangerZoneHarness initialStatuses={[]} />);
+    render(<DangerZoneHarness initial状态es={[]} />);
 
     const clearButton = screen.getByRole("button", { name: /clear selected/i });
     expect(clearButton).toBeDisabled();
@@ -48,7 +48,7 @@ describe("DangerZoneSection", () => {
   it("toggles status selection and confirms clear", async () => {
     const onClear = vi.fn();
     render(
-      <DangerZoneHarness initialStatuses={["applied"]} onClear={onClear} />,
+      <DangerZoneHarness initial状态es={["applied"]} onClear={onClear} />,
     );
 
     const appliedButton = screen.getByRole("button", { name: /^applied\b/i });

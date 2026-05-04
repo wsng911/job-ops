@@ -1,10 +1,10 @@
 import { BaseResumeSelection } from "@client/pages/settings/components/BaseResumeSelection";
-import { SettingsInput } from "@client/pages/settings/components/SettingsInput";
+import { 设置Input } from "@client/pages/settings/components/设置Input";
 import {
   toggleAiSelectable,
   toggleMustInclude,
 } from "@client/pages/settings/resume-projects-state";
-import type { ResumeProjectsSettingsInput } from "@shared/settings-schema.js";
+import type { ResumeProjects设置Input } from "@shared/settings-schema.js";
 import {
   PDF_RENDERER_LABELS,
   type PdfRenderer,
@@ -12,7 +12,7 @@ import {
 } from "@shared/types.js";
 import { AlertCircle, AlertTriangle } from "lucide-react";
 import type React from "react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, Alert描述, Alert标题 } from "@/components/ui/alert";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import {
@@ -32,7 +32,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { clampInt } from "@/lib/utils";
-import { StatusIndicator } from "./StatusIndicator";
+import { 状态Indicator } from "./状态Indicator";
 
 type VersionValidationState = {
   checked: boolean;
@@ -45,8 +45,8 @@ type ProjectSelectionConfig = {
   baseResumeId: string | null;
   onBaseResumeIdChange: (value: string | null) => void;
   projects: ResumeProjectCatalogItem[];
-  value: ResumeProjectsSettingsInput | null | undefined;
-  onChange: (next: ResumeProjectsSettingsInput) => void;
+  value: ResumeProjects设置Input | null | undefined;
+  onChange: (next: ResumeProjects设置Input) => void;
   lockedCount: number;
   maxProjectsTotal: number;
   isProjectsLoading: boolean;
@@ -60,8 +60,8 @@ type ReactiveResumeConfigPanelProps = {
   pdfRendererError?: string;
   disabled?: boolean;
   hasRxResumeAccess?: boolean;
-  showValidationStatus?: boolean;
-  validationStatus?: VersionValidationState;
+  showValidation状态?: boolean;
+  validation状态?: VersionValidationState;
   intro?: {
     title: string;
     description?: string;
@@ -83,12 +83,12 @@ type ReactiveResumeConfigPanelProps = {
   projectSelection?: ProjectSelectionConfig;
 };
 
-function renderStatusPill(label: string, state: VersionValidationState) {
+function render状态Pill(label: string, state: VersionValidationState) {
   const statusLabel = state.checked
     ? state.valid
       ? "Connected"
       : "Failed"
-    : "Not tested";
+    : "否t tested";
   const dotColor = state.checked
     ? state.valid
       ? "bg-emerald-500"
@@ -96,7 +96,7 @@ function renderStatusPill(label: string, state: VersionValidationState) {
     : "bg-muted-foreground";
 
   return (
-    <StatusIndicator
+    <状态Indicator
       label={`${label}: ${statusLabel}`}
       dotColor={dotColor}
       tooltip={
@@ -121,8 +121,8 @@ export const ReactiveResumeConfigPanel: React.FC<
   pdfRendererError,
   disabled = false,
   hasRxResumeAccess = false,
-  showValidationStatus = false,
-  validationStatus,
+  showValidation状态 = false,
+  validation状态,
   intro,
   shared,
   v5,
@@ -131,31 +131,31 @@ export const ReactiveResumeConfigPanel: React.FC<
   const canShowProjectSelection = Boolean(
     projectSelection && hasRxResumeAccess,
   );
-  const selectedValidationStatus = validationStatus;
+  const selectedValidation状态 = validation状态;
   const showInlineValidationAlert = Boolean(
-    selectedValidationStatus?.checked &&
-      !selectedValidationStatus.valid &&
-      selectedValidationStatus.message,
+    selectedValidation状态?.checked &&
+      !selectedValidation状态.valid &&
+      selectedValidation状态.message,
   );
   const selectedValidationIsWarning =
     showInlineValidationAlert &&
-    isAvailabilityWarning(selectedValidationStatus);
+    isAvailabilityWarning(selectedValidation状态);
 
   const latexSelected = pdfRenderer === "latex";
 
   return (
-    <div className="space-y-4">
+    <div class名称="space-y-4">
       {intro ? (
         <div>
-          <p className="text-sm font-semibold">{intro.title}</p>
+          <p class名称="text-sm font-semibold">{intro.title}</p>
           {intro.description ? (
-            <p className="text-xs text-muted-foreground">{intro.description}</p>
+            <p class名称="text-xs text-muted-foreground">{intro.description}</p>
           ) : null}
         </div>
       ) : null}
 
-      <div className="space-y-2">
-        <label htmlFor="pdfRenderer" className="text-sm font-medium">
+      <div class名称="space-y-2">
+        <label htmlFor="pdfRenderer" class名称="text-sm font-medium">
           PDF renderer
         </label>
         <Select
@@ -176,43 +176,43 @@ export const ReactiveResumeConfigPanel: React.FC<
           </SelectContent>
         </Select>
         {pdfRendererError ? (
-          <p className="text-xs text-destructive">{pdfRendererError}</p>
+          <p class名称="text-xs text-destructive">{pdfRendererError}</p>
         ) : null}
-        <p className="text-xs text-muted-foreground">
+        <p class名称="text-xs text-muted-foreground">
           {latexSelected
             ? "LaTeX renders PDFs locally with Jake's template and requires tectonic on the JobOps host."
             : "RxResume export uses the upstream print/export endpoint for the final PDF."}
         </p>
       </div>
 
-      {showValidationStatus && selectedValidationStatus ? (
-        <div className="flex flex-wrap items-center gap-2 text-xs w-full justify-between">
-          {renderStatusPill("v5 status", selectedValidationStatus)}
+      {showValidation状态 && selectedValidation状态 ? (
+        <div class名称="flex flex-wrap items-center gap-2 text-xs w-full justify-between">
+          {render状态Pill("v5 status", selectedValidation状态)}
         </div>
       ) : null}
 
-      {showInlineValidationAlert && selectedValidationStatus?.message ? (
+      {showInlineValidationAlert && selectedValidation状态?.message ? (
         <Alert
           variant={selectedValidationIsWarning ? "warning" : "destructive"}
         >
           {selectedValidationIsWarning ? (
-            <AlertTriangle className="h-4 w-4" />
+            <AlertTriangle class名称="h-4 w-4" />
           ) : (
-            <AlertCircle className="h-4 w-4" />
+            <AlertCircle class名称="h-4 w-4" />
           )}
-          <AlertTitle>
+          <Alert标题>
             Reactive Resume API{" "}
             {selectedValidationIsWarning ? "warning" : "error"}
-          </AlertTitle>
-          <AlertDescription>
-            {selectedValidationStatus.message}
-          </AlertDescription>
+          </Alert标题>
+          <Alert描述>
+            {selectedValidation状态.message}
+          </Alert描述>
         </Alert>
       ) : null}
 
       {
-        <div className="grid gap-4">
-          <SettingsInput
+        <div class名称="grid gap-4">
+          <设置Input
             label="RxResume URL"
             inputProps={{
               name: "rxresumeUrl",
@@ -231,7 +231,7 @@ export const ReactiveResumeConfigPanel: React.FC<
             disabled={disabled}
             error={shared.baseUrlError}
           />
-          <SettingsInput
+          <设置Input
             label="v5 API key"
             inputProps={{
               name: "rxresumeApiKey",
@@ -252,12 +252,12 @@ export const ReactiveResumeConfigPanel: React.FC<
           <Separator />
 
           {!canShowProjectSelection ? (
-            <div className="rounded-md border border-dashed border-muted-foreground/40 bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
+            <div class名称="rounded-md border border-dashed border-muted-foreground/40 bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
               Connect Reactive Resume and choose a template resume to configure
               resume projects.
             </div>
           ) : (
-            <div className="space-y-4">
+            <div class名称="space-y-4">
               <BaseResumeSelection
                 value={projectSelection.baseResumeId}
                 onValueChange={projectSelection.onBaseResumeIdChange}
@@ -266,13 +266,13 @@ export const ReactiveResumeConfigPanel: React.FC<
               />
 
               {!projectSelection.baseResumeId ? (
-                <div className="rounded-md border border-dashed border-muted-foreground/40 bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
+                <div class名称="rounded-md border border-dashed border-muted-foreground/40 bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
                   Choose a PDF to configure resume projects.
                 </div>
               ) : (
                 <>
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium">
+                  <div class名称="space-y-2">
+                    <div class名称="text-sm font-medium">
                       Max projects to choose
                     </div>
                     <Input
@@ -301,7 +301,7 @@ export const ReactiveResumeConfigPanel: React.FC<
                       }
                     />
                     {projectSelection.maxProjectsError ? (
-                      <p className="text-xs text-destructive">
+                      <p class名称="text-xs text-destructive">
                         {projectSelection.maxProjectsError}
                       </p>
                     ) : null}
@@ -310,16 +310,16 @@ export const ReactiveResumeConfigPanel: React.FC<
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="text-xs whitespace-wrap sm:whitespace-nowrap">
+                        <TableHead class名称="text-xs whitespace-wrap sm:whitespace-nowrap">
                           Project
                         </TableHead>
-                        <TableHead className="text-xs whitespace-wrap sm:whitespace-nowrap">
+                        <TableHead class名称="text-xs whitespace-wrap sm:whitespace-nowrap">
                           Visible in template
                         </TableHead>
-                        <TableHead className="text-xs whitespace-wrap sm:whitespace-nowrap">
+                        <TableHead class名称="text-xs whitespace-wrap sm:whitespace-nowrap">
                           Must Include
                         </TableHead>
-                        <TableHead className="text-xs whitespace-wrap sm:whitespace-nowrap">
+                        <TableHead class名称="text-xs whitespace-wrap sm:whitespace-nowrap">
                           AI selectable
                         </TableHead>
                       </TableRow>
@@ -339,19 +339,19 @@ export const ReactiveResumeConfigPanel: React.FC<
                         return (
                           <TableRow key={project.id}>
                             <TableCell>
-                              <div className="space-y-0.5">
-                                <div className="font-medium">
+                              <div class名称="space-y-0.5">
+                                <div class名称="font-medium">
                                   {project.name}
                                 </div>
                                 {projectMeta ? (
-                                  <div className="text-xs text-muted-foreground">
+                                  <div class名称="text-xs text-muted-foreground">
                                     {projectMeta}
                                   </div>
                                 ) : null}
                               </div>
                             </TableCell>
                             <TableCell>
-                              {project.isVisibleInBase ? "Yes" : "No"}
+                              {project.isVisibleInBase ? "是" : "否"}
                             </TableCell>
                             <TableCell>
                               <Checkbox

@@ -4,7 +4,7 @@ import { useRescoreJobMutation } from "@/client/hooks/queries/useJobMutations";
 import { showErrorToast } from "@/client/lib/error-toast";
 import { trackProductEvent } from "@/lib/analytics";
 
-export function useRescoreJob(onJobUpdated: () => void | Promise<void>) {
+export function useRescoreJob(onJob更新d: () => void | Promise<void>) {
   const [isRescoring, setIsRescoring] = useState(false);
   const rescoreMutation = useRescoreJobMutation();
 
@@ -20,7 +20,7 @@ export function useRescoreJob(onJobUpdated: () => void | Promise<void>) {
           result: "success",
         });
         toast.success("Match recalculated");
-        await onJobUpdated();
+        await onJob更新d();
       } catch (error) {
         trackProductEvent("jobs_job_action_completed", {
           action: "rescore",
@@ -31,7 +31,7 @@ export function useRescoreJob(onJobUpdated: () => void | Promise<void>) {
         setIsRescoring(false);
       }
     },
-    [onJobUpdated, rescoreMutation],
+    [onJob更新d, rescoreMutation],
   );
 
   return { isRescoring, rescoreJob };

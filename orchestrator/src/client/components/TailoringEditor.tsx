@@ -2,28 +2,28 @@ import type { Job } from "@shared/types.js";
 import type React from "react";
 import { TailoringWorkspace } from "./tailoring/TailoringWorkspace";
 
-interface TailoringEditorProps {
+interface Tailoring编辑orProps {
   job: Job;
-  onUpdate: () => void | Promise<void>;
+  on更新: () => void | Promise<void>;
   onDirtyChange?: (isDirty: boolean) => void;
-  onRegisterSave?: (save: () => Promise<void>) => void;
+  onRegister保存?: (save: () => Promise<void>) => void;
   onBeforeGenerate?: () => boolean | Promise<boolean>;
 }
 
-export const TailoringEditor: React.FC<TailoringEditorProps> = ({
+export const Tailoring编辑or: React.FC<Tailoring编辑orProps> = ({
   job,
-  onUpdate,
+  on更新,
   onDirtyChange,
-  onRegisterSave,
+  onRegister保存,
   onBeforeGenerate,
 }) => {
   return (
     <TailoringWorkspace
       mode="editor"
       job={job}
-      onUpdate={onUpdate}
+      on更新={on更新}
       onDirtyChange={onDirtyChange}
-      onRegisterSave={onRegisterSave}
+      onRegister保存={onRegister保存}
       onBeforeGenerate={onBeforeGenerate}
     />
   );

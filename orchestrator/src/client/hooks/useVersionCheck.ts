@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { checkForUpdate, parseVersion } from "../lib/version";
+import { checkFor更新, parseVersion } from "../lib/version";
 
 declare const __APP_VERSION__: string;
 
@@ -22,7 +22,7 @@ export function useVersionCheck(): VersionState {
   useEffect(() => {
     let cancelled = false;
 
-    checkForUpdate().then((result) => {
+    checkFor更新().then((result) => {
       if (cancelled) return;
       setState({
         version: result.currentVersion,

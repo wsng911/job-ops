@@ -23,13 +23,13 @@ describe("ManualImportSheet", () => {
   });
 
   it("runs analyze -> review -> import on the happy path", async () => {
-    const rawDescription = "  Backend Engineer role in London.  ";
+    const raw描述 = "  返回end Engineer role in London.  ";
     const onOpenChange = vi.fn();
     const onImported = vi.fn().mockResolvedValue(undefined);
 
     vi.mocked(api.inferManualJob).mockResolvedValue({
       job: {
-        title: "Backend Engineer",
+        title: "返回end Engineer",
         employer: "Acme Labs",
         jobUrl: "https://example.com/jobs/backend-engineer",
         location: "London, UK",
@@ -49,19 +49,19 @@ describe("ManualImportSheet", () => {
       screen.getByPlaceholderText(
         "Paste the full job description here, or fetch it from a URL above...",
       ),
-      { target: { value: rawDescription } },
+      { target: { value: raw描述 } },
     );
     fireEvent.click(screen.getByRole("button", { name: /analyze jd/i }));
 
     const titleInput = await screen.findByPlaceholderText(
-      "e.g. Junior Backend Engineer",
+      "e.g. Junior 返回end Engineer",
     );
-    expect(titleInput).toHaveValue("Backend Engineer");
+    expect(titleInput).toHaveValue("返回end Engineer");
 
     const jdTextarea = screen.getByPlaceholderText(
       "Paste the job description...",
     ) as HTMLTextAreaElement;
-    expect(jdTextarea.value).toBe(rawDescription.trim());
+    expect(jdTextarea.value).toBe(raw描述.trim());
 
     fireEvent.change(screen.getByPlaceholderText("e.g. GBP 45k-55k"), {
       target: { value: "  120k  " },
@@ -72,12 +72,12 @@ describe("ManualImportSheet", () => {
     await waitFor(() => expect(api.importManualJob).toHaveBeenCalled());
     expect(api.importManualJob).toHaveBeenCalledWith({
       job: expect.objectContaining({
-        title: "Backend Engineer",
+        title: "返回end Engineer",
         employer: "Acme Labs",
         jobUrl: "https://example.com/jobs/backend-engineer",
         location: "London, UK",
         salary: "120k",
-        jobDescription: rawDescription.trim(),
+        job描述: raw描述.trim(),
       }),
     });
 
@@ -98,7 +98,7 @@ describe("ManualImportSheet", () => {
   });
 
   it("shows warnings and requires required fields before import", async () => {
-    const rawDescription = "Manual QA Engineer role.";
+    const raw描述 = "Manual QA Engineer role.";
 
     vi.mocked(api.inferManualJob).mockResolvedValue({
       job: {},
@@ -113,7 +113,7 @@ describe("ManualImportSheet", () => {
       screen.getByPlaceholderText(
         "Paste the full job description here, or fetch it from a URL above...",
       ),
-      { target: { value: rawDescription } },
+      { target: { value: raw描述 } },
     );
     fireEvent.click(screen.getByRole("button", { name: /analyze jd/i }));
 
@@ -123,7 +123,7 @@ describe("ManualImportSheet", () => {
     expect(importButton).toBeDisabled();
 
     fireEvent.change(
-      screen.getByPlaceholderText("e.g. Junior Backend Engineer"),
+      screen.getByPlaceholderText("e.g. Junior 返回end Engineer"),
       {
         target: { value: "QA Engineer" },
       },
@@ -142,9 +142,9 @@ describe("ManualImportSheet", () => {
   });
 
   it("returns to the paste step when inference fails", async () => {
-    const rawDescription = "Backend role description.";
+    const raw描述 = "返回end role description.";
 
-    vi.mocked(api.inferManualJob).mockRejectedValue(
+    vi.mocked(api.inferManualJob).mock已拒绝Value(
       new Error("Inference failed"),
     );
 
@@ -156,7 +156,7 @@ describe("ManualImportSheet", () => {
       screen.getByPlaceholderText(
         "Paste the full job description here, or fetch it from a URL above...",
       ),
-      { target: { value: rawDescription } },
+      { target: { value: raw描述 } },
     );
     fireEvent.click(screen.getByRole("button", { name: /analyze jd/i }));
 
@@ -165,19 +165,19 @@ describe("ManualImportSheet", () => {
       screen.getByRole("button", { name: /analyze jd/i }),
     ).toBeInTheDocument();
     expect(
-      screen.queryByPlaceholderText("e.g. Junior Backend Engineer"),
+      screen.queryByPlaceholderText("e.g. Junior 返回end Engineer"),
     ).not.toBeInTheDocument();
   });
 
   it("shows a toast error and keeps the sheet open when import fails", async () => {
     vi.mocked(api.inferManualJob).mockResolvedValue({
       job: {
-        title: "Backend Engineer",
+        title: "返回end Engineer",
         employer: "Acme Labs",
         jobUrl: "https://example.com/jobs/backend-engineer",
       },
     });
-    vi.mocked(api.importManualJob).mockRejectedValue(
+    vi.mocked(api.importManualJob).mock已拒绝Value(
       new Error("Import failed"),
     );
 
@@ -195,11 +195,11 @@ describe("ManualImportSheet", () => {
       screen.getByPlaceholderText(
         "Paste the full job description here, or fetch it from a URL above...",
       ),
-      { target: { value: "Backend Engineer role." } },
+      { target: { value: "返回end Engineer role." } },
     );
     fireEvent.click(screen.getByRole("button", { name: /analyze jd/i }));
 
-    await screen.findByPlaceholderText("e.g. Junior Backend Engineer");
+    await screen.findByPlaceholderText("e.g. Junior 返回end Engineer");
 
     fireEvent.click(screen.getByRole("button", { name: /import job/i }));
 
@@ -272,7 +272,7 @@ describe("ManualImportSheet", () => {
         ),
       ).toHaveValue("Software Engineer role at Acme Corp");
       expect(
-        screen.queryByPlaceholderText("e.g. Junior Backend Engineer"),
+        screen.queryByPlaceholderText("e.g. Junior 返回end Engineer"),
       ).not.toBeInTheDocument();
     });
 
@@ -284,7 +284,7 @@ describe("ManualImportSheet", () => {
       vi.mocked(api.inferManualJob).mockResolvedValue({
         job: {
           title: "Engineer",
-          employer: "Company",
+          employer: "公司",
         },
       });
 
@@ -303,7 +303,7 @@ describe("ManualImportSheet", () => {
       );
       fireEvent.click(screen.getByRole("button", { name: /analyze jd/i }));
 
-      await screen.findByPlaceholderText("e.g. Junior Backend Engineer");
+      await screen.findByPlaceholderText("e.g. Junior 返回end Engineer");
 
       // Check the job URL field has the fetched URL (first https://... input is Job URL)
       const urlInputs = screen.getAllByPlaceholderText("https://...");
@@ -321,7 +321,7 @@ describe("ManualImportSheet", () => {
         job: {
           title: "Software Engineer",
           employer: "Acme Corp",
-          jobDescription: "Great opportunity to join our team.",
+          job描述: "Great opportunity to join our team.",
         },
       });
       vi.mocked(api.importManualJob).mockResolvedValue({ id: "job-2" } as any);
@@ -345,7 +345,7 @@ describe("ManualImportSheet", () => {
       );
       fireEvent.click(screen.getByRole("button", { name: /analyze jd/i }));
 
-      await screen.findByPlaceholderText("e.g. Junior Backend Engineer");
+      await screen.findByPlaceholderText("e.g. Junior 返回end Engineer");
       fireEvent.click(screen.getByRole("button", { name: /import job/i }));
 
       await waitFor(() =>
@@ -358,7 +358,7 @@ describe("ManualImportSheet", () => {
     });
 
     it("shows error and returns to paste step when fetch fails", async () => {
-      vi.mocked(api.fetchJobFromUrl).mockRejectedValue(
+      vi.mocked(api.fetchJobFromUrl).mock已拒绝Value(
         new Error(
           "Couldn't fetch this URL automatically. Paste the job description manually.",
         ),
@@ -408,7 +408,7 @@ describe("ManualImportSheet", () => {
         content: "Job content",
         url: "https://example.com/job",
       });
-      vi.mocked(api.inferManualJob).mockRejectedValue(
+      vi.mocked(api.inferManualJob).mock已拒绝Value(
         new Error("Inference failed"),
       );
 

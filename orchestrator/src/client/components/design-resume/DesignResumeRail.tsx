@@ -13,12 +13,12 @@ import { asArray, asRecord, setByPath } from "./utils";
 
 type DesignResumeRailProps = {
   draft: DesignResumeDocument;
-  onUpdateResumeJson: (
+  on更新ResumeJson: (
     updater: (resumeJson: DesignResumeJson) => DesignResumeJson,
   ) => void;
   onOpenDialog: (definition: ItemDefinition, index: number | null) => void;
   onUploadPicture: () => void;
-  onDeletePicture: () => void;
+  on删除Picture: () => void;
   pictureUploading: boolean;
   pictureEnabled: boolean;
   pictureDisabledReason?: string | null;
@@ -26,10 +26,10 @@ type DesignResumeRailProps = {
 
 export function DesignResumeRail({
   draft,
-  onUpdateResumeJson,
+  on更新ResumeJson,
   onOpenDialog,
   onUploadPicture,
-  onDeletePicture,
+  on删除Picture,
   pictureUploading,
   pictureEnabled,
   pictureDisabledReason,
@@ -54,7 +54,7 @@ export function DesignResumeRail({
   >[];
 
   const updateBasics = (path: string, value: unknown) => {
-    onUpdateResumeJson((current) => {
+    on更新ResumeJson((current) => {
       const next = structuredClone(current);
       const currentBasics = (asRecord(next.basics) ?? {}) as Record<
         string,
@@ -70,7 +70,7 @@ export function DesignResumeRail({
   };
 
   const updatePicture = (key: string, value: unknown) => {
-    onUpdateResumeJson((current) => {
+    on更新ResumeJson((current) => {
       const next = structuredClone(current);
       const currentPicture = (asRecord(next.picture) ?? {}) as Record<
         string,
@@ -85,7 +85,7 @@ export function DesignResumeRail({
   };
 
   const updateSummary = (key: string, value: unknown) => {
-    onUpdateResumeJson((current) => {
+    on更新ResumeJson((current) => {
       const next = structuredClone(current);
       const currentSummary = (asRecord(next.summary) ?? {}) as Record<
         string,
@@ -100,7 +100,7 @@ export function DesignResumeRail({
   };
 
   const updateCustomFields = (nextFields: Record<string, unknown>[]) => {
-    onUpdateResumeJson((current) => {
+    on更新ResumeJson((current) => {
       const next = structuredClone(current);
       const currentBasics = (asRecord(next.basics) ?? {}) as Record<
         string,
@@ -118,7 +118,7 @@ export function DesignResumeRail({
     sectionKey: string,
     nextItems: Record<string, unknown>[],
   ) => {
-    onUpdateResumeJson((current) => {
+    on更新ResumeJson((current) => {
       const next = structuredClone(current);
       const currentSections = (asRecord(next.sections) ?? {}) as Record<
         string,
@@ -138,7 +138,7 @@ export function DesignResumeRail({
   };
 
   return (
-    <Accordion type="multiple" defaultValue={[]} className="space-y-3">
+    <Accordion type="multiple" defaultValue={[]} class名称="space-y-3">
       <DesignResumeSection
         value="picture"
         title="Picture"
@@ -150,23 +150,23 @@ export function DesignResumeRail({
           pictureEnabled={pictureEnabled}
           pictureDisabledReason={pictureDisabledReason}
           onUploadPicture={onUploadPicture}
-          onDeletePicture={onDeletePicture}
-          onUpdatePicture={updatePicture}
+          on删除Picture={on删除Picture}
+          on更新Picture={updatePicture}
         />
       </DesignResumeSection>
 
       <DesignResumeSection
         value="basics"
         title="Basics"
-        subtitle="Edit your name, headline, and contact details."
+        subtitle="编辑 your name, headline, and contact details."
       >
-        <BasicsSection basics={basics} onUpdateBasics={updateBasics} />
+        <BasicsSection basics={basics} on更新Basics={updateBasics} />
       </DesignResumeSection>
 
       <DesignResumeSection
         value="basics-custom-fields"
         title="Basics Custom Fields"
-        subtitle="Add extra links or short details near your contact info."
+        subtitle="添加 extra links or short details near your contact info."
         badge={customFields.length === 0 ? "Empty" : `${customFields.length}`}
       >
         <BasicsCustomFieldsSection
@@ -180,7 +180,7 @@ export function DesignResumeRail({
         title="Summary"
         subtitle="Write the short intro that appears near the top of your resume."
       >
-        <SummarySection summary={summary} onUpdateSummary={updateSummary} />
+        <SummarySection summary={summary} on更新Summary={updateSummary} />
       </DesignResumeSection>
 
       {ITEM_DEFINITIONS.map((definition) => {
@@ -197,9 +197,9 @@ export function DesignResumeRail({
             key={definition.key}
             definition={definition}
             items={items}
-            onAdd={() => onOpenDialog(definition, null)}
-            onEdit={(index) => onOpenDialog(definition, index)}
-            onUpdateItems={(nextItems) =>
+            on添加={() => onOpenDialog(definition, null)}
+            on编辑={(index) => onOpenDialog(definition, index)}
+            on更新Items={(nextItems) =>
               updateSectionItems(definition.key, nextItems)
             }
           />

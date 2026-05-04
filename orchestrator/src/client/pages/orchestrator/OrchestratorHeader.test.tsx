@@ -6,17 +6,17 @@ import { describe, expect, it, vi } from "vitest";
 import { OrchestratorHeader } from "./OrchestratorHeader";
 
 vi.mock("@/components/ui/sheet", () => ({
-  Sheet: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  SheetTrigger: ({ children }: { children: React.ReactNode }) => (
+  Sheet: ({ children }: { children: React.React否de }) => <div>{children}</div>,
+  SheetTrigger: ({ children }: { children: React.React否de }) => (
     <div>{children}</div>
   ),
-  SheetContent: ({ children }: { children: React.ReactNode }) => (
+  SheetContent: ({ children }: { children: React.React否de }) => (
     <div>{children}</div>
   ),
-  SheetHeader: ({ children }: { children: React.ReactNode }) => (
+  SheetHeader: ({ children }: { children: React.React否de }) => (
     <div>{children}</div>
   ),
-  SheetTitle: ({ children }: { children: React.ReactNode }) => (
+  Sheet标题: ({ children }: { children: React.React否de }) => (
     <div>{children}</div>
   ),
 }));
@@ -28,10 +28,10 @@ const renderHeader = (
     navOpen: false,
     onNavOpenChange: vi.fn(),
     isPipelineRunning: false,
-    isCancelling: false,
+    is取消ling: false,
     pipelineSources: ["gradcracker"],
     onOpenAutomaticRun: vi.fn(),
-    onCancelPipeline: vi.fn(),
+    on取消Pipeline: vi.fn(),
     ...overrides,
   };
 
@@ -62,6 +62,6 @@ describe("OrchestratorHeader", () => {
   it("renders cancel button while running and triggers cancel", () => {
     const { props } = renderHeader({ isPipelineRunning: true });
     fireEvent.click(screen.getByRole("button", { name: /cancel run/i }));
-    expect(props.onCancelPipeline).toHaveBeenCalled();
+    expect(props.on取消Pipeline).toHaveBeenCalled();
   });
 });

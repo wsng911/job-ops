@@ -1,6 +1,6 @@
 import type { JobSource } from "@shared/types.js";
 import { useCallback, useEffect, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { use搜索Params } from "react-router-dom";
 import type {
   DateFilterDimension,
   DateFilterPreset,
@@ -60,24 +60,24 @@ const parseDateDimensions = (value: string | null): DateFilterDimension[] => {
 };
 
 export const useOrchestratorFilters = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, set搜索Params] = use搜索Params();
 
   useEffect(() => {
     if (!searchParams.has("q")) return;
-    setSearchParams(
+    set搜索Params(
       (prev) => {
         prev.delete("q");
         return prev;
       },
       { replace: true },
     );
-  }, [searchParams, setSearchParams]);
+  }, [searchParams, set搜索Params]);
 
   const sourceFilter =
     (searchParams.get("source") as JobSource | "all") || "all";
   const setSourceFilter = useCallback(
     (source: JobSource | "all") => {
-      setSearchParams(
+      set搜索Params(
         (prev) => {
           if (source !== "all") prev.set("source", source);
           else prev.delete("source");
@@ -86,7 +86,7 @@ export const useOrchestratorFilters = () => {
         { replace: true },
       );
     },
-    [setSearchParams],
+    [set搜索Params],
   );
 
   const sponsorFilter = useMemo((): SponsorFilter => {
@@ -98,7 +98,7 @@ export const useOrchestratorFilters = () => {
 
   const setSponsorFilter = useCallback(
     (value: SponsorFilter) => {
-      setSearchParams(
+      set搜索Params(
         (prev) => {
           if (value === "all") prev.delete("sponsor");
           else prev.set("sponsor", value);
@@ -107,7 +107,7 @@ export const useOrchestratorFilters = () => {
         { replace: true },
       );
     },
-    [setSearchParams],
+    [set搜索Params],
   );
 
   const salaryFilter = useMemo((): SalaryFilter => {
@@ -130,7 +130,7 @@ export const useOrchestratorFilters = () => {
 
   const setSalaryFilter = useCallback(
     (value: SalaryFilter) => {
-      setSearchParams(
+      set搜索Params(
         (prev) => {
           if (value.mode === "at_least") prev.delete("salaryMode");
           else prev.set("salaryMode", value.mode);
@@ -147,7 +147,7 @@ export const useOrchestratorFilters = () => {
         { replace: true },
       );
     },
-    [setSearchParams],
+    [set搜索Params],
   );
 
   const sort = useMemo((): JobSort => {
@@ -193,7 +193,7 @@ export const useOrchestratorFilters = () => {
 
   const setSort = useCallback(
     (newSort: JobSort) => {
-      setSearchParams(
+      set搜索Params(
         (prev) => {
           if (
             newSort.key === DEFAULT_SORT.key &&
@@ -208,12 +208,12 @@ export const useOrchestratorFilters = () => {
         { replace: true },
       );
     },
-    [setSearchParams],
+    [set搜索Params],
   );
 
   const setDateFilter = useCallback(
     (value: JobDateFilter) => {
-      setSearchParams(
+      set搜索Params(
         (prev) => {
           if (value.dimensions.length === 0) prev.delete("date");
           else prev.set("date", value.dimensions.join(","));
@@ -232,11 +232,11 @@ export const useOrchestratorFilters = () => {
         { replace: true },
       );
     },
-    [setSearchParams],
+    [set搜索Params],
   );
 
   const resetFilters = useCallback(() => {
-    setSearchParams(
+    set搜索Params(
       (prev) => {
         prev.delete("source");
         prev.delete("sponsor");
@@ -253,7 +253,7 @@ export const useOrchestratorFilters = () => {
       },
       { replace: true },
     );
-  }, [setSearchParams]);
+  }, [set搜索Params]);
 
   return {
     searchParams,

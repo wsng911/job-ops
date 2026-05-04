@@ -71,18 +71,18 @@ export const BaseResumeSelection: React.FC<BaseResumeSelectionProps> = ({
   }, [hasRxResumeAccess]);
 
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between">
-        <div className="text-sm font-medium">Template Resume</div>
+    <div class名称="space-y-2">
+      <div class名称="flex items-center justify-between">
+        <div class名称="text-sm font-medium">Template Resume</div>
         <Button
           variant="ghost"
           size="sm"
           onClick={fetchResumes}
           disabled={isFetchingResumes || isLoading || disabled}
-          className="h-8 px-2"
+          class名称="h-8 px-2"
         >
           <RefreshCw
-            className={`h-3 w-3 mr-1 ${isFetchingResumes ? "animate-spin" : ""}`}
+            class名称={`h-3 w-3 mr-1 ${isFetchingResumes ? "animate-spin" : ""}`}
           />
           Refresh
         </Button>
@@ -98,7 +98,7 @@ export const BaseResumeSelection: React.FC<BaseResumeSelectionProps> = ({
             placeholder={
               resumes.length > 0
                 ? "Select a template resume..."
-                : "No resumes found"
+                : "否 resumes found"
             }
           />
         </SelectTrigger>
@@ -112,13 +112,13 @@ export const BaseResumeSelection: React.FC<BaseResumeSelectionProps> = ({
       </Select>
 
       {resumes.length === 0 && !isFetchingResumes && !fetchError && (
-        <div className="text-xs text-amber-600 dark:text-amber-400 mt-2">
-          No resumes found in your account. Please create a resume on the{" "}
+        <div class名称="text-xs text-amber-600 dark:text-amber-400 mt-2">
+          否 resumes found in your account. Please create a resume on the{" "}
           <a
             href="https://rxresu.me"
             target="_blank"
             rel="noreferrer"
-            className="font-semibold underline underline-offset-2"
+            class名称="font-semibold underline underline-offset-2"
           >
             Reactive Resume website
           </a>{" "}
@@ -127,7 +127,7 @@ export const BaseResumeSelection: React.FC<BaseResumeSelectionProps> = ({
       )}
 
       {fetchError && (
-        <div className="text-xs text-destructive mt-1">{fetchError}</div>
+        <div class名称="text-xs text-destructive mt-1">{fetchError}</div>
       )}
     </div>
   );

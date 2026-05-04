@@ -5,7 +5,7 @@ interface CollapsibleSectionProps {
   isOpen: boolean;
   label: string;
   onToggle: () => void;
-  children: React.ReactNode;
+  children: React.React否de;
 }
 
 export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
@@ -15,16 +15,16 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   children,
 }) => {
   return (
-    <div className="space-y-2">
+    <div class名称="space-y-2">
       <button
         type="button"
         onClick={onToggle}
-        className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors w-full"
+        class名称="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors w-full"
       >
         {isOpen ? (
-          <ChevronUp className="h-3.5 w-3.5" />
+          <ChevronUp class名称="h-3.5 w-3.5" />
         ) : (
-          <ChevronDown className="h-3.5 w-3.5" />
+          <ChevronDown class名称="h-3.5 w-3.5" />
         )}
         {label}
       </button>

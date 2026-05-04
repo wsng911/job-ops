@@ -43,10 +43,10 @@ const sortByRecent = (a: BoardCard, b: BoardCard) => {
   return Date.parse(b.job.discoveredAt) - Date.parse(a.job.discoveredAt);
 };
 
-const sortByTitle = (a: BoardCard, b: BoardCard) =>
+const sortBy标题 = (a: BoardCard, b: BoardCard) =>
   a.job.title.localeCompare(b.job.title);
 
-const sortByCompany = (a: BoardCard, b: BoardCard) =>
+const sortBy公司 = (a: BoardCard, b: BoardCard) =>
   a.job.employer.localeCompare(b.job.employer);
 
 const BOARD_STAGES = APPLICATION_STAGES.filter(
@@ -84,7 +84,7 @@ export const InProgressBoardPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const jobPageLinkState = React.useMemo(
-    () => ({ jobPageBackTo: `${location.pathname}${location.search}` }),
+    () => ({ jobPage返回To: `${location.pathname}${location.search}` }),
     [location.pathname, location.search],
   );
 
@@ -155,9 +155,9 @@ export const InProgressBoardPage: React.FC = () => {
   const lanes = React.useMemo(() => {
     const sortFn =
       sortMode === "title"
-        ? sortByTitle
+        ? sortBy标题
         : sortMode === "company"
-          ? sortByCompany
+          ? sortBy公司
           : sortByRecent;
 
     const grouped: Record<BoardStage, BoardCard[]> = {
@@ -234,42 +234,42 @@ export const InProgressBoardPage: React.FC = () => {
         title="In Progress Board"
         subtitle="Kanban view of application stages"
         actions={
-          <div className="flex flex-wrap items-center justify-end gap-2">
+          <div class名称="flex flex-wrap items-center justify-end gap-2">
             <Select
               value={sortMode}
               onValueChange={(value) =>
                 setSortMode(value as "updated" | "title" | "company")
               }
             >
-              <SelectTrigger className="h-8 w-[132px] text-xs">
-                <ArrowDownAZ className="mr-1.5 h-3.5 w-3.5" />
+              <SelectTrigger class名称="h-8 w-[132px] text-xs">
+                <ArrowDownAZ class名称="mr-1.5 h-3.5 w-3.5" />
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="updated">Recent</SelectItem>
-                <SelectItem value="title">Title</SelectItem>
-                <SelectItem value="company">Company</SelectItem>
+                <SelectItem value="title">标题</SelectItem>
+                <SelectItem value="company">公司</SelectItem>
               </SelectContent>
             </Select>
             <Button
               size="sm"
-              className="h-8 gap-1.5 text-xs"
+              class名称="h-8 gap-1.5 text-xs"
               onClick={() => navigate("/jobs/ready")}
             >
-              <Plus className="h-3.5 w-3.5" />
-              Add
+              <Plus class名称="h-3.5 w-3.5" />
+              添加
             </Button>
           </div>
         }
       />
-      <PageMain className="max-w-[1600px]">
+      <PageMain class名称="max-w-[1600px]">
         {isLoading ? (
-          <div className="rounded-lg border border-dashed border-border/60 p-6 text-sm text-muted-foreground">
+          <div class名称="rounded-lg border border-dashed border-border/60 p-6 text-sm text-muted-foreground">
             Loading board...
           </div>
         ) : (
-          <div className="overflow-x-auto pb-2">
-            <div className="flex min-w-max items-start gap-4">
+          <div class名称="overflow-x-auto pb-2">
+            <div class名称="flex min-w-max items-start gap-4">
               {BOARD_STAGES.map((stage) => {
                 const laneCards = lanes[stage];
                 return (
@@ -290,31 +290,31 @@ export const InProgressBoardPage: React.FC = () => {
                         setDropTargetStage(null);
                       }
                     }}
-                    className={cn(
+                    class名称={cn(
                       "w-[320px] self-start rounded-xl border border-border/70 bg-muted/30 shadow-[0_10px_24px_-20px_rgba(0,0,0,0.8)] transition-colors",
                       dropTargetStage === stage &&
                         "border-sky-400/70 bg-sky-500/15",
                     )}
                   >
                     <header
-                      className={
+                      class名称={
                         "flex items-center justify-between border-b border-border/60 px-3 py-2.5"
                       }
                     >
-                      <h2 className="text-xs font-semibold tracking-[0.03em] text-foreground/90 uppercase">
+                      <h2 class名称="text-xs font-semibold tracking-[0.03em] text-foreground/90 uppercase">
                         {STAGE_LABELS[stage]}
                       </h2>
                       <Badge
                         variant="outline"
-                        className="tabular-nums border-border/50 bg-transparent text-foreground/70"
+                        class名称="tabular-nums border-border/50 bg-transparent text-foreground/70"
                       >
                         {laneCards.length}
                       </Badge>
                     </header>
 
-                    <div className="max-h-[calc(100vh-15rem)] space-y-2 overflow-y-auto p-2.5">
+                    <div class名称="max-h-[calc(100vh-15rem)] space-y-2 overflow-y-auto p-2.5">
                       {laneCards.length === 0 ? (
-                        <div className="rounded-md border border-dashed border-border/35 bg-background/20 px-2.5 py-2 text-[11px] text-muted-foreground/80">
+                        <div class名称="rounded-md border border-dashed border-border/35 bg-background/20 px-2.5 py-2 text-[11px] text-muted-foreground/80">
                           Drop a card here or log a stage.
                         </div>
                       ) : (
@@ -332,44 +332,44 @@ export const InProgressBoardPage: React.FC = () => {
                               setDragging(null);
                               setDropTargetStage(null);
                             }}
-                            className={cn(
+                            class名称={cn(
                               "block rounded-lg border border-border/60 bg-background/95 p-3 shadow-[0_8px_20px_-18px_rgba(0,0,0,1)] transition-colors",
                               "hover:border-border hover:bg-background hover:shadow-[0_12px_24px_-16px_rgba(0,0,0,1)]",
                               getCardLeftAccentClass(stage),
                               movingJobId === job.id && "opacity-70",
                             )}
                           >
-                            <div className="mb-2 flex items-start justify-between gap-2">
-                              <div className="line-clamp-2 text-sm font-semibold leading-snug text-foreground">
+                            <div class名称="mb-2 flex items-start justify-between gap-2">
+                              <div class名称="line-clamp-2 text-sm font-semibold leading-snug text-foreground">
                                 {job.title}
                               </div>
-                              <ExternalLink className="mt-0.5 h-3.5 w-3.5 text-muted-foreground" />
+                              <ExternalLink class名称="mt-0.5 h-3.5 w-3.5 text-muted-foreground" />
                             </div>
-                            <div className="text-xs text-muted-foreground/90">
+                            <div class名称="text-xs text-muted-foreground/90">
                               {job.employer}
                             </div>
                             {stage === "closed" && (
-                              <div className="mt-2 flex items-center gap-2">
+                              <div class名称="mt-2 flex items-center gap-2">
                                 <Badge
                                   variant="outline"
-                                  className="border-border/60 bg-muted/30 text-foreground/80"
+                                  class名称="border-border/60 bg-muted/30 text-foreground/80"
                                 >
-                                  Closed
+                                  关闭d
                                 </Badge>
                                 {job.outcome ? (
                                   <Badge
                                     variant="outline"
-                                    className="capitalize"
+                                    class名称="capitalize"
                                   >
                                     {job.outcome.replaceAll("_", " ")}
                                   </Badge>
                                 ) : null}
                               </div>
                             )}
-                            <div className="mt-2 text-[11px] text-muted-foreground/70">
+                            <div class名称="mt-2 text-[11px] text-muted-foreground/70">
                               {latestEventAt != null
-                                ? `Updated ${formatTimestamp(latestEventAt)}`
-                                : "No stage events yet"}
+                                ? `更新d ${formatTimestamp(latestEventAt)}`
+                                : "否 stage events yet"}
                             </div>
                           </Link>
                         ))

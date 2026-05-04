@@ -4,113 +4,113 @@ import { Drawer as DrawerPrimitive } from "vaul";
 import { cn } from "@/lib/utils";
 
 const Drawer = ({
-  shouldScaleBackground = true,
+  shouldScale返回ground = true,
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
   <DrawerPrimitive.Root
-    shouldScaleBackground={shouldScaleBackground}
+    shouldScale返回ground={shouldScale返回ground}
     {...props}
   />
 );
-Drawer.displayName = "Drawer";
+Drawer.display名称 = "Drawer";
 
 const DrawerTrigger = DrawerPrimitive.Trigger;
 
 const DrawerPortal = DrawerPrimitive.Portal;
 
-const DrawerClose = DrawerPrimitive.Close;
+const Drawer关闭 = DrawerPrimitive.关闭;
 
 const DrawerOverlay = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
->(({ className, ...props }, ref) => (
+>(({ class名称, ...props }, ref) => (
   <DrawerPrimitive.Overlay
     ref={ref}
-    className={cn("fixed inset-0 z-50 bg-black/80", className)}
+    class名称={cn("fixed inset-0 z-50 bg-black/80", class名称)}
     {...props}
   />
 ));
-DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
+DrawerOverlay.display名称 = DrawerPrimitive.Overlay.display名称;
 
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
->(({ className, children, ...props }, ref) => (
+>(({ class名称, children, ...props }, ref) => (
   <DrawerPortal>
     <DrawerOverlay />
     <DrawerPrimitive.Content
       ref={ref}
-      className={cn(
+      class名称={cn(
         "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background",
-        className,
+        class名称,
       )}
       {...props}
     >
-      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+      <div class名称="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>
 ));
-DrawerContent.displayName = "DrawerContent";
+DrawerContent.display名称 = "DrawerContent";
 
 const DrawerHeader = ({
-  className,
+  class名称,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn("grid gap-1.5 p-4 text-center sm:text-left", className)}
+    class名称={cn("grid gap-1.5 p-4 text-center sm:text-left", class名称)}
     {...props}
   />
 );
-DrawerHeader.displayName = "DrawerHeader";
+DrawerHeader.display名称 = "DrawerHeader";
 
 const DrawerFooter = ({
-  className,
+  class名称,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn("mt-auto flex flex-col gap-2 p-4", className)}
+    class名称={cn("mt-auto flex flex-col gap-2 p-4", class名称)}
     {...props}
   />
 );
-DrawerFooter.displayName = "DrawerFooter";
+DrawerFooter.display名称 = "DrawerFooter";
 
-const DrawerTitle = React.forwardRef<
-  React.ElementRef<typeof DrawerPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
->(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Title
+const Drawer标题 = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.标题>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.标题>
+>(({ class名称, ...props }, ref) => (
+  <DrawerPrimitive.标题
     ref={ref}
-    className={cn(
+    class名称={cn(
       "text-lg font-semibold leading-none tracking-tight",
-      className,
+      class名称,
     )}
     {...props}
   />
 ));
-DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
+Drawer标题.display名称 = DrawerPrimitive.标题.display名称;
 
-const DrawerDescription = React.forwardRef<
-  React.ElementRef<typeof DrawerPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>
->(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Description
+const Drawer描述 = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.描述>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.描述>
+>(({ class名称, ...props }, ref) => (
+  <DrawerPrimitive.描述
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    class名称={cn("text-sm text-muted-foreground", class名称)}
     {...props}
   />
 ));
-DrawerDescription.displayName = DrawerPrimitive.Description.displayName;
+Drawer描述.display名称 = DrawerPrimitive.描述.display名称;
 
 export {
   Drawer,
   DrawerPortal,
   DrawerOverlay,
   DrawerTrigger,
-  DrawerClose,
+  Drawer关闭,
   DrawerContent,
   DrawerHeader,
   DrawerFooter,
-  DrawerTitle,
-  DrawerDescription,
+  Drawer标题,
+  Drawer描述,
 };

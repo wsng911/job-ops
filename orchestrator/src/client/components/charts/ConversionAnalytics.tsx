@@ -21,9 +21,9 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
+  Card描述,
   CardHeader,
-  CardTitle,
+  Card标题,
 } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import { ChartKpiPanel } from "./ChartKpiPanel";
@@ -60,9 +60,9 @@ const chartConfig = {
 const FUNNEL_STAGES = [
   { key: "applied", label: "Applied", color: "#3b82f6" },
   { key: "screening", label: "Screening", color: "#8b5cf6" },
-  { key: "interview", label: "Interview", color: "#f59e0b" },
-  { key: "offer", label: "Offer", color: "#10b981" },
-  { key: "rejected", label: "Rejected", color: "#ef4444" },
+  { key: "interview", label: "面试", color: "#f59e0b" },
+  { key: "offer", label: "录用", color: "#10b981" },
+  { key: "rejected", label: "已拒绝", color: "#ef4444" },
 ] as const;
 
 // Stages that count as "screening"
@@ -88,7 +88,7 @@ const CONVERSION_STAGES = new Set([
 // Stages that count as "offer"
 const OFFER_STAGES = new Set(["offer"]);
 
-const isRejectedEvent = (event: StageEvent) =>
+const is已拒绝Event = (event: StageEvent) =>
   event.outcome === "rejected" || event.metadata?.reasonCode === "rejected";
 
 const toDateKey = (value: Date) => {
@@ -139,8 +139,8 @@ const buildFunnelData = (jobsWithEvents: JobWithEvents[]): FunnelStage[] => {
       }
     }
 
-    const reachedRejected = job.events.some(isRejectedEvent);
-    if (reachedRejected) {
+    const reached已拒绝 = job.events.some(is已拒绝Event);
+    if (reached已拒绝) {
       rejected++;
     }
   }
@@ -148,9 +148,9 @@ const buildFunnelData = (jobsWithEvents: JobWithEvents[]): FunnelStage[] => {
   return [
     { name: "Applied", value: applied, fill: FUNNEL_STAGES[0].color },
     { name: "Screening", value: screening, fill: FUNNEL_STAGES[1].color },
-    { name: "Interview", value: interview, fill: FUNNEL_STAGES[2].color },
-    { name: "Offer", value: offer, fill: FUNNEL_STAGES[3].color },
-    { name: "Rejected", value: rejected, fill: FUNNEL_STAGES[4].color },
+    { name: "面试", value: interview, fill: FUNNEL_STAGES[2].color },
+    { name: "录用", value: offer, fill: FUNNEL_STAGES[3].color },
+    { name: "已拒绝", value: rejected, fill: FUNNEL_STAGES[4].color },
   ];
 };
 
@@ -285,13 +285,13 @@ export function ConversionAnalytics({
   }, [jobsWithEvents]);
 
   return (
-    <Card className="py-0">
-      <CardHeader className="flex flex-col gap-2 border-b !p-0 sm:flex-row sm:items-stretch">
-        <div className="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:!py-0">
-          <CardTitle>Application → Response Conversion</CardTitle>
-          <CardDescription>
+    <Card class名称="py-0">
+      <CardHeader class名称="flex flex-col gap-2 border-b !p-0 sm:flex-row sm:items-stretch">
+        <div class名称="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:!py-0">
+          <Card标题>Application → Response Conversion</Card标题>
+          <Card描述>
             How many applications received a positive response from the company.
-          </CardDescription>
+          </Card描述>
         </div>
         <ChartKpiPanel
           label="Conversion Rate"
@@ -299,19 +299,19 @@ export function ConversionAnalytics({
           subtext={`${overallConversion.converted} of ${overallConversion.total} applications`}
         />
       </CardHeader>
-      <CardContent className="px-2 sm:p-6">
+      <CardContent class名称="px-2 sm:p-6">
         {error ? (
-          <div className="px-4 py-6 text-sm text-destructive">{error}</div>
+          <div class名称="px-4 py-6 text-sm text-destructive">{error}</div>
         ) : (
-          <div className="space-y-6">
+          <div class名称="space-y-6">
             {/* Funnel Chart */}
             <div>
-              <h4 className="mb-3 text-sm font-medium text-muted-foreground">
-                Funnel: Applied → Screening → Interview → Offer → Rejected
+              <h4 class名称="mb-3 text-sm font-medium text-muted-foreground">
+                Funnel: Applied → Screening → 面试 → 录用 → 已拒绝
               </h4>
               <ChartContainer
                 config={chartConfig}
-                className="aspect-auto h-[200px] w-full"
+                class名称="aspect-auto h-[200px] w-full"
               >
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
@@ -335,9 +335,9 @@ export function ConversionAnalytics({
                         if (!active || !payload?.length) return null;
                         const data = payload[0].payload as FunnelStage;
                         return (
-                          <div className="rounded-lg border border-border/60 bg-background px-3 py-2 text-xs shadow-sm">
-                            <div className="font-medium">{data.name}</div>
-                            <div className="mt-1 text-muted-foreground">
+                          <div class名称="rounded-lg border border-border/60 bg-background px-3 py-2 text-xs shadow-sm">
+                            <div class名称="font-medium">{data.name}</div>
+                            <div class名称="mt-1 text-muted-foreground">
                               {data.value} applications
                             </div>
                           </div>
@@ -351,7 +351,7 @@ export function ConversionAnalytics({
                       <LabelList
                         dataKey="value"
                         position="right"
-                        className="text-xs fill-foreground"
+                        class名称="text-xs fill-foreground"
                       />
                     </Bar>
                   </BarChart>
@@ -361,15 +361,15 @@ export function ConversionAnalytics({
 
             {/* Time Series Chart */}
             <div>
-              <div className="mb-3 flex items-center justify-between">
-                <h4 className="text-sm font-medium text-muted-foreground">
+              <div class名称="mb-3 flex items-center justify-between">
+                <h4 class名称="text-sm font-medium text-muted-foreground">
                   Conversion rate over time (rolling {Math.min(7, daysToShow)}
                   -day average)
                 </h4>
               </div>
               <ChartContainer
                 config={chartConfig}
-                className="aspect-auto h-[200px] w-full"
+                class名称="aspect-auto h-[200px] w-full"
               >
                 <LineChart
                   data={conversionTimeSeries}
@@ -402,8 +402,8 @@ export function ConversionAnalytics({
                       if (!active || !payload?.length) return null;
                       const data = payload[0].payload as ConversionDataPoint;
                       return (
-                        <div className="rounded-lg border border-border/60 bg-background px-3 py-2 text-xs shadow-sm">
-                          <div className="mb-2 text-[11px] font-medium text-muted-foreground">
+                        <div class名称="rounded-lg border border-border/60 bg-background px-3 py-2 text-xs shadow-sm">
+                          <div class名称="mb-2 text-[11px] font-medium text-muted-foreground">
                             {new Date(label as string).toLocaleDateString(
                               "en-GB",
                               {
@@ -413,28 +413,28 @@ export function ConversionAnalytics({
                               },
                             )}
                           </div>
-                          <div className="space-y-1">
-                            <div className="flex items-center justify-between gap-3">
-                              <span className="text-muted-foreground">
+                          <div class名称="space-y-1">
+                            <div class名称="flex items-center justify-between gap-3">
+                              <span class名称="text-muted-foreground">
                                 Conversion Rate
                               </span>
-                              <span className="font-semibold text-foreground">
+                              <span class名称="font-semibold text-foreground">
                                 {data.conversionRate.toFixed(1)}%
                               </span>
                             </div>
-                            <div className="flex items-center justify-between gap-3">
-                              <span className="text-muted-foreground">
+                            <div class名称="flex items-center justify-between gap-3">
+                              <span class名称="text-muted-foreground">
                                 Applied ({Math.min(7, daysToShow)}d window)
                               </span>
-                              <span className="font-semibold text-foreground">
+                              <span class名称="font-semibold text-foreground">
                                 {data.appliedCount}
                               </span>
                             </div>
-                            <div className="flex items-center justify-between gap-3">
-                              <span className="text-muted-foreground">
+                            <div class名称="flex items-center justify-between gap-3">
+                              <span class名称="text-muted-foreground">
                                 Converted
                               </span>
-                              <span className="font-semibold text-foreground">
+                              <span class名称="font-semibold text-foreground">
                                 {data.convertedCount}
                               </span>
                             </div>

@@ -23,20 +23,20 @@ export function ChartKpiPanel({
   highThreshold = 25,
 }: ChartKpiPanelProps) {
   return (
-    <div className="flex flex-col items-start justify-center gap-3 border-t px-6 py-4 text-left sm:border-t-0 sm:border-l sm:px-8 sm:py-6">
-      <div className="flex flex-col gap-1">
-        <span className="text-xs text-muted-foreground">{label}</span>
-        <div className="flex items-center gap-2">
-          <span className="text-lg font-bold leading-none sm:text-3xl">
+    <div class名称="flex flex-col items-start justify-center gap-3 border-t px-6 py-4 text-left sm:border-t-0 sm:border-l sm:px-8 sm:py-6">
+      <div class名称="flex flex-col gap-1">
+        <span class名称="text-xs text-muted-foreground">{label}</span>
+        <div class名称="flex items-center gap-2">
+          <span class名称="text-lg font-bold leading-none sm:text-3xl">
             {rate.toFixed(1)}%
           </span>
           {rate < lowThreshold ? (
-            <TrendingDown className="h-4 w-4 text-destructive" />
+            <TrendingDown class名称="h-4 w-4 text-destructive" />
           ) : rate > highThreshold ? (
-            <TrendingUp className="h-4 w-4 text-emerald-500" />
+            <TrendingUp class名称="h-4 w-4 text-emerald-500" />
           ) : null}
         </div>
-        <span className="text-xs text-muted-foreground">{subtext}</span>
+        <span class名称="text-xs text-muted-foreground">{subtext}</span>
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { editorHtmlToMarkdown, markdownToEditorHtml } from "./jobNoteContent";
+import { editorHtmlToMarkdown, markdownTo编辑orHtml } from "./job否teContent";
 
 describe("job note content bridge", () => {
   it("renders markdown into TipTap-friendly html", () => {
-    const html = markdownToEditorHtml(
+    const html = markdownTo编辑orHtml(
       "## Fit\n\n- mission\n- team\n\n[site](https://example.com)",
     );
 

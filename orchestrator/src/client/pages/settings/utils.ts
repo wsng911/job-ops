@@ -1,13 +1,13 @@
 /**
- * Settings page helpers.
+ * 设置 page helpers.
  */
 
-import type { ResumeProjectsSettings } from "@shared/types";
+import type { ResumeProjects设置 } from "@shared/types";
 import { arraysEqual } from "@/lib/utils";
 
 export function resumeProjectsEqual(
-  a: ResumeProjectsSettings,
-  b: ResumeProjectsSettings,
+  a: ResumeProjects设置,
+  b: ResumeProjects设置,
 ) {
   return (
     a.maxProjects === b.maxProjects &&
@@ -17,7 +17,7 @@ export function resumeProjectsEqual(
 }
 
 export const formatSecretHint = (hint: string | null) =>
-  hint ? `${hint}********` : "Not set";
+  hint ? `${hint}********` : "否t set";
 
 export const LLM_PROVIDERS = [
   "openrouter",
@@ -82,26 +82,26 @@ const PROVIDER_KEY_HELPERS: Record<
   { text: string; href?: string }
 > = {
   openrouter: {
-    text: "Create a key at openrouter.ai",
+    text: "创建 a key at openrouter.ai",
     href: "https://openrouter.ai/keys",
   },
-  lmstudio: { text: "No API key required for LM Studio" },
-  ollama: { text: "No API key required for Ollama" },
+  lmstudio: { text: "否 API key required for LM Studio" },
+  ollama: { text: "否 API key required for Ollama" },
   openai: {
-    text: "Create a key at platform.openai.com",
+    text: "创建 a key at platform.openai.com",
     href: "https://platform.openai.com/api-keys",
   },
   openai_compatible: {
     text: "Use the bearer token issued by your compatible provider",
   },
   gemini: {
-    text: "Create a key at aistudio.google.com/api-keys",
+    text: "创建 a key at aistudio.google.com/api-keys",
     href: "https://aistudio.google.com/app/apikey",
   },
   gemini_cli: {
     text: "Authenticate with the Gemini CLI (gemini login / OAuth); see docs link below",
   },
-  codex: { text: "No API key required when Codex is authenticated locally" },
+  codex: { text: "否 API key required when Codex is authenticated locally" },
 };
 
 const BASE_URL_PROVIDERS = ["lmstudio", "ollama", "openai_compatible"] as const;

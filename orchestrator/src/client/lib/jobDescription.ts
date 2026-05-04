@@ -1,12 +1,12 @@
 import { stripHtml } from "@/lib/utils";
 
-export const getRenderableJobDescription = (jobDescription?: string | null) => {
-  if (!jobDescription) return "No description available.";
+export const getRenderableJob描述 = (job描述?: string | null) => {
+  if (!job描述) return "否 description available.";
 
   const plainText =
-    jobDescription.includes("<") && jobDescription.includes(">")
-      ? stripHtml(jobDescription)
-      : jobDescription;
+    job描述.includes("<") && job描述.includes(">")
+      ? stripHtml(job描述)
+      : job描述;
 
   const normalizedLineBreaks = plainText.replace(/\r\n/g, "\n");
   if (

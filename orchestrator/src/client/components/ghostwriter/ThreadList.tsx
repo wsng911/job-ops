@@ -9,14 +9,14 @@ type ThreadListProps = {
   previews: Record<string, string>;
   activeThreadId: string | null;
   onSelectThread: (threadId: string) => void;
-  onCreateThread: () => void;
+  on创建Thread: () => void;
   disabled?: boolean;
 };
 
 function formatRelativeTime(value: string | null): string {
-  if (!value) return "Updated just now";
+  if (!value) return "更新d just now";
   const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Updated recently";
+  if (Number.isNaN(date.getTime())) return "更新d recently";
   const diffMs = date.getTime() - Date.now();
   const absMs = Math.abs(diffMs);
 
@@ -27,17 +27,17 @@ function formatRelativeTime(value: string | null): string {
 
   if (absMs < hour) {
     const minutes = Math.max(1, Math.round(diffMs / minute));
-    return `Updated ${rtf.format(minutes, "minute")}`;
+    return `更新d ${rtf.format(minutes, "minute")}`;
   }
   if (absMs < day) {
     const hours = Math.round(diffMs / hour);
-    return `Updated ${rtf.format(hours, "hour")}`;
+    return `更新d ${rtf.format(hours, "hour")}`;
   }
   const days = Math.round(diffMs / day);
-  return `Updated ${rtf.format(days, "day")}`;
+  return `更新d ${rtf.format(days, "day")}`;
 }
 
-function normalizeThreadTitle(input: string | null, fallback: string): string {
+function normalizeThread标题(input: string | null, fallback: string): string {
   const value = input?.trim();
   return value && value.length > 0 ? value : fallback;
 }
@@ -48,55 +48,55 @@ export const ThreadList: React.FC<ThreadListProps> = ({
   previews,
   activeThreadId,
   onSelectThread,
-  onCreateThread,
+  on创建Thread,
   disabled,
 }) => {
   const titleCounts = new Map<string, number>();
   threads.forEach((thread) => {
-    const normalized = normalizeThreadTitle(
+    const normalized = normalizeThread标题(
       thread.title,
       `${job.title} @ ${job.employer}`,
     );
     titleCounts.set(normalized, (titleCounts.get(normalized) ?? 0) + 1);
   });
 
-  const seenTitles = new Map<string, number>();
+  const seen标题s = new Map<string, number>();
 
   return (
-    <aside className="min-h-0 space-y-3 pr-0 md:pr-4">
-      <div className="flex items-center justify-between">
-        <div className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+    <aside class名称="min-h-0 space-y-3 pr-0 md:pr-4">
+      <div class名称="flex items-center justify-between">
+        <div class名称="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
           Threads
         </div>
         <Button
           size="sm"
           variant="outline"
-          onClick={onCreateThread}
+          onClick={on创建Thread}
           disabled={disabled}
-          className="h-8 px-2.5 text-xs"
+          class名称="h-8 px-2.5 text-xs"
         >
-          New
+          新建
         </Button>
       </div>
 
-      <div className="max-h-[13rem] space-y-1 overflow-auto pr-1">
+      <div class名称="max-h-[13rem] space-y-1 overflow-auto pr-1">
         {threads.length === 0 ? (
-          <div className="p-2 text-xs text-muted-foreground">
-            No threads yet
+          <div class名称="p-2 text-xs text-muted-foreground">
+            否 threads yet
           </div>
         ) : (
           threads.map((thread) => {
-            const rawTitle = normalizeThreadTitle(
+            const raw标题 = normalizeThread标题(
               thread.title,
               `${job.title} @ ${job.employer}`,
             );
-            const seenCount = (seenTitles.get(rawTitle) ?? 0) + 1;
-            seenTitles.set(rawTitle, seenCount);
-            const hasDuplicates = (titleCounts.get(rawTitle) ?? 0) > 1;
+            const seenCount = (seen标题s.get(raw标题) ?? 0) + 1;
+            seen标题s.set(raw标题, seenCount);
+            const hasDuplicates = (titleCounts.get(raw标题) ?? 0) > 1;
             const title = hasDuplicates
-              ? `${rawTitle} (${seenCount})`
-              : rawTitle;
-            const preview = previews[thread.id]?.trim() || "No messages yet";
+              ? `${raw标题} (${seenCount})`
+              : raw标题;
+            const preview = previews[thread.id]?.trim() || "否 messages yet";
             const isActive = activeThreadId === thread.id;
 
             return (
@@ -105,7 +105,7 @@ export const ThreadList: React.FC<ThreadListProps> = ({
                 type="button"
                 onClick={() => onSelectThread(thread.id)}
                 disabled={disabled}
-                className={cn(
+                class名称={cn(
                   "relative w-full rounded-md border px-3 py-2.5 text-left transition-colors",
                   isActive
                     ? "border-foreground/25 bg-accent text-accent-foreground"
@@ -113,20 +113,20 @@ export const ThreadList: React.FC<ThreadListProps> = ({
                 )}
               >
                 {isActive && (
-                  <span className="absolute bottom-2 left-0 top-2 w-0.5 rounded-r bg-foreground" />
+                  <span class名称="absolute bottom-2 left-0 top-2 w-0.5 rounded-r bg-foreground" />
                 )}
                 <div
-                  className={cn(
+                  class名称={cn(
                     "truncate pr-2 text-xs",
                     isActive ? "font-semibold" : "font-medium text-foreground",
                   )}
                 >
                   {title}
                 </div>
-                <div className="mt-1 text-[10px] text-muted-foreground">
+                <div class名称="mt-1 text-[10px] text-muted-foreground">
                   {formatRelativeTime(thread.lastMessageAt ?? thread.updatedAt)}
                 </div>
-                <div className="mt-1 truncate text-[11px] text-muted-foreground/90">
+                <div class名称="mt-1 truncate text-[11px] text-muted-foreground/90">
                   {preview}
                 </div>
               </button>

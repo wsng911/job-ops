@@ -15,7 +15,7 @@ vi.mock("@/components/ui/tabs", () => ({
     value,
     onValueChange,
   }: {
-    children: React.ReactNode;
+    children: React.React否de;
     value: string;
     onValueChange?: (value: string) => void;
   }) => (
@@ -59,14 +59,14 @@ vi.mock("@/components/ui/tabs", () => ({
       )}
     </div>
   ),
-  TabsList: ({ children }: { children: React.ReactNode }) => (
+  TabsList: ({ children }: { children: React.React否de }) => (
     <div data-testid="tabs-list">{children}</div>
   ),
   TabsTrigger: ({
     children,
     value,
   }: {
-    children: React.ReactNode;
+    children: React.React否de;
     value: string;
   }) => (
     <button type="button" data-testid={`tab-${value}`} value={value}>

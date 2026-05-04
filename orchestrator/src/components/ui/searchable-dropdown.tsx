@@ -1,4 +1,4 @@
-import { Check, ChevronsUpDown, Search } from "lucide-react";
+import { Check, ChevronsUpDown, 搜索 } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,29 +9,29 @@ import {
 import { useVirtualizedListbox } from "@/components/ui/virtualized-listbox";
 import { cn } from "@/lib/utils";
 
-export interface SearchableDropdownOption {
+export interface 搜索ableDropdownOption {
   value: string;
   label: string;
   searchText?: string;
   disabled?: boolean;
 }
 
-interface SearchableDropdownProps {
+interface 搜索ableDropdownProps {
   inputId?: string;
   value: string;
-  options: SearchableDropdownOption[];
+  options: 搜索ableDropdownOption[];
   onValueChange: (value: string) => void;
   placeholder: string;
   searchPlaceholder?: string;
   emptyText?: string;
   ariaLabel?: string;
   disabled?: boolean;
-  triggerClassName?: string;
-  contentClassName?: string;
-  listClassName?: string;
+  triggerClass名称?: string;
+  contentClass名称?: string;
+  listClass名称?: string;
 }
 
-type SearchableDropdownRow =
+type 搜索ableDropdownRow =
   | {
       id: string;
       type: "custom";
@@ -42,11 +42,11 @@ type SearchableDropdownRow =
       id: string;
       type: "option";
       disabled: boolean;
-      option: SearchableDropdownOption;
+      option: 搜索ableDropdownOption;
       searchableValue: string;
     };
 
-function getSearchableValue(option: SearchableDropdownOption): string {
+function get搜索ableValue(option: 搜索ableDropdownOption): string {
   return [option.label, option.searchText ?? "", option.value].join(" ").trim();
 }
 
@@ -61,25 +61,25 @@ function toDomIdSegment(value: string): string {
 
 function createRowDomId(
   listId: string,
-  type: SearchableDropdownRow["type"],
+  type: 搜索ableDropdownRow["type"],
   value: string,
 ): string {
   return `${toDomIdSegment(listId)}-${type}-${toDomIdSegment(value)}`;
 }
 
-export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
+export const 搜索ableDropdown: React.FC<搜索ableDropdownProps> = ({
   inputId,
   value,
   options,
   onValueChange,
   placeholder,
-  searchPlaceholder = "Search...",
-  emptyText = "No results found.",
+  searchPlaceholder = "搜索...",
+  emptyText = "否 results found.",
   ariaLabel,
   disabled = false,
-  triggerClassName,
-  contentClassName,
-  listClassName,
+  triggerClass名称,
+  contentClass名称,
+  listClass名称,
 }) => {
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
@@ -104,12 +104,12 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
 
     const normalizedQuery = deferredTrimmedQuery.toLowerCase();
     return options.filter((option) =>
-      getSearchableValue(option).toLowerCase().includes(normalizedQuery),
+      get搜索ableValue(option).toLowerCase().includes(normalizedQuery),
     );
   }, [deferredTrimmedQuery, options]);
 
-  const rows = React.useMemo<SearchableDropdownRow[]>(() => {
-    const nextRows: SearchableDropdownRow[] = [];
+  const rows = React.useMemo<搜索ableDropdownRow[]>(() => {
+    const nextRows: 搜索ableDropdownRow[] = [];
 
     if (hasCustomValue) {
       nextRows.push({
@@ -126,7 +126,7 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
         type: "option",
         disabled: Boolean(option.disabled),
         option,
-        searchableValue: getSearchableValue(option),
+        searchableValue: get搜索ableValue(option),
       });
     }
 
@@ -203,7 +203,7 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
   }, [open]);
 
   const selectRow = React.useCallback(
-    (row: SearchableDropdownRow) => {
+    (row: 搜索ableDropdownRow) => {
       if (row.type === "option") {
         if (row.disabled) return;
         onValueChange(row.option.value);
@@ -293,7 +293,7 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
           value={value}
           disabled={disabled}
           onChange={(event) => onValueChange(event.target.value)}
-          className="sr-only"
+          class名称="sr-only"
           tabIndex={-1}
           aria-hidden="true"
         />
@@ -307,18 +307,18 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
           aria-controls={listId}
           aria-label={inputId ? undefined : (ariaLabel ?? triggerLabel)}
           disabled={disabled}
-          className={cn("justify-between", triggerClassName)}
+          class名称={cn("justify-between", triggerClass名称)}
         >
-          <span className="truncate">{triggerLabel}</span>
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 text-muted-foreground" />
+          <span class名称="truncate">{triggerLabel}</span>
+          <ChevronsUpDown class名称="ml-2 h-4 w-4 shrink-0 text-muted-foreground" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
         align="start"
-        className={cn("w-[320px] p-0", contentClassName)}
+        class名称={cn("w-[320px] p-0", contentClass名称)}
       >
-        <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
-          <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+        <div class名称="flex items-center border-b px-3" cmdk-input-wrapper="">
+          <搜索 class名称="mr-2 h-4 w-4 shrink-0 opacity-50" />
           <input
             ref={inputRef}
             role="combobox"
@@ -330,7 +330,7 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             onKeyDown={handleInputKeyDown}
-            className="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
+            class名称="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
           />
         </div>
         <div
@@ -338,16 +338,16 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
           id={listId}
           role="listbox"
           aria-label={ariaLabel}
-          className={cn(
+          class名称={cn(
             "max-h-56 overflow-y-auto overflow-x-hidden",
-            listClassName,
+            listClass名称,
           )}
           onWheelCapture={(event) => event.stopPropagation()}
         >
           {rows.length === 0 ? (
-            <div className="py-6 text-center text-sm">{emptyText}</div>
+            <div class名称="py-6 text-center text-sm">{emptyText}</div>
           ) : (
-            <div className="relative w-full" style={{ height: getTotalSize() }}>
+            <div class名称="relative w-full" style={{ height: getTotalSize() }}>
               {virtualItems.map((virtualItem) => {
                 const row = rows[virtualItem.index];
                 if (!row) return null;
@@ -367,7 +367,7 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
                     aria-selected={selected}
                     aria-disabled={row.type === "option" ? row.disabled : false}
                     id={row.id}
-                    className={cn(
+                    class名称={cn(
                       "absolute left-0 top-0 flex w-full cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-left text-sm outline-none",
                       isActive ? "bg-accent text-accent-foreground" : "",
                       row.type === "option" && row.disabled
@@ -383,12 +383,12 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
                     }}
                     onClick={() => selectRow(row)}
                   >
-                    <span className="truncate">
+                    <span class名称="truncate">
                       {row.type === "custom" ? row.label : row.option.label}
                     </span>
                     {row.type === "option" ? (
                       <Check
-                        className={cn(
+                        class名称={cn(
                           "ml-auto h-4 w-4 shrink-0",
                           selected ? "opacity-100" : "opacity-0",
                         )}

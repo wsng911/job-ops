@@ -3,7 +3,7 @@ import {
   CalendarClock,
   CheckCircle2,
   Copy,
-  Edit2,
+  编辑2,
   ExternalLink,
   FileText,
   MoreHorizontal,
@@ -40,12 +40,12 @@ type JobPageRightSidebarProps = {
   onMarkApplied: () => void;
   onMoveToInProgress: () => void;
   onOpenLogEvent: () => void;
-  onEditTailoring: () => void;
+  on编辑Tailoring: () => void;
   onViewPdf: () => void;
   onUploadPdf: () => void;
   onRegeneratePdf: () => void;
   onSkip: () => void;
-  onOpenEditDetails: () => void;
+  onOpen编辑Details: () => void;
   onCopyJobInfo: () => void;
   onRescore: () => void;
   onCheckSponsor: () => void;
@@ -66,31 +66,31 @@ export const JobPageRightSidebar: React.FC<JobPageRightSidebarProps> = ({
   onMarkApplied,
   onMoveToInProgress,
   onOpenLogEvent,
-  onEditTailoring,
+  on编辑Tailoring,
   onViewPdf,
   onUploadPdf,
   onRegeneratePdf,
   onSkip,
-  onOpenEditDetails,
+  onOpen编辑Details,
   onCopyJobInfo,
   onRescore,
   onCheckSponsor,
 }) => (
-  <aside className="space-y-4 xl:sticky xl:top-5">
-    <section className="rounded-xl border border-border/50 bg-card/85 p-3">
-      <div className="mb-3 flex items-center gap-2 px-1 text-sm font-semibold">
-        Actions
+  <aside class名称="space-y-4 xl:sticky xl:top-5">
+    <section class名称="rounded-xl border border-border/50 bg-card/85 p-3">
+      <div class名称="mb-3 flex items-center gap-2 px-1 text-sm font-semibold">
+        操作
       </div>
-      <div className="space-y-2">
+      <div class名称="space-y-2">
         {jobLink && (
           <Button
             asChild
             size="sm"
             variant="outline"
-            className="w-full justify-start"
+            class名称="w-full justify-start"
           >
             <a href={jobLink} target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
+              <ExternalLink class名称="mr-1.5 h-3.5 w-3.5" />
               Open Job Listing
             </a>
           </Button>
@@ -100,11 +100,11 @@ export const JobPageRightSidebar: React.FC<JobPageRightSidebarProps> = ({
           <Button
             size="sm"
             variant="outline"
-            className="w-full justify-start"
+            class名称="w-full justify-start"
             onClick={onStartTailoring}
             disabled={isBusy}
           >
-            <Sparkles className="mr-1.5 h-3.5 w-3.5" />
+            <Sparkles class名称="mr-1.5 h-3.5 w-3.5" />
             Start Tailoring
           </Button>
         )}
@@ -112,12 +112,12 @@ export const JobPageRightSidebar: React.FC<JobPageRightSidebarProps> = ({
         {isReady && (
           <Button
             size="sm"
-            className="w-full justify-start"
+            class名称="w-full justify-start"
             variant="outline"
             onClick={onMarkApplied}
             disabled={isBusy}
           >
-            <CheckCircle2 className="mr-1.5 h-3.5 w-3.5" />
+            <CheckCircle2 class名称="mr-1.5 h-3.5 w-3.5" />
             Mark Applied
           </Button>
         )}
@@ -125,12 +125,12 @@ export const JobPageRightSidebar: React.FC<JobPageRightSidebarProps> = ({
         {isApplied && (
           <Button
             size="sm"
-            className="w-full justify-start"
+            class名称="w-full justify-start"
             variant="outline"
             onClick={onMoveToInProgress}
             disabled={isBusy}
           >
-            <CheckCircle2 className="mr-1.5 h-3.5 w-3.5" />
+            <CheckCircle2 class名称="mr-1.5 h-3.5 w-3.5" />
             Move to In Progress
           </Button>
         )}
@@ -138,12 +138,12 @@ export const JobPageRightSidebar: React.FC<JobPageRightSidebarProps> = ({
         {isInProgress && (
           <Button
             size="sm"
-            className="w-full justify-start"
+            class名称="w-full justify-start"
             variant="outline"
             onClick={onOpenLogEvent}
             disabled={!canLogEvents || isBusy}
           >
-            <PlusCircle className="mr-1.5 h-3.5 w-3.5" />
+            <PlusCircle class名称="mr-1.5 h-3.5 w-3.5" />
             Log event
           </Button>
         )}
@@ -152,12 +152,12 @@ export const JobPageRightSidebar: React.FC<JobPageRightSidebarProps> = ({
           <Button
             size="sm"
             variant="outline"
-            className="h-9 w-full justify-start"
-            onClick={onEditTailoring}
+            class名称="h-9 w-full justify-start"
+            onClick={on编辑Tailoring}
             disabled={isBusy}
           >
-            <Sparkles className="mr-1.5 h-3.5 w-3.5" />
-            Edit Tailoring
+            <Sparkles class名称="mr-1.5 h-3.5 w-3.5" />
+            编辑 Tailoring
           </Button>
         )}
 
@@ -165,10 +165,10 @@ export const JobPageRightSidebar: React.FC<JobPageRightSidebarProps> = ({
           <Button
             size="sm"
             variant="outline"
-            className="h-9 w-full justify-start"
+            class名称="h-9 w-full justify-start"
             onClick={onViewPdf}
           >
-            <FileText className="mr-1.5 h-3.5 w-3.5" />
+            <FileText class名称="mr-1.5 h-3.5 w-3.5" />
             View PDF
           </Button>
         )}
@@ -176,11 +176,11 @@ export const JobPageRightSidebar: React.FC<JobPageRightSidebarProps> = ({
         <Button
           size="sm"
           variant="outline"
-          className="h-9 w-full justify-start"
+          class名称="h-9 w-full justify-start"
           onClick={onUploadPdf}
           disabled={isUploadingPdf}
         >
-          <Upload className="mr-1.5 h-3.5 w-3.5" />
+          <Upload class名称="mr-1.5 h-3.5 w-3.5" />
           {isUploadingPdf
             ? "Uploading PDF"
             : job.pdfPath
@@ -192,11 +192,11 @@ export const JobPageRightSidebar: React.FC<JobPageRightSidebarProps> = ({
           <Button
             size="sm"
             variant="outline"
-            className="h-9 w-full justify-start"
+            class名称="h-9 w-full justify-start"
             onClick={onRegeneratePdf}
             disabled={isBusy}
           >
-            <RefreshCcw className="mr-1.5 h-3.5 w-3.5" />
+            <RefreshCcw class名称="mr-1.5 h-3.5 w-3.5" />
             Regenerate PDF
           </Button>
         )}
@@ -205,11 +205,11 @@ export const JobPageRightSidebar: React.FC<JobPageRightSidebarProps> = ({
           <Button
             size="sm"
             variant="outline"
-            className="h-9 w-full justify-start"
+            class名称="h-9 w-full justify-start"
             onClick={onSkip}
             disabled={isBusy}
           >
-            <XCircle className="mr-1.5 h-3.5 w-3.5" />
+            <XCircle class名称="mr-1.5 h-3.5 w-3.5" />
             Skip Job
           </Button>
         )}
@@ -219,24 +219,24 @@ export const JobPageRightSidebar: React.FC<JobPageRightSidebarProps> = ({
             <Button
               size="sm"
               variant="ghost"
-              className="h-9 w-full justify-start text-muted-foreground"
+              class名称="h-9 w-full justify-start text-muted-foreground"
             >
-              <MoreHorizontal className="mr-1.5 h-3.5 w-3.5" />
+              <MoreHorizontal class名称="mr-1.5 h-3.5 w-3.5" />
               More actions
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onSelect={onOpenEditDetails}>
-              <Edit2 className="mr-2 h-4 w-4" />
-              Edit details
+            <DropdownMenuItem onSelect={onOpen编辑Details}>
+              <编辑2 class名称="mr-2 h-4 w-4" />
+              编辑 details
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={onCopyJobInfo}>
-              <Copy className="mr-2 h-4 w-4" />
+              <Copy class名称="mr-2 h-4 w-4" />
               Copy job info
             </DropdownMenuItem>
             {(isReady || isDiscovered) && (
               <DropdownMenuItem onSelect={onRescore}>
-                <RefreshCcw className="mr-2 h-4 w-4" />
+                <RefreshCcw class名称="mr-2 h-4 w-4" />
                 Recalculate match
               </DropdownMenuItem>
             )}
@@ -250,23 +250,23 @@ export const JobPageRightSidebar: React.FC<JobPageRightSidebarProps> = ({
     </section>
 
     {tasks.length > 0 && (
-      <section className="rounded-xl border border-border/50 bg-card/70 p-4">
-        <div className="mb-3 flex items-center gap-2 text-sm font-semibold">
-          <CalendarClock className="h-4 w-4" />
+      <section class名称="rounded-xl border border-border/50 bg-card/70 p-4">
+        <div class名称="mb-3 flex items-center gap-2 text-sm font-semibold">
+          <CalendarClock class名称="h-4 w-4" />
           Upcoming tasks
         </div>
-        <div className="space-y-3">
+        <div class名称="space-y-3">
           {tasks.map((task) => (
-            <div key={task.id} className="space-y-1">
-              <div className="text-sm font-medium">{task.title}</div>
+            <div key={task.id} class名称="space-y-1">
+              <div class名称="text-sm font-medium">{task.title}</div>
               {task.notes && (
-                <div className="text-xs text-muted-foreground">
+                <div class名称="text-xs text-muted-foreground">
                   {task.notes}
                 </div>
               )}
               <Badge
                 variant="outline"
-                className="text-[10px] uppercase tracking-wide"
+                class名称="text-[10px] uppercase tracking-wide"
               >
                 {formatTimestamp(task.dueDate)}
               </Badge>

@@ -12,7 +12,7 @@ describe("settings constants", () => {
           tone: "",
           formality: null,
           constraints: "",
-          doNotUse: undefined,
+          do否tUse: undefined,
         },
         defaults: {
           tone: { effective: "professional", default: "professional" },
@@ -21,7 +21,7 @@ describe("settings constants", () => {
             effective: "Keep it warm",
             default: "Keep it warm",
           },
-          doNotUse: { effective: "", default: "" },
+          do否tUse: { effective: "", default: "" },
           languageMode: { effective: "manual", default: "manual" },
           manualLanguage: { effective: "english", default: "english" },
           stopSlopEnabled: { effective: false, default: false },
@@ -33,7 +33,7 @@ describe("settings constants", () => {
       tone: "professional",
       formality: "medium",
       constraints: "Keep it warm",
-      doNotUse: "",
+      do否tUse: "",
     });
   });
 
@@ -44,7 +44,7 @@ describe("settings constants", () => {
           tone: "",
           formality: "",
           constraints: " ",
-          doNotUse: null,
+          do否tUse: null,
         },
         defaults: {
           tone: { effective: "friendly", default: "professional" },
@@ -53,7 +53,7 @@ describe("settings constants", () => {
             effective: "Keep the response warm, approachable, and confident.",
             default: "",
           },
-          doNotUse: { effective: "synergy", default: "" },
+          do否tUse: { effective: "synergy", default: "" },
           languageMode: { effective: "manual", default: "manual" },
           manualLanguage: { effective: "english", default: "english" },
           stopSlopEnabled: { effective: false, default: false },
@@ -65,7 +65,7 @@ describe("settings constants", () => {
       tone: "friendly",
       formality: "low",
       constraints: "Keep the response warm, approachable, and confident.",
-      doNotUse: "synergy",
+      do否tUse: "synergy",
     });
   });
 
@@ -75,7 +75,7 @@ describe("settings constants", () => {
         tone: "friendly",
         formality: "low",
         constraints: "Keep the response warm, approachable, and confident.",
-        doNotUse: "",
+        do否tUse: "",
       }),
     ).toBe("friendly");
 
@@ -84,7 +84,7 @@ describe("settings constants", () => {
         tone: "friendly",
         formality: "low",
         constraints: "Custom note",
-        doNotUse: "",
+        do否tUse: "",
       }),
     ).toBeNull();
   });

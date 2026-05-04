@@ -1,11 +1,11 @@
 import {
   getRxResumeBaseResumeSelection,
   getStoredRxResumeCredentialAvailability,
-  type RxResumeSettingsLike,
+  type RxResume设置Like,
 } from "@client/lib/rxresume-config";
 import { useCallback, useMemo, useState } from "react";
 
-export function useRxResumeConfigState(settings: RxResumeSettingsLike) {
+export function useRxResumeConfigState(settings: RxResume设置Like) {
   const storedRxResume = useMemo(
     () => getStoredRxResumeCredentialAvailability(settings),
     [settings],

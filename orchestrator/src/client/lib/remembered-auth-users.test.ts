@@ -12,14 +12,14 @@ describe("remembered auth users", () => {
 
   it("stores usernames without passwords and keeps the latest first", () => {
     vi.setSystemTime(new Date("2026-01-01T00:00:00.000Z"));
-    rememberAuthUser({ username: "admin", displayName: "Admin" });
+    rememberAuthUser({ username: "admin", display名称: "Admin" });
 
     vi.setSystemTime(new Date("2026-01-01T00:01:00.000Z"));
     rememberAuthUser({ username: "sam" });
 
     expect(loadRememberedAuthUsers()).toMatchObject([
-      { username: "sam", displayName: null },
-      { username: "admin", displayName: "Admin" },
+      { username: "sam", display名称: null },
+      { username: "admin", display名称: "Admin" },
     ]);
     expect(localStorage.getItem("jobops.rememberedAuthUsers")).not.toContain(
       "password",
@@ -27,12 +27,12 @@ describe("remembered auth users", () => {
   });
 
   it("keeps an existing display name when the next sign-in only has a username", () => {
-    rememberAuthUser({ username: "admin", displayName: "Admin" });
+    rememberAuthUser({ username: "admin", display名称: "Admin" });
     rememberAuthUser({ username: "admin" });
 
     expect(loadRememberedAuthUsers()[0]).toMatchObject({
       username: "admin",
-      displayName: "Admin",
+      display名称: "Admin",
     });
   });
 });

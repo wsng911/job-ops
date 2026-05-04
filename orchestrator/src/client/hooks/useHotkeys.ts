@@ -10,11 +10,11 @@ type KeyBindingMap = Record<string, (event: KeyboardEvent) => void>;
 const INPUT_TAG_NAMES = new Set(["INPUT", "TEXTAREA", "SELECT"]);
 const NON_SHIFT_MODIFIER_PATTERN = /(?:^|\+)(\$mod|Control|Meta|Alt)(?:\+|$)/;
 
-function isEditableTarget(event: KeyboardEvent): boolean {
+function is编辑ableTarget(event: KeyboardEvent): boolean {
   const target = event.target;
   if (!(target instanceof HTMLElement)) return false;
-  if (INPUT_TAG_NAMES.has(target.tagName)) return true;
-  if (target.isContentEditable) return true;
+  if (INPUT_TAG_NAMES.has(target.tag名称)) return true;
+  if (target.isContent编辑able) return true;
   return false;
 }
 
@@ -27,7 +27,7 @@ function isEditableTarget(event: KeyboardEvent): boolean {
  * - Uses a stable ref for handler updates without rebinding.
  * - Rebuilds bindings when the key set changes.
  *
- * Non-shift modifier shortcuts (e.g. "$mod+K") bypass the input guard because
+ * 否n-shift modifier shortcuts (e.g. "$mod+K") bypass the input guard because
  * the user explicitly held a non-text modifier. Shift-only shortcuts (e.g.
  * "Shift+?") stay blocked in inputs so typing punctuation doesn't trigger app
  * hotkeys.
@@ -51,13 +51,13 @@ export function useHotkeys(
     const guarded: KeyBindingMap = {};
     const bindingKeys = bindingSignature ? bindingSignature.split("|") : [];
     for (const key of bindingKeys) {
-      const hasNonShiftModifier = key
+      const has否nShiftModifier = key
         .split(" ")
         .some((sequence) => NON_SHIFT_MODIFIER_PATTERN.test(sequence));
 
       guarded[key] = (event: KeyboardEvent) => {
         // Skip single-key shortcuts when the user is typing in an input.
-        if (!hasNonShiftModifier && isEditableTarget(event)) return;
+        if (!has否nShiftModifier && is编辑ableTarget(event)) return;
         bindingsRef.current[key]?.(event);
       };
     }

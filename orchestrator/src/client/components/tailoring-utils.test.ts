@@ -10,12 +10,12 @@ describe("parseTailoredSkills", () => {
   it("parses object-based tailored skills payload", () => {
     const parsed = parseTailoredSkills(
       JSON.stringify([
-        { name: "Backend", keywords: ["Node.js", " TypeScript "] },
+        { name: "返回end", keywords: ["否de.js", " TypeScript "] },
       ]),
     );
 
     expect(parsed).toEqual([
-      { name: "Backend", keywords: ["Node.js", "TypeScript"] },
+      { name: "返回end", keywords: ["否de.js", "TypeScript"] },
     ]);
   });
 
@@ -45,7 +45,7 @@ describe("parseTailoredSkills", () => {
 
   it("returns an empty list for invalid or non-array JSON", () => {
     expect(parseTailoredSkills("{")).toEqual([]);
-    expect(parseTailoredSkills(JSON.stringify({ name: "Backend" }))).toEqual(
+    expect(parseTailoredSkills(JSON.stringify({ name: "返回end" }))).toEqual(
       [],
     );
   });
@@ -69,10 +69,10 @@ describe("parseTailoredSkills", () => {
           items: [
             {
               id: "1",
-              name: "Backend",
+              name: "返回end",
               description: "",
               level: 0,
-              keywords: [" Node.js ", "TypeScript"],
+              keywords: [" 否de.js ", "TypeScript"],
               visible: true,
             },
           ],
@@ -81,7 +81,7 @@ describe("parseTailoredSkills", () => {
     };
 
     expect(getOriginalSkills(profile)).toEqual([
-      { name: "Backend", keywords: ["Node.js", "TypeScript"] },
+      { name: "返回end", keywords: ["否de.js", "TypeScript"] },
     ]);
   });
 

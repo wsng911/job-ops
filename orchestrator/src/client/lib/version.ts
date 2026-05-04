@@ -20,7 +20,7 @@ export interface VersionCheckResult {
 }
 
 /**
- * Normalize the app version into the user-facing release format.
+ * 否rmalize the app version into the user-facing release format.
  */
 export function parseVersion(rawVersion: string): string {
   const normalized = rawVersion.trim();
@@ -37,7 +37,7 @@ export function parseVersion(rawVersion: string): string {
  * Check for updates against GitHub releases API.
  * Results are cached for 24 hours to avoid rate limits.
  */
-export async function checkForUpdate(): Promise<VersionCheckResult> {
+export async function checkFor更新(): Promise<VersionCheckResult> {
   const currentRaw =
     typeof __APP_VERSION__ !== "undefined"
       ? (__APP_VERSION__ as string)

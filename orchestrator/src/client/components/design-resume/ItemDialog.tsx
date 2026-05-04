@@ -6,16 +6,16 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+  Dialog描述,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
+  Dialog标题,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { IconPickerField } from "./IconPickerField";
-import { RichTextEditor } from "./RichTextEditor";
+import { RichText编辑or } from "./RichText编辑or";
 
 export type ItemFieldType =
   | "text"
@@ -45,8 +45,8 @@ type ItemDialogProps = {
   item: Record<string, unknown> | null;
   fields: ItemFieldConfig[];
   onOpenChange: (open: boolean) => void;
-  onSave: (item: Record<string, unknown>) => void;
-  onDelete?: () => void;
+  on保存: (item: Record<string, unknown>) => void;
+  on删除?: () => void;
 };
 
 function getValue(source: Record<string, unknown>, path: string): unknown {
@@ -101,7 +101,7 @@ function parseTagInput(input: string): string[] {
     .filter(Boolean);
 }
 
-function normalizeDraftForSave(
+function normalizeDraftFor保存(
   draft: Record<string, unknown>,
   fields: ItemFieldConfig[],
 ): Record<string, unknown> {
@@ -131,20 +131,20 @@ function renderTextField(
   updateField: (path: string, value: unknown) => void,
   setFieldErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>,
   fieldId: string,
-  iconPrefix?: React.ReactNode,
+  iconPrefix?: React.React否de,
 ) {
   return (
-    <div key={field.key} className="grid gap-2">
-      <label className="text-sm font-medium" htmlFor={fieldId}>
+    <div key={field.key} class名称="grid gap-2">
+      <label class名称="text-sm font-medium" htmlFor={fieldId}>
         {field.label}
-        {field.required ? <span className="ml-1 text-rose-400">*</span> : null}
+        {field.required ? <span class名称="ml-1 text-rose-400">*</span> : null}
       </label>
       {iconPrefix ? (
         <div
-          className={`flex items-stretch overflow-hidden rounded-md border ${fieldErrors[field.key] ? "border-rose-500" : "border-input"} bg-background/60 focus-within:ring-1 focus-within:ring-ring`}
+          class名称={`flex items-stretch overflow-hidden rounded-md border ${fieldErrors[field.key] ? "border-rose-500" : "border-input"} bg-background/60 focus-within:ring-1 focus-within:ring-ring`}
         >
           {/* icon square — borderless, flush left */}
-          <div className="flex shrink-0 items-center border-r border-input">
+          <div class名称="flex shrink-0 items-center border-r border-input">
             {iconPrefix}
           </div>
           <input
@@ -173,7 +173,7 @@ function renderTextField(
                   : event.currentTarget.value,
               );
             }}
-            className="flex-1 bg-transparent px-3 py-2 text-sm outline-none placeholder:text-muted-foreground"
+            class名称="flex-1 bg-transparent px-3 py-2 text-sm outline-none placeholder:text-muted-foreground"
           />
         </div>
       ) : (
@@ -203,7 +203,7 @@ function renderTextField(
                 : event.currentTarget.value,
             );
           }}
-          className={
+          class名称={
             fieldErrors[field.key]
               ? "border-rose-500 bg-background/60"
               : "bg-background/60"
@@ -211,7 +211,7 @@ function renderTextField(
         />
       )}
       {fieldErrors[field.key] ? (
-        <p className="text-xs text-rose-400">{fieldErrors[field.key]}</p>
+        <p class名称="text-xs text-rose-400">{fieldErrors[field.key]}</p>
       ) : null}
     </div>
   );
@@ -225,8 +225,8 @@ function renderFields(
   updateField: (path: string, value: unknown) => void,
   setTagDrafts: React.Dispatch<React.SetStateAction<Record<string, string>>>,
   setFieldErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>,
-): React.ReactNode[] {
-  const nodes: React.ReactNode[] = [];
+): React.React否de[] {
+  const nodes: React.React否de[] = [];
   let i = 0;
   while (i < fields.length) {
     const field = fields[i];
@@ -236,9 +236,9 @@ function renderFields(
 
     if (field.type === "richtext") {
       nodes.push(
-        <div key={field.key} className="grid gap-2">
-          <span className="text-sm font-medium">{field.label}</span>
-          <RichTextEditor
+        <div key={field.key} class名称="grid gap-2">
+          <span class名称="text-sm font-medium">{field.label}</span>
+          <RichText编辑or
             value={value as string}
             onChange={(next) => updateField(field.key, next)}
             placeholder={field.placeholder}
@@ -251,8 +251,8 @@ function renderFields(
 
     if (field.type === "textarea") {
       nodes.push(
-        <div key={field.key} className="grid gap-2">
-          <label className="text-sm font-medium" htmlFor={fieldId}>
+        <div key={field.key} class名称="grid gap-2">
+          <label class名称="text-sm font-medium" htmlFor={fieldId}>
             {field.label}
           </label>
           <Textarea
@@ -262,7 +262,7 @@ function renderFields(
             onChange={(event) =>
               updateField(field.key, event.currentTarget.value)
             }
-            className="min-h-[110px] bg-background/60"
+            class名称="min-h-[110px] bg-background/60"
           />
         </div>,
       );
@@ -272,8 +272,8 @@ function renderFields(
 
     if (field.type === "tags") {
       nodes.push(
-        <div key={field.key} className="grid gap-2">
-          <label className="text-sm font-medium" htmlFor={fieldId}>
+        <div key={field.key} class名称="grid gap-2">
+          <label class名称="text-sm font-medium" htmlFor={fieldId}>
             {field.label}
           </label>
           <TokenizedInput
@@ -285,9 +285,9 @@ function renderFields(
               setTagDrafts((current) => ({ ...current, [field.key]: next }))
             }
             onValuesChange={(next) => updateField(field.key, next)}
-            placeholder={field.placeholder ?? "Add a value"}
+            placeholder={field.placeholder ?? "添加 a value"}
             helperText="Press Enter, comma, or paste a list to add items."
-            removeLabelPrefix="Remove tag"
+            removeLabelPrefix="移除 tag"
           />
         </div>,
       );
@@ -299,12 +299,12 @@ function renderFields(
       nodes.push(
         <div
           key={field.key}
-          className="flex items-center justify-between rounded-lg border border-border/60 bg-muted/20 px-4 py-3"
+          class名称="flex items-center justify-between rounded-lg border border-border/60 bg-muted/20 px-4 py-3"
         >
           <div>
-            <div className="text-sm font-medium">{field.label}</div>
+            <div class名称="text-sm font-medium">{field.label}</div>
             {field.placeholder ? (
-              <div className="text-xs text-muted-foreground">
+              <div class名称="text-xs text-muted-foreground">
                 {field.placeholder}
               </div>
             ) : null}
@@ -328,7 +328,7 @@ function renderFields(
           getValue(draft, nextField.key),
         );
         const nextFieldId = fieldIdForPath(nextField.key);
-        const iconNode = (
+        const icon否de = (
           <IconPickerField
             value={value as string}
             onChange={(next) => updateField(field.key, next)}
@@ -342,7 +342,7 @@ function renderFields(
             updateField,
             setFieldErrors,
             nextFieldId,
-            iconNode,
+            icon否de,
           ),
         );
         i += 2;
@@ -353,8 +353,8 @@ function renderFields(
     // Icon picker — standalone (with label)
     if (field.type === "icon") {
       nodes.push(
-        <div key={field.key} className="grid gap-2">
-          <label className="text-sm font-medium" htmlFor={fieldId}>
+        <div key={field.key} class名称="grid gap-2">
+          <label class名称="text-sm font-medium" htmlFor={fieldId}>
             {field.label}
           </label>
           <IconPickerField
@@ -390,8 +390,8 @@ export function ItemDialog({
   item,
   fields,
   onOpenChange,
-  onSave,
-  onDelete,
+  on保存,
+  on删除,
 }: ItemDialogProps) {
   const initialDraft = useMemo(
     () =>
@@ -399,7 +399,7 @@ export function ItemDialog({
         item ?? {
           id: createId(),
           hidden: false,
-          options: { showLinkInTitle: false },
+          options: { showLinkIn标题: false },
         },
       ) as Record<string, unknown>,
     [item],
@@ -420,13 +420,13 @@ export function ItemDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[88vh] max-w-3xl overflow-y-auto border-border/70 bg-background/95 px-6 pb-6 pt-6">
+      <DialogContent class名称="max-h-[88vh] max-w-3xl overflow-y-auto border-border/70 bg-background/95 px-6 pb-6 pt-6">
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+          <Dialog标题>{title}</Dialog标题>
+          <Dialog描述>{description}</Dialog描述>
         </DialogHeader>
 
-        <div className="grid gap-4">
+        <div class名称="grid gap-4">
           {renderFields(
             fields,
             draft,
@@ -438,32 +438,32 @@ export function ItemDialog({
           )}
         </div>
 
-        <DialogFooter className="items-center justify-between gap-3 sm:justify-between">
+        <DialogFooter class名称="items-center justify-between gap-3 sm:justify-between">
           <div>
-            {onDelete ? (
+            {on删除 ? (
               <Button
                 type="button"
                 variant="ghost"
-                className="text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"
-                onClick={onDelete}
+                class名称="text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"
+                onClick={on删除}
               >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete
+                <Trash2 class名称="mr-2 h-4 w-4" />
+                删除
               </Button>
             ) : null}
           </div>
-          <div className="flex items-center gap-2">
+          <div class名称="flex items-center gap-2">
             <Button
               type="button"
               variant="ghost"
               onClick={() => onOpenChange(false)}
             >
-              Cancel
+              取消
             </Button>
             <Button
               type="button"
               onClick={() => {
-                const normalized = normalizeDraftForSave(draft, fields);
+                const normalized = normalizeDraftFor保存(draft, fields);
                 const errors: Record<string, string> = {};
                 for (const field of fields) {
                   if (!field.required) continue;
@@ -481,12 +481,12 @@ export function ItemDialog({
                   return;
                 }
                 setFieldErrors({});
-                onSave(normalized);
+                on保存(normalized);
                 onOpenChange(false);
               }}
             >
-              <Plus className="mr-2 h-4 w-4" />
-              Save item
+              <Plus class名称="mr-2 h-4 w-4" />
+              保存 item
             </Button>
           </div>
         </DialogFooter>

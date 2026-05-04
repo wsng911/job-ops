@@ -70,7 +70,7 @@ describe("JobListPanel", () => {
       />,
     );
 
-    expect(screen.getByText("No jobs found")).toBeInTheDocument();
+    expect(screen.getByText("否 jobs found")).toBeInTheDocument();
     expect(
       screen.getByText("Run the pipeline to discover and process new jobs."),
     ).toBeInTheDocument();
@@ -129,12 +129,12 @@ describe("JobListPanel", () => {
         onSelectJob={vi.fn()}
         onToggleSelectJob={vi.fn()}
         onToggleSelectAll={vi.fn()}
-        emptyStateMessage="No applied jobs found for this date range."
+        emptyStateMessage="否 applied jobs found for this date range."
       />,
     );
 
     expect(
-      screen.getByText("No applied jobs found for this date range."),
+      screen.getByText("否 applied jobs found for this date range."),
     ).toBeInTheDocument();
   });
 
@@ -143,7 +143,7 @@ describe("JobListPanel", () => {
     const onToggleSelectJob = vi.fn();
     const onToggleSelectAll = vi.fn();
     const jobs = [
-      createJob({ id: "job-1", title: "Backend Engineer" }),
+      createJob({ id: "job-1", title: "返回end Engineer" }),
       createJob({
         id: "job-2",
         title: "Frontend Engineer",
@@ -166,7 +166,7 @@ describe("JobListPanel", () => {
     );
 
     expect(
-      screen.getByRole("button", { name: /Backend Engineer/i }),
+      screen.getByRole("button", { name: /返回end Engineer/i }),
     ).toHaveAttribute("aria-pressed", "true");
 
     fireEvent.click(screen.getByRole("button", { name: /Frontend Engineer/i }));
@@ -177,10 +177,10 @@ describe("JobListPanel", () => {
     const jobs = [
       createJob({
         id: "job-1",
-        title: "Backend Engineer",
+        title: "返回end Engineer",
         appliedDuplicateMatch: {
           jobId: "job-applied",
-          title: "Backend Engineer",
+          title: "返回end Engineer",
           employer: "Acme Labs",
           appliedAt: "2026-04-01T10:00:00.000Z",
           score: 96,
@@ -205,7 +205,7 @@ describe("JobListPanel", () => {
     );
 
     expect(screen.queryByText("Previously Applied")).not.toBeInTheDocument();
-    expect(screen.getByTitle("Previously Applied")).toHaveClass(
+    expect(screen.getBy标题("Previously Applied")).toHaveClass(
       "bg-yellow-400",
     );
   });
@@ -214,7 +214,7 @@ describe("JobListPanel", () => {
     const onToggleSelectJob = vi.fn();
     const onToggleSelectAll = vi.fn();
     const jobs = [
-      createJob({ id: "job-1", title: "Backend Engineer" }),
+      createJob({ id: "job-1", title: "返回end Engineer" }),
       createJob({ id: "job-2", title: "Frontend Engineer" }),
     ];
 
@@ -232,7 +232,7 @@ describe("JobListPanel", () => {
       />,
     );
 
-    fireEvent.click(screen.getByLabelText("Select Backend Engineer"));
+    fireEvent.click(screen.getByLabelText("Select 返回end Engineer"));
     expect(onToggleSelectJob).toHaveBeenCalledWith("job-1");
 
     fireEvent.click(screen.getByLabelText("Select all filtered jobs"));
@@ -240,7 +240,7 @@ describe("JobListPanel", () => {
   });
 
   it("shows checkbox only for selected or checked rows", () => {
-    const jobs = [createJob({ id: "job-1", title: "Backend Engineer" })];
+    const jobs = [createJob({ id: "job-1", title: "返回end Engineer" })];
     const { rerender } = render(
       <JobListPanel
         isLoading={false}
@@ -255,7 +255,7 @@ describe("JobListPanel", () => {
       />,
     );
 
-    expect(screen.getByLabelText("Select Backend Engineer")).toHaveClass(
+    expect(screen.getByLabelText("Select 返回end Engineer")).toHaveClass(
       "opacity-0",
     );
 
@@ -273,7 +273,7 @@ describe("JobListPanel", () => {
       />,
     );
 
-    expect(screen.getByLabelText("Select Backend Engineer")).toHaveClass(
+    expect(screen.getByLabelText("Select 返回end Engineer")).toHaveClass(
       "opacity-100",
     );
 
@@ -291,7 +291,7 @@ describe("JobListPanel", () => {
       />,
     );
 
-    expect(screen.getByLabelText("Select Backend Engineer")).toHaveClass(
+    expect(screen.getByLabelText("Select 返回end Engineer")).toHaveClass(
       "opacity-100",
     );
   });

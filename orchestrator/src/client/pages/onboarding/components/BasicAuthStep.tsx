@@ -6,22 +6,22 @@ import type { BasicAuthChoice } from "../types";
 
 export const BasicAuthStep: React.FC<{
   basicAuthChoice: BasicAuthChoice;
-  basicAuthPassword: string;
+  basicAuth密码: string;
   basicAuthUser: string;
   isBusy: boolean;
   onBasicAuthChoiceChange: (choice: BasicAuthChoice) => void;
-  onBasicAuthPasswordChange: (value: string) => void;
+  onBasicAuth密码Change: (value: string) => void;
   onBasicAuthUserChange: (value: string) => void;
 }> = ({
   basicAuthChoice,
-  basicAuthPassword,
+  basicAuth密码,
   basicAuthUser,
   isBusy,
   onBasicAuthChoiceChange,
-  onBasicAuthPasswordChange,
+  onBasicAuth密码Change,
   onBasicAuthUserChange,
 }) => (
-  <div className="space-y-6">
+  <div class名称="space-y-6">
     <RadioGroup
       value={basicAuthChoice ?? ""}
       onValueChange={(value) =>
@@ -29,7 +29,7 @@ export const BasicAuthStep: React.FC<{
           value === "enable" || value === "skip" ? value : null,
         )
       }
-      className="grid gap-4 lg:grid-cols-2"
+      class名称="grid gap-4 lg:grid-cols-2"
     >
       {[
         {
@@ -41,7 +41,7 @@ export const BasicAuthStep: React.FC<{
         {
           value: "skip",
           title: "Skip for now",
-          description: "You can add authentication later from Settings.",
+          description: "You can add authentication later from 设置.",
         },
       ].map((option) => {
         const checked = basicAuthChoice === option.value;
@@ -50,7 +50,7 @@ export const BasicAuthStep: React.FC<{
           <label
             key={option.value}
             htmlFor={radioId}
-            className={cn(
+            class名称={cn(
               "flex cursor-pointer items-start gap-4 rounded-lg border p-4 transition-colors",
               checked
                 ? "border-primary bg-muted/40"
@@ -60,13 +60,13 @@ export const BasicAuthStep: React.FC<{
             <RadioGroupItem
               id={radioId}
               value={option.value}
-              className="mt-1"
+              class名称="mt-1"
             />
-            <div className="space-y-1">
-              <div className="text-base font-medium text-foreground">
+            <div class名称="space-y-1">
+              <div class名称="text-base font-medium text-foreground">
                 {option.title}
               </div>
-              <div className="text-sm leading-6 text-muted-foreground">
+              <div class名称="text-sm leading-6 text-muted-foreground">
                 {option.description}
               </div>
             </div>
@@ -76,10 +76,10 @@ export const BasicAuthStep: React.FC<{
     </RadioGroup>
 
     {basicAuthChoice === "enable" && (
-      <div className="grid gap-5 rounded-lg border border-border/60 bg-muted/20 p-5 lg:grid-cols-2">
-        <div className="space-y-2">
-          <label htmlFor="basicAuthUser" className="text-sm font-medium">
-            Username
+      <div class名称="grid gap-5 rounded-lg border border-border/60 bg-muted/20 p-5 lg:grid-cols-2">
+        <div class名称="space-y-2">
+          <label htmlFor="basicAuthUser" class名称="text-sm font-medium">
+            用户名
           </label>
           <Input
             id="basicAuthUser"
@@ -91,18 +91,18 @@ export const BasicAuthStep: React.FC<{
             disabled={isBusy}
           />
         </div>
-        <div className="space-y-2">
-          <label htmlFor="basicAuthPassword" className="text-sm font-medium">
-            Password
+        <div class名称="space-y-2">
+          <label htmlFor="basicAuth密码" class名称="text-sm font-medium">
+            密码
           </label>
           <Input
-            id="basicAuthPassword"
+            id="basicAuth密码"
             type="password"
-            value={basicAuthPassword}
+            value={basicAuth密码}
             onChange={(event) =>
-              onBasicAuthPasswordChange(event.currentTarget.value)
+              onBasicAuth密码Change(event.currentTarget.value)
             }
-            placeholder="Create a password"
+            placeholder="创建 a password"
             disabled={isBusy}
           />
         </div>

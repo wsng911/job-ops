@@ -1,11 +1,11 @@
-import type { ResumeProfile } from "@shared/types";
+import type { Resume个人资料 } from "@shared/types";
 
 export interface TailoredSkillGroup {
   name: string;
   keywords: string[];
 }
 
-export interface EditableSkillGroup {
+export interface 编辑ableSkillGroup {
   id: string;
   name: string;
   keywordsText: string;
@@ -67,9 +67,9 @@ export function serializeTailoredSkills(groups: TailoredSkillGroup[]): string {
   return JSON.stringify(groups);
 }
 
-export function toEditableSkillGroups(
+export function to编辑ableSkillGroups(
   groups: TailoredSkillGroup[],
-): EditableSkillGroup[] {
+): 编辑ableSkillGroup[] {
   return groups.map((group) => ({
     id: createTailoredSkillDraftId(),
     name: group.name,
@@ -77,8 +77,8 @@ export function toEditableSkillGroups(
   }));
 }
 
-export function fromEditableSkillGroups(
-  groups: EditableSkillGroup[],
+export function from编辑ableSkillGroups(
+  groups: 编辑ableSkillGroup[],
 ): TailoredSkillGroup[] {
   const normalized: TailoredSkillGroup[] = [];
 
@@ -96,18 +96,18 @@ export function fromEditableSkillGroups(
   return normalized;
 }
 
-export function getOriginalSummary(profile: ResumeProfile | null): string {
+export function getOriginalSummary(profile: Resume个人资料 | null): string {
   if (!profile) return "";
   return profile.basics?.summary?.trim() ?? "";
 }
 
-export function getOriginalHeadline(profile: ResumeProfile | null): string {
+export function getOriginalHeadline(profile: Resume个人资料 | null): string {
   if (!profile) return "";
   return profile.basics?.label?.trim() ?? "";
 }
 
 export function getOriginalSkills(
-  profile: ResumeProfile | null,
+  profile: Resume个人资料 | null,
 ): TailoredSkillGroup[] {
   if (!profile) return [];
 

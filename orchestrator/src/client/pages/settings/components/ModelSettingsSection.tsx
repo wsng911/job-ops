@@ -1,8 +1,8 @@
 import * as api from "@client/api";
 import { CodexAuthPanel } from "@client/components/CodexAuthPanel";
 import { GeminiCliSetupHint } from "@client/components/GeminiCliSetupHint";
-import { SettingsInput } from "@client/pages/settings/components/SettingsInput";
-import { SettingsSectionFrame } from "@client/pages/settings/components/SettingsSectionFrame";
+import { 设置Input } from "@client/pages/settings/components/设置Input";
+import { 设置SectionFrame } from "@client/pages/settings/components/设置SectionFrame";
 import type { ModelValues } from "@client/pages/settings/types";
 import {
   formatSecretHint,
@@ -12,11 +12,11 @@ import {
   supportsLlmModelSuggestions,
 } from "@client/pages/settings/utils";
 import { getDefaultModelForProvider } from "@shared/settings-registry";
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import type React from "react";
 import { useDeferredValue, useEffect, useRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { SearchableDropdown } from "@/components/ui/searchable-dropdown";
+import { 搜索ableDropdown } from "@/components/ui/searchable-dropdown";
 import {
   Select,
   SelectContent,
@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 
-type ModelSettingsSectionProps = {
+type Model设置SectionProps = {
   values: ModelValues;
   isLoading: boolean;
   isSaving: boolean;
@@ -36,7 +36,7 @@ type ModelSettingsSectionProps = {
 function renderKeyHelper(
   helperText: string,
   helperHref: string | null,
-  keepSavedKey: boolean,
+  keep保存dKey: boolean,
 ) {
   return (
     <>
@@ -45,19 +45,19 @@ function renderKeyHelper(
           href={helperHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline decoration-border underline-offset-4 transition-colors hover:text-foreground"
+          class名称="underline decoration-border underline-offset-4 transition-colors hover:text-foreground"
         >
           {helperText}
         </a>
       ) : (
         helperText
       )}
-      {keepSavedKey ? ". Leave blank to keep the saved key." : null}
+      {keep保存dKey ? ". Leave blank to keep the saved key." : null}
     </>
   );
 }
 
-export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
+export const Model设置Section: React.FC<Model设置SectionProps> = ({
   values,
   isLoading,
   isSaving,
@@ -79,7 +79,7 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
     watch,
     setValue,
     formState: { errors, dirtyFields },
-  } = useFormContext<UpdateSettingsInput>();
+  } = useFormContext<更新设置Input>();
 
   const selectedProvider = watch("llmProvider") || llmProvider || "openrouter";
   const previousProviderRef = useRef(selectedProvider);
@@ -187,7 +187,7 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
   ]);
 
   const keyHint = formatSecretHint(llmApiKeyHint);
-  const keyText = showApiKey ? keyHint || "Not set" : "Not required";
+  const keyText = showApiKey ? keyHint || "否t set" : "否t required";
   const resolvedBaseUrl = llmBaseUrlValue?.trim() || llmBaseUrl || "-";
   const selectedDefaultModel = modelValue.trim();
   const previewDefaultModel =
@@ -201,14 +201,14 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
     selectedProjectSelectionModel || previewDefaultModel;
   const modelHelper = supportsModelSuggestions
     ? !hasAvailableApiKey
-      ? `Add or save a ${providerConfig.label} API key to load available models.`
+      ? `添加 or save a ${providerConfig.label} API key to load available models.`
       : isLoadingModels
         ? "Loading available models..."
         : modelsError
           ? modelsError
           : availableModels.length > 0
             ? "Choose from the available text-generation models."
-            : "No text-generation models were returned."
+            : "否 text-generation models were returned."
     : `Type the exact model name manually, or leave blank to use the ${providerConfig.label} default model.`;
   const defaultModelOptions = buildModelOptions({
     models: availableModels,
@@ -236,13 +236,13 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
   });
 
   return (
-    <SettingsSectionFrame mode={layoutMode} title="Model" value="model">
-      <div className="space-y-4">
-        <div className="space-y-4">
-          <div className="text-sm font-medium">LLM Provider</div>
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-2">
-              <label htmlFor="llmProvider" className="text-sm font-medium">
+    <设置SectionFrame mode={layoutMode} title="Model" value="model">
+      <div class名称="space-y-4">
+        <div class名称="space-y-4">
+          <div class名称="text-sm font-medium">LLM Provider</div>
+          <div class名称="grid gap-4 md:grid-cols-2">
+            <div class名称="space-y-2">
+              <label htmlFor="llmProvider" class名称="text-sm font-medium">
                 Provider
               </label>
               <Controller
@@ -268,14 +268,14 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
                 )}
               />
               {errors.llmProvider?.message && (
-                <p className="text-xs text-destructive">
+                <p class名称="text-xs text-destructive">
                   {errors.llmProvider.message as string}
                 </p>
               )}
-              <p className="text-xs text-muted-foreground">
+              <p class名称="text-xs text-muted-foreground">
                 Used for scoring, tailoring, and extraction.
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p class名称="text-xs text-muted-foreground">
                 {providerConfig.providerHint}
               </p>
               {isCodexProvider ? (
@@ -284,7 +284,7 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
               {isGeminiCliProvider ? <GeminiCliSetupHint /> : null}
             </div>
             {showBaseUrl && (
-              <SettingsInput
+              <设置Input
                 label="LLM base URL"
                 inputProps={register("llmBaseUrl")}
                 placeholder={providerConfig.baseUrlPlaceholder}
@@ -295,7 +295,7 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
               />
             )}
             {showApiKey && (
-              <SettingsInput
+              <设置Input
                 label="LLM API key"
                 inputProps={register("llmApiKey")}
                 type="password"
@@ -316,42 +316,42 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
         <Separator />
 
         {supportsModelSuggestions ? (
-          <div className="space-y-2">
-            <label htmlFor="model" className="text-sm font-medium">
+          <div class名称="space-y-2">
+            <label htmlFor="model" class名称="text-sm font-medium">
               Default model
             </label>
             <Controller
               name="model"
               control={control}
               render={({ field }) => (
-                <SearchableDropdown
+                <搜索ableDropdown
                   inputId="model"
                   value={field.value ?? ""}
                   options={defaultModelOptions}
                   onValueChange={field.onChange}
                   placeholder={providerDefaultModel || "Select a model"}
-                  searchPlaceholder="Search models..."
-                  emptyText="No models found."
+                  searchPlaceholder="搜索 models..."
+                  emptyText="否 models found."
                   ariaLabel="Default model"
                   disabled={isLoading || isSaving || isLoadingModels}
-                  triggerClassName="h-9 w-full justify-between rounded-md border border-input bg-transparent px-3 text-sm font-normal shadow-sm"
-                  contentClassName="w-[var(--radix-popover-trigger-width)] border-border bg-popover p-0"
-                  listClassName="max-h-64"
+                  triggerClass名称="h-9 w-full justify-between rounded-md border border-input bg-transparent px-3 text-sm font-normal shadow-sm"
+                  contentClass名称="w-[var(--radix-popover-trigger-width)] border-border bg-popover p-0"
+                  listClass名称="max-h-64"
                 />
               )}
             />
             {errors.model?.message && (
-              <p className="text-xs text-destructive">
+              <p class名称="text-xs text-destructive">
                 {errors.model.message as string}
               </p>
             )}
-            <div className="text-xs text-muted-foreground">{modelHelper}</div>
-            <div className="text-xs text-muted-foreground">
-              Current: <span className="font-mono">{previewDefaultModel}</span>
+            <div class名称="text-xs text-muted-foreground">{modelHelper}</div>
+            <div class名称="text-xs text-muted-foreground">
+              Current: <span class名称="font-mono">{previewDefaultModel}</span>
             </div>
           </div>
         ) : (
-          <SettingsInput
+          <设置Input
             label="Default model"
             inputProps={register("model")}
             placeholder={providerDefaultModel}
@@ -364,21 +364,21 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
 
         <Separator />
 
-        <div className="space-y-4">
-          <div className="text-sm font-medium">Task-Specific Overrides</div>
+        <div class名称="space-y-4">
+          <div class名称="text-sm font-medium">Task-Specific Overrides</div>
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div class名称="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {supportsModelSuggestions ? (
               <>
-                <div className="space-y-2">
-                  <label htmlFor="modelScorer" className="text-sm font-medium">
+                <div class名称="space-y-2">
+                  <label htmlFor="modelScorer" class名称="text-sm font-medium">
                     Scoring Model
                   </label>
                   <Controller
                     name="modelScorer"
                     control={control}
                     render={({ field }) => (
-                      <SearchableDropdown
+                      <搜索ableDropdown
                         inputId="modelScorer"
                         value={field.value ?? ""}
                         options={scoringModelOptions}
@@ -386,30 +386,30 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
                         placeholder={
                           previewDefaultModel || "Inherit default model"
                         }
-                        searchPlaceholder="Search models..."
-                        emptyText="No models found."
+                        searchPlaceholder="搜索 models..."
+                        emptyText="否 models found."
                         ariaLabel="Scoring Model"
                         disabled={isLoading || isSaving || isLoadingModels}
-                        triggerClassName="h-9 w-full justify-between rounded-md border border-input bg-transparent px-3 text-sm font-normal shadow-sm"
-                        contentClassName="w-[var(--radix-popover-trigger-width)] border-border bg-popover p-0"
-                        listClassName="max-h-64"
+                        triggerClass名称="h-9 w-full justify-between rounded-md border border-input bg-transparent px-3 text-sm font-normal shadow-sm"
+                        contentClass名称="w-[var(--radix-popover-trigger-width)] border-border bg-popover p-0"
+                        listClass名称="max-h-64"
                       />
                     )}
                   />
                   {errors.modelScorer?.message && (
-                    <p className="text-xs text-destructive">
+                    <p class名称="text-xs text-destructive">
                       {errors.modelScorer.message as string}
                     </p>
                   )}
-                  <div className="text-xs text-muted-foreground">
-                    Current: <span className="font-mono">{scoringModel}</span>
+                  <div class名称="text-xs text-muted-foreground">
+                    Current: <span class名称="font-mono">{scoringModel}</span>
                   </div>
                 </div>
 
-                <div className="space-y-2">
+                <div class名称="space-y-2">
                   <label
                     htmlFor="modelTailoring"
-                    className="text-sm font-medium"
+                    class名称="text-sm font-medium"
                   >
                     Tailoring Model
                   </label>
@@ -417,7 +417,7 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
                     name="modelTailoring"
                     control={control}
                     render={({ field }) => (
-                      <SearchableDropdown
+                      <搜索ableDropdown
                         inputId="modelTailoring"
                         value={field.value ?? ""}
                         options={tailoringModelOptions}
@@ -425,30 +425,30 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
                         placeholder={
                           previewDefaultModel || "Inherit default model"
                         }
-                        searchPlaceholder="Search models..."
-                        emptyText="No models found."
+                        searchPlaceholder="搜索 models..."
+                        emptyText="否 models found."
                         ariaLabel="Tailoring Model"
                         disabled={isLoading || isSaving || isLoadingModels}
-                        triggerClassName="h-9 w-full justify-between rounded-md border border-input bg-transparent px-3 text-sm font-normal shadow-sm"
-                        contentClassName="w-[var(--radix-popover-trigger-width)] border-border bg-popover p-0"
-                        listClassName="max-h-64"
+                        triggerClass名称="h-9 w-full justify-between rounded-md border border-input bg-transparent px-3 text-sm font-normal shadow-sm"
+                        contentClass名称="w-[var(--radix-popover-trigger-width)] border-border bg-popover p-0"
+                        listClass名称="max-h-64"
                       />
                     )}
                   />
                   {errors.modelTailoring?.message && (
-                    <p className="text-xs text-destructive">
+                    <p class名称="text-xs text-destructive">
                       {errors.modelTailoring.message as string}
                     </p>
                   )}
-                  <div className="text-xs text-muted-foreground">
-                    Current: <span className="font-mono">{tailoringModel}</span>
+                  <div class名称="text-xs text-muted-foreground">
+                    Current: <span class名称="font-mono">{tailoringModel}</span>
                   </div>
                 </div>
 
-                <div className="space-y-2">
+                <div class名称="space-y-2">
                   <label
                     htmlFor="modelProjectSelection"
-                    className="text-sm font-medium"
+                    class名称="text-sm font-medium"
                   >
                     Project Selection Model
                   </label>
@@ -456,7 +456,7 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
                     name="modelProjectSelection"
                     control={control}
                     render={({ field }) => (
-                      <SearchableDropdown
+                      <搜索ableDropdown
                         inputId="modelProjectSelection"
                         value={field.value ?? ""}
                         options={projectSelectionModelOptions}
@@ -464,30 +464,30 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
                         placeholder={
                           previewDefaultModel || "Inherit default model"
                         }
-                        searchPlaceholder="Search models..."
-                        emptyText="No models found."
+                        searchPlaceholder="搜索 models..."
+                        emptyText="否 models found."
                         ariaLabel="Project Selection Model"
                         disabled={isLoading || isSaving || isLoadingModels}
-                        triggerClassName="h-9 w-full justify-between rounded-md border border-input bg-transparent px-3 text-sm font-normal shadow-sm"
-                        contentClassName="w-[var(--radix-popover-trigger-width)] border-border bg-popover p-0"
-                        listClassName="max-h-64"
+                        triggerClass名称="h-9 w-full justify-between rounded-md border border-input bg-transparent px-3 text-sm font-normal shadow-sm"
+                        contentClass名称="w-[var(--radix-popover-trigger-width)] border-border bg-popover p-0"
+                        listClass名称="max-h-64"
                       />
                     )}
                   />
                   {errors.modelProjectSelection?.message && (
-                    <p className="text-xs text-destructive">
+                    <p class名称="text-xs text-destructive">
                       {errors.modelProjectSelection.message as string}
                     </p>
                   )}
-                  <div className="text-xs text-muted-foreground">
+                  <div class名称="text-xs text-muted-foreground">
                     Current:{" "}
-                    <span className="font-mono">{projectSelectionModel}</span>
+                    <span class名称="font-mono">{projectSelectionModel}</span>
                   </div>
                 </div>
               </>
             ) : (
               <>
-                <SettingsInput
+                <设置Input
                   label="Scoring Model"
                   inputProps={register("modelScorer")}
                   placeholder={previewDefaultModel || "inherit"}
@@ -496,7 +496,7 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
                   current={scoringModel}
                 />
 
-                <SettingsInput
+                <设置Input
                   label="Tailoring Model"
                   inputProps={register("modelTailoring")}
                   placeholder={previewDefaultModel || "inherit"}
@@ -505,7 +505,7 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
                   current={tailoringModel}
                 />
 
-                <SettingsInput
+                <设置Input
                   label="Project Selection Model"
                   inputProps={register("modelProjectSelection")}
                   placeholder={previewDefaultModel || "inherit"}
@@ -522,33 +522,33 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
 
         <Separator />
 
-        <div className="space-y-3 text-sm">
-          <div className="text-xs text-muted-foreground">Resolved config</div>
-          <div className="grid gap-x-4 gap-y-2 text-xs sm:grid-cols-[160px_1fr]">
-            <div className="text-muted-foreground">Provider</div>
-            <div className="font-mono">{selectedProvider || "-"}</div>
+        <div class名称="space-y-3 text-sm">
+          <div class名称="text-xs text-muted-foreground">Resolved config</div>
+          <div class名称="grid gap-x-4 gap-y-2 text-xs sm:grid-cols-[160px_1fr]">
+            <div class名称="text-muted-foreground">Provider</div>
+            <div class名称="font-mono">{selectedProvider || "-"}</div>
 
-            <div className="text-muted-foreground">Base URL</div>
-            <div className="font-mono">{resolvedBaseUrl}</div>
+            <div class名称="text-muted-foreground">Base URL</div>
+            <div class名称="font-mono">{resolvedBaseUrl}</div>
 
-            <div className="text-muted-foreground">API key</div>
-            <div className="font-mono">{keyText}</div>
+            <div class名称="text-muted-foreground">API key</div>
+            <div class名称="font-mono">{keyText}</div>
 
-            <div className="text-muted-foreground">Default model</div>
-            <div className="font-mono">{previewDefaultModel}</div>
+            <div class名称="text-muted-foreground">Default model</div>
+            <div class名称="font-mono">{previewDefaultModel}</div>
 
-            <div className="text-muted-foreground">Scoring model</div>
-            <div className="font-mono">
+            <div class名称="text-muted-foreground">Scoring model</div>
+            <div class名称="font-mono">
               {selectedScoringModel ? scoringModel : "inherits"}
             </div>
 
-            <div className="text-muted-foreground">Tailoring model</div>
-            <div className="font-mono">
+            <div class名称="text-muted-foreground">Tailoring model</div>
+            <div class名称="font-mono">
               {selectedTailoringModel ? tailoringModel : "inherits"}
             </div>
 
-            <div className="text-muted-foreground">Project selection</div>
-            <div className="font-mono">
+            <div class名称="text-muted-foreground">Project selection</div>
+            <div class名称="font-mono">
               {selectedProjectSelectionModel
                 ? projectSelectionModel
                 : "inherits"}
@@ -556,7 +556,7 @@ export const ModelSettingsSection: React.FC<ModelSettingsSectionProps> = ({
           </div>
         </div>
       </div>
-    </SettingsSectionFrame>
+    </设置SectionFrame>
   );
 };
 

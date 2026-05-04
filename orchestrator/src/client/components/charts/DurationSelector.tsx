@@ -31,14 +31,14 @@ export function DurationSelector({ value, onChange }: DurationSelectorProps) {
   );
 
   return (
-    <div className="flex items-center gap-2">
+    <div class名称="flex items-center gap-2">
       <Tabs value={String(value)} onValueChange={handleChange}>
-        <TabsList className="h-8">
+        <TabsList class名称="h-8">
           {DURATION_OPTIONS.map((option) => (
             <TabsTrigger
               key={option.value}
               value={String(option.value)}
-              className="px-3 text-xs"
+              class名称="px-3 text-xs"
             >
               {option.label}
             </TabsTrigger>

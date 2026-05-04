@@ -1,11 +1,11 @@
 import type { PipelineRun } from "@shared/types";
 
-export type PipelineRunDisplayStatus = PipelineRun["status"] | "incomplete";
+export type PipelineRunDisplay状态 = PipelineRun["status"] | "incomplete";
 
-export function getPipelineRunDisplayStatus(
+export function getPipelineRunDisplay状态(
   run: PipelineRun,
   options?: { isActive?: boolean },
-): PipelineRunDisplayStatus {
+): PipelineRunDisplay状态 {
   if (options?.isActive && run.status === "running") {
     return "running";
   }
@@ -17,8 +17,8 @@ export function getPipelineRunDisplayStatus(
   return run.status;
 }
 
-export function getPipelineRunStatusLabel(
-  status: PipelineRunDisplayStatus,
+export function getPipelineRun状态Label(
+  status: PipelineRunDisplay状态,
 ): string {
   switch (status) {
     case "running":
@@ -28,7 +28,7 @@ export function getPipelineRunStatusLabel(
     case "failed":
       return "Failed";
     case "cancelled":
-      return "Cancelled";
+      return "取消led";
     case "incomplete":
       return "Incomplete";
   }

@@ -1,28 +1,28 @@
-import type { JobStatus } from "@shared/types.js";
+import type { Job状态 } from "@shared/types.js";
 import { cn } from "@/lib/utils";
-import { defaultStatusToken, statusTokens } from "./constants";
+import { default状态Token, statusTokens } from "./constants";
 
-interface JobStatusBadgeProps {
-  status: JobStatus;
+interface Job状态BadgeProps {
+  status: Job状态;
   label?: string;
-  className?: string;
+  class名称?: string;
 }
 
-export const JobStatusBadge = ({
+export const Job状态Badge = ({
   status,
   label,
-  className,
-}: JobStatusBadgeProps) => {
-  const statusToken = statusTokens[status] ?? defaultStatusToken;
+  class名称,
+}: Job状态BadgeProps) => {
+  const statusToken = statusTokens[status] ?? default状态Token;
   return (
     <span
-      className={cn(
+      class名称={cn(
         "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-wide",
         statusToken.badge,
-        className,
+        class名称,
       )}
     >
-      <span className={cn("h-1.5 w-1.5 rounded-full", statusToken.dot)} />
+      <span class名称={cn("h-1.5 w-1.5 rounded-full", statusToken.dot)} />
       {label ?? statusToken.label}
     </span>
   );

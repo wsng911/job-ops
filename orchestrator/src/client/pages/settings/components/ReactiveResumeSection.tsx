@@ -1,6 +1,6 @@
 import { ReactiveResumeConfigPanel } from "@client/components/ReactiveResumeConfigPanel";
-import { SettingsSectionFrame } from "@client/pages/settings/components/SettingsSectionFrame";
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import { 设置SectionFrame } from "@client/pages/settings/components/设置SectionFrame";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import type { PdfRenderer, ResumeProjectCatalogItem } from "@shared/types.js";
 import type React from "react";
 import {
@@ -15,8 +15,8 @@ type ReactiveResumeSectionProps = {
   setRxResumeBaseResumeIdDraft: (value: string | null) => void;
   // True when v5 API key is configured.
   hasRxResumeAccess: boolean;
-  onCredentialFieldEdit?: () => void;
-  validationStatus?: {
+  onCredentialField编辑?: () => void;
+  validation状态?: {
     checked: boolean;
     valid: boolean;
     message?: string | null;
@@ -35,8 +35,8 @@ export const ReactiveResumeSection: React.FC<ReactiveResumeSectionProps> = ({
   rxResumeBaseResumeIdDraft,
   setRxResumeBaseResumeIdDraft,
   hasRxResumeAccess,
-  onCredentialFieldEdit,
-  validationStatus,
+  onCredentialField编辑,
+  validation状态,
   profileProjects,
   lockedCount,
   maxProjectsTotal,
@@ -50,7 +50,7 @@ export const ReactiveResumeSection: React.FC<ReactiveResumeSectionProps> = ({
     clearErrors,
     setValue,
     formState: { errors },
-  } = useFormContext<UpdateSettingsInput>();
+  } = useFormContext<更新设置Input>();
 
   const pdfRendererValue = (useWatch({
     control,
@@ -60,9 +60,9 @@ export const ReactiveResumeSection: React.FC<ReactiveResumeSectionProps> = ({
     useWatch({ control, name: "rxresumeApiKey" }) ?? "";
   const rxresumeUrlValue = useWatch({ control, name: "rxresumeUrl" }) ?? "";
   const resumeProjectsValue = useWatch({ control, name: "resumeProjects" });
-  const setDirtyTouchedValue = <TField extends Path<UpdateSettingsInput>>(
+  const setDirtyTouchedValue = <TField extends Path<更新设置Input>>(
     field: TField,
-    value: PathValue<UpdateSettingsInput, TField>,
+    value: PathValue<更新设置Input, TField>,
   ) =>
     setValue(field, value, {
       shouldDirty: true,
@@ -70,12 +70,12 @@ export const ReactiveResumeSection: React.FC<ReactiveResumeSectionProps> = ({
     });
 
   const clearRxResumeFeedback = () => {
-    onCredentialFieldEdit?.();
+    onCredentialField编辑?.();
     clearErrors(["rxresumeApiKey", "rxresumeUrl"]);
   };
 
   return (
-    <SettingsSectionFrame
+    <设置SectionFrame
       mode={layoutMode}
       title="Reactive Resume"
       value="reactive-resume"
@@ -88,8 +88,8 @@ export const ReactiveResumeSection: React.FC<ReactiveResumeSectionProps> = ({
         pdfRendererError={errors.pdfRenderer?.message as string | undefined}
         disabled={isLoading || isSaving}
         hasRxResumeAccess={hasRxResumeAccess}
-        showValidationStatus={Boolean(validationStatus)}
-        validationStatus={validationStatus}
+        showValidation状态={Boolean(validation状态)}
+        validation状态={validation状态}
         shared={{
           baseUrl: rxresumeUrlValue,
           onBaseUrlChange: (value) => {
@@ -120,6 +120,6 @@ export const ReactiveResumeSection: React.FC<ReactiveResumeSectionProps> = ({
             errors.resumeProjects?.maxProjects?.message?.toString(),
         }}
       />
-    </SettingsSectionFrame>
+    </设置SectionFrame>
   );
 };

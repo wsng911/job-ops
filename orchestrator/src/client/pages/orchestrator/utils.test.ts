@@ -1,14 +1,14 @@
-import { createAppSettings, createJob } from "@shared/testing/factories.js";
+import { createApp设置, createJob } from "@shared/testing/factories.js";
 import { describe, expect, it } from "vitest";
 import { getEnabledSources, getJobCounts } from "./utils";
 
 describe("orchestrator utils", () => {
   it("enables adzuna only when both app id and key are configured", () => {
-    const withCreds = createAppSettings({
+    const withCreds = createApp设置({
       adzunaAppId: "app-id",
       adzunaAppKeyHint: "key-",
     });
-    const withoutKey = createAppSettings({
+    const withoutKey = createApp设置({
       adzunaAppId: "app-id",
       adzunaAppKeyHint: null,
     });
@@ -18,30 +18,30 @@ describe("orchestrator utils", () => {
   });
 
   it("enables startupjobs without credentials", () => {
-    expect(getEnabledSources(createAppSettings())).toContain("startupjobs");
+    expect(getEnabledSources(createApp设置())).toContain("startupjobs");
   });
 
   it("enables workingnomads without credentials", () => {
-    expect(getEnabledSources(createAppSettings())).toContain("workingnomads");
+    expect(getEnabledSources(createApp设置())).toContain("workingnomads");
   });
 
   it("enables golangjobs without credentials", () => {
-    expect(getEnabledSources(createAppSettings())).toContain("golangjobs");
+    expect(getEnabledSources(createApp设置())).toContain("golangjobs");
   });
 
   it("enables jobindex without credentials", () => {
-    expect(getEnabledSources(createAppSettings())).toContain("jobindex");
+    expect(getEnabledSources(createApp设置())).toContain("jobindex");
   });
 
   it("enables seek only when apify token is configured", () => {
-    const withToken = createAppSettings({ apifyTokenHint: "sk-" });
-    const withoutToken = createAppSettings({ apifyTokenHint: null });
+    const withToken = createApp设置({ apifyTokenHint: "sk-" });
+    const withoutToken = createApp设置({ apifyTokenHint: null });
     expect(getEnabledSources(withToken)).toContain("seek");
     expect(getEnabledSources(withoutToken)).not.toContain("seek");
   });
 
   it("enables naukri without credentials", () => {
-    expect(getEnabledSources(createAppSettings())).toContain("naukri");
+    expect(getEnabledSources(createApp设置())).toContain("naukri");
   });
 
   it("counts processing jobs in ready and discovered tabs", () => {

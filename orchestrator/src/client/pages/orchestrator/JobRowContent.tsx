@@ -1,13 +1,13 @@
 import type { JobListItem } from "@shared/types.js";
 import { cn } from "@/lib/utils";
-import { defaultStatusToken, statusTokens } from "./constants";
+import { default状态Token, statusTokens } from "./constants";
 
 interface JobRowContentProps {
   job: JobListItem;
   isSelected?: boolean;
-  showStatusDot?: boolean;
-  statusDotClassName?: string;
-  className?: string;
+  show状态Dot?: boolean;
+  statusDotClass名称?: string;
+  class名称?: string;
 }
 
 function getSuitabilityScoreTone(score: number): string {
@@ -19,52 +19,52 @@ function getSuitabilityScoreTone(score: number): string {
 export const JobRowContent = ({
   job,
   isSelected = false,
-  showStatusDot = true,
-  statusDotClassName,
-  className,
+  show状态Dot = true,
+  statusDotClass名称,
+  class名称,
 }: JobRowContentProps) => {
   const hasScore = job.suitabilityScore != null;
-  const statusToken = statusTokens[job.status] ?? defaultStatusToken;
+  const statusToken = statusTokens[job.status] ?? default状态Token;
   const suitabilityTone = getSuitabilityScoreTone(job.suitabilityScore ?? 0);
 
   return (
-    <div className={cn("flex min-w-0 flex-1 items-center gap-3", className)}>
+    <div class名称={cn("flex min-w-0 flex-1 items-center gap-3", class名称)}>
       <span
-        className={cn(
+        class名称={cn(
           "h-2 w-2 rounded-full shrink-0",
           statusToken.dot,
           !isSelected && "opacity-70",
-          statusDotClassName,
-          !showStatusDot && "hidden",
+          statusDotClass名称,
+          !show状态Dot && "hidden",
         )}
         title={statusToken.label}
       />
 
-      <div className="min-w-0 flex-1">
+      <div class名称="min-w-0 flex-1">
         <div
-          className={cn(
+          class名称={cn(
             "truncate text-sm leading-tight",
             isSelected ? "font-semibold" : "font-medium",
           )}
         >
           {job.title}
         </div>
-        <div className="truncate text-xs text-muted-foreground mt-0.5">
+        <div class名称="truncate text-xs text-muted-foreground mt-0.5">
           {job.employer}
           {job.location && (
-            <span className="before:content-['_in_']">{job.location}</span>
+            <span class名称="before:content-['_in_']">{job.location}</span>
           )}
         </div>
         {job.salary?.trim() && (
-          <div className="truncate text-xs text-muted-foreground mt-0.5">
+          <div class名称="truncate text-xs text-muted-foreground mt-0.5">
             {job.salary}
           </div>
         )}
       </div>
 
       {hasScore && (
-        <div className="shrink-0 text-right">
-          <span className={cn("text-xs tabular-nums", suitabilityTone)}>
+        <div class名称="shrink-0 text-right">
+          <span class名称={cn("text-xs tabular-nums", suitabilityTone)}>
             {job.suitabilityScore}
           </span>
         </div>

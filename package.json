@@ -1,5 +1,5 @@
 {
-  "name": "job-ops",
+  "name": "job-ops-zh",
   "private": true,
   "workspaces": [
     "orchestrator",
@@ -31,5 +31,6 @@
   },
   "volta": {
     "node": "22.22.1"
-  }
+  },
+  "description": "求职申请追踪工具，中文界面"
 }

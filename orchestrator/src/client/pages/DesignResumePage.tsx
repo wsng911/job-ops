@@ -4,7 +4,7 @@ import { DesignResumeRail } from "@client/components/design-resume/DesignResumeR
 import { ItemDialog } from "@client/components/design-resume/ItemDialog";
 import { PageHeader, PageMain } from "@client/components/layout";
 import { useDesignResume } from "@client/hooks/useDesignResume";
-import { useSettings } from "@client/hooks/useSettings";
+import { use设置 } from "@client/hooks/use设置";
 import { useTracerReadiness } from "@client/hooks/useTracerReadiness";
 import type {
   DesignResumeDocument,
@@ -28,12 +28,12 @@ import { downloadDesignResumePdf } from "@/client/lib/private-pdf";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
+  AlertDialog取消,
   AlertDialogContent,
-  AlertDialogDescription,
+  AlertDialog描述,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialog标题,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -46,7 +46,7 @@ import {
   Sheet,
   SheetContent,
   SheetHeader,
-  SheetTitle,
+  Sheet标题,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import type { ItemDefinition } from "../components/design-resume/definitions";
@@ -63,10 +63,10 @@ import { queryKeys } from "../lib/queryKeys";
 export const DesignResumePage: React.FC = () => {
   const queryClient = useQueryClient();
   const { document, status, isLoading, error } = useDesignResume();
-  const { settings, isLoading: settingsLoading } = useSettings();
+  const { settings, isLoading: settingsLoading } = use设置();
   const { readiness: tracerReadiness } = useTracerReadiness();
   const [draft, setDraft] = useState<DesignResumeDocument | null>(null);
-  const [saveState, setSaveState] = useState<
+  const [saveState, set保存State] = useState<
     "idle" | "saving" | "saved" | "error"
   >("idle");
   const [dialogState, setDialogState] = useState<{
@@ -77,7 +77,7 @@ export const DesignResumePage: React.FC = () => {
   const [mobileRailOpen, setMobileRailOpen] = useState(false);
   const [pictureUploading, setPictureUploading] = useState(false);
   const [resumeImporting, setResumeImporting] = useState(false);
-  const [showReimportConfirm, setShowReimportConfirm] = useState(false);
+  const [showReimport确认, setShowReimport确认] = useState(false);
   const [pdfDownloading, setPdfDownloading] = useState(false);
   const [rendererUpdating, setRendererUpdating] = useState(false);
   const [dirty, setDirty] = useState(false);
@@ -117,7 +117,7 @@ export const DesignResumePage: React.FC = () => {
       const documentSnapshot = structuredClone(draft.resumeJson);
 
       try {
-        setSaveState("saving");
+        set保存State("saving");
         const updated = await api.updateDesignResume({
           baseRevision,
           document: documentSnapshot,
@@ -131,7 +131,7 @@ export const DesignResumePage: React.FC = () => {
           });
           setDraft(updated);
           setDirty(false);
-          setSaveState("saved");
+          set保存State("saved");
           return;
         }
 
@@ -145,9 +145,9 @@ export const DesignResumePage: React.FC = () => {
               }
             : updated,
         );
-        setSaveState("idle");
+        set保存State("idle");
       } catch (saveError) {
-        setSaveState("error");
+        set保存State("error");
         showErrorToast(saveError, "Failed to save Design Resume.");
       }
     }, 700);
@@ -180,7 +180,7 @@ export const DesignResumePage: React.FC = () => {
       const baseRevision = draft.revision;
       const documentSnapshot = structuredClone(draft.resumeJson);
 
-      setSaveState("saving");
+      set保存State("saving");
       const updated = await api.updateDesignResume({
         baseRevision,
         document: documentSnapshot,
@@ -188,7 +188,7 @@ export const DesignResumePage: React.FC = () => {
 
       if (editVersionRef.current === editVersionAtStart) {
         setDesignResume(updated);
-        setSaveState("saved");
+        set保存State("saved");
         return updated;
       }
 
@@ -207,7 +207,7 @@ export const DesignResumePage: React.FC = () => {
           : updated,
       );
       setDirty(true);
-      setSaveState("idle");
+      set保存State("idle");
       return mergedDraft;
     };
 
@@ -223,7 +223,7 @@ export const DesignResumePage: React.FC = () => {
       };
     });
     setDirty(true);
-    if (saveState === "saved" || saveState === "error") setSaveState("idle");
+    if (saveState === "saved" || saveState === "error") set保存State("idle");
   };
 
   const activeDialogItem = useMemo(() => {
@@ -242,20 +242,20 @@ export const DesignResumePage: React.FC = () => {
 
   const handleImport = async () => {
     try {
-      setSaveState("saving");
+      set保存State("saving");
       const imported = await api.importDesignResumeFromRxResume();
       setDesignResume(imported);
-      setSaveState("saved");
+      set保存State("saved");
       toast.success("Imported your resume.");
     } catch (importError) {
-      setSaveState("error");
+      set保存State("error");
       showErrorToast(importError, "Failed to import your resume.");
     }
   };
 
-  const handleImportWithConfirm = () => {
+  const handleImportWith确认 = () => {
     if (status?.exists) {
-      setShowReimportConfirm(true);
+      setShowReimport确认(true);
     } else {
       void handleImport();
     }
@@ -272,15 +272,15 @@ export const DesignResumePage: React.FC = () => {
       }
 
       const imported = await api.importDesignResumeFromFile({
-        fileName: file.name,
+        file名称: file.name,
         mediaType: file.type || match[1],
         dataBase64: match[2],
       });
       setDesignResume(imported);
-      setSaveState("saved");
+      set保存State("saved");
       toast.success("Imported your resume file.");
     } catch (importError) {
-      setSaveState("error");
+      set保存State("error");
       showErrorToast(importError, "Failed to import your resume file.");
     } finally {
       setResumeImporting(false);
@@ -293,7 +293,7 @@ export const DesignResumePage: React.FC = () => {
   const handleExport = async () => {
     try {
       const exported = await api.exportDesignResume();
-      makeDownload(exported.fileName, exported.document);
+      makeDownload(exported.file名称, exported.document);
       toast.success("Exported your resume JSON.");
     } catch (exportError) {
       showErrorToast(exportError, "Failed to export Design Resume.");
@@ -304,7 +304,7 @@ export const DesignResumePage: React.FC = () => {
     try {
       setPdfDownloading(true);
       const generated = await api.generateDesignResumePdf();
-      await downloadDesignResumePdf(generated.fileName);
+      await downloadDesignResumePdf(generated.file名称);
       toast.success("Your PDF is ready.");
     } catch (downloadError) {
       showErrorToast(downloadError, "Failed to generate a PDF.");
@@ -344,7 +344,7 @@ export const DesignResumePage: React.FC = () => {
             : updated,
         );
         setDirty(true);
-        setSaveState("idle");
+        set保存State("idle");
       }
       toast.success("Picture uploaded.");
     } catch (uploadError) {
@@ -357,7 +357,7 @@ export const DesignResumePage: React.FC = () => {
     }
   };
 
-  const handleDeletePicture = async () => {
+  const handle删除Picture = async () => {
     try {
       const latestDraft = await ensureLatestPersistedDraft();
       if (!latestDraft) return;
@@ -379,7 +379,7 @@ export const DesignResumePage: React.FC = () => {
             : updated,
         );
         setDirty(true);
-        setSaveState("idle");
+        set保存State("idle");
       }
       toast.success("Picture removed.");
     } catch (deleteError) {
@@ -392,10 +392,10 @@ export const DesignResumePage: React.FC = () => {
 
     try {
       setRendererUpdating(true);
-      const updatedSettings = await api.updateSettings({
+      const updated设置 = await api.update设置({
         pdfRenderer: nextRenderer,
       });
-      queryClient.setQueryData(queryKeys.settings.current(), updatedSettings);
+      queryClient.setQueryData(queryKeys.settings.current(), updated设置);
       toast.success(
         nextRenderer === "latex"
           ? "Jake's template is now active."
@@ -417,7 +417,7 @@ export const DesignResumePage: React.FC = () => {
           subtitle="Loading your resume"
         />
         <PageMain>
-          <div className="rounded-2xl border border-border/70 bg-background/95 px-6 py-20 text-center text-sm text-muted-foreground">
+          <div class名称="rounded-2xl border border-border/70 bg-background/95 px-6 py-20 text-center text-sm text-muted-foreground">
             Loading Design Resume...
           </div>
         </PageMain>
@@ -428,7 +428,7 @@ export const DesignResumePage: React.FC = () => {
   const rail = draft ? (
     <DesignResumeRail
       draft={draft}
-      onUpdateResumeJson={updateResumeJson}
+      on更新ResumeJson={updateResumeJson}
       onOpenDialog={(definition, index) =>
         setDialogState({
           definition,
@@ -440,7 +440,7 @@ export const DesignResumePage: React.FC = () => {
         })
       }
       onUploadPicture={() => fileInputRef.current?.click()}
-      onDeletePicture={handleDeletePicture}
+      on删除Picture={handle删除Picture}
       pictureUploading={pictureUploading}
       pictureEnabled={pictureEnabled}
       pictureDisabledReason={pictureDisabledReason}
@@ -453,7 +453,7 @@ export const DesignResumePage: React.FC = () => {
         ref={fileInputRef}
         type="file"
         accept="image/png,image/jpeg,image/webp"
-        className="hidden"
+        class名称="hidden"
         onChange={(event) => {
           const file = event.currentTarget.files?.[0];
           if (file) {
@@ -465,7 +465,7 @@ export const DesignResumePage: React.FC = () => {
         ref={importFileInputRef}
         type="file"
         accept="application/pdf,.pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.docx"
-        className="hidden"
+        class名称="hidden"
         onChange={(event) => {
           const file = event.currentTarget.files?.[0];
           if (file) {
@@ -477,44 +477,44 @@ export const DesignResumePage: React.FC = () => {
       <PageHeader
         icon={PenSquare}
         title="Design Resume"
-        subtitle="Edit your resume details"
+        subtitle="编辑 your resume details"
         actions={
-          <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:flex-nowrap sm:justify-end">
+          <div class名称="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:flex-nowrap sm:justify-end">
             <Sheet open={mobileRailOpen} onOpenChange={setMobileRailOpen}>
               <SheetTrigger asChild>
-                <Button type="button" variant="outline" className="lg:hidden">
-                  <PanelLeft className="mr-2 h-4 w-4" />
-                  Edit
+                <Button type="button" variant="outline" class名称="lg:hidden">
+                  <PanelLeft class名称="mr-2 h-4 w-4" />
+                  编辑
                 </Button>
               </SheetTrigger>
               <SheetContent
                 side="left"
-                className="w-full max-w-[28rem] overflow-y-auto"
+                class名称="w-full max-w-[28rem] overflow-y-auto"
               >
                 <SheetHeader>
-                  <SheetTitle>Design Resume</SheetTitle>
+                  <Sheet标题>Design Resume</Sheet标题>
                 </SheetHeader>
-                <div className="mt-6">{rail}</div>
+                <div class名称="mt-6">{rail}</div>
               </SheetContent>
             </Sheet>
 
-            <div className="hidden items-center gap-2 sm:flex">
+            <div class名称="hidden items-center gap-2 sm:flex">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => importFileInputRef.current?.click()}
                 disabled={resumeImporting}
               >
-                <Import className="mr-2 h-4 w-4" />
+                <Import class名称="mr-2 h-4 w-4" />
                 {resumeImporting ? "Importing File" : "Import File"}
               </Button>
 
               <Button
                 type="button"
                 variant="outline"
-                onClick={handleImportWithConfirm}
+                onClick={handleImportWith确认}
               >
-                <Import className="mr-2 h-4 w-4" />
+                <Import class名称="mr-2 h-4 w-4" />
                 {status?.exists ? "Re-import RxResume" : "Import RxResume"}
               </Button>
 
@@ -524,7 +524,7 @@ export const DesignResumePage: React.FC = () => {
                 onClick={handleDownloadPdf}
                 disabled={!canDownloadPdf}
               >
-                <FileDown className="mr-2 h-4 w-4" />
+                <FileDown class名称="mr-2 h-4 w-4" />
                 {pdfDownloading ? "Preparing PDF" : "Download PDF"}
               </Button>
 
@@ -534,7 +534,7 @@ export const DesignResumePage: React.FC = () => {
                 onClick={handleExport}
                 disabled={!status?.exists}
               >
-                <Download className="mr-2 h-4 w-4" />
+                <Download class名称="mr-2 h-4 w-4" />
                 Export
               </Button>
             </div>
@@ -545,36 +545,36 @@ export const DesignResumePage: React.FC = () => {
                   type="button"
                   variant="outline"
                   size="icon"
-                  className="ml-auto sm:hidden"
+                  class名称="ml-auto sm:hidden"
                   aria-label="Open resume actions"
                 >
-                  <MoreHorizontal className="h-4 w-4" />
+                  <MoreHorizontal class名称="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" class名称="w-48">
                 <DropdownMenuItem
                   onSelect={() => importFileInputRef.current?.click()}
                   disabled={resumeImporting}
                 >
-                  <Import className="mr-2 h-4 w-4" />
+                  <Import class名称="mr-2 h-4 w-4" />
                   {resumeImporting ? "Importing File" : "Import File"}
                 </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => handleImportWithConfirm()}>
-                  <Import className="mr-2 h-4 w-4" />
+                <DropdownMenuItem onSelect={() => handleImportWith确认()}>
+                  <Import class名称="mr-2 h-4 w-4" />
                   {status?.exists ? "Re-import RxResume" : "Import RxResume"}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onSelect={() => handleDownloadPdf()}
                   disabled={!canDownloadPdf}
                 >
-                  <FileDown className="mr-2 h-4 w-4" />
+                  <FileDown class名称="mr-2 h-4 w-4" />
                   {pdfDownloading ? "Preparing PDF" : "Download PDF"}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onSelect={() => handleExport()}
                   disabled={!status?.exists}
                 >
-                  <Download className="mr-2 h-4 w-4" />
+                  <Download class名称="mr-2 h-4 w-4" />
                   Export JSON
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -583,27 +583,27 @@ export const DesignResumePage: React.FC = () => {
         }
       />
 
-      <PageMain className="h-[calc(100dvh-5rem)] overflow-hidden">
+      <PageMain class名称="h-[calc(100dvh-5rem)] overflow-hidden">
         {!draft ? (
-          <div className="flex h-full items-center justify-center rounded-2xl border border-border/70 bg-background/95 px-6 py-20 text-center">
-            <div className="mx-auto max-w-xl space-y-4">
-              <div className="inline-flex rounded-full border border-border/70 bg-muted/20 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
+          <div class名称="flex h-full items-center justify-center rounded-2xl border border-border/70 bg-background/95 px-6 py-20 text-center">
+            <div class名称="mx-auto max-w-xl space-y-4">
+              <div class名称="inline-flex rounded-full border border-border/70 bg-muted/20 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
                 Design Resume
               </div>
-              <h2 className="text-3xl font-semibold tracking-tight text-foreground">
+              <h2 class名称="text-3xl font-semibold tracking-tight text-foreground">
                 Import your resume to start editing it here.
               </h2>
-              <p className="text-sm leading-7 text-muted-foreground">
+              <p class名称="text-sm leading-7 text-muted-foreground">
                 Once imported, you can update your resume here without jumping
                 between tools.
               </p>
-              <div className="flex justify-center gap-3">
+              <div class名称="flex justify-center gap-3">
                 <Button type="button" onClick={handleImport}>
-                  <Import className="mr-2 h-4 w-4" />
+                  <Import class名称="mr-2 h-4 w-4" />
                   Import resume
                 </Button>
                 {error ? (
-                  <div className="rounded-lg border border-rose-500/30 bg-rose-500/10 px-4 py-2 text-sm text-rose-300">
+                  <div class名称="rounded-lg border border-rose-500/30 bg-rose-500/10 px-4 py-2 text-sm text-rose-300">
                     {formatUserFacingError(
                       error,
                       "Unable to load Design Resume.",
@@ -614,18 +614,18 @@ export const DesignResumePage: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="grid h-full min-h-0 gap-6 lg:grid-cols-[400px_minmax(0,1fr)] xl:grid-cols-[500px_minmax(0,1fr)]">
-            <aside className="hidden min-h-0 lg:block">
-              <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-border/70 bg-muted/20">
-                <div className="border-b border-border/70 px-4 py-4">
-                  <div className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <div class名称="grid h-full min-h-0 gap-6 lg:grid-cols-[400px_minmax(0,1fr)] xl:grid-cols-[500px_minmax(0,1fr)]">
+            <aside class名称="hidden min-h-0 lg:block">
+              <div class名称="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-border/70 bg-muted/20">
+                <div class名称="border-b border-border/70 px-4 py-4">
+                  <div class名称="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                     Design Resume
                   </div>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Update your resume details here. Changes save automatically.
+                  <p class名称="mt-1 text-xs text-muted-foreground">
+                    更新 your resume details here. Changes save automatically.
                   </p>
                 </div>
-                <div className="min-h-0 flex-1 overflow-y-auto p-4">{rail}</div>
+                <div class名称="min-h-0 flex-1 overflow-y-auto p-4">{rail}</div>
               </div>
             </aside>
 
@@ -644,14 +644,14 @@ export const DesignResumePage: React.FC = () => {
       {dialogState && draft ? (
         <ItemDialog
           open={Boolean(dialogState)}
-          title={`${dialogState.index == null ? "Add" : "Edit"} ${dialogState.definition.singularTitle}`}
+          title={`${dialogState.index == null ? "添加" : "编辑"} ${dialogState.definition.singular标题}`}
           description={dialogState.definition.description}
           item={activeDialogItem}
           fields={dialogState.definition.fields}
           onOpenChange={(open) => {
             if (!open) setDialogState(null);
           }}
-          onSave={(item) => {
+          on保存={(item) => {
             updateResumeJson((current) => {
               const next = structuredClone(current);
               const sections = (asRecord(next.sections) ?? {}) as Record<
@@ -681,7 +681,7 @@ export const DesignResumePage: React.FC = () => {
               return next;
             });
           }}
-          onDelete={
+          on删除={
             dialogState.index == null
               ? undefined
               : () => {
@@ -715,28 +715,28 @@ export const DesignResumePage: React.FC = () => {
       ) : null}
 
       <AlertDialog
-        open={showReimportConfirm}
-        onOpenChange={setShowReimportConfirm}
+        open={showReimport确认}
+        onOpenChange={setShowReimport确认}
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Re-import from RxResume?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialog标题>Re-import from RxResume?</AlertDialog标题>
+            <AlertDialog描述>
               This will replace your current Design Resume with the latest data
               from RxResume. Any edits you've made here will be permanently
               overwritten and cannot be undone.
-            </AlertDialogDescription>
+            </AlertDialog描述>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialog取消>取消</AlertDialog取消>
             <AlertDialogAction
-              className="bg-[#F1703E] text-white hover:bg-[#d9612f]"
+              class名称="bg-[#F1703E] text-white hover:bg-[#d9612f]"
               onClick={() => {
-                setShowReimportConfirm(false);
+                setShowReimport确认(false);
                 void handleImport();
               }}
             >
-              <Import className="mr-2 h-4 w-4" />
+              <Import class名称="mr-2 h-4 w-4" />
               Re-import
             </AlertDialogAction>
           </AlertDialogFooter>

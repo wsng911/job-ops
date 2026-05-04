@@ -7,9 +7,9 @@ import type React from "react";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
+  Sheet描述,
   SheetHeader,
-  SheetTitle,
+  Sheet标题,
 } from "@/components/ui/sheet";
 import { ManualImportFlow, type ManualImportResult } from "./ManualImportFlow";
 
@@ -26,26 +26,26 @@ export const ManualImportSheet: React.FC<ManualImportSheetProps> = ({
 }) => {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:max-w-xl overflow-hidden">
-        <div className="flex h-full flex-col">
+      <SheetContent side="right" class名称="w-full sm:max-w-xl overflow-hidden">
+        <div class名称="flex h-full flex-col">
           <SheetHeader>
-            <SheetTitle className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-border/60 bg-muted/30">
-                <FileText className="h-4 w-4 text-muted-foreground" />
+            <Sheet标题 class名称="flex items-center gap-2">
+              <span class名称="flex h-8 w-8 items-center justify-center rounded-lg border border-border/60 bg-muted/30">
+                <FileText class名称="h-4 w-4 text-muted-foreground" />
               </span>
               Manual Import
-            </SheetTitle>
-            <SheetDescription>
+            </Sheet标题>
+            <Sheet描述>
               Paste a job description, review the AI draft, then import the
               role.
-            </SheetDescription>
+            </Sheet描述>
           </SheetHeader>
 
-          <div className="mt-4 min-h-0 flex-1">
+          <div class名称="mt-4 min-h-0 flex-1">
             <ManualImportFlow
               active={open}
               onImported={onImported}
-              onClose={() => onOpenChange(false)}
+              on关闭={() => onOpenChange(false)}
             />
           </div>
         </div>

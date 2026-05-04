@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   hasCompletedBasicAuthOnboarding,
-  hasSavedSearchTermsOnboarding,
+  has保存d搜索TermsOnboarding,
   isOnboardingComplete,
 } from "./onboarding";
 
@@ -17,7 +17,7 @@ describe("onboarding helpers", () => {
 
   it("requires an explicit saved search-terms override by default", () => {
     expect(
-      hasSavedSearchTermsOnboarding({
+      has保存d搜索TermsOnboarding({
         searchTerms: {
           value: ["Platform Engineer"],
           default: ["Software Engineer"],

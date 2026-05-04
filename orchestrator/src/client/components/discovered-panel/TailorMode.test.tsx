@@ -1,5 +1,5 @@
 import * as api from "@client/api";
-import { useProfile } from "@client/hooks/useProfile";
+import { use个人资料 } from "@client/hooks/use个人资料";
 import { _resetTracerReadinessCache } from "@client/hooks/useTracerReadiness";
 import { renderWithQueryClient } from "@client/test/renderWithQueryClient";
 import { createJob as createBaseJob } from "@shared/testing/factories.js";
@@ -18,8 +18,8 @@ vi.mock("@client/api", () => ({
   getTracerReadiness: vi.fn(),
 }));
 
-vi.mock("@client/hooks/useProfile", () => ({
-  useProfile: vi.fn(),
+vi.mock("@client/hooks/use个人资料", () => ({
+  use个人资料: vi.fn(),
 }));
 
 vi.mock("sonner", () => ({
@@ -32,12 +32,12 @@ vi.mock("sonner", () => ({
 const createJob = (overrides: Partial<Job> = {}): Job =>
   createBaseJob({
     id: "job-1",
-    tailoredSummary: "Saved summary",
-    tailoredHeadline: "Saved headline",
+    tailoredSummary: "保存d summary",
+    tailoredHeadline: "保存d headline",
     tailoredSkills: JSON.stringify([
       { name: "Core", keywords: ["React", "TypeScript"] },
     ]),
-    jobDescription: "Saved description",
+    job描述: "保存d description",
     selectedProjectIds: "p1",
     ...overrides,
   });
@@ -63,7 +63,7 @@ describe("TailorMode", () => {
       lastSuccessAt: Date.now(),
       reason: null,
     });
-    vi.mocked(useProfile).mockReturnValue({
+    vi.mocked(use个人资料).mockReturnValue({
       profile: {
         basics: {
           summary: "Original base summary",
@@ -74,10 +74,10 @@ describe("TailorMode", () => {
             items: [
               {
                 id: "s1",
-                name: "Backend",
+                name: "返回end",
                 description: "",
                 level: 0,
-                keywords: ["Node.js", "TypeScript"],
+                keywords: ["否de.js", "TypeScript"],
                 visible: true,
               },
             ],
@@ -86,8 +86,8 @@ describe("TailorMode", () => {
       },
       error: null,
       isLoading: false,
-      personName: "Resume",
-      refreshProfile: vi.fn(),
+      person名称: "Resume",
+      refresh个人资料: vi.fn(),
     });
   });
 
@@ -95,7 +95,7 @@ describe("TailorMode", () => {
     const { rerender } = render(
       <TailorMode
         job={createJob()}
-        onBack={vi.fn()}
+        on返回={vi.fn()}
         onFinalize={vi.fn()}
         isFinalizing={false}
       />,
@@ -112,7 +112,7 @@ describe("TailorMode", () => {
     rerender(
       <TailorMode
         job={createJob({ tailoredSummary: "Older server value" })}
-        onBack={vi.fn()}
+        on返回={vi.fn()}
         onFinalize={vi.fn()}
         isFinalizing={false}
       />,
@@ -128,7 +128,7 @@ describe("TailorMode", () => {
     render(
       <TailorMode
         job={createJob({ selectedProjectIds: "" })}
-        onBack={vi.fn()}
+        on返回={vi.fn()}
         onFinalize={vi.fn()}
         isFinalizing={false}
       />,
@@ -143,7 +143,7 @@ describe("TailorMode", () => {
     render(
       <TailorMode
         job={createJob()}
-        onBack={vi.fn()}
+        on返回={vi.fn()}
         onFinalize={vi.fn()}
         isFinalizing={false}
       />,
@@ -163,7 +163,7 @@ describe("TailorMode", () => {
     const { rerender } = render(
       <TailorMode
         job={createJob()}
-        onBack={vi.fn()}
+        on返回={vi.fn()}
         onFinalize={vi.fn()}
         isFinalizing={false}
       />,
@@ -181,15 +181,15 @@ describe("TailorMode", () => {
       <TailorMode
         job={createJob({
           id: "job-2",
-          tailoredSummary: "New job summary",
-          tailoredHeadline: "New job headline",
+          tailoredSummary: "新建 job summary",
+          tailoredHeadline: "新建 job headline",
           tailoredSkills: JSON.stringify([
-            { name: "Backend", keywords: ["Node.js", "Postgres"] },
+            { name: "返回end", keywords: ["否de.js", "Postgres"] },
           ]),
-          jobDescription: "New job description",
+          job描述: "新建 job description",
           selectedProjectIds: "",
         })}
-        onBack={vi.fn()}
+        on返回={vi.fn()}
         onFinalize={vi.fn()}
         isFinalizing={false}
       />,
@@ -197,22 +197,22 @@ describe("TailorMode", () => {
     ensureAccordionOpen("Summary");
     ensureAccordionOpen("Headline");
     ensureAccordionOpen("Tailored Skills");
-    ensureAccordionOpen("Backend");
+    ensureAccordionOpen("返回end");
 
     expect(screen.getByLabelText("Tailored Summary")).toHaveValue(
-      "New job summary",
+      "新建 job summary",
     );
     expect(screen.getByLabelText("Tailored Headline")).toHaveValue(
-      "New job headline",
+      "新建 job headline",
     );
-    expect(screen.getByDisplayValue("Node.js, Postgres")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("否de.js, Postgres")).toBeInTheDocument();
   });
 
   it("does not sync same-job props while summary field is focused", async () => {
     const { rerender } = render(
       <TailorMode
         job={createJob()}
-        onBack={vi.fn()}
+        on返回={vi.fn()}
         onFinalize={vi.fn()}
         isFinalizing={false}
       />,
@@ -228,7 +228,7 @@ describe("TailorMode", () => {
     rerender(
       <TailorMode
         job={createJob({ tailoredSummary: "Incoming from poll" })}
-        onBack={vi.fn()}
+        on返回={vi.fn()}
         onFinalize={vi.fn()}
         isFinalizing={false}
       />,
@@ -236,7 +236,7 @@ describe("TailorMode", () => {
     ensureAccordionOpen("Summary");
 
     expect(screen.getByLabelText("Tailored Summary")).toHaveValue(
-      "Saved summary",
+      "保存d summary",
     );
   });
 
@@ -244,7 +244,7 @@ describe("TailorMode", () => {
     const { rerender } = render(
       <TailorMode
         job={createJob()}
-        onBack={vi.fn()}
+        on返回={vi.fn()}
         onFinalize={vi.fn()}
         isFinalizing={false}
       />,
@@ -261,7 +261,7 @@ describe("TailorMode", () => {
     rerender(
       <TailorMode
         job={createJob({ tailoredHeadline: "Incoming headline from poll" })}
-        onBack={vi.fn()}
+        on返回={vi.fn()}
         onFinalize={vi.fn()}
         isFinalizing={false}
       />,
@@ -279,14 +279,14 @@ describe("TailorMode", () => {
       tailoredSummary: "AI summary",
       tailoredHeadline: "AI headline",
       tailoredSkills: JSON.stringify([
-        { name: "Backend", keywords: ["Node.js", "Kafka"] },
+        { name: "返回end", keywords: ["否de.js", "Kafka"] },
       ]),
     } as Job);
 
     render(
       <TailorMode
         job={createJob()}
-        onBack={vi.fn()}
+        on返回={vi.fn()}
         onFinalize={vi.fn()}
         isFinalizing={false}
       />,
@@ -302,16 +302,16 @@ describe("TailorMode", () => {
       "AI headline",
     );
     ensureAccordionOpen("Tailored Skills");
-    ensureAccordionOpen("Backend");
-    expect(screen.getByDisplayValue("Backend")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("Node.js, Kafka")).toBeInTheDocument();
+    ensureAccordionOpen("返回end");
+    expect(screen.getByDisplayValue("返回end")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("否de.js, Kafka")).toBeInTheDocument();
   });
 
   it("supports undo to template and redo to AI draft", async () => {
     render(
       <TailorMode
         job={createJob()}
-        onBack={vi.fn()}
+        on返回={vi.fn()}
         onFinalize={vi.fn()}
         isFinalizing={false}
       />,
@@ -327,7 +327,7 @@ describe("TailorMode", () => {
     );
     fireEvent.click(screen.getAllByLabelText("Redo to AI draft")[0]);
     expect(screen.getByLabelText("Tailored Summary")).toHaveValue(
-      "Saved summary",
+      "保存d summary",
     );
 
     ensureAccordionOpen("Headline");
@@ -337,13 +337,13 @@ describe("TailorMode", () => {
     );
     fireEvent.click(screen.getAllByLabelText("Redo to AI draft")[1]);
     expect(screen.getByLabelText("Tailored Headline")).toHaveValue(
-      "Saved headline",
+      "保存d headline",
     );
 
     ensureAccordionOpen("Tailored Skills");
     fireEvent.click(screen.getAllByLabelText("Undo to template")[2]);
-    ensureAccordionOpen("Backend");
-    expect(screen.getByDisplayValue("Node.js, TypeScript")).toBeInTheDocument();
+    ensureAccordionOpen("返回end");
+    expect(screen.getByDisplayValue("否de.js, TypeScript")).toBeInTheDocument();
     fireEvent.click(screen.getAllByLabelText("Redo to AI draft")[2]);
     ensureAccordionOpen("Core");
     expect(screen.getByDisplayValue("React, TypeScript")).toBeInTheDocument();

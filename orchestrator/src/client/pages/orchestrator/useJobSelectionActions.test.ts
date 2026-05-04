@@ -4,7 +4,7 @@ import type { JobActionResponse, JobActionStreamEvent } from "@shared/types.js";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { toast } from "sonner";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { useJobSelectionActions } from "./useJobSelectionActions";
+import { useJobSelection操作 } from "./useJobSelection操作";
 
 vi.mock("@client/api", () => ({
   streamJobAction: vi.fn(),
@@ -97,7 +97,7 @@ const mockStreamJobAction = (
   );
 };
 
-describe("useJobSelectionActions", () => {
+describe("useJobSelection操作", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(toast.loading).mockReturnValue("job-progress-toast");
@@ -109,7 +109,7 @@ describe("useJobSelectionActions", () => {
     );
     const loadJobs = vi.fn().mockResolvedValue(undefined);
     const { result } = renderHook(() =>
-      useJobSelectionActions({
+      useJobSelection操作({
         activeJobs,
         activeTab: "discovered",
         loadJobs,
@@ -129,7 +129,7 @@ describe("useJobSelectionActions", () => {
     );
     const loadJobs = vi.fn().mockResolvedValue(undefined);
     const { result } = renderHook(() =>
-      useJobSelectionActions({
+      useJobSelection操作({
         activeJobs,
         activeTab: "discovered",
         loadJobs,
@@ -180,7 +180,7 @@ describe("useJobSelectionActions", () => {
     );
 
     const { result } = renderHook(() =>
-      useJobSelectionActions({
+      useJobSelection操作({
         activeJobs,
         activeTab: "discovered",
         loadJobs,
@@ -243,7 +243,7 @@ describe("useJobSelectionActions", () => {
     });
 
     const { result } = renderHook(() =>
-      useJobSelectionActions({
+      useJobSelection操作({
         activeJobs,
         activeTab: "ready",
         loadJobs,

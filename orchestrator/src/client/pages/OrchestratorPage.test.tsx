@@ -22,19 +22,19 @@ Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
 });
 
 vi.mock("../api", () => ({
-  updateSettings: vi.fn().mockResolvedValue({}),
+  update设置: vi.fn().mockResolvedValue({}),
   runPipeline: vi.fn().mockResolvedValue({ message: "ok" }),
   cancelPipeline: vi.fn().mockResolvedValue({
     message: "Pipeline cancellation requested",
     pipelineRunId: "run-1",
     alreadyRequested: false,
   }),
-  getPipelineStatus: vi.fn().mockResolvedValue({
+  getPipeline状态: vi.fn().mockResolvedValue({
     isRunning: false,
     lastRun: null,
     nextScheduledRun: null,
   }),
-  getProfile: vi.fn().mockResolvedValue({ personName: "Test User" }),
+  get个人资料: vi.fn().mockResolvedValue({ person名称: "Test User" }),
   skipJob: vi.fn().mockResolvedValue({}),
   markAsApplied: vi.fn().mockResolvedValue({}),
   processJob: vi.fn().mockResolvedValue({}),
@@ -75,30 +75,30 @@ let mockIsLoading = false;
 const jobFixture = createJob({
   id: "job-1",
   source: "linkedin",
-  title: "Backend Engineer",
+  title: "返回end Engineer",
   employer: "Acme",
   location: "London",
-  jobDescription: "Build APIs",
+  job描述: "Build APIs",
   status: "ready",
 });
 
 const job2 = createJob({
   id: "job-2",
   source: "linkedin",
-  title: "Backend Engineer",
+  title: "返回end Engineer",
   employer: "Acme",
   location: "London",
-  jobDescription: "Build APIs",
+  job描述: "Build APIs",
   status: "discovered",
 });
 
 const processingJob = createJob({
   id: "job-3",
   source: "linkedin",
-  title: "Backend Engineer",
+  title: "返回end Engineer",
   employer: "Acme",
   location: "London",
-  jobDescription: "Build APIs",
+  job描述: "Build APIs",
   status: "processing",
 });
 
@@ -144,7 +144,7 @@ vi.mock("../hooks/useDemoInfo", () => ({
     lastResetAt: null,
     nextResetAt: null,
     baselineVersion: null,
-    baselineName: null,
+    baseline名称: null,
   }),
 }));
 
@@ -156,25 +156,25 @@ vi.mock("./orchestrator/usePipelineSources", () => ({
   }),
 }));
 
-vi.mock("../hooks/useSettings", () => ({
-  useSettings: () => ({
+vi.mock("../hooks/use设置", () => ({
+  use设置: () => ({
     settings: {
-      ukvisajobsEmail: null,
-      ukvisajobsPasswordHint: null,
+      ukvisajobs邮箱: null,
+      ukvisajobs密码Hint: null,
     },
-    refreshSettings: vi.fn(),
+    refresh设置: vi.fn(),
   }),
 }));
 
 vi.mock("./orchestrator/OrchestratorHeader", () => ({
   OrchestratorHeader: ({
-    onCancelPipeline,
+    on取消Pipeline,
   }: {
-    onCancelPipeline: () => void;
+    on取消Pipeline: () => void;
   }) => (
     <div data-testid="header">
-      <button type="button" onClick={onCancelPipeline}>
-        Cancel Pipeline
+      <button type="button" onClick={on取消Pipeline}>
+        取消 Pipeline
       </button>
     </div>
   ),
@@ -200,7 +200,7 @@ vi.mock("./orchestrator/JobCommandBar", () => ({
         Command Select Job
       </button>
       <button type="button" onClick={() => onOpenChange?.(false)}>
-        Close Command Bar
+        关闭 Command Bar
       </button>
     </div>
   ),
@@ -295,7 +295,7 @@ vi.mock("./orchestrator/OrchestratorFilters", () => ({
 vi.mock("./orchestrator/JobDetailPanel", () => ({
   JobDetailPanel: ({ selectedJob }: { selectedJob: Job | null }) => (
     <div data-testid="detail-panel">
-      {selectedJob?.appliedDuplicateMatch ? "Previously Applied" : "No match"}
+      {selectedJob?.appliedDuplicateMatch ? "Previously Applied" : "否 match"}
     </div>
   ),
 }));
@@ -388,14 +388,14 @@ vi.mock("./orchestrator/JobListPanel", () => ({
 
 vi.mock("./orchestrator/RunModeModal", () => ({
   RunModeModal: ({
-    onSaveAndRunAutomatic,
+    on保存AndRunAutomatic,
   }: {
-    onSaveAndRunAutomatic: (values: AutomaticRunValues) => Promise<void>;
+    on保存AndRunAutomatic: (values: AutomaticRunValues) => Promise<void>;
   }) => (
     <button
       type="button"
       data-testid="run-automatic"
-      onClick={() => void onSaveAndRunAutomatic(mockAutomaticRunValues)}
+      onClick={() => void on保存AndRunAutomatic(mockAutomaticRunValues)}
     >
       Run automatic
     </button>
@@ -498,7 +498,7 @@ describe("OrchestratorPage", () => {
       </MemoryRouter>,
     );
 
-    fireEvent.click(screen.getByText("Cancel Pipeline"));
+    fireEvent.click(screen.getByText("取消 Pipeline"));
 
     await waitFor(() => {
       expect(api.cancelPipeline).toHaveBeenCalledTimes(1);
@@ -652,7 +652,7 @@ describe("OrchestratorPage", () => {
     expect(screen.getByTestId("command-open")).toHaveTextContent("closed");
     fireEvent.click(screen.getByText("Open Command Bar"));
     expect(screen.getByTestId("command-open")).toHaveTextContent("open");
-    fireEvent.click(screen.getByText("Close Command Bar"));
+    fireEvent.click(screen.getByText("关闭 Command Bar"));
     expect(screen.getByTestId("command-open")).toHaveTextContent("closed");
   });
 
@@ -922,7 +922,7 @@ describe("OrchestratorPage", () => {
     ) as unknown as typeof window.matchMedia;
     const setIntervalSpy = vi
       .spyOn(globalThis, "setInterval")
-      .mockReturnValue(0 as unknown as NodeJS.Timeout);
+      .mockReturnValue(0 as unknown as 否deJS.Timeout);
 
     render(
       <MemoryRouter initialEntries={["/jobs/ready"]}>
@@ -936,7 +936,7 @@ describe("OrchestratorPage", () => {
     fireEvent.click(screen.getByTestId("run-automatic"));
 
     await waitFor(() => {
-      expect(api.updateSettings).toHaveBeenCalledWith({
+      expect(api.update设置).toHaveBeenCalledWith({
         searchTerms: ["backend"],
         workplaceTypes: ["remote", "hybrid", "onsite"],
         jobspyResultsWanted: 150,
@@ -949,7 +949,7 @@ describe("OrchestratorPage", () => {
         seekMaxJobsPerTerm: 150,
         jobspyCountryIndeed: "united kingdom",
         searchCities: null,
-        locationSearchScope: "selected_only",
+        location搜索Scope: "selected_only",
         locationMatchStrictness: "exact_only",
       });
     });
@@ -999,7 +999,7 @@ describe("OrchestratorPage", () => {
     fireEvent.click(screen.getByTestId("run-automatic"));
 
     await waitFor(() => {
-      expect(api.updateSettings).toHaveBeenCalledWith(
+      expect(api.update设置).toHaveBeenCalledWith(
         expect.objectContaining({
           searchCities: "London|Manchester",
         }),
@@ -1036,7 +1036,7 @@ describe("OrchestratorPage", () => {
     fireEvent.click(screen.getByTestId("run-automatic"));
 
     await waitFor(() => {
-      expect(api.updateSettings).toHaveBeenCalledWith(
+      expect(api.update设置).toHaveBeenCalledWith(
         expect.objectContaining({
           searchCities: "Leeds|Manchester",
         }),
@@ -1073,7 +1073,7 @@ describe("OrchestratorPage", () => {
     fireEvent.click(screen.getByTestId("run-automatic"));
 
     await waitFor(() => {
-      expect(api.updateSettings).toHaveBeenCalledWith(
+      expect(api.update设置).toHaveBeenCalledWith(
         expect.objectContaining({
           searchCities: "Leeds|Manchester",
         }),
@@ -1182,7 +1182,7 @@ describe("OrchestratorPage", () => {
     fireEvent.click(screen.getByTestId("run-automatic"));
 
     await waitFor(() => {
-      expect(api.updateSettings).not.toHaveBeenCalled();
+      expect(api.update设置).not.toHaveBeenCalled();
       expect(api.runPipeline).not.toHaveBeenCalled();
     });
   });
@@ -1318,7 +1318,7 @@ describe("OrchestratorPage", () => {
       );
     });
 
-    // Update mock so selectedJob matches the discovered tab — visibleSelectedJob
+    // 更新 mock so selectedJob matches the discovered tab — visibleSelectedJob
     // filters out jobs whose status doesn't belong to the active tab.
     mockSelectedJob = job2;
 

@@ -98,14 +98,14 @@ export function DesignResumePdfPreview({
     isFrameLoading;
 
   return (
-    <div className="relative flex h-full min-h-0 items-center justify-center overflow-hidden bg-muted/10 p-6 xl:p-8">
-      <div className="relative h-full min-h-[720px] w-full overflow-hidden border border-border/70 bg-white shadow-[0_24px_80px_rgba(0,0,0,0.24)]">
+    <div class名称="relative flex h-full min-h-0 items-center justify-center overflow-hidden bg-muted/10 p-6 xl:p-8">
+      <div class名称="relative h-full min-h-[720px] w-full overflow-hidden border border-border/70 bg-white shadow-[0_24px_80px_rgba(0,0,0,0.24)]">
         {pdfUrl ? (
           <iframe
             key={pdfUrl}
             src={pdfUrl}
             title="Design Resume PDF preview"
-            className="h-full w-full bg-white"
+            class名称="h-full w-full bg-white"
             onLoad={() => {
               setIsFrameLoading(false);
               setPreviewState("ready");
@@ -114,10 +114,10 @@ export function DesignResumePdfPreview({
         ) : null}
 
         {showLoader ? (
-          <div className="absolute inset-0 grid place-items-center bg-background/70 backdrop-blur-[2px]">
-            <div className="flex max-w-sm flex-col items-center gap-3 rounded-2xl border border-border/70 bg-background/95 px-6 py-5 text-center shadow-lg">
-              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-              <div className="text-sm font-medium text-foreground">
+          <div class名称="absolute inset-0 grid place-items-center bg-background/70 backdrop-blur-[2px]">
+            <div class名称="flex max-w-sm flex-col items-center gap-3 rounded-2xl border border-border/70 bg-background/95 px-6 py-5 text-center shadow-lg">
+              <Loader2 class名称="h-6 w-6 animate-spin text-muted-foreground" />
+              <div class名称="text-sm font-medium text-foreground">
                 {isUpdatingRenderer
                   ? "Updating template before refreshing the preview"
                   : previewState === "waiting-for-save"
@@ -129,13 +129,13 @@ export function DesignResumePdfPreview({
         ) : null}
 
         {previewState === "error" ? (
-          <div className="absolute inset-0 grid place-items-center bg-background/80">
-            <div className="flex max-w-sm flex-col items-center gap-3 rounded-2xl border border-rose-500/30 bg-rose-500/10 px-6 py-5 text-center">
-              <FileText className="h-6 w-6 text-rose-300" />
-              <div className="text-sm font-medium text-rose-200">
+          <div class名称="absolute inset-0 grid place-items-center bg-background/80">
+            <div class名称="flex max-w-sm flex-col items-center gap-3 rounded-2xl border border-rose-500/30 bg-rose-500/10 px-6 py-5 text-center">
+              <FileText class名称="h-6 w-6 text-rose-300" />
+              <div class名称="text-sm font-medium text-rose-200">
                 Preview unavailable
               </div>
-              <div className="text-xs leading-6 text-rose-200/80">
+              <div class名称="text-xs leading-6 text-rose-200/80">
                 {previewError ?? "Could not render the PDF preview."}
               </div>
             </div>

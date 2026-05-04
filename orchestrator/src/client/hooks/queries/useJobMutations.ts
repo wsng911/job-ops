@@ -1,15 +1,15 @@
 import * as api from "@client/api";
 import type {
-  CreateJobNoteInput,
+  创建Job否teInput,
   Job,
-  UpdateJobNoteInput,
+  更新Job否teInput,
 } from "@shared/types";
 import type { QueryClient } from "@tanstack/react-query";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/client/lib/queryKeys";
 import { invalidateJobData } from "./invalidate";
 
-export async function invalidateJobNotesData(
+export async function invalidateJob否tesData(
   queryClient: QueryClient,
   jobId: string,
 ): Promise<void> {
@@ -18,7 +18,7 @@ export async function invalidateJobNotesData(
   });
 }
 
-export function useUpdateJobMutation() {
+export function use更新JobMutation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ id, update }: { id: string; update: Partial<Job> }) =>
@@ -115,7 +115,7 @@ export function useCheckSponsorMutation() {
   });
 }
 
-export function useCreateJobNoteMutation() {
+export function use创建Job否teMutation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({
@@ -123,15 +123,15 @@ export function useCreateJobNoteMutation() {
       input,
     }: {
       jobId: string;
-      input: CreateJobNoteInput;
-    }) => api.createJobNote(jobId, input),
+      input: 创建Job否teInput;
+    }) => api.createJob否te(jobId, input),
     onSuccess: async (_data, variables) => {
-      await invalidateJobNotesData(queryClient, variables.jobId);
+      await invalidateJob否tesData(queryClient, variables.jobId);
     },
   });
 }
 
-export function useUpdateJobNoteMutation() {
+export function use更新Job否teMutation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({
@@ -141,21 +141,21 @@ export function useUpdateJobNoteMutation() {
     }: {
       jobId: string;
       noteId: string;
-      input: UpdateJobNoteInput;
-    }) => api.updateJobNote(jobId, noteId, input),
+      input: 更新Job否teInput;
+    }) => api.updateJob否te(jobId, noteId, input),
     onSuccess: async (_data, variables) => {
-      await invalidateJobNotesData(queryClient, variables.jobId);
+      await invalidateJob否tesData(queryClient, variables.jobId);
     },
   });
 }
 
-export function useDeleteJobNoteMutation() {
+export function use删除Job否teMutation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ jobId, noteId }: { jobId: string; noteId: string }) =>
-      api.deleteJobNote(jobId, noteId),
+      api.deleteJob否te(jobId, noteId),
     onSuccess: async (_data, variables) => {
-      await invalidateJobNotesData(queryClient, variables.jobId);
+      await invalidateJob否tesData(queryClient, variables.jobId);
     },
   });
 }

@@ -26,7 +26,7 @@ vi.mock("sonner", () => ({
 const makeJob = (overrides: Partial<JobListItem>): JobListItem => ({
   id: "job-1",
   source: "manual",
-  title: "Backend Engineer",
+  title: "返回end Engineer",
   employer: "Acme",
   jobUrl: "https://example.com/jobs/1",
   applicationLink: null,
@@ -71,7 +71,7 @@ beforeEach(() => {
   vi.mocked(api.getJobs).mockResolvedValue({
     jobs: [makeJob({})],
     total: 1,
-    byStatus: {
+    by状态: {
       discovered: 0,
       processing: 0,
       ready: 0,
@@ -84,7 +84,7 @@ beforeEach(() => {
   } as Awaited<ReturnType<typeof api.getJobs>>);
   vi.mocked(api.getJobStageEvents).mockResolvedValue([makeEvent({})]);
   vi.mocked(api.transitionJobStage).mockResolvedValue(
-    makeEvent({ toStage: "offer", title: "Offer" }),
+    makeEvent({ toStage: "offer", title: "录用" }),
   );
 });
 
@@ -103,7 +103,7 @@ describe("InProgressBoardPage", () => {
       });
     });
 
-    expect(await screen.findByText("Backend Engineer")).toBeInTheDocument();
+    expect(await screen.findByText("返回end Engineer")).toBeInTheDocument();
   });
 
   it("shows cards even when no stage events are present", async () => {
@@ -115,7 +115,7 @@ describe("InProgressBoardPage", () => {
       </MemoryRouter>,
     );
 
-    expect(await screen.findByText("Backend Engineer")).toBeInTheDocument();
+    expect(await screen.findByText("返回end Engineer")).toBeInTheDocument();
   });
 
   it("transitions a job stage when dropped into another lane", async () => {
@@ -125,12 +125,12 @@ describe("InProgressBoardPage", () => {
       </MemoryRouter>,
     );
 
-    const card = await screen.findByRole("link", { name: /Backend Engineer/i });
-    const offerHeader = await screen.findByText("Offer");
+    const card = await screen.findByRole("link", { name: /返回end Engineer/i });
+    const offerHeader = await screen.findByText("录用");
     const offerLane = offerHeader.closest("section");
 
     if (!offerLane) {
-      throw new Error("Offer lane section not found");
+      throw new Error("录用 lane section not found");
     }
 
     fireEvent.dragStart(card, {
@@ -147,7 +147,7 @@ describe("InProgressBoardPage", () => {
         metadata: {
           actor: "user",
           eventType: "status_update",
-          eventLabel: "Moved to Offer",
+          eventLabel: "Moved to 录用",
           reasonCode: "in_progress_board_drag",
         },
       });
@@ -155,7 +155,7 @@ describe("InProgressBoardPage", () => {
   });
 
   it("surfaces load errors", async () => {
-    vi.mocked(api.getJobs).mockRejectedValue(new Error("Failed to load board"));
+    vi.mocked(api.getJobs).mock已拒绝Value(new Error("Failed to load board"));
 
     render(
       <MemoryRouter>

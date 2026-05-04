@@ -1,13 +1,13 @@
 import {
   buildLocationPreferencesSummary,
   type LocationMatchStrictness,
-  type LocationSearchScope,
+  type Location搜索Scope,
   normalizeLocationMatchStrictness,
-  normalizeLocationSearchScope,
+  normalizeLocation搜索Scope,
 } from "@shared/location-preferences.js";
 import {
-  parseSearchCitiesSetting,
-  serializeSearchCitiesSetting,
+  parse搜索CitiesSetting,
+  serialize搜索CitiesSetting,
 } from "@shared/search-cities.js";
 import type { JobSource } from "@shared/types";
 
@@ -28,7 +28,7 @@ export interface AutomaticRunValues {
   country: string;
   cityLocations: string[];
   workplaceTypes: WorkplaceType[];
-  searchScope: LocationSearchScope;
+  searchScope: Location搜索Scope;
   matchStrictness: LocationMatchStrictness;
 }
 
@@ -85,7 +85,7 @@ export const AUTOMATIC_PRESETS: Record<
 export const RUN_MEMORY_STORAGE_KEY = "jobops.pipeline.run-memory.v1";
 
 export const SEARCH_SCOPE_OPTIONS: Array<{
-  value: LocationSearchScope;
+  value: Location搜索Scope;
   label: string;
 }> = [
   {
@@ -202,7 +202,7 @@ export function deriveExtractorLimits(args: {
   const includesAdzuna = args.sources.includes("adzuna");
   const includesHiringCafe = args.sources.includes("hiringcafe");
   const includesStartupJobs = args.sources.includes("startupjobs");
-  const includesWorkingNomads = args.sources.includes("workingnomads");
+  const includesWorking否mads = args.sources.includes("workingnomads");
   const includesJobindex = args.sources.includes("jobindex");
   const includesSeek = args.sources.includes("seek");
   const includesNaukri = args.sources.includes("naukri");
@@ -216,7 +216,7 @@ export function deriveExtractorLimits(args: {
     (includesAdzuna ? termCount : 0) +
     (includesHiringCafe ? termCount : 0) +
     (includesStartupJobs ? termCount : 0) +
-    (includesWorkingNomads ? termCount : 0) +
+    (includesWorking否mads ? termCount : 0) +
     (includesJobindex ? termCount : 0) +
     (includesSeek ? termCount : 0) +
     (includesNaukri ? termCount : 0);
@@ -251,7 +251,7 @@ export function deriveExtractorLimits(args: {
   };
 }
 
-export function parseSearchTermsInput(input: string): string[] {
+export function parse搜索TermsInput(input: string): string[] {
   return input
     .split(/[\n,]/g)
     .map((value) => value.trim())
@@ -259,7 +259,7 @@ export function parseSearchTermsInput(input: string): string[] {
 }
 
 export function parseCityLocationsInput(input: string): string[] {
-  const parsed = parseSearchTermsInput(input);
+  const parsed = parse搜索TermsInput(input);
   const seen = new Set<string>();
   const out: string[] = [];
   for (const city of parsed) {
@@ -274,11 +274,11 @@ export function parseCityLocationsInput(input: string): string[] {
 export function parseCityLocationsSetting(
   location: string | null | undefined,
 ): string[] {
-  return parseSearchCitiesSetting(location);
+  return parse搜索CitiesSetting(location);
 }
 
 export function serializeCityLocationsSetting(cities: string[]): string | null {
-  return serializeSearchCitiesSetting(cities);
+  return serialize搜索CitiesSetting(cities);
 }
 
 export function summarizeLocationPreferences(
@@ -295,12 +295,12 @@ export function summarizeLocationPreferences(
     country: values.country,
     cityLocations: values.cityLocations,
     workplaceTypes: values.workplaceTypes,
-    searchScope: normalizeLocationSearchScope(values.searchScope),
+    searchScope: normalizeLocation搜索Scope(values.searchScope),
     matchStrictness: normalizeLocationMatchStrictness(values.matchStrictness),
   });
 }
 
-export function stringifySearchTerms(terms: string[]): string {
+export function stringify搜索Terms(terms: string[]): string {
   return terms.join("\n");
 }
 
@@ -332,7 +332,7 @@ export function calculateAutomaticEstimate(args: {
   const hasAdzuna = sources.includes("adzuna");
   const hasHiringCafe = sources.includes("hiringcafe");
   const hasStartupJobs = sources.includes("startupjobs");
-  const hasWorkingNomads = sources.includes("workingnomads");
+  const hasWorking否mads = sources.includes("workingnomads");
   const hasJobindex = sources.includes("jobindex");
   const hasSeek = sources.includes("seek");
   const hasNaukri = sources.includes("naukri");
@@ -357,7 +357,7 @@ export function calculateAutomaticEstimate(args: {
   const startupJobsCap = hasStartupJobs
     ? limits.startupjobsMaxJobsPerTerm * termCount
     : 0;
-  const workingNomadsCap = hasWorkingNomads
+  const working否madsCap = hasWorking否mads
     ? limits.workingnomadsMaxJobsPerTerm * termCount
     : 0;
   const jobindexCap = hasJobindex
@@ -373,7 +373,7 @@ export function calculateAutomaticEstimate(args: {
     adzunaCap +
     hiringCafeCap +
     startupJobsCap +
-    workingNomadsCap +
+    working否madsCap +
     jobindexCap +
     seekCap +
     naukriCap;

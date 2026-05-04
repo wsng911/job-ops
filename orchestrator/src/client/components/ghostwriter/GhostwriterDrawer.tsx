@@ -5,11 +5,11 @@ import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
-  SheetClose,
+  Sheet关闭,
   SheetContent,
-  SheetDescription,
+  Sheet描述,
   SheetHeader,
-  SheetTitle,
+  Sheet标题,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -17,7 +17,7 @@ import { GhostwriterPanel } from "./GhostwriterPanel";
 
 type GhostwriterDrawerProps = {
   job: Job | null;
-  triggerClassName?: string;
+  triggerClass名称?: string;
 };
 
 type DisplayMode = "drawer" | "fullscreen";
@@ -43,7 +43,7 @@ function getStoredDisplayMode(): DisplayMode {
 
 export const GhostwriterDrawer: React.FC<GhostwriterDrawerProps> = ({
   job,
-  triggerClassName,
+  triggerClass名称,
 }) => {
   const [open, setOpen] = useState(false);
   const [displayMode, setDisplayMode] = useState<DisplayMode>(() =>
@@ -75,7 +75,7 @@ export const GhostwriterDrawer: React.FC<GhostwriterDrawerProps> = ({
   }, [displayMode]);
 
   const isFullscreen = isDesktop && displayMode === "fullscreen";
-  const panelClassName = useMemo(
+  const panelClass名称 = useMemo(
     () =>
       cn(
         "flex w-full flex-col p-0",
@@ -93,30 +93,30 @@ export const GhostwriterDrawer: React.FC<GhostwriterDrawerProps> = ({
         <Button
           size="sm"
           variant="outline"
-          className={cn("h-8 gap-1.5 text-xs", triggerClassName)}
+          class名称={cn("h-8 gap-1.5 text-xs", triggerClass名称)}
           disabled={!job}
         >
-          <PanelRightOpen className="h-3.5 w-3.5" />
+          <PanelRightOpen class名称="h-3.5 w-3.5" />
           Ghostwriter
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="right" className={panelClassName}>
-        <div className="border-b border-border/50 p-4">
+      <SheetContent side="right" class名称={panelClass名称}>
+        <div class名称="border-b border-border/50 p-4">
           <SheetHeader>
-            <div className="flex items-start justify-between gap-2 w-full max-w-6xl mx-auto">
-              <div className="min-w-0">
-                <SheetTitle>Ghostwriter</SheetTitle>
-                <SheetDescription>
+            <div class名称="flex items-start justify-between gap-2 w-full max-w-6xl mx-auto">
+              <div class名称="min-w-0">
+                <Sheet标题>Ghostwriter</Sheet标题>
+                <Sheet描述>
                   {job && `${job.title} at ${job.employer}.`}
-                </SheetDescription>
+                </Sheet描述>
               </div>
-              <div className="flex shrink-0 items-center gap-1 rounded-md border border-border/60 bg-background/70 p-1">
+              <div class名称="flex shrink-0 items-center gap-1 rounded-md border border-border/60 bg-background/70 p-1">
                 {isDesktop && (
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="h-7 w-7"
+                    class名称="h-7 w-7"
                     onClick={() =>
                       setDisplayMode((current) =>
                         current === "fullscreen" ? "drawer" : "fullscreen",
@@ -134,30 +134,30 @@ export const GhostwriterDrawer: React.FC<GhostwriterDrawerProps> = ({
                     }
                   >
                     {isFullscreen ? (
-                      <Minimize2 className="h-4 w-4" />
+                      <Minimize2 class名称="h-4 w-4" />
                     ) : (
-                      <Maximize2 className="h-4 w-4" />
+                      <Maximize2 class名称="h-4 w-4" />
                     )}
                   </Button>
                 )}
-                <SheetClose asChild>
+                <Sheet关闭 asChild>
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="h-7 w-7"
-                    aria-label="Close Ghostwriter"
-                    title="Close Ghostwriter"
+                    class名称="h-7 w-7"
+                    aria-label="关闭 Ghostwriter"
+                    title="关闭 Ghostwriter"
                   >
-                    <span className="text-base leading-none">×</span>
+                    <span class名称="text-base leading-none">×</span>
                   </Button>
-                </SheetClose>
+                </Sheet关闭>
               </div>
             </div>
           </SheetHeader>
         </div>
 
         {job && (
-          <div className="flex min-h-0 flex-1 p-4 pt-0">
+          <div class名称="flex min-h-0 flex-1 p-4 pt-0">
             <GhostwriterPanel job={job} />
           </div>
         )}

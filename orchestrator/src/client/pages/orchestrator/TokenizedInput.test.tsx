@@ -32,7 +32,7 @@ function renderCityInput(initialValues: string[] = []) {
       onValuesChange={setValues}
       placeholder='e.g. "London"'
       helperText="City helper"
-      removeLabelPrefix="Remove city"
+      removeLabelPrefix="移除 city"
     />
   );
 
@@ -62,7 +62,7 @@ describe("TokenizedInput", () => {
     const collapsedTokens = screen.getByTestId("cities-collapsed-tokens");
     expect(within(collapsedTokens).getByText("Leeds")).toBeInTheDocument();
     expect(
-      screen.queryByRole("button", { name: "Remove city Leeds" }),
+      screen.queryByRole("button", { name: "移除 city Leeds" }),
     ).not.toBeInTheDocument();
   });
 
@@ -77,13 +77,13 @@ describe("TokenizedInput", () => {
 
     expect(input.value).toBe("");
     expect(
-      screen.getByRole("button", { name: "Remove city Leeds" }),
+      screen.getByRole("button", { name: "移除 city Leeds" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Remove city London" }),
+      screen.getByRole("button", { name: "移除 city London" }),
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole("button", { name: "Remove city leeds" }),
+      screen.queryByRole("button", { name: "移除 city leeds" }),
     ).not.toBeInTheDocument();
   });
 
@@ -102,7 +102,7 @@ describe("TokenizedInput", () => {
     expect(within(collapsedTokens).getByText("Liverpool")).toBeInTheDocument();
     expect(within(collapsedTokens).getByText("+1 more")).toBeInTheDocument();
     expect(
-      screen.queryByRole("button", { name: "Remove city York" }),
+      screen.queryByRole("button", { name: "移除 city York" }),
     ).not.toBeInTheDocument();
   });
 
@@ -111,16 +111,16 @@ describe("TokenizedInput", () => {
     const input = getInput();
 
     expect(
-      screen.queryByRole("button", { name: "Remove city Leeds" }),
+      screen.queryByRole("button", { name: "移除 city Leeds" }),
     ).not.toBeInTheDocument();
 
     fireEvent.focus(input);
 
     expect(
-      screen.getByRole("button", { name: "Remove city Leeds" }),
+      screen.getByRole("button", { name: "移除 city Leeds" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Remove city London" }),
+      screen.getByRole("button", { name: "移除 city London" }),
     ).toBeInTheDocument();
   });
 });

@@ -1,9 +1,9 @@
 import type React from "react";
 import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { use搜索Params } from "react-router-dom";
 
 export const GmailOauthCallbackPage: React.FC = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams] = use搜索Params();
 
   useEffect(() => {
     const code = searchParams.get("code");
@@ -26,10 +26,10 @@ export const GmailOauthCallbackPage: React.FC = () => {
   }, [searchParams]);
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-4">
-      <div className="text-center">
-        <h1 className="text-lg font-semibold">Completing Gmail connection…</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
+    <main class名称="flex min-h-screen items-center justify-center px-4">
+      <div class名称="text-center">
+        <h1 class名称="text-lg font-semibold">Completing Gmail connection…</h1>
+        <p class名称="mt-2 text-sm text-muted-foreground">
           You can close this window if it does not close automatically.
         </p>
       </div>

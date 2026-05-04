@@ -19,26 +19,26 @@ function formatRemaining(ms: number): string {
 }
 
 export const CodexAuthPanel: React.FC<CodexAuthPanelProps> = ({ isBusy }) => {
-  const [codexAuthStatus, setCodexAuthStatus] = useState<Awaited<
-    ReturnType<typeof api.getCodexAuthStatus>
+  const [codexAuth状态, setCodexAuth状态] = useState<Awaited<
+    ReturnType<typeof api.getCodexAuth状态>
   > | null>(null);
-  const [isLoadingCodexAuthStatus, setIsLoadingCodexAuthStatus] =
+  const [isLoadingCodexAuth状态, setIsLoadingCodexAuth状态] =
     useState(false);
   const [isStartingCodexAuth, setIsStartingCodexAuth] = useState(false);
   const [isDisconnectingCodexAuth, setIsDisconnectingCodexAuth] =
     useState(false);
   const [codexAuthError, setCodexAuthError] = useState<string | null>(null);
   const [hasCopiedCode, setHasCopiedCode] = useState(false);
-  const [nowMs, setNowMs] = useState(() => Date.now());
+  const [nowMs, set否wMs] = useState(() => Date.now());
 
-  const refreshCodexAuthStatus = useCallback(async (showLoading = true) => {
+  const refreshCodexAuth状态 = useCallback(async (showLoading = true) => {
     if (showLoading) {
-      setIsLoadingCodexAuthStatus(true);
+      setIsLoadingCodexAuth状态(true);
     }
     setCodexAuthError(null);
     try {
-      const status = await api.getCodexAuthStatus();
-      setCodexAuthStatus(status);
+      const status = await api.getCodexAuth状态();
+      setCodexAuth状态(status);
     } catch (error) {
       setCodexAuthError(
         error instanceof Error
@@ -47,7 +47,7 @@ export const CodexAuthPanel: React.FC<CodexAuthPanelProps> = ({ isBusy }) => {
       );
     } finally {
       if (showLoading) {
-        setIsLoadingCodexAuthStatus(false);
+        setIsLoadingCodexAuth状态(false);
       }
     }
   }, []);
@@ -58,7 +58,7 @@ export const CodexAuthPanel: React.FC<CodexAuthPanelProps> = ({ isBusy }) => {
     setHasCopiedCode(false);
     try {
       const status = await api.startCodexAuth({ forceRestart });
-      setCodexAuthStatus(status);
+      setCodexAuth状态(status);
     } catch (error) {
       setCodexAuthError(
         error instanceof Error
@@ -71,7 +71,7 @@ export const CodexAuthPanel: React.FC<CodexAuthPanelProps> = ({ isBusy }) => {
   }, []);
 
   const copyCode = useCallback(async () => {
-    const code = codexAuthStatus?.userCode;
+    const code = codexAuth状态?.userCode;
     if (!code) return;
     if (typeof navigator === "undefined" || !navigator.clipboard?.writeText) {
       setCodexAuthError("Copy is not available in this browser.");
@@ -87,7 +87,7 @@ export const CodexAuthPanel: React.FC<CodexAuthPanelProps> = ({ isBusy }) => {
         error instanceof Error ? error.message : "Failed to copy code.",
       );
     }
-  }, [codexAuthStatus?.userCode]);
+  }, [codexAuth状态?.userCode]);
 
   const disconnectCodex = useCallback(async () => {
     setIsDisconnectingCodexAuth(true);
@@ -95,7 +95,7 @@ export const CodexAuthPanel: React.FC<CodexAuthPanelProps> = ({ isBusy }) => {
     setHasCopiedCode(false);
     try {
       const status = await api.disconnectCodexAuth();
-      setCodexAuthStatus(status);
+      setCodexAuth状态(status);
     } catch (error) {
       setCodexAuthError(
         error instanceof Error ? error.message : "Failed to disconnect Codex.",
@@ -106,79 +106,79 @@ export const CodexAuthPanel: React.FC<CodexAuthPanelProps> = ({ isBusy }) => {
   }, []);
 
   useEffect(() => {
-    void refreshCodexAuthStatus();
-  }, [refreshCodexAuthStatus]);
+    void refreshCodexAuth状态();
+  }, [refreshCodexAuth状态]);
 
   useEffect(() => {
-    if (!codexAuthStatus?.loginInProgress || codexAuthStatus.authenticated) {
+    if (!codexAuth状态?.loginInProgress || codexAuth状态.authenticated) {
       return;
     }
 
     const timer = window.setInterval(() => {
-      void refreshCodexAuthStatus(false);
+      void refreshCodexAuth状态(false);
     }, 4_000);
 
     return () => {
       window.clearInterval(timer);
     };
   }, [
-    codexAuthStatus?.authenticated,
-    codexAuthStatus?.loginInProgress,
-    refreshCodexAuthStatus,
+    codexAuth状态?.authenticated,
+    codexAuth状态?.loginInProgress,
+    refreshCodexAuth状态,
   ]);
 
   const expirationMs = useMemo(() => {
-    if (!codexAuthStatus?.expiresAt) return null;
-    const parsed = Date.parse(codexAuthStatus.expiresAt);
+    if (!codexAuth状态?.expiresAt) return null;
+    const parsed = Date.parse(codexAuth状态.expiresAt);
     return Number.isFinite(parsed) ? parsed : null;
-  }, [codexAuthStatus?.expiresAt]);
+  }, [codexAuth状态?.expiresAt]);
 
   useEffect(() => {
-    if (!expirationMs || codexAuthStatus?.authenticated) return;
-    setNowMs(Date.now());
+    if (!expirationMs || codexAuth状态?.authenticated) return;
+    set否wMs(Date.now());
 
     const timer = window.setInterval(() => {
-      setNowMs(Date.now());
+      set否wMs(Date.now());
     }, 1_000);
     return () => {
       window.clearInterval(timer);
     };
-  }, [codexAuthStatus?.authenticated, expirationMs]);
+  }, [codexAuth状态?.authenticated, expirationMs]);
 
   const remainingMs = expirationMs ? expirationMs - nowMs : null;
   const showExpiryCountdown =
     remainingMs !== null && remainingMs > 0 && remainingMs <= TWO_MINUTES_MS;
 
-  const hasCode = Boolean(codexAuthStatus?.userCode);
-  const hasVerificationUrl = Boolean(codexAuthStatus?.verificationUrl);
+  const hasCode = Boolean(codexAuth状态?.userCode);
+  const hasVerificationUrl = Boolean(codexAuth状态?.verificationUrl);
   const hasDevicePayload = hasCode && hasVerificationUrl;
-  const isAuthenticated = Boolean(codexAuthStatus?.authenticated);
+  const isAuthenticated = Boolean(codexAuth状态?.authenticated);
   const isWaitingForApproval =
-    Boolean(codexAuthStatus?.loginInProgress) && !isAuthenticated;
-  const displayUsername = codexAuthStatus?.username?.trim() || "your account";
+    Boolean(codexAuth状态?.loginInProgress) && !isAuthenticated;
+  const display用户名 = codexAuth状态?.username?.trim() || "your account";
 
   if (isAuthenticated) {
     return (
-      <div className="space-y-3 rounded-md border border-border bg-muted/30 p-3">
-        <div className="flex items-center justify-between gap-2">
-          <div className="text-xs font-medium">Codex Sign-In</div>
+      <div class名称="space-y-3 rounded-md border border-border bg-muted/30 p-3">
+        <div class名称="flex items-center justify-between gap-2">
+          <div class名称="text-xs font-medium">Codex Sign-In</div>
           <Badge
-            className="gap-1 border-emerald-700 bg-emerald-700 text-white dark:border-emerald-300 dark:bg-emerald-300 dark:text-emerald-950"
+            class名称="gap-1 border-emerald-700 bg-emerald-700 text-white dark:border-emerald-300 dark:bg-emerald-300 dark:text-emerald-950"
             variant="outline"
           >
-            <CheckCircle2 className="h-3.5 w-3.5" />
+            <CheckCircle2 class名称="h-3.5 w-3.5" />
             Authenticated
           </Badge>
         </div>
 
-        <div className="flex items-center justify-between gap-3 rounded-md border border-emerald-300/60 bg-emerald-500/10 px-3 py-2">
-          <p className="text-sm text-foreground">
-            <span className="font-medium">Connected as </span>
-            <span className="font-mono">{displayUsername}</span>
+        <div class名称="flex items-center justify-between gap-3 rounded-md border border-emerald-300/60 bg-emerald-500/10 px-3 py-2">
+          <p class名称="text-sm text-foreground">
+            <span class名称="font-medium">Connected as </span>
+            <span class名称="font-mono">{display用户名}</span>
           </p>
           <button
             type="button"
-            className="text-xs font-medium text-destructive underline-offset-2 hover:underline disabled:cursor-not-allowed disabled:opacity-60"
+            class名称="text-xs font-medium text-destructive underline-offset-2 hover:underline disabled:cursor-not-allowed disabled:opacity-60"
             onClick={() => void disconnectCodex()}
             disabled={isBusy || isDisconnectingCodexAuth}
           >
@@ -187,58 +187,58 @@ export const CodexAuthPanel: React.FC<CodexAuthPanelProps> = ({ isBusy }) => {
         </div>
 
         {codexAuthError ? (
-          <p className="text-xs text-destructive">{codexAuthError}</p>
+          <p class名称="text-xs text-destructive">{codexAuthError}</p>
         ) : null}
       </div>
     );
   }
 
   return (
-    <div className="space-y-3 rounded-md border border-border bg-muted/30 p-3">
-      <div className="flex items-center justify-between gap-2">
-        <div className="text-xs font-medium">Codex Sign-In</div>
+    <div class名称="space-y-3 rounded-md border border-border bg-muted/30 p-3">
+      <div class名称="flex items-center justify-between gap-2">
+        <div class名称="text-xs font-medium">Codex Sign-In</div>
         {isWaitingForApproval ? (
-          <div className="inline-flex items-center gap-1 text-xs text-amber-700">
-            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+          <div class名称="inline-flex items-center gap-1 text-xs text-amber-700">
+            <Loader2 class名称="h-3.5 w-3.5 animate-spin" />
             Waiting for approval
           </div>
         ) : null}
       </div>
 
-      <div className="rounded-md border border-dashed border-border/70 bg-background/60 px-3 py-2 text-xs text-muted-foreground">
+      <div class名称="rounded-md border border-dashed border-border/70 bg-background/60 px-3 py-2 text-xs text-muted-foreground">
         Start sign-in to generate a one-time code. After approval in your
         browser, click{" "}
-        <span className="font-medium text-foreground">Check Status</span>.
+        <span class名称="font-medium text-foreground">Check 状态</span>.
       </div>
 
-      <div className="space-y-1 text-xs text-muted-foreground">
-        <div className="flex items-center gap-2">
+      <div class名称="space-y-1 text-xs text-muted-foreground">
+        <div class名称="flex items-center gap-2">
           {hasDevicePayload || isAuthenticated ? (
-            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+            <CheckCircle2 class名称="h-3.5 w-3.5 text-emerald-600" />
           ) : (
-            <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border text-[10px]">
+            <span class名称="inline-flex h-4 w-4 items-center justify-center rounded-full border text-[10px]">
               1
             </span>
           )}
           <span>Start sign-in</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div class名称="flex items-center gap-2">
           {hasCopiedCode || isAuthenticated ? (
-            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+            <CheckCircle2 class名称="h-3.5 w-3.5 text-emerald-600" />
           ) : (
-            <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border text-[10px]">
+            <span class名称="inline-flex h-4 w-4 items-center justify-center rounded-full border text-[10px]">
               2
             </span>
           )}
           <span>Copy code and open verification page</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div class名称="flex items-center gap-2">
           {isAuthenticated ? (
-            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+            <CheckCircle2 class名称="h-3.5 w-3.5 text-emerald-600" />
           ) : isWaitingForApproval ? (
-            <Loader2 className="h-3.5 w-3.5 animate-spin text-amber-700" />
+            <Loader2 class名称="h-3.5 w-3.5 animate-spin text-amber-700" />
           ) : (
-            <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border text-[10px]">
+            <span class名称="inline-flex h-4 w-4 items-center justify-center rounded-full border text-[10px]">
               3
             </span>
           )}
@@ -247,14 +247,14 @@ export const CodexAuthPanel: React.FC<CodexAuthPanelProps> = ({ isBusy }) => {
       </div>
 
       {hasDevicePayload ? (
-        <div className="space-y-2 rounded-lg border border-border bg-background/70 p-3">
-          <div className="text-center text-[11px] uppercase tracking-wide text-muted-foreground">
+        <div class名称="space-y-2 rounded-lg border border-border bg-background/70 p-3">
+          <div class名称="text-center text-[11px] uppercase tracking-wide text-muted-foreground">
             One-time code
           </div>
-          <div className="text-center font-mono text-2xl font-semibold tracking-widest text-foreground">
-            {codexAuthStatus?.userCode}
+          <div class名称="text-center font-mono text-2xl font-semibold tracking-widest text-foreground">
+            {codexAuth状态?.userCode}
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-2">
+          <div class名称="flex flex-wrap items-center justify-center gap-2">
             <Button
               type="button"
               size="sm"
@@ -262,38 +262,38 @@ export const CodexAuthPanel: React.FC<CodexAuthPanelProps> = ({ isBusy }) => {
               onClick={() => void copyCode()}
               disabled={isBusy}
             >
-              <Copy className="h-3.5 w-3.5" />
+              <Copy class名称="h-3.5 w-3.5" />
               {hasCopiedCode ? "Copied" : "Copy code"}
             </Button>
             <Button type="button" size="sm" variant="outline" asChild>
               <a
-                href={codexAuthStatus?.verificationUrl ?? "#"}
+                href={codexAuth状态?.verificationUrl ?? "#"}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <ExternalLink className="h-3.5 w-3.5" />
+                <ExternalLink class名称="h-3.5 w-3.5" />
                 Open verification page
               </a>
             </Button>
           </div>
           {showExpiryCountdown ? (
-            <div className="text-center text-[11px] text-amber-700">
+            <div class名称="text-center text-[11px] text-amber-700">
               Code expires in {formatRemaining(remainingMs)}
             </div>
           ) : null}
         </div>
       ) : null}
 
-      <div className="flex flex-wrap gap-2">
+      <div class名称="flex flex-wrap gap-2">
         {hasDevicePayload && !isAuthenticated ? (
           <>
             <Button
               type="button"
               size="sm"
-              onClick={() => void refreshCodexAuthStatus()}
-              disabled={isBusy || isLoadingCodexAuthStatus}
+              onClick={() => void refreshCodexAuth状态()}
+              disabled={isBusy || isLoadingCodexAuth状态}
             >
-              {isLoadingCodexAuthStatus ? "Checking..." : "Check Status"}
+              {isLoadingCodexAuth状态 ? "Checking..." : "Check 状态"}
             </Button>
             <Button
               type="button"
@@ -302,7 +302,7 @@ export const CodexAuthPanel: React.FC<CodexAuthPanelProps> = ({ isBusy }) => {
               onClick={() => void startCodexAuth(true)}
               disabled={isBusy || isStartingCodexAuth}
             >
-              {isStartingCodexAuth ? "Starting..." : "Start New Sign-In"}
+              {isStartingCodexAuth ? "Starting..." : "Start 新建 Sign-In"}
             </Button>
           </>
         ) : (
@@ -318,11 +318,11 @@ export const CodexAuthPanel: React.FC<CodexAuthPanelProps> = ({ isBusy }) => {
       </div>
 
       {codexAuthError ? (
-        <p className="text-xs text-destructive">{codexAuthError}</p>
+        <p class名称="text-xs text-destructive">{codexAuthError}</p>
       ) : null}
-      {codexAuthStatus?.flowMessage && !isAuthenticated ? (
-        <p className="text-xs text-muted-foreground">
-          {codexAuthStatus.flowMessage}
+      {codexAuth状态?.flowMessage && !isAuthenticated ? (
+        <p class名称="text-xs text-muted-foreground">
+          {codexAuth状态.flowMessage}
         </p>
       ) : null}
     </div>

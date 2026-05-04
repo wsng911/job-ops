@@ -1,12 +1,12 @@
 /**
- * Settings page constants.
+ * 设置 page constants.
  */
 
 import type { ChatValues } from "@client/pages/settings/types";
-import type { JobStatus } from "@shared/types";
+import type { Job状态 } from "@shared/types";
 
 /** All available job statuses for clearing */
-export const ALL_JOB_STATUSES: JobStatus[] = [
+export const ALL_JOB_STATUSES: Job状态[] = [
   "discovered",
   "processing",
   "ready",
@@ -16,8 +16,8 @@ export const ALL_JOB_STATUSES: JobStatus[] = [
   "expired",
 ];
 
-/** Status descriptions for UI */
-export const STATUS_DESCRIPTIONS: Record<JobStatus, string> = {
+/** 状态 descriptions for UI */
+export const STATUS_DESCRIPTIONS: Record<Job状态, string> = {
   discovered: "Crawled but not processed",
   processing: "Currently generating resume",
   ready: "PDF generated, waiting for user to apply",
@@ -37,7 +37,7 @@ export type WritingStyleDraft = {
   tone: string;
   formality: string;
   constraints: string;
-  doNotUse: string;
+  do否tUse: string;
 };
 
 export type WritingStylePreset = {
@@ -56,7 +56,7 @@ export const WRITING_STYLE_PRESETS: WritingStylePreset[] = [
       tone: "professional",
       formality: "medium",
       constraints: "",
-      doNotUse: "",
+      do否tUse: "",
     },
   },
   {
@@ -67,7 +67,7 @@ export const WRITING_STYLE_PRESETS: WritingStylePreset[] = [
       tone: "concise",
       formality: "medium",
       constraints: "Keep the response tight, practical, and easy to scan.",
-      doNotUse: "",
+      do否tUse: "",
     },
   },
   {
@@ -78,7 +78,7 @@ export const WRITING_STYLE_PRESETS: WritingStylePreset[] = [
       tone: "direct",
       formality: "medium",
       constraints: "Prioritize clarity and direct wording over flourish.",
-      doNotUse: "",
+      do否tUse: "",
     },
   },
   {
@@ -89,7 +89,7 @@ export const WRITING_STYLE_PRESETS: WritingStylePreset[] = [
       tone: "friendly",
       formality: "low",
       constraints: "Keep the response warm, approachable, and confident.",
-      doNotUse: "",
+      do否tUse: "",
     },
   },
 ];
@@ -104,7 +104,7 @@ export function resolveWritingStyleDraft(args: {
     tone: values.tone?.trim() || defaults.tone.effective,
     formality: values.formality?.trim() || defaults.formality.effective,
     constraints: values.constraints?.trim() || defaults.constraints.effective,
-    doNotUse: values.doNotUse?.trim() || defaults.doNotUse.effective,
+    do否tUse: values.do否tUse?.trim() || defaults.do否tUse.effective,
   };
 }
 
@@ -116,7 +116,7 @@ export function getMatchingWritingStylePresetId(
       preset.values.tone === style.tone &&
       preset.values.formality === style.formality &&
       preset.values.constraints === style.constraints &&
-      preset.values.doNotUse === style.doNotUse,
+      preset.values.do否tUse === style.do否tUse,
   );
 
   return match?.id ?? null;

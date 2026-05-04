@@ -1,9 +1,9 @@
-import type { JobNote } from "@shared/types";
+import type { Job否te } from "@shared/types";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { NoteContextSelector } from "./NoteContextSelector";
+import { 否teContextSelector } from "./否teContextSelector";
 
-const makeNote = (overrides: Partial<JobNote>): JobNote => ({
+const make否te = (overrides: Partial<Job否te>): Job否te => ({
   id: "note-1",
   jobId: "job-1",
   title: "Recruiter call",
@@ -13,13 +13,13 @@ const makeNote = (overrides: Partial<JobNote>): JobNote => ({
   ...overrides,
 });
 
-describe("NoteContextSelector", () => {
+describe("否teContextSelector", () => {
   it("renders notes and toggles a selected note", () => {
     const onChange = vi.fn();
     render(
-      <NoteContextSelector
-        notes={[makeNote({ id: "note-1", title: "Recruiter call" })]}
-        selectedNoteIds={[]}
+      <否teContextSelector
+        notes={[make否te({ id: "note-1", title: "Recruiter call" })]}
+        selected否teIds={[]}
         onChange={onChange}
       />,
     );
@@ -31,12 +31,12 @@ describe("NoteContextSelector", () => {
   });
 
   it("shows per-note and aggregate trimming feedback", () => {
-    const selectedNoteIds = Array.from(
+    const selected否teIds = Array.from(
       { length: 5 },
       (_, index) => `note-${index + 1}`,
     );
-    const notes = selectedNoteIds.map((id, index) =>
-      makeNote({
+    const notes = selected否teIds.map((id, index) =>
+      make否te({
         id,
         title: `Long note ${index + 1}`,
         content: "A".repeat(3001),
@@ -44,9 +44,9 @@ describe("NoteContextSelector", () => {
     );
 
     render(
-      <NoteContextSelector
+      <否teContextSelector
         notes={notes}
-        selectedNoteIds={selectedNoteIds}
+        selected否teIds={selected否teIds}
         onChange={vi.fn()}
       />,
     );
@@ -61,9 +61,9 @@ describe("NoteContextSelector", () => {
 
   it("does not show aggregate overflow for a single oversized note", () => {
     render(
-      <NoteContextSelector
-        notes={[makeNote({ content: "A".repeat(100_000) })]}
-        selectedNoteIds={["note-1"]}
+      <否teContextSelector
+        notes={[make否te({ content: "A".repeat(100_000) })]}
+        selected否teIds={["note-1"]}
         onChange={vi.fn()}
       />,
     );
@@ -77,21 +77,21 @@ describe("NoteContextSelector", () => {
   });
 
   it("disables unchecked notes at the selection limit", () => {
-    const selectedNoteIds = Array.from(
+    const selected否teIds = Array.from(
       { length: 8 },
       (_, index) => `note-${index + 1}`,
     );
     const notes = [
-      ...selectedNoteIds.map((id, index) =>
-        makeNote({ id, title: `Selected note ${index + 1}` }),
+      ...selected否teIds.map((id, index) =>
+        make否te({ id, title: `Selected note ${index + 1}` }),
       ),
-      makeNote({ id: "note-9", title: "Ninth note" }),
+      make否te({ id: "note-9", title: "Ninth note" }),
     ];
 
     render(
-      <NoteContextSelector
+      <否teContextSelector
         notes={notes}
-        selectedNoteIds={selectedNoteIds}
+        selected否teIds={selected否teIds}
         onChange={vi.fn()}
       />,
     );

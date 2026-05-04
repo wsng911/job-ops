@@ -2,46 +2,46 @@ import type React from "react";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
+  AlertDialog取消,
   AlertDialogContent,
-  AlertDialogDescription,
+  AlertDialog描述,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialog标题,
 } from "@/components/ui/alert-dialog";
 
-interface ConfirmDeleteProps {
+interface 确认删除Props {
   isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
+  on关闭: () => void;
+  on确认: () => void;
   title?: string;
   description?: string;
 }
 
-export const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({
+export const 确认删除: React.FC<确认删除Props> = ({
   isOpen,
-  onClose,
-  onConfirm,
+  on关闭,
+  on确认,
   title = "Are you sure?",
   description = "This action cannot be undone. This will permanently delete this event from the timeline.",
 }) => {
   return (
-    <AlertDialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <AlertDialog open={isOpen} onOpenChange={(open) => !open && on关闭()}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{description}</AlertDialogDescription>
+          <AlertDialog标题>{title}</AlertDialog标题>
+          <AlertDialog描述>{description}</AlertDialog描述>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>
+          <AlertDialog取消 onClick={on关闭}>取消</AlertDialog取消>
           <AlertDialogAction
             onClick={() => {
-              onConfirm();
-              onClose();
+              on确认();
+              on关闭();
             }}
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            class名称="bg-destructive text-destructive-foreground hover:bg-destructive/90"
           >
-            Delete
+            删除
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

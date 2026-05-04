@@ -5,7 +5,7 @@ import { showErrorToast } from "@/client/lib/error-toast";
  * Designed for a single, fast, repeatable workflow: verify → download → apply → mark applied.
  * The PDF is the primary artifact, represented abstractly through an Application Kit summary.
  *
- * Now includes inline tailoring mode for editing and regenerating PDFs without switching tabs.
+ * 否w includes inline tailoring mode for editing and regenerating PDFs without switching tabs.
  */
 
 import type { Job, ResumeProjectCatalogItem } from "@shared/types.js";
@@ -14,7 +14,7 @@ import {
   ChevronUp,
   Copy,
   Download,
-  Edit2,
+  编辑2,
   ExternalLink,
   FileText,
   FolderKanban,
@@ -49,12 +49,12 @@ import {
   useMarkAsAppliedMutation,
   useSkipJobMutation,
 } from "../hooks/queries/useJobMutations";
-import { useProfile } from "../hooks/useProfile";
+import { use个人资料 } from "../hooks/use个人资料";
 import { useRescoreJob } from "../hooks/useRescoreJob";
 import { FitAssessment, JobHeader, TailoredSummary } from ".";
 import { TailorMode } from "./discovered-panel/TailorMode";
 import { GhostwriterDrawer } from "./ghostwriter/GhostwriterDrawer";
-import { JobDetailsEditDrawer } from "./JobDetailsEditDrawer";
+import { JobDetails编辑Drawer } from "./JobDetails编辑Drawer";
 import { KbdHint } from "./KbdHint";
 import { OpenJobListingButton } from "./OpenJobListingButton";
 import { ReadySummaryAccordion } from "./ReadySummaryAccordion";
@@ -64,14 +64,14 @@ type PanelMode = "ready" | "tailor";
 
 interface ReadyPanelProps {
   job: Job | null;
-  onJobUpdated: () => void | Promise<void>;
+  onJob更新d: () => void | Promise<void>;
   onJobMoved: (jobId: string) => void;
   onTailoringDirtyChange?: (isDirty: boolean) => void;
 }
 
 export const ReadyPanel: React.FC<ReadyPanelProps> = ({
   job,
-  onJobUpdated,
+  onJob更新d,
   onJobMoved,
   onTailoringDirtyChange,
 }) => {
@@ -79,12 +79,12 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
   const [isMarkingApplied, setIsMarkingApplied] = useState(false);
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [isUploadingPdf, setIsUploadingPdf] = useState(false);
-  const [isEditDetailsOpen, setIsEditDetailsOpen] = useState(false);
-  const { isRescoring, rescoreJob } = useRescoreJob(onJobUpdated);
+  const [is编辑DetailsOpen, setIs编辑DetailsOpen] = useState(false);
+  const { isRescoring, rescoreJob } = useRescoreJob(onJob更新d);
   const [catalog, setCatalog] = useState<ResumeProjectCatalogItem[]>([]);
   const [recentlyApplied, setRecentlyApplied] = useState<{
     jobId: string;
-    jobTitle: string;
+    job标题: string;
     employer: string;
     timeoutId: ReturnType<typeof setTimeout>;
   } | null>(null);
@@ -93,9 +93,9 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
   const markAsAppliedMutation = useMarkAsAppliedMutation();
   const skipJobMutation = useSkipJobMutation();
 
-  const { personName } = useProfile();
-  const openEditDetails = useCallback(() => {
-    window.setTimeout(() => setIsEditDetailsOpen(true), 0);
+  const { person名称 } = use个人资料();
+  const open编辑Details = useCallback(() => {
+    window.setTimeout(() => setIs编辑DetailsOpen(true), 0);
   }, []);
 
   const loadCatalog = useCallback(async (silently = false) => {
@@ -131,7 +131,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
     if (previousJobIdRef.current === currentJobId) return;
     previousJobIdRef.current = currentJobId;
     setMode("ready");
-    setIsEditDetailsOpen(false);
+    setIs编辑DetailsOpen(false);
     onTailoringDirtyChange?.(false);
   }, [job?.id, onTailoringDirtyChange]);
 
@@ -155,7 +155,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
     () => (job ? buildReadyPanelGoogleDorks(job) : []),
     [job],
   );
-  const pdfFilename = `${safeFilenamePart(personName || "Unknown")}_${safeFilenamePart(job?.employer || "Unknown")}.pdf`;
+  const pdfFilename = `${safeFilenamePart(person名称 || "Unknown")}_${safeFilenamePart(job?.employer || "Unknown")}.pdf`;
 
   const handleOpenPdf = useCallback(() => {
     if (!job) return;
@@ -188,7 +188,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
           clearTimeout(recentlyApplied.timeoutId);
         }
         setRecentlyApplied(null);
-        await onJobUpdated();
+        await onJob更新d();
       } catch (error) {
         trackProductEvent("jobs_job_action_completed", {
           action: "move_to_ready",
@@ -199,7 +199,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
         showErrorToast(error, "Failed to undo");
       }
     },
-    [onJobUpdated, recentlyApplied],
+    [onJob更新d, recentlyApplied],
   );
 
   // Handle mark as applied with undo capability
@@ -223,14 +223,14 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
 
       setRecentlyApplied({
         jobId: job.id,
-        jobTitle: job.title,
+        job标题: job.title,
         employer: job.employer,
         timeoutId,
       });
 
-      // Notify parent to move to next job
+      // 否tify parent to move to next job
       onJobMoved(job.id);
-      await onJobUpdated();
+      await onJob更新d();
 
       toast.success("Marked as applied", {
         description: `${job.title} at ${job.employer}`,
@@ -251,7 +251,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
     } finally {
       setIsMarkingApplied(false);
     }
-  }, [job, markAsAppliedMutation, onJobMoved, onJobUpdated, handleUndoApplied]);
+  }, [job, markAsAppliedMutation, onJobMoved, onJob更新d, handleUndoApplied]);
 
   const handleRegenerate = useCallback(async () => {
     if (!job) return;
@@ -265,7 +265,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
         from_status: job.status,
       });
       toast.success("PDF regenerated");
-      await onJobUpdated();
+      await onJob更新d();
     } catch (error) {
       trackProductEvent("jobs_job_action_completed", {
         action: "generate_pdf",
@@ -276,7 +276,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
     } finally {
       setIsRegenerating(false);
     }
-  }, [job, onJobUpdated]);
+  }, [job, onJob更新d]);
 
   const handleRescore = useCallback(
     () => rescoreJob(job?.id),
@@ -296,7 +296,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
       });
       toast.message("Job skipped");
       onJobMoved(job.id);
-      await onJobUpdated();
+      await onJob更新d();
     } catch (error) {
       trackProductEvent("jobs_job_action_completed", {
         action: "skip",
@@ -306,7 +306,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
       });
       showErrorToast(error, "Failed to skip");
     }
-  }, [job, onJobMoved, onJobUpdated, skipJobMutation]);
+  }, [job, onJobMoved, onJob更新d, skipJobMutation]);
 
   const handleCopyInfo = useCallback(async () => {
     if (!job) return;
@@ -329,7 +329,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
         setIsUploadingPdf(true);
         await uploadJobPdfFromFile(job.id, file);
         toast.success(job.pdfPath ? "PDF replaced" : "PDF attached");
-        await onJobUpdated();
+        await onJob更新d();
       } catch (error) {
         showErrorToast(error, "Failed to upload PDF");
       } finally {
@@ -339,7 +339,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
         }
       }
     },
-    [job, onJobUpdated],
+    [job, onJob更新d],
   );
 
   // Handler for regenerating PDF after tailoring edits
@@ -354,7 +354,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
         from_status: job.status,
       });
       toast.success("PDF regenerated");
-      await onJobUpdated();
+      await onJob更新d();
       setMode("ready");
     } catch (error) {
       trackProductEvent("jobs_job_action_completed", {
@@ -366,19 +366,19 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
     } finally {
       setIsRegenerating(false);
     }
-  }, [job, onJobUpdated]);
+  }, [job, onJob更新d]);
 
   // Empty state
   if (!job) {
     return (
-      <div className="flex h-full min-h-[300px] flex-col items-center justify-center gap-2 text-center">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted/30">
-          <FileText className="h-5 w-5 text-muted-foreground" />
+      <div class名称="flex h-full min-h-[300px] flex-col items-center justify-center gap-2 text-center">
+        <div class名称="flex h-12 w-12 items-center justify-center rounded-full bg-muted/30">
+          <FileText class名称="h-5 w-5 text-muted-foreground" />
         </div>
-        <div className="text-sm font-medium text-muted-foreground">
-          No job selected
+        <div class名称="text-sm font-medium text-muted-foreground">
+          否 job selected
         </div>
-        <p className="text-xs text-muted-foreground/70 max-w-[200px]">
+        <p class名称="text-xs text-muted-foreground/70 max-w-[200px]">
           Select a Ready job to view its application kit and take action.
         </p>
       </div>
@@ -390,7 +390,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
     return (
       <TailorMode
         job={job}
-        onBack={() => setMode("ready")}
+        on返回={() => setMode("ready")}
         onFinalize={handleTailorFinalize}
         isFinalizing={isRegenerating}
         variant="ready"
@@ -400,10 +400,10 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div class名称="flex flex-col h-full">
       <JobHeader
         job={job}
-        className="pb-4 border-b border-border/40"
+        class名称="pb-4 border-b border-border/40"
         onCheckSponsor={async () => {
           try {
             await api.checkSponsor(job.id);
@@ -412,7 +412,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
               result: "success",
               from_status: job.status,
             });
-            await onJobUpdated();
+            await onJob更新d();
           } catch (error) {
             trackProductEvent("jobs_job_action_completed", {
               action: "check_sponsor",
@@ -426,30 +426,30 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
 
       {/* ─────────────────────────────────────────────────────────────────────
           PRIMARY ACTION CLUSTER
-          All actions in one line: View, Save, Open, and Mark Applied
+          All actions in one line: View, 保存, Open, and Mark Applied
       ───────────────────────────────────────────────────────────────────── */}
-      <div className="pb-4 border-b border-border/40">
-        <div className="grid gap-2 sm:grid-cols-2">
+      <div class名称="pb-4 border-b border-border/40">
+        <div class名称="grid gap-2 sm:grid-cols-2">
           <GhostwriterDrawer
             job={job}
-            triggerClassName="h-9 w-full justify-center gap-1 px-2 text-xs"
+            triggerClass名称="h-9 w-full justify-center gap-1 px-2 text-xs"
           />
 
           {/* Download PDF - primary artifact action */}
           <Button
             variant="outline"
-            className="h-9 w-full gap-1 px-2 text-xs"
+            class名称="h-9 w-full gap-1 px-2 text-xs"
             onClick={handleDownloadPdf}
           >
-            <Download className="h-3.5 w-3.5 shrink-0" />
-            <span className="truncate">Download PDF</span>
-            <KbdHint shortcut="d" className="ml-auto" />
+            <Download class名称="h-3.5 w-3.5 shrink-0" />
+            <span class名称="truncate">Download PDF</span>
+            <KbdHint shortcut="d" class名称="ml-auto" />
           </Button>
 
           {/* Open job - to verify before applying */}
           <OpenJobListingButton
             href={jobLink}
-            className="h-9 w-full px-2 text-xs"
+            class名称="h-9 w-full px-2 text-xs"
             shortcut="o"
           />
 
@@ -457,22 +457,22 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
           <Button
             onClick={handleMarkApplied}
             variant="default"
-            className="h-9 w-full gap-1 px-2 text-xs"
+            class名称="h-9 w-full gap-1 px-2 text-xs"
             disabled={isMarkingApplied}
           >
             {isMarkingApplied ? (
-              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              <Loader2 class名称="h-3.5 w-3.5 animate-spin" />
             ) : (
-              <CheckCircle2 className="h-3.5 w-3.5" />
+              <CheckCircle2 class名称="h-3.5 w-3.5" />
             )}
-            <span className="truncate">Mark Applied</span>
-            <KbdHint shortcut="a" className="ml-auto" />
+            <span class名称="truncate">Mark Applied</span>
+            <KbdHint shortcut="a" class名称="ml-auto" />
           </Button>
         </div>
       </div>
 
-      <div className="flex-1 py-4 space-y-4">
-        <div className="space-y-3">
+      <div class名称="flex-1 py-4 space-y-4">
+        <div class名称="space-y-3">
           <FitAssessment job={job} />
           <TailoredSummary job={job} />
 
@@ -487,7 +487,7 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
               }
               value="search-dorks"
             >
-              <div className="text-muted-foreground flex flex-col items-start gap-2">
+              <div class名称="text-muted-foreground flex flex-col items-start gap-2">
                 {googleDorks.map((dork) => (
                   <a
                     key={dork.query}
@@ -495,13 +495,13 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
                     rel="noopener noreferrer"
                     target="_blank"
                     title={dork.query}
-                    className={cn(
+                    class名称={cn(
                       buttonVariants({ variant: "link", size: "sm" }),
                       "justify-start w-fit h-fit gap-1 px-0 wrap-break-word",
                     )}
                   >
                     {dork.label}
-                    <ExternalLink className="ml-1" />
+                    <ExternalLink class名称="ml-1" />
                   </a>
                 ))}
               </div>
@@ -520,14 +520,14 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
             }
             value="projects"
           >
-            <ul className="list-disc text-xs text-muted-foreground space-y-1">
+            <ul class名称="list-disc text-xs text-muted-foreground space-y-1">
               {selectedProjectIds.map((id) => {
                 const name = catalog.find((p) => p.id === id)?.name;
                 if (!name) return null;
                 return <li key={id}>{name}</li>;
               })}
               {selectedProjectIds.length === 0 && (
-                <li className="list-none italic">No projects selected</li>
+                <li class名称="list-none italic">否 projects selected</li>
               )}
             </ul>
           </ReadySummaryAccordion>
@@ -538,33 +538,33 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
           SECONDARY ACTIONS
           Fix/More menu - all non-critical actions demoted here
       ───────────────────────────────────────────────────────────────────── */}
-      <div className="pt-3 border-t border-border/40">
+      <div class名称="pt-3 border-t border-border/40">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
               size="sm"
-              className="w-full h-8 gap-2 text-xs text-muted-foreground hover:text-foreground justify-center"
+              class名称="w-full h-8 gap-2 text-xs text-muted-foreground hover:text-foreground justify-center"
             >
               More actions
-              <ChevronUp className="h-3 w-3 ml-1" />
+              <ChevronUp class名称="h-3 w-3 ml-1" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="center" className="w-56">
-            {/* Fix/Edit actions */}
+          <DropdownMenuContent align="center" class名称="w-56">
+            {/* Fix/编辑 actions */}
             <DropdownMenuItem onSelect={() => setMode("tailor")}>
-              <Edit2 className="mr-2 h-4 w-4" />
-              Edit tailoring
+              <编辑2 class名称="mr-2 h-4 w-4" />
+              编辑 tailoring
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={openEditDetails}>
-              <Edit2 className="mr-2 h-4 w-4" />
-              Edit details
+            <DropdownMenuItem onSelect={open编辑Details}>
+              <编辑2 class名称="mr-2 h-4 w-4" />
+              编辑 details
             </DropdownMenuItem>
             <DropdownMenuItem
               onSelect={() => uploadPdfInputRef.current?.click()}
               disabled={isUploadingPdf}
             >
-              <Upload className="mr-2 h-4 w-4" />
+              <Upload class名称="mr-2 h-4 w-4" />
               {isUploadingPdf
                 ? "Uploading PDF..."
                 : job.pdfPath
@@ -577,14 +577,14 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
               disabled={isRegenerating}
             >
               <RefreshCcw
-                className={cn("mr-2 h-4 w-4", isRegenerating && "animate-spin")}
+                class名称={cn("mr-2 h-4 w-4", isRegenerating && "animate-spin")}
               />
               {isRegenerating ? "Regenerating..." : "Regenerate PDF"}
             </DropdownMenuItem>
 
             <DropdownMenuItem onSelect={handleRescore} disabled={isRescoring}>
               <RefreshCcw
-                className={cn("mr-2 h-4 w-4", isRescoring && "animate-spin")}
+                class名称={cn("mr-2 h-4 w-4", isRescoring && "animate-spin")}
               />
               {isRescoring ? "Recalculating..." : "Recalculate match"}
             </DropdownMenuItem>
@@ -593,12 +593,12 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
 
             {/* Utility actions */}
             <DropdownMenuItem onSelect={handleOpenPdf}>
-              <FileText className="mr-2 h-4 w-4" />
+              <FileText class名称="mr-2 h-4 w-4" />
               View PDF
             </DropdownMenuItem>
 
             <DropdownMenuItem onSelect={handleCopyInfo}>
-              <Copy className="mr-2 h-4 w-4" />
+              <Copy class名称="mr-2 h-4 w-4" />
               Copy job info
             </DropdownMenuItem>
 
@@ -607,27 +607,27 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
             {/* Destructive actions */}
             <DropdownMenuItem
               onSelect={handleSkip}
-              className="text-destructive focus:text-destructive"
+              class名称="text-destructive focus:text-destructive"
             >
-              <XCircle className="mr-2 h-4 w-4" />
+              <XCircle class名称="mr-2 h-4 w-4" />
               Skip this job
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
 
-      <JobDetailsEditDrawer
-        open={isEditDetailsOpen}
-        onOpenChange={setIsEditDetailsOpen}
+      <JobDetails编辑Drawer
+        open={is编辑DetailsOpen}
+        onOpenChange={setIs编辑DetailsOpen}
         job={job}
-        onJobUpdated={onJobUpdated}
+        onJob更新d={onJob更新d}
       />
 
       <input
         ref={uploadPdfInputRef}
         type="file"
         accept="application/pdf,.pdf"
-        className="hidden"
+        class名称="hidden"
         onChange={(event) => {
           const file = event.currentTarget.files?.[0];
           if (file) {
@@ -641,20 +641,20 @@ export const ReadyPanel: React.FC<ReadyPanelProps> = ({
           Lightweight undo option after marking applied
       ───────────────────────────────────────────────────────────────────── */}
       {recentlyApplied && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-xl">
-          <div className="flex flex-wrap items-center gap-3 rounded-lg border bg-card px-4 py-2 shadow-lg">
-            <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-            <span className="min-w-0 flex-1 truncate text-sm">
-              <span className="font-medium">{recentlyApplied.jobTitle}</span>
-              <span className="text-muted-foreground"> marked applied</span>
+        <div class名称="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-xl">
+          <div class名称="flex flex-wrap items-center gap-3 rounded-lg border bg-card px-4 py-2 shadow-lg">
+            <CheckCircle2 class名称="h-4 w-4 text-emerald-500" />
+            <span class名称="min-w-0 flex-1 truncate text-sm">
+              <span class名称="font-medium">{recentlyApplied.job标题}</span>
+              <span class名称="text-muted-foreground"> marked applied</span>
             </span>
             <Button
               variant="ghost"
               size="sm"
-              className="h-7 gap-1.5 text-xs"
+              class名称="h-7 gap-1.5 text-xs"
               onClick={() => handleUndoApplied(recentlyApplied.jobId)}
             >
-              <Undo2 className="h-3.5 w-3.5" />
+              <Undo2 class名称="h-3.5 w-3.5" />
               Undo
             </Button>
           </div>

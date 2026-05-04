@@ -50,12 +50,12 @@ export const BaseResumeStep: React.FC<{
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="space-y-6">
+    <div class名称="space-y-6">
       <input
         ref={fileInputRef}
         type="file"
         accept="application/pdf,.pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.docx"
-        className="hidden"
+        class名称="hidden"
         onChange={(event) => {
           const file = event.currentTarget.files?.[0];
           if (file) {
@@ -70,14 +70,14 @@ export const BaseResumeStep: React.FC<{
         onValueChange={(value) =>
           onResumeSetupModeChange(value === "rxresume" ? "rxresume" : "upload")
         }
-        className="grid gap-4 lg:grid-cols-2"
+        class名称="grid gap-4 lg:grid-cols-2"
       >
         {[
           {
             value: "upload",
             title: "Upload a PDF or DOCX",
             description:
-              "Create a local Design Resume directly in Job Ops from your existing file.",
+              "创建 a local Design Resume directly in Job Ops from your existing file.",
           },
           {
             value: "rxresume",
@@ -92,7 +92,7 @@ export const BaseResumeStep: React.FC<{
             <label
               key={option.value}
               htmlFor={radioId}
-              className={cn(
+              class名称={cn(
                 "flex cursor-pointer items-start gap-4 rounded-xl border p-4 transition-colors",
                 checked
                   ? "border-primary bg-muted/40"
@@ -102,13 +102,13 @@ export const BaseResumeStep: React.FC<{
               <RadioGroupItem
                 id={radioId}
                 value={option.value}
-                className="mt-1"
+                class名称="mt-1"
               />
-              <div className="space-y-1">
-                <div className="text-base font-medium text-foreground">
+              <div class名称="space-y-1">
+                <div class名称="text-base font-medium text-foreground">
                   {option.title}
                 </div>
-                <div className="text-sm leading-6 text-muted-foreground">
+                <div class名称="text-sm leading-6 text-muted-foreground">
                   {option.description}
                 </div>
               </div>
@@ -119,30 +119,30 @@ export const BaseResumeStep: React.FC<{
 
       {resumeSetupMode === "upload" ? (
         <>
-          <div className="rounded-xl border border-border/60 bg-muted/10 p-5">
-            <div className="space-y-2">
-              <div className="text-sm font-medium">
+          <div class名称="rounded-xl border border-border/60 bg-muted/10 p-5">
+            <div class名称="space-y-2">
+              <div class名称="text-sm font-medium">
                 Upload a PDF or DOCX resume
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p class名称="text-sm text-muted-foreground">
                 Job Ops will send the file directly to your configured AI model
                 and store the validated structured result as your local Design
                 Resume.
               </p>
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center gap-3">
+            <div class名称="mt-4 flex flex-wrap items-center gap-3">
               <Button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={isBusy || isImportingResume}
               >
-                <Upload className="h-4 w-4" />
+                <Upload class名称="h-4 w-4" />
                 {isImportingResume
                   ? "Importing resume..."
                   : "Upload resume file"}
               </Button>
-              <div className="text-xs text-muted-foreground">
+              <div class名称="text-xs text-muted-foreground">
                 Supported formats: PDF and DOCX.
               </div>
             </div>
@@ -151,7 +151,7 @@ export const BaseResumeStep: React.FC<{
           {(baseResumeValidation.checked || rxresumeValidation.checked) &&
           !hasRxResumeAccess &&
           !baseResumeValidation.valid ? (
-            <div className="rounded-lg border border-amber-500/20 bg-amber-500/10 px-4 py-3 text-sm text-amber-700">
+            <div class名称="rounded-lg border border-amber-500/20 bg-amber-500/10 px-4 py-3 text-sm text-amber-700">
               Upload a resume here, or switch to the Reactive Resume option if
               you want to import from an existing template resume instead.
             </div>

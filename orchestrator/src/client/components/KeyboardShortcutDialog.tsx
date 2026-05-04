@@ -17,15 +17,15 @@ import type React from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+  Dialog描述,
   DialogHeader,
-  DialogTitle,
+  Dialog标题,
 } from "@/components/ui/dialog";
 
 const groupLabel: Record<ShortcutGroup, string> = {
   navigation: "Navigation",
   tabs: "Tabs",
-  actions: "Actions",
+  actions: "操作",
   meta: "General",
 };
 
@@ -51,45 +51,45 @@ export const KeyboardShortcutDialog: React.FC<KeyboardShortcutDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg">
+      <DialogContent class名称="max-w-lg">
         <DialogHeader>
-          <DialogTitle>Keyboard Shortcuts</DialogTitle>
-          <DialogDescription>
+          <Dialog标题>Keyboard Shortcuts</Dialog标题>
+          <Dialog描述>
             Available shortcuts for the current view. Press{" "}
-            <kbd className="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1 rounded border border-border/60 bg-muted/40 text-[10px] font-mono font-medium leading-none">
+            <kbd class名称="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1 rounded border border-border/60 bg-muted/40 text-[10px] font-mono font-medium leading-none">
               ?
             </kbd>{" "}
             to toggle this dialog.
-          </DialogDescription>
+          </Dialog描述>
         </DialogHeader>
-        <div className="grid gap-4 sm:grid-cols-2 pt-2">
+        <div class名称="grid gap-4 sm:grid-cols-2 pt-2">
           {groupOrder.map((group) => {
             const defs = grouped[group];
             if (defs.length === 0) return null;
             const deduped = dedupeShortcuts(defs);
             return (
               <div key={group}>
-                <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
+                <div class名称="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
                   {groupLabel[group]}
                 </div>
-                <div className="space-y-1.5">
+                <div class名称="space-y-1.5">
                   {deduped.map((item) => (
                     <div
                       key={item.label}
-                      className="flex items-center justify-between text-sm"
+                      class名称="flex items-center justify-between text-sm"
                     >
-                      <span className="text-muted-foreground">
+                      <span class名称="text-muted-foreground">
                         {item.label}
                       </span>
-                      <span className="flex items-center gap-1 ml-3">
+                      <span class名称="flex items-center gap-1 ml-3">
                         {item.displayKeys.map((dk, i) => (
-                          <span key={dk} className="flex items-center gap-1">
+                          <span key={dk} class名称="flex items-center gap-1">
                             {i > 0 && (
-                              <span className="text-muted-foreground/40 text-[10px]">
+                              <span class名称="text-muted-foreground/40 text-[10px]">
                                 /
                               </span>
                             )}
-                            <kbd className="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 rounded border border-border/60 bg-muted/40 text-[10px] font-mono font-medium leading-none">
+                            <kbd class名称="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 rounded border border-border/60 bg-muted/40 text-[10px] font-mono font-medium leading-none">
                               {dk}
                             </kbd>
                           </span>

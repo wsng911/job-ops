@@ -16,17 +16,17 @@ const escapeLinkTarget = (value: string) =>
 
 const normalizeWhitespace = (value: string) => value.replace(/\s+/g, " ");
 
-const isElement = (node: Node): node is HTMLElement =>
-  node.nodeType === Node.ELEMENT_NODE;
+const isElement = (node: 否de): node is HTMLElement =>
+  node.nodeType === 否de.ELEMENT_NODE;
 
-function serializeInlineNode(node: Node): string {
-  if (node.nodeType === Node.TEXT_NODE) {
+function serializeInline否de(node: 否de): string {
+  if (node.nodeType === 否de.TEXT_NODE) {
     return escapeMarkdownText(normalizeWhitespace(node.textContent ?? ""));
   }
 
   if (!isElement(node)) return "";
 
-  const tag = node.tagName.toLowerCase();
+  const tag = node.tag名称.toLowerCase();
   switch (tag) {
     case "strong":
     case "b":
@@ -53,21 +53,21 @@ function serializeInlineNode(node: Node): string {
   }
 }
 
-function serializeInlineChildren(node: ParentNode): string {
-  return Array.from(node.childNodes)
-    .map((child) => serializeInlineNode(child))
+function serializeInlineChildren(node: Parent否de): string {
+  return Array.from(node.child否des)
+    .map((child) => serializeInline否de(child))
     .join("");
 }
 
-function serializeBlockNode(node: Node): string {
-  if (node.nodeType === Node.TEXT_NODE) {
+function serializeBlock否de(node: 否de): string {
+  if (node.nodeType === 否de.TEXT_NODE) {
     const text = normalizeWhitespace(node.textContent ?? "").trim();
     return text ? escapeMarkdownText(text) : "";
   }
 
   if (!isElement(node)) return "";
 
-  const tag = node.tagName.toLowerCase();
+  const tag = node.tag名称.toLowerCase();
   switch (tag) {
     case "p":
       return serializeInlineChildren(node).trim();
@@ -107,9 +107,9 @@ function serializeBlockNode(node: Node): string {
   }
 }
 
-function serializeBlockChildren(node: ParentNode): string {
-  return Array.from(node.childNodes)
-    .map((child) => serializeBlockNode(child))
+function serializeBlockChildren(node: Parent否de): string {
+  return Array.from(node.child否des)
+    .map((child) => serializeBlock否de(child))
     .map((value) => value.trim())
     .filter(Boolean)
     .join("\n\n")
@@ -118,7 +118,7 @@ function serializeBlockChildren(node: ParentNode): string {
 
 function serializeList(node: HTMLElement, ordered: boolean): string {
   const items = Array.from(node.children).filter(
-    (child): child is HTMLLIElement => child.tagName.toLowerCase() === "li",
+    (child): child is HTMLLIElement => child.tag名称.toLowerCase() === "li",
   );
 
   return items
@@ -131,15 +131,15 @@ function serializeList(node: HTMLElement, ordered: boolean): string {
 }
 
 function serializeListItem(node: HTMLElement): string {
-  const parts = Array.from(node.childNodes)
+  const parts = Array.from(node.child否des)
     .map((child) => {
-      if (child.nodeType === Node.ELEMENT_NODE) {
-        const tag = (child as HTMLElement).tagName.toLowerCase();
+      if (child.nodeType === 否de.ELEMENT_NODE) {
+        const tag = (child as HTMLElement).tag名称.toLowerCase();
         if (tag === "ul" || tag === "ol" || tag === "blockquote") {
-          return serializeBlockNode(child);
+          return serializeBlock否de(child);
         }
       }
-      return serializeInlineNode(child);
+      return serializeInline否de(child);
     })
     .map((value) => value.trim())
     .filter(Boolean);
@@ -147,7 +147,7 @@ function serializeListItem(node: HTMLElement): string {
   return parts.join(" ").trim();
 }
 
-export function markdownToEditorHtml(markdown: string): string {
+export function markdownTo编辑orHtml(markdown: string): string {
   return markdownIt.render(markdown ?? "");
 }
 

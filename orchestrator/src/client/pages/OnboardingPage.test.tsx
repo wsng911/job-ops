@@ -2,7 +2,7 @@ import * as api from "@client/api";
 import { useDemoInfo } from "@client/hooks/useDemoInfo";
 import { useOnboardingRequirement } from "@client/hooks/useOnboardingRequirement";
 import { useRxResumeConfigState } from "@client/hooks/useRxResumeConfigState";
-import { useSettings } from "@client/hooks/useSettings";
+import { use设置 } from "@client/hooks/use设置";
 import { validateAndMaybePersistRxResumeMode } from "@client/lib/rxresume-config";
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
@@ -12,22 +12,22 @@ import { OnboardingPage } from "./OnboardingPage";
 
 vi.mock("@client/api", () => ({
   importDesignResumeFromFile: vi.fn(),
-  suggestOnboardingSearchTerms: vi.fn(),
-  getCodexAuthStatus: vi.fn(),
+  suggestOnboarding搜索Terms: vi.fn(),
+  getCodexAuth状态: vi.fn(),
   startCodexAuth: vi.fn(),
   disconnectCodexAuth: vi.fn(),
   validateLlm: vi.fn(),
   validateRxresume: vi.fn(),
   validateResumeConfig: vi.fn(),
-  updateSettings: vi.fn(),
+  update设置: vi.fn(),
 }));
 
 vi.mock("@client/hooks/useDemoInfo", () => ({
   useDemoInfo: vi.fn(),
 }));
 
-vi.mock("@client/hooks/useSettings", () => ({
-  useSettings: vi.fn(),
+vi.mock("@client/hooks/use设置", () => ({
+  use设置: vi.fn(),
 }));
 
 vi.mock("@client/hooks/useRxResumeConfigState", () => ({
@@ -63,7 +63,7 @@ vi.mock("sonner", () => ({
   },
 }));
 
-const baseSettings = {
+const base设置 = {
   llmProvider: { value: "openrouter", default: "openrouter", override: null },
   llmBaseUrl: { value: "", default: "", override: null },
   llmApiKeyHint: "sk-t",
@@ -78,12 +78,12 @@ const baseSettings = {
     override: ["Platform Engineer"],
   },
   basicAuthUser: null,
-  basicAuthPassword: null,
-  basicAuthPasswordHint: null,
+  basicAuth密码: null,
+  basicAuth密码Hint: null,
   basicAuthActive: false,
 };
 
-let currentSettings: any;
+let current设置: any;
 
 function getStepButton(label: RegExp) {
   const element = screen.getByText(label);
@@ -109,7 +109,7 @@ describe("OnboardingPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.clear();
-    currentSettings = { ...baseSettings };
+    current设置 = { ...base设置 };
 
     vi.mocked(useDemoInfo).mockReturnValue({
       demoMode: false,
@@ -117,16 +117,16 @@ describe("OnboardingPage", () => {
       lastResetAt: null,
       nextResetAt: null,
       baselineVersion: null,
-      baselineName: null,
+      baseline名称: null,
     });
 
-    vi.mocked(useSettings).mockImplementation(() => ({
-      settings: currentSettings,
+    vi.mocked(use设置).mockImplementation(() => ({
+      settings: current设置,
       isLoading: false,
-      refreshSettings: vi.fn(),
+      refresh设置: vi.fn(),
       error: null,
       showSponsorInfo: true,
-      renderMarkdownInJobDescriptions: true,
+      renderMarkdownInJob描述s: true,
     }));
 
     vi.mocked(useRxResumeConfigState).mockReturnValue({
@@ -142,10 +142,10 @@ describe("OnboardingPage", () => {
     vi.mocked(useOnboardingRequirement).mockImplementation(() => ({
       checking: false,
       complete: Boolean(
-        (currentSettings.basicAuthActive ||
-          currentSettings.onboardingBasicAuthDecision !== null) &&
-          Array.isArray(currentSettings.searchTerms?.override) &&
-          currentSettings.searchTerms.override.length > 0,
+        (current设置.basicAuthActive ||
+          current设置.onboardingBasicAuthDecision !== null) &&
+          Array.isArray(current设置.searchTerms?.override) &&
+          current设置.searchTerms.override.length > 0,
       ),
     }));
     vi.mocked(validateAndMaybePersistRxResumeMode).mockResolvedValue({
@@ -154,16 +154,16 @@ describe("OnboardingPage", () => {
         message: null,
       },
     } as any);
-    vi.mocked(api.suggestOnboardingSearchTerms).mockResolvedValue({
-      terms: ["Platform Engineer", "Backend Engineer"],
+    vi.mocked(api.suggestOnboarding搜索Terms).mockResolvedValue({
+      terms: ["Platform Engineer", "返回end Engineer"],
       source: "ai",
     });
-    vi.mocked(api.getCodexAuthStatus).mockResolvedValue({
+    vi.mocked(api.getCodexAuth状态).mockResolvedValue({
       authenticated: false,
       username: null,
       validationMessage:
         "Codex is not authenticated in this container. Run `codex login` and try again.",
-      flowStatus: "idle",
+      flow状态: "idle",
       loginInProgress: false,
       verificationUrl: null,
       userCode: null,
@@ -176,7 +176,7 @@ describe("OnboardingPage", () => {
       username: null,
       validationMessage:
         "Codex is not authenticated in this container. Run `codex login` and try again.",
-      flowStatus: "running",
+      flow状态: "running",
       loginInProgress: true,
       verificationUrl: "https://auth.openai.com/codex/device",
       userCode: "ABCD-EFGH",
@@ -214,8 +214,8 @@ describe("OnboardingPage", () => {
   });
 
   it("shows Codex sign-in controls in onboarding when provider is codex", async () => {
-    currentSettings = {
-      ...baseSettings,
+    current设置 = {
+      ...base设置,
       llmProvider: { value: "codex", default: "codex", override: null },
       llmApiKeyHint: null,
     };
@@ -234,7 +234,7 @@ describe("OnboardingPage", () => {
 
     renderPage();
 
-    await waitFor(() => expect(api.getCodexAuthStatus).toHaveBeenCalled());
+    await waitFor(() => expect(api.getCodexAuth状态).toHaveBeenCalled());
     expect(screen.getByText("Codex Sign-In")).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: /start sign-in/i }));
@@ -251,8 +251,8 @@ describe("OnboardingPage", () => {
   });
 
   it("does not treat local providers as validated before the connection check passes", async () => {
-    currentSettings = {
-      ...baseSettings,
+    current设置 = {
+      ...base设置,
       llmProvider: { value: "lmstudio", default: "lmstudio", override: null },
       llmBaseUrl: {
         value: "http://localhost:1234",
@@ -397,13 +397,13 @@ describe("OnboardingPage", () => {
       ).toBeInTheDocument();
     });
 
-    expect(api.suggestOnboardingSearchTerms).not.toHaveBeenCalled();
+    expect(api.suggestOnboarding搜索Terms).not.toHaveBeenCalled();
     expect(screen.getByText(/saved search terms/i)).toBeInTheDocument();
   });
 
   it("auto-populates search terms from the resume when no explicit override exists", async () => {
-    currentSettings = {
-      ...baseSettings,
+    current设置 = {
+      ...base设置,
       searchTerms: {
         value: ["web developer"],
         default: ["web developer"],
@@ -423,8 +423,8 @@ describe("OnboardingPage", () => {
       valid: true,
       message: null,
     });
-    vi.mocked(api.suggestOnboardingSearchTerms).mockResolvedValue({
-      terms: ["Platform Engineer", "Backend Engineer"],
+    vi.mocked(api.suggestOnboarding搜索Terms).mockResolvedValue({
+      terms: ["Platform Engineer", "返回end Engineer"],
       source: "ai",
     });
 
@@ -433,7 +433,7 @@ describe("OnboardingPage", () => {
     fireEvent.click(screen.getByRole("button", { name: /search terms/i }));
 
     await waitFor(() => {
-      expect(api.suggestOnboardingSearchTerms).toHaveBeenCalledTimes(1);
+      expect(api.suggestOnboarding搜索Terms).toHaveBeenCalledTimes(1);
     });
 
     expect(
@@ -447,13 +447,13 @@ describe("OnboardingPage", () => {
       within(collapsedTokens).getByText("Platform Engineer"),
     ).toBeInTheDocument();
     expect(
-      within(collapsedTokens).getByText("Backend Engineer"),
+      within(collapsedTokens).getByText("返回end Engineer"),
     ).toBeInTheDocument();
   });
 
   it("saves edited search terms through settings updates", async () => {
-    currentSettings = {
-      ...baseSettings,
+    current设置 = {
+      ...base设置,
       searchTerms: {
         value: ["web developer"],
         default: ["web developer"],
@@ -473,13 +473,13 @@ describe("OnboardingPage", () => {
       valid: true,
       message: null,
     });
-    vi.mocked(api.suggestOnboardingSearchTerms).mockResolvedValue({
-      terms: ["Platform Engineer", "Backend Engineer"],
+    vi.mocked(api.suggestOnboarding搜索Terms).mockResolvedValue({
+      terms: ["Platform Engineer", "返回end Engineer"],
       source: "ai",
     });
-    vi.mocked(api.updateSettings).mockImplementation(async (update) => {
-      currentSettings = {
-        ...currentSettings,
+    vi.mocked(api.update设置).mockImplementation(async (update) => {
+      current设置 = {
+        ...current设置,
         ...("searchTerms" in update
           ? {
               searchTerms: {
@@ -490,7 +490,7 @@ describe("OnboardingPage", () => {
             }
           : {}),
       };
-      return currentSettings;
+      return current设置;
     });
 
     renderPage();
@@ -498,7 +498,7 @@ describe("OnboardingPage", () => {
     fireEvent.click(screen.getByRole("button", { name: /search terms/i }));
 
     await waitFor(() => {
-      expect(api.suggestOnboardingSearchTerms).toHaveBeenCalledTimes(1);
+      expect(api.suggestOnboarding搜索Terms).toHaveBeenCalledTimes(1);
     });
 
     const input = screen.getByPlaceholderText("Type a role and press Enter");
@@ -509,10 +509,10 @@ describe("OnboardingPage", () => {
     fireEvent.click(screen.getByRole("button", { name: /save search terms/i }));
 
     await waitFor(() => {
-      expect(api.updateSettings).toHaveBeenCalledWith({
+      expect(api.update设置).toHaveBeenCalledWith({
         searchTerms: [
           "Platform Engineer",
-          "Backend Engineer",
+          "返回end Engineer",
           "Staff Software Engineer",
         ],
       });
@@ -536,15 +536,15 @@ describe("OnboardingPage", () => {
       valid: true,
       message: null,
     });
-    vi.mocked(api.updateSettings).mockImplementation(async () => {
-      currentSettings = {
-        ...currentSettings,
+    vi.mocked(api.update设置).mockImplementation(async () => {
+      current设置 = {
+        ...current设置,
         onboardingBasicAuthDecision: "skipped",
       };
       return {
-        ...currentSettings,
+        ...current设置,
         searchTerms: {
-          ...currentSettings.searchTerms,
+          ...current设置.searchTerms,
           override: null,
         },
       };
@@ -570,7 +570,7 @@ describe("OnboardingPage", () => {
     await waitFor(() => {
       expect(screen.getByText("ready page")).toBeInTheDocument();
     });
-    expect(api.updateSettings).toHaveBeenCalledWith({
+    expect(api.update设置).toHaveBeenCalledWith({
       onboardingBasicAuthDecision: "skipped",
     });
   });
@@ -592,19 +592,19 @@ describe("OnboardingPage", () => {
       valid: true,
       message: null,
     });
-    vi.mocked(api.updateSettings).mockImplementation(async (update) => {
-      currentSettings = {
-        ...currentSettings,
+    vi.mocked(api.update设置).mockImplementation(async (update) => {
+      current设置 = {
+        ...current设置,
         ...("enableBasicAuth" in update || "basicAuthUser" in update
           ? {
               basicAuthActive: true,
               onboardingBasicAuthDecision: "enabled",
               basicAuthUser:
-                update.basicAuthUser ?? currentSettings.basicAuthUser,
+                update.basicAuthUser ?? current设置.basicAuthUser,
             }
           : {}),
       };
-      return currentSettings;
+      return current设置;
     });
 
     renderPage();
@@ -635,10 +635,10 @@ describe("OnboardingPage", () => {
     await waitFor(() => {
       expect(screen.getByText("ready page")).toBeInTheDocument();
     });
-    expect(api.updateSettings).toHaveBeenCalledWith({
+    expect(api.update设置).toHaveBeenCalledWith({
       enableBasicAuth: true,
       basicAuthUser: "jobops-admin",
-      basicAuthPassword: "correct horse battery staple",
+      basicAuth密码: "correct horse battery staple",
       onboardingBasicAuthDecision: "enabled",
     });
   });
@@ -648,8 +648,8 @@ describe("OnboardingPage", () => {
       checking: false,
       complete: false,
     });
-    currentSettings = {
-      ...baseSettings,
+    current设置 = {
+      ...base设置,
       onboardingBasicAuthDecision: "skipped",
       searchTerms: {
         value: ["web developer"],
@@ -669,9 +669,9 @@ describe("OnboardingPage", () => {
       valid: true,
       message: null,
     });
-    vi.mocked(api.updateSettings).mockImplementation(async (update) => {
-      currentSettings = {
-        ...currentSettings,
+    vi.mocked(api.update设置).mockImplementation(async (update) => {
+      current设置 = {
+        ...current设置,
         ...("searchTerms" in update
           ? {
               searchTerms: {
@@ -682,7 +682,7 @@ describe("OnboardingPage", () => {
             }
           : {}),
       };
-      return currentSettings;
+      return current设置;
     });
 
     renderPage();
@@ -696,7 +696,7 @@ describe("OnboardingPage", () => {
     fireEvent.click(screen.getByRole("button", { name: /search terms/i }));
 
     await waitFor(() => {
-      expect(api.suggestOnboardingSearchTerms).toHaveBeenCalledTimes(1);
+      expect(api.suggestOnboarding搜索Terms).toHaveBeenCalledTimes(1);
     });
 
     fireEvent.click(screen.getByRole("button", { name: /save search terms/i }));
@@ -704,8 +704,8 @@ describe("OnboardingPage", () => {
     await waitFor(() => {
       expect(screen.getByText("ready page")).toBeInTheDocument();
     });
-    expect(api.updateSettings).toHaveBeenCalledWith({
-      searchTerms: ["Platform Engineer", "Backend Engineer"],
+    expect(api.update设置).toHaveBeenCalledWith({
+      searchTerms: ["Platform Engineer", "返回end Engineer"],
     });
   });
 
@@ -722,8 +722,8 @@ describe("OnboardingPage", () => {
       valid: true,
       message: null,
     });
-    vi.mocked(api.updateSettings).mockResolvedValue({
-      ...baseSettings,
+    vi.mocked(api.update设置).mockResolvedValue({
+      ...base设置,
       onboardingBasicAuthDecision: "skipped",
     } as any);
 
@@ -745,7 +745,7 @@ describe("OnboardingPage", () => {
     fireEvent.click(screen.getByRole("button", { name: /finish onboarding/i }));
 
     await waitFor(() => {
-      expect(api.updateSettings).toHaveBeenCalledWith({
+      expect(api.update设置).toHaveBeenCalledWith({
         onboardingBasicAuthDecision: "skipped",
       });
     });
@@ -755,8 +755,8 @@ describe("OnboardingPage", () => {
   });
 
   it("does not finish onboarding when only default search terms exist", async () => {
-    currentSettings = {
-      ...baseSettings,
+    current设置 = {
+      ...base设置,
       onboardingBasicAuthDecision: "skipped",
       searchTerms: {
         value: ["web developer"],
@@ -805,7 +805,7 @@ describe("OnboardingPage", () => {
       valid: true,
       message: null,
     });
-    vi.mocked(api.updateSettings).mockResolvedValue(baseSettings as any);
+    vi.mocked(api.update设置).mockResolvedValue(base设置 as any);
 
     renderPage();
 
@@ -820,7 +820,7 @@ describe("OnboardingPage", () => {
     );
 
     await waitFor(() => {
-      expect(api.updateSettings).toHaveBeenCalled();
+      expect(api.update设置).toHaveBeenCalled();
     });
 
     expect(
@@ -845,18 +845,18 @@ describe("OnboardingPage", () => {
       message: null,
     });
 
-    currentSettings = {
-      ...baseSettings,
+    current设置 = {
+      ...base设置,
       rxresumeUrl: "",
     };
 
-    vi.mocked(useSettings).mockImplementation(() => ({
-      settings: currentSettings,
+    vi.mocked(use设置).mockImplementation(() => ({
+      settings: current设置,
       isLoading: false,
-      refreshSettings: vi.fn(),
+      refresh设置: vi.fn(),
       error: null,
       showSponsorInfo: true,
-      renderMarkdownInJobDescriptions: true,
+      renderMarkdownInJob描述s: true,
     }));
 
     renderPage();
@@ -897,7 +897,7 @@ describe("OnboardingPage", () => {
     vi.mocked(api.validateResumeConfig).mockResolvedValue({
       valid: false,
       message:
-        "No local resume is ready yet. Upload a PDF or DOCX resume, or connect Reactive Resume and select a template resume.",
+        "否 local resume is ready yet. Upload a PDF or DOCX resume, or connect Reactive Resume and select a template resume.",
     });
 
     renderPage();
@@ -995,7 +995,7 @@ describe("OnboardingPage", () => {
     vi.mocked(api.validateResumeConfig)
       .mockResolvedValueOnce({
         valid: false,
-        message: "No resume yet",
+        message: "否 resume yet",
       })
       .mockResolvedValueOnce({
         valid: true,
@@ -1013,9 +1013,9 @@ describe("OnboardingPage", () => {
       updatedAt: "2026-04-11T00:00:00.000Z",
       assets: [],
     });
-    vi.mocked(api.updateSettings).mockImplementation(async (update) => {
-      currentSettings = {
-        ...currentSettings,
+    vi.mocked(api.update设置).mockImplementation(async (update) => {
+      current设置 = {
+        ...current设置,
         ...("pdfRenderer" in update
           ? {
               pdfRenderer: {
@@ -1026,7 +1026,7 @@ describe("OnboardingPage", () => {
             }
           : {}),
       };
-      return currentSettings;
+      return current设置;
     });
 
     const { container } = renderPage();
@@ -1058,14 +1058,14 @@ describe("OnboardingPage", () => {
 
     await waitFor(() => {
       expect(api.importDesignResumeFromFile).toHaveBeenCalledWith({
-        fileName: "resume.pdf",
+        file名称: "resume.pdf",
         mediaType: "application/pdf",
         dataBase64: expect.any(String),
       });
     });
 
     await waitFor(() => {
-      expect(api.updateSettings).toHaveBeenCalledWith({
+      expect(api.update设置).toHaveBeenCalledWith({
         pdfRenderer: "latex",
       });
     });
@@ -1101,9 +1101,9 @@ describe("OnboardingPage", () => {
       updatedAt: "2026-04-11T00:00:00.000Z",
       assets: [],
     });
-    vi.mocked(api.updateSettings).mockImplementation(async (update) => {
-      currentSettings = {
-        ...currentSettings,
+    vi.mocked(api.update设置).mockImplementation(async (update) => {
+      current设置 = {
+        ...current设置,
         ...("pdfRenderer" in update
           ? {
               pdfRenderer: {
@@ -1114,7 +1114,7 @@ describe("OnboardingPage", () => {
             }
           : {}),
       };
-      return currentSettings;
+      return current设置;
     });
 
     const { container } = renderPage();
@@ -1167,7 +1167,7 @@ describe("OnboardingPage", () => {
     vi.mocked(api.validateResumeConfig)
       .mockResolvedValueOnce({
         valid: false,
-        message: "No resume yet",
+        message: "否 resume yet",
       })
       .mockResolvedValueOnce({
         valid: true,
@@ -1185,9 +1185,9 @@ describe("OnboardingPage", () => {
       updatedAt: "2026-04-11T00:00:00.000Z",
       assets: [],
     });
-    vi.mocked(api.updateSettings).mockImplementation(async (update) => {
-      currentSettings = {
-        ...currentSettings,
+    vi.mocked(api.update设置).mockImplementation(async (update) => {
+      current设置 = {
+        ...current设置,
         ...("pdfRenderer" in update
           ? {
               pdfRenderer: {
@@ -1198,7 +1198,7 @@ describe("OnboardingPage", () => {
             }
           : {}),
       };
-      return currentSettings;
+      return current设置;
     });
 
     const { container } = renderPage();
@@ -1223,15 +1223,15 @@ describe("OnboardingPage", () => {
     });
 
     await waitFor(() => {
-      expect(api.updateSettings).toHaveBeenCalledWith({
+      expect(api.update设置).toHaveBeenCalledWith({
         pdfRenderer: "latex",
       });
     });
   });
 
   it("only shows the template resume picker after Reactive Resume validates", async () => {
-    currentSettings = {
-      ...baseSettings,
+    current设置 = {
+      ...base设置,
       rxresumeApiKeyHint: null,
       rxresumeBaseResumeId: null,
       pdfRenderer: { value: "latex", default: "rxresume", override: null },
@@ -1261,12 +1261,12 @@ describe("OnboardingPage", () => {
           },
         }) as any,
     );
-    vi.mocked(api.updateSettings).mockImplementation(async (update) => {
-      currentSettings = {
-        ...currentSettings,
+    vi.mocked(api.update设置).mockImplementation(async (update) => {
+      current设置 = {
+        ...current设置,
         ...update,
       };
-      return currentSettings;
+      return current设置;
     });
     vi.mocked(api.validateResumeConfig).mockResolvedValue({
       valid: false,

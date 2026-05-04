@@ -1,13 +1,13 @@
 export type RememberedAuthUser = {
   username: string;
-  displayName: string | null;
+  display名称: string | null;
   rememberedAt: number;
 };
 
 const REMEMBERED_AUTH_USERS_KEY = "jobops.rememberedAuthUsers";
 const MAX_REMEMBERED_AUTH_USERS = 8;
 
-function normalizeUsername(username: string): string {
+function normalize用户名(username: string): string {
   return username.trim();
 }
 
@@ -24,16 +24,16 @@ function parseRememberedAuthUsers(value: string | null): RememberedAuthUser[] {
         const candidate = item as Partial<RememberedAuthUser>;
         if (typeof candidate.username !== "string") return [];
 
-        const username = normalizeUsername(candidate.username);
+        const username = normalize用户名(candidate.username);
         if (!username) return [];
 
         return [
           {
             username,
-            displayName:
-              typeof candidate.displayName === "string" &&
-              candidate.displayName.trim()
-                ? candidate.displayName.trim()
+            display名称:
+              typeof candidate.display名称 === "string" &&
+              candidate.display名称.trim()
+                ? candidate.display名称.trim()
                 : null,
             rememberedAt:
               typeof candidate.rememberedAt === "number"
@@ -69,19 +69,19 @@ export function loadRememberedAuthUsers(): RememberedAuthUser[] {
 
 export function rememberAuthUser(input: {
   username: string;
-  displayName?: string | null;
+  display名称?: string | null;
 }): RememberedAuthUser[] {
-  const username = normalizeUsername(input.username);
+  const username = normalize用户名(input.username);
   if (!username) return loadRememberedAuthUsers();
 
   const existingUsers = loadRememberedAuthUsers();
   const existingUser = existingUsers.find((user) => user.username === username);
-  const displayName =
-    input.displayName === undefined
-      ? (existingUser?.displayName ?? null)
-      : input.displayName?.trim() || null;
+  const display名称 =
+    input.display名称 === undefined
+      ? (existingUser?.display名称 ?? null)
+      : input.display名称?.trim() || null;
   const nextUsers = [
-    { username, displayName, rememberedAt: Date.now() },
+    { username, display名称, rememberedAt: Date.now() },
     ...existingUsers.filter((user) => user.username !== username),
   ].slice(0, MAX_REMEMBERED_AUTH_USERS);
 

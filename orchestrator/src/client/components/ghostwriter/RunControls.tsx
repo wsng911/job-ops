@@ -16,10 +16,10 @@ export const RunControls: React.FC<RunControlsProps> = ({
   onRegenerate,
 }) => {
   return (
-    <div className="flex items-center justify-end gap-2">
+    <div class名称="flex items-center justify-end gap-2">
       {isStreaming ? (
         <Button size="sm" variant="outline" onClick={() => void onStop()}>
-          <Square className="mr-1 h-3.5 w-3.5" />
+          <Square class名称="mr-1 h-3.5 w-3.5" />
           Stop
         </Button>
       ) : (
@@ -29,14 +29,14 @@ export const RunControls: React.FC<RunControlsProps> = ({
           onClick={() => void onRegenerate()}
           disabled={!canRegenerate}
         >
-          <RefreshCcw className="mr-1 h-3.5 w-3.5" />
+          <RefreshCcw class名称="mr-1 h-3.5 w-3.5" />
           Regenerate
         </Button>
       )}
 
       {isStreaming && (
-        <div className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+        <div class名称="inline-flex items-center gap-1 text-xs text-muted-foreground">
+          <Loader2 class名称="h-3.5 w-3.5 animate-spin" />
           Generating
         </div>
       )}

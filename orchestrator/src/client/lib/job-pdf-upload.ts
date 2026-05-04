@@ -14,7 +14,7 @@ export async function uploadJobPdfFromFile(
   }
 
   return api.uploadJobPdf(jobId, {
-    fileName: file.name,
+    file名称: file.name,
     mediaType: file.type || match[1],
     dataBase64: match[2],
   });

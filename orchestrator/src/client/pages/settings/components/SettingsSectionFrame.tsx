@@ -6,20 +6,20 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 
-type SettingsSectionFrameProps = {
-  children: React.ReactNode;
-  className?: string;
-  contentClassName?: string;
+type 设置SectionFrameProps = {
+  children: React.React否de;
+  class名称?: string;
+  contentClass名称?: string;
   mode?: "accordion" | "panel";
-  title: React.ReactNode;
+  title: React.React否de;
   tone?: "default" | "danger";
   value: string;
 };
 
-export const SettingsSectionFrame: React.FC<SettingsSectionFrameProps> = ({
+export const 设置SectionFrame: React.FC<设置SectionFrameProps> = ({
   children,
-  className,
-  contentClassName,
+  class名称,
+  contentClass名称,
   mode = "accordion",
   title,
   tone = "default",
@@ -28,9 +28,9 @@ export const SettingsSectionFrame: React.FC<SettingsSectionFrameProps> = ({
   if (mode === "panel") {
     return (
       <section
-        className={cn("space-y-4", tone === "danger" && "pt-2", className)}
+        class名称={cn("space-y-4", tone === "danger" && "pt-2", class名称)}
       >
-        <div className={cn("space-y-4", contentClassName)}>{children}</div>
+        <div class名称={cn("space-y-4", contentClass名称)}>{children}</div>
       </section>
     );
   }
@@ -38,16 +38,16 @@ export const SettingsSectionFrame: React.FC<SettingsSectionFrameProps> = ({
   return (
     <AccordionItem
       value={value}
-      className={cn(
+      class名称={cn(
         "rounded-lg border px-4",
         tone === "danger" && "mt-4 border-destructive/30",
-        className,
+        class名称,
       )}
     >
-      <AccordionTrigger className="py-4 hover:no-underline">
+      <AccordionTrigger class名称="py-4 hover:no-underline">
         {typeof title === "string" ? (
           <span
-            className={cn(
+            class名称={cn(
               "text-base font-semibold",
               tone === "danger" && "tracking-wider text-destructive",
             )}
@@ -58,7 +58,7 @@ export const SettingsSectionFrame: React.FC<SettingsSectionFrameProps> = ({
           title
         )}
       </AccordionTrigger>
-      <AccordionContent className={cn("pb-4", contentClassName)}>
+      <AccordionContent class名称={cn("pb-4", contentClass名称)}>
         {children}
       </AccordionContent>
     </AccordionItem>

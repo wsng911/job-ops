@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { SignInPage } from "./SignInPage";
 
 vi.mock("@client/api", () => ({
-  getAuthBootstrapStatus: vi.fn(async () => ({
+  getAuthBootstrap状态: vi.fn(async () => ({
     setupRequired: false,
   })),
   hasAuthenticatedSession: vi.fn(() => false),
@@ -12,11 +12,11 @@ vi.mock("@client/api", () => ({
   setupFirstAdmin: vi.fn(async () => ({
     id: "user-1",
     username: "admin",
-    displayName: null,
+    display名称: null,
     isSystemAdmin: true,
     isDisabled: false,
     workspaceId: "tenant_default",
-    workspaceName: "JobOps",
+    workspace名称: "JobOps",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   })),
@@ -24,7 +24,7 @@ vi.mock("@client/api", () => ({
 }));
 
 import {
-  getAuthBootstrapStatus,
+  getAuthBootstrap状态,
   hasAuthenticatedSession,
   restoreAuthSessionFromLegacyCredentials,
   setupFirstAdmin,
@@ -35,7 +35,7 @@ describe("SignInPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.clear();
-    vi.mocked(getAuthBootstrapStatus).mockResolvedValue({
+    vi.mocked(getAuthBootstrap状态).mockResolvedValue({
       setupRequired: false,
     });
     vi.mocked(hasAuthenticatedSession).mockReturnValue(false);
@@ -43,11 +43,11 @@ describe("SignInPage", () => {
     const authUser = {
       id: "user-1",
       username: "admin",
-      displayName: null,
+      display名称: null,
       isSystemAdmin: true,
       isDisabled: false,
       workspaceId: "tenant_default",
-      workspaceName: "JobOps",
+      workspace名称: "JobOps",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -69,13 +69,13 @@ describe("SignInPage", () => {
       expect(restoreAuthSessionFromLegacyCredentials).toHaveBeenCalledTimes(1);
     });
 
-    fireEvent.change(screen.getByLabelText("Username"), {
+    fireEvent.change(screen.getByLabelText("用户名"), {
       target: { value: "admin" },
     });
-    fireEvent.change(screen.getByLabelText("Password"), {
+    fireEvent.change(screen.getByLabelText("密码"), {
       target: { value: "secret" },
     });
-    fireEvent.click(screen.getByRole("button", { name: "Sign in" }));
+    fireEvent.click(screen.getByRole("button", { name: "登录" }));
 
     await waitFor(() => {
       expect(signInWithCredentials).toHaveBeenCalledWith("admin", "secret");
@@ -89,7 +89,7 @@ describe("SignInPage", () => {
       JSON.stringify([
         {
           username: "remembered-admin",
-          displayName: null,
+          display名称: null,
           rememberedAt: Date.now(),
         },
       ]),
@@ -107,10 +107,10 @@ describe("SignInPage", () => {
       expect(restoreAuthSessionFromLegacyCredentials).toHaveBeenCalledTimes(1);
     });
 
-    expect(screen.getByLabelText("Username")).toHaveValue("remembered-admin");
-    expect(screen.getByLabelText("Password")).toHaveValue("");
+    expect(screen.getByLabelText("用户名")).toHaveValue("remembered-admin");
+    expect(screen.getByLabelText("密码")).toHaveValue("");
 
-    fireEvent.click(screen.getByRole("button", { name: "Sign in" }));
+    fireEvent.click(screen.getByRole("button", { name: "登录" }));
 
     expect(await screen.findByRole("alert")).toHaveTextContent(
       "Enter both username and password.",

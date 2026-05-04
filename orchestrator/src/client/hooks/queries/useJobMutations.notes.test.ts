@@ -1,13 +1,13 @@
 import * as api from "@client/api";
-import type { JobNote } from "@shared/types";
+import type { Job否te } from "@shared/types";
 import { act } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { queryKeys } from "@/client/lib/queryKeys";
 import { renderHookWithQueryClient } from "@/client/test/renderWithQueryClient";
-import { useCreateJobNoteMutation } from "./useJobMutations";
+import { use创建Job否teMutation } from "./useJobMutations";
 
 vi.mock("@client/api", () => ({
-  createJobNote: vi.fn(),
+  createJob否te: vi.fn(),
 }));
 
 describe("job note mutations", () => {
@@ -16,7 +16,7 @@ describe("job note mutations", () => {
   });
 
   it("invalidates the job notes query after creating a note", async () => {
-    const note: JobNote = {
+    const note: Job否te = {
       id: "note-1",
       jobId: "job-1",
       title: "Why applied",
@@ -24,10 +24,10 @@ describe("job note mutations", () => {
       createdAt: "2026-01-01T00:00:00.000Z",
       updatedAt: "2026-01-01T00:00:00.000Z",
     };
-    vi.mocked(api.createJobNote).mockResolvedValue(note);
+    vi.mocked(api.createJob否te).mockResolvedValue(note);
 
     const { result, queryClient } = renderHookWithQueryClient(() =>
-      useCreateJobNoteMutation(),
+      use创建Job否teMutation(),
     );
     const invalidateSpy = vi
       .spyOn(queryClient, "invalidateQueries")
@@ -43,7 +43,7 @@ describe("job note mutations", () => {
       });
     });
 
-    expect(api.createJobNote).toHaveBeenCalledWith("job-1", {
+    expect(api.createJob否te).toHaveBeenCalledWith("job-1", {
       title: "Why applied",
       content: "Because it fits.",
     });

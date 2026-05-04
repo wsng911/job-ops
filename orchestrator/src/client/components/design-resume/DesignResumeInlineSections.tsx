@@ -1,17 +1,17 @@
 import { FileImage, ImagePlus, Plus, Trash2 } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, Alert描述 } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
-import { RichTextEditor } from "./RichTextEditor";
+import { RichText编辑or } from "./RichText编辑or";
 import { fieldId, getByPath, toBoolean, toNumber, toText } from "./utils";
 
-const labelClassName =
+const labelClass名称 =
   "text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground";
-const fieldClassName = "bg-background/60";
-const insetPanelClassName =
+const fieldClass名称 = "bg-background/60";
+const insetPanelClass名称 =
   "rounded-lg border border-border/60 bg-background/60";
-const subtlePanelClassName =
+const subtlePanelClass名称 =
   "rounded-lg border border-border/60 bg-muted/20 px-4 py-3";
 
 function normalizeColorValue(value: string): string {
@@ -44,24 +44,24 @@ function ColorField({
   const pickerValue = normalizeColorValue(value);
 
   return (
-    <div className="grid gap-2">
-      <label className={labelClassName} htmlFor={id}>
+    <div class名称="grid gap-2">
+      <label class名称={labelClass名称} htmlFor={id}>
         {label}
       </label>
-      <div className="flex items-center gap-2">
+      <div class名称="flex items-center gap-2">
         <input
           id={id}
           type="color"
           value={pickerValue}
           onChange={(event) => onChange(event.currentTarget.value)}
-          className="h-10 w-12 cursor-pointer rounded-md border border-border/60 bg-background/60 p-1"
+          class名称="h-10 w-12 cursor-pointer rounded-md border border-border/60 bg-background/60 p-1"
           aria-label={label}
           disabled={disabled}
         />
         <Input
           value={value}
           onChange={(event) => onChange(event.currentTarget.value)}
-          className={fieldClassName}
+          class名称={fieldClass名称}
           disabled={disabled}
         />
       </div>
@@ -75,8 +75,8 @@ type PictureSectionProps = {
   pictureEnabled: boolean;
   pictureDisabledReason?: string | null;
   onUploadPicture: () => void;
-  onDeletePicture: () => void;
-  onUpdatePicture: (key: string, value: unknown) => void;
+  on删除Picture: () => void;
+  on更新Picture: (key: string, value: unknown) => void;
 };
 
 export function PictureSection({
@@ -85,50 +85,50 @@ export function PictureSection({
   pictureEnabled,
   pictureDisabledReason,
   onUploadPicture,
-  onDeletePicture,
-  onUpdatePicture,
+  on删除Picture,
+  on更新Picture,
 }: PictureSectionProps) {
   const editDisabled = !pictureEnabled;
 
   return (
-    <div className="grid gap-3">
+    <div class名称="grid gap-3">
       {!pictureEnabled ? (
         <Alert>
-          <AlertDescription>
+          <Alert描述>
             {pictureDisabledReason ??
               "Pictures require JobOps to be reachable at a public URL."}
-          </AlertDescription>
+          </Alert描述>
         </Alert>
       ) : null}
 
       {picture.url ? (
         <div
-          className={`${insetPanelClassName} flex items-center gap-3 border-dashed p-3`}
+          class名称={`${insetPanelClass名称} flex items-center gap-3 border-dashed p-3`}
         >
           <img
             src={toText(picture.url)}
             alt="Design Resume profile"
-            className="h-16 w-16 rounded-lg border border-border/60 object-cover"
+            class名称="h-16 w-16 rounded-lg border border-border/60 object-cover"
           />
-          <div className="flex flex-wrap gap-2">
+          <div class名称="flex flex-wrap gap-2">
             <Button
               type="button"
               variant="outline"
               onClick={onUploadPicture}
               disabled={pictureUploading || editDisabled}
             >
-              <ImagePlus className="mr-2 h-4 w-4" />
+              <ImagePlus class名称="mr-2 h-4 w-4" />
               Replace
             </Button>
             <Button
               type="button"
               variant="ghost"
-              className="text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"
-              onClick={onDeletePicture}
+              class名称="text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"
+              onClick={on删除Picture}
               disabled={pictureUploading}
             >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Delete
+              <Trash2 class名称="mr-2 h-4 w-4" />
+              删除
             </Button>
           </div>
         </div>
@@ -136,49 +136,49 @@ export function PictureSection({
         <Button
           type="button"
           variant="outline"
-          className="justify-start border-dashed"
+          class名称="justify-start border-dashed"
           onClick={onUploadPicture}
           disabled={pictureUploading || editDisabled}
         >
-          <FileImage className="mr-2 h-4 w-4" />
+          <FileImage class名称="mr-2 h-4 w-4" />
           {pictureUploading ? "Uploading..." : "Upload image"}
         </Button>
       )}
 
-      <div className="grid gap-2">
-        <label className={labelClassName} htmlFor={fieldId("picture", "url")}>
+      <div class名称="grid gap-2">
+        <label class名称={labelClass名称} htmlFor={fieldId("picture", "url")}>
           Image URL
         </label>
         <Input
           id={fieldId("picture", "url")}
           value={toText(picture.url)}
           onChange={(event) =>
-            onUpdatePicture("url", event.currentTarget.value)
+            on更新Picture("url", event.currentTarget.value)
           }
-          className={fieldClassName}
+          class名称={fieldClass名称}
           disabled={editDisabled}
         />
       </div>
 
       <div
-        className={`${subtlePanelClassName} flex items-center justify-between`}
+        class名称={`${subtlePanelClass名称} flex items-center justify-between`}
       >
         <div>
-          <div className="text-sm font-medium text-foreground">
+          <div class名称="text-sm font-medium text-foreground">
             Show picture
           </div>
-          <div className="text-xs text-muted-foreground">
+          <div class名称="text-xs text-muted-foreground">
             Turn your photo on or off.
           </div>
         </div>
         <Switch
           checked={!toBoolean(picture.hidden, false)}
-          onCheckedChange={(checked) => onUpdatePicture("hidden", !checked)}
+          onCheckedChange={(checked) => on更新Picture("hidden", !checked)}
           disabled={editDisabled}
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div class名称="grid grid-cols-2 gap-3">
         {[
           ["size", "Size"],
           ["rotation", "Rotation"],
@@ -187,8 +187,8 @@ export function PictureSection({
           ["borderWidth", "Border width"],
           ["shadowWidth", "Shadow width"],
         ].map(([key, label]) => (
-          <div key={key} className="grid gap-2">
-            <label className={labelClassName} htmlFor={fieldId("picture", key)}>
+          <div key={key} class名称="grid gap-2">
+            <label class名称={labelClass名称} htmlFor={fieldId("picture", key)}>
               {label}
             </label>
             <Input
@@ -196,9 +196,9 @@ export function PictureSection({
               type="number"
               value={String(toNumber(picture[key], 0))}
               onChange={(event) =>
-                onUpdatePicture(key, Number(event.currentTarget.value || 0))
+                on更新Picture(key, Number(event.currentTarget.value || 0))
               }
-              className={fieldClassName}
+              class名称={fieldClass名称}
               disabled={editDisabled}
             />
           </div>
@@ -213,7 +213,7 @@ export function PictureSection({
             label={label}
             value={toText(picture[key])}
             disabled={editDisabled}
-            onChange={(nextValue) => onUpdatePicture(key, nextValue)}
+            onChange={(nextValue) => on更新Picture(key, nextValue)}
           />
         ))}
       </div>
@@ -223,31 +223,31 @@ export function PictureSection({
 
 type BasicsSectionProps = {
   basics: Record<string, unknown>;
-  onUpdateBasics: (path: string, value: unknown) => void;
+  on更新Basics: (path: string, value: unknown) => void;
 };
 
-export function BasicsSection({ basics, onUpdateBasics }: BasicsSectionProps) {
+export function BasicsSection({ basics, on更新Basics }: BasicsSectionProps) {
   return (
-    <div className="grid gap-3">
+    <div class名称="grid gap-3">
       {[
-        ["name", "Name"],
+        ["name", "名称"],
         ["headline", "Headline"],
-        ["email", "Email"],
+        ["email", "邮箱"],
         ["phone", "Phone"],
         ["location", "Location"],
         ["website.url", "Website"],
       ].map(([path, label]) => (
-        <div key={path} className="grid gap-2">
-          <label className={labelClassName} htmlFor={fieldId("basics", path)}>
+        <div key={path} class名称="grid gap-2">
+          <label class名称={labelClass名称} htmlFor={fieldId("basics", path)}>
             {label}
           </label>
           <Input
             id={fieldId("basics", path)}
             value={toText(getByPath(basics, path))}
             onChange={(event) =>
-              onUpdateBasics(path, event.currentTarget.value)
+              on更新Basics(path, event.currentTarget.value)
             }
-            className={fieldClassName}
+            class名称={fieldClass名称}
           />
         </div>
       ))}
@@ -274,21 +274,21 @@ export function BasicsCustomFieldsSection({
   };
 
   return (
-    <div className="space-y-3">
+    <div class名称="space-y-3">
       {customFields.map((field, index) => (
         <div
           key={toText(field.id, `field-${index}`)}
-          className={`${insetPanelClassName} p-3`}
+          class名称={`${insetPanelClass名称} p-3`}
         >
-          <div className="grid gap-3">
+          <div class名称="grid gap-3">
             {[
               ["icon", "Icon"],
               ["text", "Text"],
               ["link", "Link"],
             ].map(([key, label]) => (
-              <div key={key} className="grid gap-2">
+              <div key={key} class名称="grid gap-2">
                 <label
-                  className={labelClassName}
+                  class名称={labelClass名称}
                   htmlFor={fieldId("custom-field", String(index), key)}
                 >
                   {label}
@@ -304,12 +304,12 @@ export function BasicsCustomFieldsSection({
                     };
                     onChange(nextFields);
                   }}
-                  className={fieldClassName}
+                  class名称={fieldClass名称}
                 />
               </div>
             ))}
           </div>
-          <div className="mt-3 flex items-center justify-end gap-2">
+          <div class名称="mt-3 flex items-center justify-end gap-2">
             <Button
               type="button"
               variant="ghost"
@@ -327,7 +327,7 @@ export function BasicsCustomFieldsSection({
             <Button
               type="button"
               variant="ghost"
-              className="text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"
+              class名称="text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"
               onClick={() =>
                 onChange(
                   customFields.filter(
@@ -336,7 +336,7 @@ export function BasicsCustomFieldsSection({
                 )
               }
             >
-              Remove
+              移除
             </Button>
           </div>
         </div>
@@ -344,7 +344,7 @@ export function BasicsCustomFieldsSection({
       <Button
         type="button"
         variant="outline"
-        className="w-full border-dashed"
+        class名称="w-full border-dashed"
         onClick={() =>
           onChange([
             ...customFields,
@@ -357,8 +357,8 @@ export function BasicsCustomFieldsSection({
           ])
         }
       >
-        <Plus className="mr-2 h-4 w-4" />
-        Add custom field
+        <Plus class名称="mr-2 h-4 w-4" />
+        添加 custom field
       </Button>
     </div>
   );
@@ -366,34 +366,34 @@ export function BasicsCustomFieldsSection({
 
 type SummarySectionProps = {
   summary: Record<string, unknown>;
-  onUpdateSummary: (key: string, value: unknown) => void;
+  on更新Summary: (key: string, value: unknown) => void;
 };
 
 export function SummarySection({
   summary,
-  onUpdateSummary,
+  on更新Summary,
 }: SummarySectionProps) {
   return (
-    <div className="space-y-3">
+    <div class名称="space-y-3">
       <div
-        className={`${subtlePanelClassName} flex items-center justify-between`}
+        class名称={`${subtlePanelClass名称} flex items-center justify-between`}
       >
         <div>
-          <div className="text-sm font-medium text-foreground">
+          <div class名称="text-sm font-medium text-foreground">
             Show summary
           </div>
-          <div className="text-xs text-muted-foreground">
+          <div class名称="text-xs text-muted-foreground">
             Show or hide this section on your resume.
           </div>
         </div>
         <Switch
           checked={!toBoolean(summary.hidden, false)}
-          onCheckedChange={(checked) => onUpdateSummary("hidden", !checked)}
+          onCheckedChange={(checked) => on更新Summary("hidden", !checked)}
         />
       </div>
-      <RichTextEditor
+      <RichText编辑or
         value={toText(summary.content)}
-        onChange={(next) => onUpdateSummary("content", next)}
+        onChange={(next) => on更新Summary("content", next)}
         placeholder="Summarize the story your resume should tell."
       />
     </div>

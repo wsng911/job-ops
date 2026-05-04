@@ -54,13 +54,13 @@ export function subscribeToEventSource<T>(
   handlers: EventSourceSubscriptionHandlers<T>,
 ): () => void {
   const controller = new AbortController();
-  let isClosed = false;
+  let is关闭d = false;
 
   void (async () => {
     let authHeader = getCachedAuthHeader();
     let authAttempt = 0;
 
-    while (!isClosed) {
+    while (!is关闭d) {
       try {
         const response = await fetch(url, {
           headers: authHeader ? { Authorization: authHeader } : undefined,
@@ -92,7 +92,7 @@ export function subscribeToEventSource<T>(
         let buffer = "";
 
         try {
-          while (!isClosed) {
+          while (!is关闭d) {
             const { done, value } = await reader.read();
             if (done) {
               buffer += decoder.decode();
@@ -122,7 +122,7 @@ export function subscribeToEventSource<T>(
 
         return;
       } catch {
-        if (!isClosed && !controller.signal.aborted) {
+        if (!is关闭d && !controller.signal.aborted) {
           handlers.onError?.();
         }
         return;
@@ -131,7 +131,7 @@ export function subscribeToEventSource<T>(
   })();
 
   return () => {
-    isClosed = true;
+    is关闭d = true;
     controller.abort();
   };
 }

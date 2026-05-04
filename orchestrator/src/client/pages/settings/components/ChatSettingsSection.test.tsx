@@ -1,10 +1,10 @@
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { describe, expect, it, vi } from "vitest";
 import { Accordion } from "@/components/ui/accordion";
-import { ChatSettingsSection } from "./ChatSettingsSection";
+import { Chat设置Section } from "./Chat设置Section";
 
 vi.mock("@/components/ui/select", () => {
   const SelectContext = React.createContext<{
@@ -16,7 +16,7 @@ vi.mock("@/components/ui/select", () => {
     value,
     onValueChange,
   }: {
-    children: React.ReactNode;
+    children: React.React否de;
     value?: string;
     onValueChange?: (value: string) => void;
   }) => {
@@ -30,7 +30,7 @@ vi.mock("@/components/ui/select", () => {
     );
   };
 
-  const SelectContent = ({ children }: { children: React.ReactNode }) => (
+  const SelectContent = ({ children }: { children: React.React否de }) => (
     <>{children}</>
   );
   const SelectItem = ({
@@ -38,7 +38,7 @@ vi.mock("@/components/ui/select", () => {
     children,
   }: {
     value: string;
-    children: React.ReactNode;
+    children: React.React否de;
   }) => {
     const context = React.useContext(SelectContext);
 
@@ -67,18 +67,18 @@ vi.mock("@/components/ui/select", () => {
   };
 });
 
-const ChatSettingsHarness = ({
-  mode = "onSubmit" as const,
+const Chat设置Harness = ({
+  mode = "on提交" as const,
 }: {
-  mode?: "onSubmit" | "onChange";
+  mode?: "on提交" | "onChange";
 } = {}) => {
-  const methods = useForm<UpdateSettingsInput>({
+  const methods = useForm<更新设置Input>({
     mode,
     defaultValues: {
       chatStyleTone: "",
       chatStyleFormality: "",
       chatStyleConstraints: "",
-      chatStyleDoNotUse: "",
+      chatStyleDo否tUse: "",
       chatStyleLanguageMode: null,
       chatStyleManualLanguage: null,
       ghostwriterStopSlopEnabled: null,
@@ -90,12 +90,12 @@ const ChatSettingsHarness = ({
   return (
     <FormProvider {...methods}>
       <Accordion type="multiple" defaultValue={["chat"]}>
-        <ChatSettingsSection
+        <Chat设置Section
           values={{
             tone: { effective: "professional", default: "professional" },
             formality: { effective: "medium", default: "medium" },
             constraints: { effective: "", default: "" },
-            doNotUse: { effective: "", default: "" },
+            do否tUse: { effective: "", default: "" },
             languageMode: { effective: "manual", default: "manual" },
             manualLanguage: { effective: "english", default: "english" },
             stopSlopEnabled: { effective: false, default: false },
@@ -110,9 +110,9 @@ const ChatSettingsHarness = ({
   );
 };
 
-describe("ChatSettingsSection", () => {
+describe("Chat设置Section", () => {
   it("treats blank overrides as unset so preset and selects stay aligned", () => {
-    render(<ChatSettingsHarness />);
+    render(<Chat设置Harness />);
 
     expect(screen.getAllByDisplayValue("professional").length).toBeGreaterThan(
       0,
@@ -123,7 +123,7 @@ describe("ChatSettingsSection", () => {
   });
 
   it("applies preset values to the writing style fields", () => {
-    render(<ChatSettingsHarness />);
+    render(<Chat设置Harness />);
 
     fireEvent.click(screen.getAllByRole("button", { name: "Friendly" })[0]);
 
@@ -137,7 +137,7 @@ describe("ChatSettingsSection", () => {
   });
 
   it("hides the manual language selector when matching the resume language", () => {
-    render(<ChatSettingsHarness />);
+    render(<Chat设置Harness />);
 
     fireEvent.click(
       screen.getByRole("button", { name: "Match current resume language" }),
@@ -150,7 +150,7 @@ describe("ChatSettingsSection", () => {
   });
 
   it("renders the Stop Slop Ghostwriter toggle", () => {
-    render(<ChatSettingsHarness />);
+    render(<Chat设置Harness />);
 
     expect(
       screen.getByLabelText("Use Stop Slop for Ghostwriter"),
@@ -159,7 +159,7 @@ describe("ChatSettingsSection", () => {
   });
 
   it("shows validation error when summary word limit is out of range", async () => {
-    const { container } = render(<ChatSettingsHarness mode="onChange" />);
+    const { container } = render(<Chat设置Harness mode="onChange" />);
 
     const input = container.querySelector(
       "#chatStyleSummaryMaxWords",
@@ -172,7 +172,7 @@ describe("ChatSettingsSection", () => {
   });
 
   it("shows validation error when max keywords per skill is out of range", async () => {
-    const { container } = render(<ChatSettingsHarness mode="onChange" />);
+    const { container } = render(<Chat设置Harness mode="onChange" />);
 
     const input = container.querySelector(
       "#chatStyleMaxKeywordsPerSkill",
@@ -185,7 +185,7 @@ describe("ChatSettingsSection", () => {
   });
 
   it("does not show validation error for valid summary word limit", async () => {
-    const { container } = render(<ChatSettingsHarness mode="onChange" />);
+    const { container } = render(<Chat设置Harness mode="onChange" />);
 
     const input = container.querySelector(
       "#chatStyleSummaryMaxWords",

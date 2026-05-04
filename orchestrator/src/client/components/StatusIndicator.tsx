@@ -1,4 +1,4 @@
-import type { JobStatus } from "@shared/types/jobs";
+import type { Job状态 } from "@shared/types/jobs";
 import type React from "react";
 import {
   Tooltip,
@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import {
-  defaultStatusToken,
+  default状态Token,
   statusTokens,
 } from "../pages/orchestrator/constants";
 
@@ -31,30 +31,30 @@ const badgeVariantClasses = {
   },
 };
 
-type StatusIndicatorProps = {
+type 状态IndicatorProps = {
   dotColor?: string;
-  label: React.ReactNode;
-  className?: string;
-  dotClassName?: string;
+  label: React.React否de;
+  class名称?: string;
+  dotClass名称?: string;
   variant?: keyof typeof badgeVariantClasses;
   appearance?: "inline" | "badge";
   animateDot?: boolean;
-  tooltip?: React.ReactNode;
-  tooltipClassName?: string;
+  tooltip?: React.React否de;
+  tooltipClass名称?: string;
   tooltipSide?: "top" | "right" | "bottom" | "left";
   tooltipDelayDuration?: number;
 };
 
-const StatusIndicator: React.FC<StatusIndicatorProps> = ({
+const 状态Indicator: React.FC<状态IndicatorProps> = ({
   dotColor,
   label,
-  className,
-  dotClassName,
+  class名称,
+  dotClass名称,
   variant = "amber",
   appearance = "inline",
   animateDot = appearance === "badge",
   tooltip,
-  tooltipClassName,
+  tooltipClass名称,
   tooltipSide = "top",
   tooltipDelayDuration = 0,
 }) => {
@@ -63,22 +63,22 @@ const StatusIndicator: React.FC<StatusIndicatorProps> = ({
 
   const content = (
     <span
-      className={cn(
+      class名称={cn(
         appearance === "badge"
           ? "inline-flex items-center gap-2 rounded-full border px-2 py-1 text-[11px] font-semibold uppercase tracking-wide"
           : STATUS_INDICATOR_BASE_CLASS,
         appearance === "badge" ? badgeTokens.badge : undefined,
-        className,
+        class名称,
       )}
     >
       <span
-        className={cn(
+        class名称={cn(
           appearance === "badge"
             ? "h-1.5 w-1.5 rounded-full"
             : STATUS_INDICATOR_DOT_CLASS,
           animateDot ? "animate-pulse" : undefined,
           resolvedDotColor,
-          dotClassName,
+          dotClass名称,
         )}
       />
       {label}
@@ -91,7 +91,7 @@ const StatusIndicator: React.FC<StatusIndicatorProps> = ({
     <TooltipProvider>
       <Tooltip delayDuration={tooltipDelayDuration}>
         <TooltipTrigger asChild>{content}</TooltipTrigger>
-        <TooltipContent side={tooltipSide} className={tooltipClassName}>
+        <TooltipContent side={tooltipSide} class名称={tooltipClass名称}>
           {tooltip}
         </TooltipContent>
       </Tooltip>
@@ -99,23 +99,23 @@ const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   );
 };
 
-const getJobStatusIndicator = (status: JobStatus) => {
-  const tokens = statusTokens[status] ?? defaultStatusToken;
+const getJob状态Indicator = (status: Job状态) => {
+  const tokens = statusTokens[status] ?? default状态Token;
   return { label: tokens.label, dotColor: tokens.dot };
 };
 
-const getTracerStatusIndicator = (enabled: boolean) => ({
+const getTracer状态Indicator = (enabled: boolean) => ({
   label: enabled ? "Tracer On" : "Tracer Off",
   dotColor: enabled ? "bg-violet-500" : "bg-slate-500",
 });
 
-const StatusBadgeIndicator: React.FC<
-  Omit<StatusIndicatorProps, "appearance"> & { appearance?: "badge" }
-> = (props) => <StatusIndicator {...props} appearance="badge" />;
+const 状态BadgeIndicator: React.FC<
+  Omit<状态IndicatorProps, "appearance"> & { appearance?: "badge" }
+> = (props) => <状态Indicator {...props} appearance="badge" />;
 
 export {
-  StatusIndicator,
-  getJobStatusIndicator,
-  getTracerStatusIndicator,
-  StatusBadgeIndicator,
+  状态Indicator,
+  getJob状态Indicator,
+  getTracer状态Indicator,
+  状态BadgeIndicator,
 };

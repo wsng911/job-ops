@@ -25,13 +25,13 @@ import { InProgressBoardPage } from "./pages/InProgressBoardPage";
 import { JobPage } from "./pages/JobPage";
 import { OnboardingPage } from "./pages/OnboardingPage";
 import { OrchestratorPage } from "./pages/OrchestratorPage";
-import { SettingsPage } from "./pages/SettingsPage";
+import { 设置Page } from "./pages/设置Page";
 import { SignInPage } from "./pages/SignInPage";
 import { TracerLinksPage } from "./pages/TracerLinksPage";
 import { TrackingInboxPage } from "./pages/TrackingInboxPage";
 import { VisaSponsorsPage } from "./pages/VisaSponsorsPage";
 
-/** Backwards-compatibility redirects: old URL paths -> new URL paths */
+/** 返回wards-compatibility redirects: old URL paths -> new URL paths */
 const REDIRECTS: Array<{ from: string; to: string }> = [
   { from: "/", to: "/jobs/ready" },
   { from: "/home", to: "/overview" },
@@ -76,7 +76,7 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     setAuthNavigator((nextPath) => {
-      const search = new URLSearchParams();
+      const search = new URL搜索Params();
       if (
         nextPath &&
         nextPath !== "/sign-in" &&
@@ -98,13 +98,13 @@ export const App: React.FC = () => {
     <>
       <OnboardingGate />
       {demoInfo?.demoMode && !demoWaitlistBannerDismissed && (
-        <div className="sticky top-0 z-50 w-full border-b border-orange-400/60 bg-orange-500 px-4 py-2 text-xs text-orange-950 shadow-sm">
-          <div className="mx-auto flex items-center justify-center gap-3">
-            <p className="flex-1 text-center font-medium">
+        <div class名称="sticky top-0 z-50 w-full border-b border-orange-400/60 bg-orange-500 px-4 py-2 text-xs text-orange-950 shadow-sm">
+          <div class名称="mx-auto flex items-center justify-center gap-3">
+            <p class名称="flex-1 text-center font-medium">
               This is a read-only demo. Want JobOps without the Docker setup? ☁️{" "}
               Cloud version coming soon — join the waitlist at{" "}
               <a
-                className="font-semibold underline underline-offset-2 hover:text-orange-900"
+                class名称="font-semibold underline underline-offset-2 hover:text-orange-900"
                 href="https://try.jobops.app?utm_source=demo&utm_medium=banner&utm_campaign=waitlist"
                 target="_blank"
                 rel="noreferrer"
@@ -116,7 +116,7 @@ export const App: React.FC = () => {
               type="button"
               variant="ghost"
               size="icon"
-              className="h-7 w-7 shrink-0 rounded-full text-orange-950 hover:bg-orange-400/30 hover:text-orange-950"
+              class名称="h-7 w-7 shrink-0 rounded-full text-orange-950 hover:bg-orange-400/30 hover:text-orange-950"
               onClick={() => {
                 setDemoWaitlistBannerDismissed(true);
                 try {
@@ -126,14 +126,14 @@ export const App: React.FC = () => {
                 }
               }}
             >
-              <X className="h-4 w-4" />
-              <span className="sr-only">Dismiss demo waitlist banner</span>
+              <X class名称="h-4 w-4" />
+              <span class名称="sr-only">Dismiss demo waitlist banner</span>
             </Button>
           </div>
         </div>
       )}
       {demoInfo?.demoMode && (
-        <div className="w-full border-b border-amber-400/50 bg-amber-500/20 px-4 py-2 text-center text-xs text-amber-100 backdrop-blur">
+        <div class名称="w-full border-b border-amber-400/50 bg-amber-500/20 px-4 py-2 text-center text-xs text-amber-100 backdrop-blur">
           Demo mode: integrations are simulated and data resets every{" "}
           {demoInfo.resetCadenceHours} hours.
         </div>
@@ -144,12 +144,12 @@ export const App: React.FC = () => {
             key={pageKey}
             nodeRef={nodeRef}
             timeout={100}
-            classNames="page"
+            class名称s="page"
             unmountOnExit
           >
             <div ref={nodeRef}>
               <Routes location={location}>
-                {/* Backwards-compatibility redirects */}
+                {/* 返回wards-compatibility redirects */}
                 {REDIRECTS.map(({ from, to }) => (
                   <Route
                     key={from}
@@ -173,7 +173,7 @@ export const App: React.FC = () => {
                 <Route path="/design-resume" element={<DesignResumePage />} />
                 <Route path="/onboarding" element={<OnboardingPage />} />
                 <Route path="/sign-in" element={<SignInPage />} />
-                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/settings" element={<设置Page />} />
                 <Route path="/tracer-links" element={<TracerLinksPage />} />
                 <Route path="/visa-sponsors" element={<VisaSponsorsPage />} />
                 <Route path="/tracking-inbox" element={<TrackingInboxPage />} />

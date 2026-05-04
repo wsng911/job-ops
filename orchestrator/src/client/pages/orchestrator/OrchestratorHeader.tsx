@@ -1,4 +1,4 @@
-import { PageHeader, StatusIndicator } from "@client/components/layout";
+import { PageHeader, 状态Indicator } from "@client/components/layout";
 import type { JobSource } from "@shared/types.js";
 import { Loader2, Play, Square } from "lucide-react";
 import type React from "react";
@@ -8,49 +8,49 @@ interface OrchestratorHeaderProps {
   navOpen: boolean;
   onNavOpenChange: (open: boolean) => void;
   isPipelineRunning: boolean;
-  isCancelling: boolean;
+  is取消ling: boolean;
   pipelineSources: JobSource[];
   onOpenAutomaticRun: () => void;
-  onCancelPipeline: () => void;
+  on取消Pipeline: () => void;
 }
 
 export const OrchestratorHeader: React.FC<OrchestratorHeaderProps> = ({
   navOpen,
   onNavOpenChange,
   isPipelineRunning,
-  isCancelling,
+  is取消ling,
   pipelineSources,
   onOpenAutomaticRun,
-  onCancelPipeline,
+  on取消Pipeline,
 }) => {
   const actions = isPipelineRunning ? (
     <Button
       size="sm"
-      onClick={onCancelPipeline}
-      disabled={isCancelling}
+      onClick={on取消Pipeline}
+      disabled={is取消ling}
       variant="destructive"
-      className="gap-2"
+      class名称="gap-2"
     >
-      {isCancelling ? (
-        <Loader2 className="h-4 w-4 animate-spin" />
+      {is取消ling ? (
+        <Loader2 class名称="h-4 w-4 animate-spin" />
       ) : (
-        <Square className="h-4 w-4" />
+        <Square class名称="h-4 w-4" />
       )}
-      <span className="hidden sm:inline">
-        {isCancelling ? `Cancelling (${pipelineSources.length})` : `Cancel run`}
+      <span class名称="hidden sm:inline">
+        {is取消ling ? `取消ling (${pipelineSources.length})` : `取消 run`}
       </span>
     </Button>
   ) : (
-    <Button size="sm" onClick={onOpenAutomaticRun} className="gap-2">
-      <Play className="h-4 w-4" />
-      <span className="hidden sm:inline">Run pipeline</span>
+    <Button size="sm" onClick={onOpenAutomaticRun} class名称="gap-2">
+      <Play class名称="h-4 w-4" />
+      <span class名称="hidden sm:inline">Run pipeline</span>
     </Button>
   );
 
   return (
     <PageHeader
       icon={() => (
-        <img src="/favicon.png" alt="" className="size-8 rounded-lg" />
+        <img src="/favicon.png" alt="" class名称="size-8 rounded-lg" />
       )}
       title="Job Ops"
       subtitle="Orchestrator"
@@ -58,7 +58,7 @@ export const OrchestratorHeader: React.FC<OrchestratorHeaderProps> = ({
       onNavOpenChange={onNavOpenChange}
       statusIndicator={
         isPipelineRunning ? (
-          <StatusIndicator label="Pipeline running" variant="amber" />
+          <状态Indicator label="Pipeline running" variant="amber" />
         ) : undefined
       }
       actions={actions}

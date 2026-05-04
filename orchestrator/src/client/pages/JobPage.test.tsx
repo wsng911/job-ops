@@ -1,11 +1,11 @@
 import { createJob } from "@shared/testing/factories.js";
-import type { Job, JobNote } from "@shared/types.js";
+import type { Job, Job否te } from "@shared/types.js";
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
-import type { ReactNode } from "react";
+import type { React否de } from "react";
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { editorHtmlToMarkdown } from "@/client/lib/jobNoteContent";
+import { editorHtmlToMarkdown } from "@/client/lib/job否teContent";
 import * as api from "../api";
 import { renderWithQueryClient } from "../test/renderWithQueryClient";
 import { JobPage } from "./JobPage";
@@ -17,9 +17,9 @@ const TIPTAP_HTML =
 const render = (ui: Parameters<typeof renderWithQueryClient>[0]) =>
   renderWithQueryClient(ui);
 
-let notesStore: JobNote[] = [];
+let notesStore: Job否te[] = [];
 
-const makeNote = (overrides: Partial<JobNote>): JobNote => ({
+const make否te = (overrides: Partial<Job否te>): Job否te => ({
   id: "note-1",
   jobId: "job-1",
   title: "Application answer",
@@ -29,8 +29,8 @@ const makeNote = (overrides: Partial<JobNote>): JobNote => ({
   ...overrides,
 });
 
-vi.mock("@/client/components/design-resume/RichTextEditor", () => ({
-  RichTextEditor: ({
+vi.mock("@/client/components/design-resume/RichText编辑or", () => ({
+  RichText编辑or: ({
     value,
     onChange,
     placeholder,
@@ -50,18 +50,18 @@ vi.mock("@/client/components/design-resume/RichTextEditor", () => ({
 }));
 
 vi.mock("@/components/ui/dropdown-menu", () => ({
-  DropdownMenu: ({ children }: { children: ReactNode }) => <>{children}</>,
-  DropdownMenuTrigger: ({ children }: { children: ReactNode }) => (
+  DropdownMenu: ({ children }: { children: React否de }) => <>{children}</>,
+  DropdownMenuTrigger: ({ children }: { children: React否de }) => (
     <>{children}</>
   ),
-  DropdownMenuContent: ({ children }: { children: ReactNode }) => (
+  DropdownMenuContent: ({ children }: { children: React否de }) => (
     <div>{children}</div>
   ),
   DropdownMenuItem: ({
     children,
     onSelect,
   }: {
-    children: ReactNode;
+    children: React否de;
     onSelect?: () => void;
   }) => (
     <button type="button" onClick={() => onSelect?.()}>
@@ -75,10 +75,10 @@ vi.mock("../api", () => ({
   getJob: vi.fn(),
   getJobStageEvents: vi.fn(),
   getJobTasks: vi.fn(),
-  getJobNotes: vi.fn(),
-  createJobNote: vi.fn(),
-  updateJobNote: vi.fn(),
-  deleteJobNote: vi.fn(),
+  getJob否tes: vi.fn(),
+  createJob否te: vi.fn(),
+  updateJob否te: vi.fn(),
+  deleteJob否te: vi.fn(),
   updateJobStageEvent: vi.fn(),
   deleteJobStageEvent: vi.fn(),
   transitionJobStage: vi.fn(),
@@ -103,8 +103,8 @@ vi.mock("../components/ghostwriter/GhostwriterPanel", () => ({
   GhostwriterPanel: () => <div data-testid="ghostwriter-panel" />,
 }));
 
-vi.mock("../components/JobDetailsEditDrawer", () => ({
-  JobDetailsEditDrawer: () => null,
+vi.mock("../components/JobDetails编辑Drawer", () => ({
+  JobDetails编辑Drawer: () => null,
 }));
 
 vi.mock("../components/LogEventModal", () => ({
@@ -115,17 +115,17 @@ vi.mock("./job-page/JobPageRightSidebar", () => ({
   JobPageRightSidebar: () => <div data-testid="job-right-sidebar" />,
 }));
 
-vi.mock("../components/ConfirmDelete", () => ({
-  ConfirmDelete: ({
+vi.mock("../components/确认删除", () => ({
+  确认删除: ({
     isOpen,
-    onClose,
-    onConfirm,
+    on关闭,
+    on确认,
     title,
     description,
   }: {
     isOpen: boolean;
-    onClose: () => void;
-    onConfirm: () => void;
+    on关闭: () => void;
+    on确认: () => void;
     title?: string;
     description?: string;
   }) =>
@@ -133,11 +133,11 @@ vi.mock("../components/ConfirmDelete", () => ({
       <div role="alertdialog">
         <div>{title}</div>
         <div>{description}</div>
-        <button type="button" onClick={onConfirm}>
-          Delete
+        <button type="button" onClick={on确认}>
+          删除
         </button>
-        <button type="button" onClick={onClose}>
-          Cancel
+        <button type="button" onClick={on关闭}>
+          取消
         </button>
       </div>
     ) : null,
@@ -176,9 +176,9 @@ beforeEach(() => {
       notes: "Bring questions about the team.",
     },
   ]);
-  vi.mocked(api.getJobNotes).mockImplementation(async () => notesStore);
-  vi.mocked(api.createJobNote).mockImplementation(async (jobId, input) => {
-    const created = makeNote({
+  vi.mocked(api.getJob否tes).mockImplementation(async () => notesStore);
+  vi.mocked(api.createJob否te).mockImplementation(async (jobId, input) => {
+    const created = make否te({
       id: `note-${notesStore.length + 1}`,
       jobId,
       title: input.title,
@@ -189,11 +189,11 @@ beforeEach(() => {
     notesStore = [created, ...notesStore];
     return created;
   });
-  vi.mocked(api.updateJobNote).mockImplementation(
+  vi.mocked(api.updateJob否te).mockImplementation(
     async (_jobId, noteId, input) => {
       const current = notesStore.find((note) => note.id === noteId);
       if (!current) {
-        throw new Error("Note not found");
+        throw new Error("否te not found");
       }
 
       const updated = {
@@ -208,7 +208,7 @@ beforeEach(() => {
       return updated;
     },
   );
-  vi.mocked(api.deleteJobNote).mockImplementation(async (_jobId, noteId) => {
+  vi.mocked(api.deleteJob否te).mockImplementation(async (_jobId, noteId) => {
     notesStore = notesStore.filter((note) => note.id !== noteId);
   });
 });
@@ -223,7 +223,7 @@ const LocationProbe = () => {
   );
 };
 
-type RouterInitialEntry = NonNullable<
+type RouterInitialEntry = 否nNullable<
   Parameters<typeof MemoryRouter>[0]["initialEntries"]
 >[number];
 
@@ -268,13 +268,13 @@ describe("JobPage notes", () => {
 
   it("renders the full-width notes section and defaults to markdown preview", async () => {
     notesStore = [
-      makeNote({
+      make否te({
         id: "note-older",
         title: "Recruiter contact",
         content: "Reach out to Jane.",
         updatedAt: "2026-01-01T09:00:00.000Z",
       }),
-      makeNote({
+      make否te({
         id: "note-newer",
         title: "Why this company",
         content:
@@ -318,7 +318,7 @@ describe("JobPage notes", () => {
     await waitFor(() =>
       expect(
         screen.getByText(
-          "No notes yet. Capture reminders, interview prep, or links in markdown.",
+          "否 notes yet. Capture reminders, interview prep, or links in markdown.",
         ),
       ).toBeInTheDocument(),
     );
@@ -333,7 +333,7 @@ describe("JobPage notes", () => {
       expect(screen.getByTestId("tiptap-editor")).toBeInTheDocument(),
     );
 
-    fireEvent.change(screen.getByLabelText("Title"), {
+    fireEvent.change(screen.getByLabelText("标题"), {
       target: { value: "Why this company" },
     });
     fireEvent.click(
@@ -344,12 +344,12 @@ describe("JobPage notes", () => {
     const expectedMarkdown = editorHtmlToMarkdown(TIPTAP_HTML);
 
     await waitFor(() =>
-      expect(api.createJobNote).toHaveBeenCalledWith("job-1", {
+      expect(api.createJob否te).toHaveBeenCalledWith("job-1", {
         title: "Why this company",
         content: expectedMarkdown,
       }),
     );
-    expect(toast.success).toHaveBeenCalledWith("Note saved");
+    expect(toast.success).toHaveBeenCalledWith("否te saved");
     expect(
       await screen.findByRole("heading", { name: "Fit" }),
     ).toBeInTheDocument();
@@ -360,7 +360,7 @@ describe("JobPage notes", () => {
 
     fireEvent.click(
       within(screen.getByTestId("job-notes-detail")).getByRole("button", {
-        name: "Edit note",
+        name: "编辑 note",
       }),
     );
 
@@ -377,16 +377,16 @@ describe("JobPage notes", () => {
     fireEvent.click(screen.getByRole("button", { name: /save note/i }));
 
     await waitFor(() =>
-      expect(api.updateJobNote).toHaveBeenCalledWith("job-1", "note-1", {
+      expect(api.updateJob否te).toHaveBeenCalledWith("job-1", "note-1", {
         title: "Why this company",
         content: expectedMarkdown,
       }),
     );
-    expect(toast.success).toHaveBeenCalledWith("Note saved");
+    expect(toast.success).toHaveBeenCalledWith("否te saved");
 
     fireEvent.click(
       within(screen.getByTestId("job-notes-detail")).getByRole("button", {
-        name: "Delete note",
+        name: "删除 note",
       }),
     );
     fireEvent.click(
@@ -396,9 +396,9 @@ describe("JobPage notes", () => {
     );
 
     await waitFor(() =>
-      expect(api.deleteJobNote).toHaveBeenCalledWith("job-1", "note-1"),
+      expect(api.deleteJob否te).toHaveBeenCalledWith("job-1", "note-1"),
     );
-    expect(toast.success).toHaveBeenCalledWith("Note deleted");
+    expect(toast.success).toHaveBeenCalledWith("否te deleted");
     await waitFor(() =>
       expect(screen.queryByText("Why this company")).toBeNull(),
     );
@@ -441,7 +441,7 @@ describe("JobPage back navigation", () => {
   it("returns to the entry page instead of stepping through job memory views", async () => {
     renderJobPage({
       pathname: "/job/job-1/ghostwriter",
-      state: { jobPageBackTo: "/jobs/ready?q=backend" },
+      state: { jobPage返回To: "/jobs/ready?q=backend" },
     });
 
     expect(await screen.findByTestId("ghostwriter-panel")).toBeInTheDocument();
@@ -478,7 +478,7 @@ describe("JobPage back navigation", () => {
   it("preserves the entry page state across internal job view links", async () => {
     renderJobPage({
       pathname: "/job/job-1",
-      state: { jobPageBackTo: "/jobs/ready?source=naukri" },
+      state: { jobPage返回To: "/jobs/ready?source=naukri" },
     });
 
     await screen.findByRole("heading", { name: "Acme Labs" });

@@ -1,25 +1,25 @@
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Accordion } from "@/components/ui/accordion";
-import { EnvironmentSettingsSection } from "./EnvironmentSettingsSection";
+import { Environment设置Section } from "./Environment设置Section";
 
-const EnvironmentSettingsHarness = () => {
+const Environment设置Harness = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
       mutations: { retry: false },
     },
   });
-  const methods = useForm<UpdateSettingsInput>({
+  const methods = useForm<更新设置Input>({
     defaultValues: {
-      ukvisajobsEmail: "visa@example.com",
+      ukvisajobs邮箱: "visa@example.com",
       basicAuthUser: "admin",
-      ukvisajobsPassword: "",
+      ukvisajobs密码: "",
       adzunaAppId: "adzuna-id",
       adzunaAppKey: "",
-      basicAuthPassword: "super-secret",
+      basicAuth密码: "super-secret",
       webhookSecret: "",
       enableBasicAuth: true,
     },
@@ -29,18 +29,18 @@ const EnvironmentSettingsHarness = () => {
     <QueryClientProvider client={queryClient}>
       <FormProvider {...methods}>
         <Accordion type="multiple" defaultValue={["environment"]}>
-          <EnvironmentSettingsSection
+          <Environment设置Section
             values={{
               readable: {
-                ukvisajobsEmail: "visa@example.com",
+                ukvisajobs邮箱: "visa@example.com",
                 adzunaAppId: "adzuna-id",
                 basicAuthUser: "admin",
-                basicAuthPassword: "super-secret",
+                basicAuth密码: "super-secret",
               },
               private: {
-                ukvisajobsPasswordHint: "pass",
+                ukvisajobs密码Hint: "pass",
                 adzunaAppKeyHint: "adzu",
-                basicAuthPasswordHint: "abcd",
+                basicAuth密码Hint: "abcd",
                 webhookSecretHint: "sec-",
               },
               basicAuthActive: true,
@@ -54,9 +54,9 @@ const EnvironmentSettingsHarness = () => {
   );
 };
 
-describe("EnvironmentSettingsSection", () => {
+describe("Environment设置Section", () => {
   it("renders values grouped logically and masks private secrets with hints", () => {
-    render(<EnvironmentSettingsHarness />);
+    render(<Environment设置Harness />);
 
     expect(screen.getByDisplayValue("visa@example.com")).toBeInTheDocument();
     expect(screen.getByDisplayValue("adzuna-id")).toBeInTheDocument();

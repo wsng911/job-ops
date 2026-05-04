@@ -4,9 +4,9 @@ import type {
   Job,
   JobChatMessage,
   JobChatStreamEvent,
-  JobNote,
+  Job否te,
 } from "@shared/types";
-import { Settings2 } from "lucide-react";
+import { 设置2 } from "lucide-react";
 import type React from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -15,18 +15,18 @@ import { showErrorToast } from "@/client/lib/error-toast";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
+  AlertDialog取消,
   AlertDialogContent,
-  AlertDialogDescription,
+  AlertDialog描述,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialog标题,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { bucketQueryLength, trackProductEvent } from "@/lib/analytics";
 import { Composer } from "./Composer";
 import { MessageList } from "./MessageList";
-import { NoteContextSelector } from "./NoteContextSelector";
+import { 否teContextSelector } from "./否teContextSelector";
 
 type GhostwriterPanelProps = {
   job: Job;
@@ -41,10 +41,10 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
 }) => {
   const [messages, setMessages] = useState<JobChatMessage[]>([]);
   const [branches, setBranches] = useState<BranchInfo[]>([]);
-  const [notes, setNotes] = useState<JobNote[]>([]);
-  const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
+  const [notes, set否tes] = useState<Job否te[]>([]);
+  const [selected否teIds, setSelected否teIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [areNotesLoading, setAreNotesLoading] = useState(true);
+  const [are否tesLoading, setAre否tesLoading] = useState(true);
   const [isSavingContext, setIsSavingContext] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
   const [streamingMessageId, setStreamingMessageId] = useState<string | null>(
@@ -77,31 +77,31 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
     });
     setMessages(data.messages);
     setBranches(data.branches);
-    setSelectedNoteIds(data.selectedNoteIds);
+    setSelected否teIds(data.selected否teIds);
   }, [job.id]);
 
-  const loadNotes = useCallback(async () => {
-    setAreNotesLoading(true);
+  const load否tes = useCallback(async () => {
+    setAre否tesLoading(true);
     try {
-      const data = await api.getJobNotes(job.id);
-      setNotes(data);
+      const data = await api.getJob否tes(job.id);
+      set否tes(data);
     } catch (error) {
       showErrorToast(error, "Failed to load notes");
     } finally {
-      setAreNotesLoading(false);
+      setAre否tesLoading(false);
     }
   }, [job.id]);
 
   const load = useCallback(async () => {
     setIsLoading(true);
     try {
-      await Promise.all([loadMessages(), loadNotes()]);
+      await Promise.all([loadMessages(), load否tes()]);
     } catch (error) {
       showErrorToast(error, "Failed to load Ghostwriter");
     } finally {
       setIsLoading(false);
     }
-  }, [loadMessages, loadNotes]);
+  }, [loadMessages, load否tes]);
 
   useEffect(() => {
     void load();
@@ -112,12 +112,12 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
   }, [load]);
 
   useEffect(() => {
-    if (areNotesLoading) return;
+    if (are否tesLoading) return;
     const noteIds = new Set(notes.map((note) => note.id));
-    setSelectedNoteIds((current) =>
+    setSelected否teIds((current) =>
       current.filter((noteId) => noteIds.has(noteId)),
     );
-  }, [areNotesLoading, notes]);
+  }, [are否tesLoading, notes]);
 
   const onStreamEvent = useCallback(
     (event: JobChatStreamEvent) => {
@@ -229,7 +229,7 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
       try {
         await api.streamJobGhostwriterMessage(
           job.id,
-          { content, selectedNoteIds, signal: controller.signal },
+          { content, selected否teIds, signal: controller.signal },
           { onEvent: onStreamEvent },
         );
 
@@ -251,7 +251,7 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
       loadMessages,
       messages,
       onStreamEvent,
-      selectedNoteIds,
+      selected否teIds,
     ],
   );
 
@@ -274,7 +274,7 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
     async (assistantMessageId: string) => {
       if (isStreaming) return;
 
-      // Remove messages below the branch point (everything after the regenerated message disappears)
+      // 移除 messages below the branch point (everything after the regenerated message disappears)
       setMessages((current) => {
         const targetIndex = current.findIndex(
           (m) => m.id === assistantMessageId,
@@ -292,7 +292,7 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
         await api.streamRegenerateJobGhostwriterMessage(
           job.id,
           assistantMessageId,
-          { selectedNoteIds, signal: controller.signal },
+          { selected否teIds, signal: controller.signal },
           { onEvent: onStreamEvent },
         );
         await loadMessages();
@@ -306,14 +306,14 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
         setIsStreaming(false);
       }
     },
-    [isStreaming, job.id, loadMessages, onStreamEvent, selectedNoteIds],
+    [isStreaming, job.id, loadMessages, onStreamEvent, selected否teIds],
   );
 
   const editMessage = useCallback(
     async (messageId: string, content: string) => {
       if (isStreaming) return;
 
-      // Remove the edited message and everything below it (old branch disappears)
+      // 移除 the edited message and everything below it (old branch disappears)
       setMessages((current) => {
         const targetIndex = current.findIndex((m) => m.id === messageId);
         if (targetIndex === -1) return current;
@@ -349,7 +349,7 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
         await api.editJobGhostwriterMessage(
           job.id,
           messageId,
-          { content, selectedNoteIds, signal: controller.signal },
+          { content, selected否teIds, signal: controller.signal },
           { onEvent: onStreamEvent },
         );
         await loadMessages();
@@ -363,28 +363,28 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
         setIsStreaming(false);
       }
     },
-    [isStreaming, job.id, loadMessages, onStreamEvent, selectedNoteIds],
+    [isStreaming, job.id, loadMessages, onStreamEvent, selected否teIds],
   );
 
-  const updateSelectedNotes = useCallback(
-    async (nextSelectedNoteIds: string[]) => {
-      const previousSelectedNoteIds = selectedNoteIds;
-      setSelectedNoteIds(nextSelectedNoteIds);
+  const updateSelected否tes = useCallback(
+    async (nextSelected否teIds: string[]) => {
+      const previousSelected否teIds = selected否teIds;
+      setSelected否teIds(nextSelected否teIds);
       setIsSavingContext(true);
 
       try {
         const result = await api.updateJobGhostwriterContext(job.id, {
-          selectedNoteIds: nextSelectedNoteIds,
+          selected否teIds: nextSelected否teIds,
         });
-        setSelectedNoteIds(result.selectedNoteIds);
+        setSelected否teIds(result.selected否teIds);
       } catch (error) {
-        setSelectedNoteIds(previousSelectedNoteIds);
+        setSelected否teIds(previousSelected否teIds);
         showErrorToast(error, "Failed to update Ghostwriter notes");
       } finally {
         setIsSavingContext(false);
       }
     },
-    [job.id, selectedNoteIds],
+    [job.id, selected否teIds],
   );
 
   const switchBranch = useCallback(
@@ -432,30 +432,30 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
   }, [job.id]);
 
   return (
-    <div className="flex h-full min-h-0 flex-1 flex-col max-w-6xl mx-auto">
+    <div class名称="flex h-full min-h-0 flex-1 flex-col max-w-6xl mx-auto">
       <div
         ref={messageListRef}
-        className="min-h-0 flex-1 overflow-y-auto border-b border-border/50 pb-3 pr-1"
+        class名称="min-h-0 flex-1 overflow-y-auto border-b border-border/50 pb-3 pr-1"
       >
         {messages.length === 0 && !isLoading ? (
-          <div className="flex h-full min-h-[260px] justify-center px-3 flex-col text-left">
-            <h4 className="font-medium">
+          <div class名称="flex h-full min-h-[260px] justify-center px-3 flex-col text-left">
+            <h4 class名称="font-medium">
               {job.title} at {job.employer}
             </h4>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            <p class名称="mt-2 text-sm leading-relaxed text-muted-foreground">
               Ghostwriter already has this job description, your resume and your
               writing style preferences. Ask for tailored response drafts, or
               concise role-fit talking points.
             </p>
-            <div className="mt-4">
+            <div class名称="mt-4">
               <Button
                 variant="outline"
                 size="sm"
-                className="gap-1.5 w-fit"
+                class名称="gap-1.5 w-fit"
                 asChild
               >
                 <Link to="/settings#chat">
-                  <Settings2 className="h-4 w-4" />
+                  <设置2 class名称="h-4 w-4" />
                   Alter personality
                 </Link>
               </Button>
@@ -468,26 +468,26 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
             isStreaming={isStreaming}
             streamingMessageId={streamingMessageId}
             onRegenerate={regenerate}
-            onEdit={editMessage}
+            on编辑={editMessage}
             onSwitchBranch={switchBranch}
           />
         )}
       </div>
 
-      <div className="mt-4">
+      <div class名称="mt-4">
         <Composer
           disabled={isLoading || isStreaming}
           isStreaming={isStreaming}
           canReset={canReset}
           noteContextSelector={
-            <NoteContextSelector
+            <否teContextSelector
               notes={notes}
-              selectedNoteIds={selectedNoteIds}
+              selected否teIds={selected否teIds}
               disabled={isLoading || isStreaming}
-              isLoading={areNotesLoading}
+              isLoading={are否tesLoading}
               isSaving={isSavingContext}
-              onChange={(nextSelectedNoteIds) =>
-                void updateSelectedNotes(nextSelectedNoteIds)
+              onChange={(nextSelected否teIds) =>
+                void updateSelected否tes(nextSelected否teIds)
               }
             />
           }
@@ -500,17 +500,17 @@ export const GhostwriterPanel: React.FC<GhostwriterPanelProps> = ({
       <AlertDialog open={isResetDialogOpen} onOpenChange={setIsResetDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Start over?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialog标题>Start over?</AlertDialog标题>
+            <AlertDialog描述>
               This will permanently erase the entire conversation. This action
               cannot be undone.
-            </AlertDialogDescription>
+            </AlertDialog描述>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialog取消>取消</AlertDialog取消>
             <AlertDialogAction
               onClick={() => void resetConversation()}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              class名称="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
               Erase conversation
             </AlertDialogAction>

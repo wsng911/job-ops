@@ -1,12 +1,12 @@
-import { lockLabel, type StatusLock } from "./JobCommandBar.utils";
-import { JobStatusBadge } from "./JobStatusBadge";
+import { lockLabel, type 状态Lock } from "./JobCommandBar.utils";
+import { Job状态Badge } from "./Job状态Badge";
 
 interface JobCommandBarLockBadgeProps {
-  activeLock: StatusLock;
+  activeLock: 状态Lock;
 }
 
 export const JobCommandBarLockBadge = ({
   activeLock,
 }: JobCommandBarLockBadgeProps) => (
-  <JobStatusBadge status={activeLock} label={`@${lockLabel[activeLock]}`} />
+  <Job状态Badge status={activeLock} label={`@${lockLabel[activeLock]}`} />
 );

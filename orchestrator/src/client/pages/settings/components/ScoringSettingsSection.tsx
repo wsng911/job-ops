@@ -1,8 +1,8 @@
 import { TokenizedInput } from "@client/pages/orchestrator/TokenizedInput";
-import { SettingsInput } from "@client/pages/settings/components/SettingsInput";
-import { SettingsSectionFrame } from "@client/pages/settings/components/SettingsSectionFrame";
+import { 设置Input } from "@client/pages/settings/components/设置Input";
+import { 设置SectionFrame } from "@client/pages/settings/components/设置SectionFrame";
 import type { ScoringValues } from "@client/pages/settings/types";
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import type React from "react";
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 
-type ScoringSettingsSectionProps = {
+type Scoring设置SectionProps = {
   values: ScoringValues;
   isLoading: boolean;
   isSaving: boolean;
@@ -24,7 +24,7 @@ function parseTokenizedKeywordInput(input: string): string[] {
     .filter(Boolean);
 }
 
-export const ScoringSettingsSection: React.FC<ScoringSettingsSectionProps> = ({
+export const Scoring设置Section: React.FC<Scoring设置SectionProps> = ({
   values,
   isLoading,
   isSaving,
@@ -34,11 +34,11 @@ export const ScoringSettingsSection: React.FC<ScoringSettingsSectionProps> = ({
     penalizeMissingSalary,
     missingSalaryPenalty,
     autoSkipScoreThreshold,
-    blockedCompanyKeywords,
+    blocked公司Keywords,
     scoringInstructions,
   } = values;
-  const { control, watch, setValue } = useFormContext<UpdateSettingsInput>();
-  const [blockedCompanyKeywordDraft, setBlockedCompanyKeywordDraft] =
+  const { control, watch, setValue } = useFormContext<更新设置Input>();
+  const [blocked公司KeywordDraft, setBlocked公司KeywordDraft] =
     useState("");
 
   // Watch the current form value to conditionally show/hide penalty input
@@ -47,18 +47,18 @@ export const ScoringSettingsSection: React.FC<ScoringSettingsSectionProps> = ({
 
   // Watch auto-skip threshold to show current value
   const currentAutoSkipThreshold = watch("autoSkipScoreThreshold");
-  const blockedCompanyKeywordValues =
-    watch("blockedCompanyKeywords") ?? blockedCompanyKeywords.default;
+  const blocked公司KeywordValues =
+    watch("blocked公司Keywords") ?? blocked公司Keywords.default;
 
   return (
-    <SettingsSectionFrame
+    <设置SectionFrame
       mode={layoutMode}
-      title="Scoring Settings"
+      title="Scoring 设置"
       value="scoring"
     >
-      <div className="space-y-4">
+      <div class名称="space-y-4">
         {/* Enable penalty toggle */}
-        <div className="flex items-start space-x-3">
+        <div class名称="flex items-start space-x-3">
           <Controller
             name="penalizeMissingSalary"
             control={control}
@@ -75,14 +75,14 @@ export const ScoringSettingsSection: React.FC<ScoringSettingsSectionProps> = ({
               />
             )}
           />
-          <div className="flex flex-col gap-1.5">
+          <div class名称="flex flex-col gap-1.5">
             <label
               htmlFor="penalizeMissingSalary"
-              className="text-sm font-medium leading-none cursor-pointer"
+              class名称="text-sm font-medium leading-none cursor-pointer"
             >
               Penalize Missing Salary
             </label>
-            <p className="text-xs text-muted-foreground">
+            <p class名称="text-xs text-muted-foreground">
               Reduce suitability scores for jobs that do not include salary
               information. Jobs with any salary text (including "Competitive")
               are not penalized.
@@ -92,12 +92,12 @@ export const ScoringSettingsSection: React.FC<ScoringSettingsSectionProps> = ({
 
         {/* Penalty amount input - only shown when enabled */}
         {currentPenalizeEnabled && (
-          <div className="pl-7">
+          <div class名称="pl-7">
             <Controller
               name="missingSalaryPenalty"
               control={control}
               render={({ field }) => (
-                <SettingsInput
+                <设置Input
                   label="Penalty Amount"
                   type="number"
                   inputProps={{
@@ -128,12 +128,12 @@ export const ScoringSettingsSection: React.FC<ScoringSettingsSectionProps> = ({
         <Separator />
 
         {/* Auto-skip threshold input */}
-        <div className="space-y-3">
+        <div class名称="space-y-3">
           <Controller
             name="autoSkipScoreThreshold"
             control={control}
             render={({ field }) => (
-              <SettingsInput
+              <设置Input
                 label="Auto-skip Score Threshold"
                 type="number"
                 inputProps={{
@@ -168,10 +168,10 @@ export const ScoringSettingsSection: React.FC<ScoringSettingsSectionProps> = ({
 
         <Separator />
 
-        <div className="space-y-3">
+        <div class名称="space-y-3">
           <label
             htmlFor="scoringInstructions"
-            className="text-sm font-medium leading-none"
+            class名称="text-sm font-medium leading-none"
           >
             Scoring Instructions
           </label>
@@ -179,7 +179,7 @@ export const ScoringSettingsSection: React.FC<ScoringSettingsSectionProps> = ({
             name="scoringInstructions"
             control={control}
             render={({ field }) => (
-              <div className="space-y-2">
+              <div class名称="space-y-2">
                 <Textarea
                   id="scoringInstructions"
                   value={field.value ?? scoringInstructions.default}
@@ -188,14 +188,14 @@ export const ScoringSettingsSection: React.FC<ScoringSettingsSectionProps> = ({
                   disabled={isLoading || isSaving}
                   maxLength={4000}
                 />
-                <div className="text-xs text-muted-foreground">
+                <div class名称="text-xs text-muted-foreground">
                   Optional guidance for the AI scorer about what to weigh more
                   or less. This only changes scoring, not Ghostwriter or
                   tailoring.
                 </div>
-                <div className="text-xs text-muted-foreground">
+                <div class名称="text-xs text-muted-foreground">
                   Current:{" "}
-                  <span className="font-mono">
+                  <span class名称="font-mono">
                     {scoringInstructions.effective || "—"}
                   </span>
                 </div>
@@ -206,77 +206,77 @@ export const ScoringSettingsSection: React.FC<ScoringSettingsSectionProps> = ({
 
         <Separator />
 
-        <div className="space-y-3">
+        <div class名称="space-y-3">
           <label
             htmlFor="blocked-company-keywords"
-            className="text-sm font-medium leading-none"
+            class名称="text-sm font-medium leading-none"
           >
-            Blocked Company Keywords
+            Blocked 公司 Keywords
           </label>
           <TokenizedInput
             id="blocked-company-keywords"
-            values={blockedCompanyKeywordValues}
-            draft={blockedCompanyKeywordDraft}
+            values={blocked公司KeywordValues}
+            draft={blocked公司KeywordDraft}
             parseInput={parseTokenizedKeywordInput}
-            onDraftChange={setBlockedCompanyKeywordDraft}
+            onDraftChange={setBlocked公司KeywordDraft}
             onValuesChange={(value) =>
-              setValue("blockedCompanyKeywords", value, { shouldDirty: true })
+              setValue("blocked公司Keywords", value, { shouldDirty: true })
             }
             placeholder='e.g. "recruitment", "staffing"'
             helperText="Jobs whose company name contains one of these keywords will be dropped during discovery."
-            removeLabelPrefix="Remove blocked keyword"
+            removeLabelPrefix="移除 blocked keyword"
             disabled={isLoading || isSaving}
           />
-          <div className="break-words font-mono text-xs text-muted-foreground">
+          <div class名称="break-words font-mono text-xs text-muted-foreground">
             Effective:{" "}
-            {blockedCompanyKeywordValues.length > 0
-              ? blockedCompanyKeywordValues.join(", ")
-              : "None"}{" "}
+            {blocked公司KeywordValues.length > 0
+              ? blocked公司KeywordValues.join(", ")
+              : "否ne"}{" "}
             | Default:{" "}
-            {blockedCompanyKeywords.default.length > 0
-              ? blockedCompanyKeywords.default.join(", ")
-              : "None"}
+            {blocked公司Keywords.default.length > 0
+              ? blocked公司Keywords.default.join(", ")
+              : "否ne"}
           </div>
         </div>
 
         <Separator />
 
         {/* Effective/Default values display */}
-        <div className="grid gap-2 text-sm sm:grid-cols-2">
+        <div class名称="grid gap-2 text-sm sm:grid-cols-2">
           <div>
-            <div className="text-xs text-muted-foreground">Penalty Enabled</div>
-            <div className="break-words font-mono text-xs">
-              Effective: {penalizeMissingSalary.effective ? "Yes" : "No"} |
-              Default: {penalizeMissingSalary.default ? "Yes" : "No"}
+            <div class名称="text-xs text-muted-foreground">Penalty Enabled</div>
+            <div class名称="break-words font-mono text-xs">
+              Effective: {penalizeMissingSalary.effective ? "是" : "否"} |
+              Default: {penalizeMissingSalary.default ? "是" : "否"}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">Penalty Amount</div>
-            <div className="break-words font-mono text-xs">
+            <div class名称="text-xs text-muted-foreground">Penalty Amount</div>
+            <div class名称="break-words font-mono text-xs">
               Effective: {missingSalaryPenalty.effective} | Default:{" "}
               {missingSalaryPenalty.default}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Auto-skip Threshold
             </div>
-            <div className="break-words font-mono text-xs">
+            <div class名称="break-words font-mono text-xs">
               Effective: {autoSkipScoreThreshold.effective ?? "Disabled"} |
               Default: {autoSkipScoreThreshold.default ?? "Disabled"}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Scoring Instructions
             </div>
-            <div className="break-words font-mono text-xs">
+            <div class名称="break-words font-mono text-xs">
               Effective: {scoringInstructions.effective || "—"} | Default:{" "}
               {scoringInstructions.default || "—"}
             </div>
           </div>
         </div>
       </div>
-    </SettingsSectionFrame>
+    </设置SectionFrame>
   );
 };

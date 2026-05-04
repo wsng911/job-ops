@@ -15,25 +15,25 @@ import { ConversionAnalytics } from "./ConversionAnalytics";
 
 // Mock UI components
 vi.mock("@/components/ui/card", () => ({
-  Card: ({ children }: { children: React.ReactNode }) => (
+  Card: ({ children }: { children: React.React否de }) => (
     <div data-testid="card">{children}</div>
   ),
-  CardContent: ({ children }: { children: React.ReactNode }) => (
+  CardContent: ({ children }: { children: React.React否de }) => (
     <div data-testid="card-content">{children}</div>
   ),
-  CardHeader: ({ children }: { children: React.ReactNode }) => (
+  CardHeader: ({ children }: { children: React.React否de }) => (
     <div data-testid="card-header">{children}</div>
   ),
-  CardTitle: ({ children }: { children: React.ReactNode }) => (
+  Card标题: ({ children }: { children: React.React否de }) => (
     <div data-testid="card-title">{children}</div>
   ),
-  CardDescription: ({ children }: { children: React.ReactNode }) => (
+  Card描述: ({ children }: { children: React.React否de }) => (
     <div data-testid="card-description">{children}</div>
   ),
 }));
 
 vi.mock("@/components/ui/chart", () => ({
-  ChartContainer: ({ children }: { children: React.ReactNode }) => (
+  ChartContainer: ({ children }: { children: React.React否de }) => (
     <div data-testid="chart-container">{children}</div>
   ),
   ChartTooltip: () => <div data-testid="chart-tooltip">Tooltip</div>,
@@ -44,7 +44,7 @@ vi.mock("recharts", () => ({
     children,
     data,
   }: {
-    children: React.ReactNode;
+    children: React.React否de;
     data?: unknown;
   }) => (
     <div data-testid="bar-chart">
@@ -55,7 +55,7 @@ vi.mock("recharts", () => ({
   Bar: () => <div data-testid="bar">Bar</div>,
   Cell: () => <div data-testid="cell">Cell</div>,
   LabelList: () => <div data-testid="label-list">LabelList</div>,
-  LineChart: ({ children }: { children: React.ReactNode }) => (
+  LineChart: ({ children }: { children: React.React否de }) => (
     <div data-testid="line-chart">{children}</div>
   ),
   Line: () => <div data-testid="line">Line</div>,
@@ -63,7 +63,7 @@ vi.mock("recharts", () => ({
   XAxis: () => <div data-testid="x-axis">XAxis</div>,
   YAxis: () => <div data-testid="y-axis">YAxis</div>,
   Tooltip: () => <div data-testid="tooltip">Tooltip</div>,
-  ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
+  ResponsiveContainer: ({ children }: { children: React.React否de }) => (
     <div data-testid="responsive-container">{children}</div>
   ),
 }));
@@ -380,7 +380,7 @@ describe("ConversionAnalytics - Edge Cases", () => {
 
       expect(
         screen.getByText(
-          "Funnel: Applied → Screening → Interview → Offer → Rejected",
+          "Funnel: Applied → Screening → 面试 → 录用 → 已拒绝",
         ),
       ).toBeInTheDocument();
 
@@ -392,11 +392,11 @@ describe("ConversionAnalytics - Edge Cases", () => {
         value: number;
       }>;
       const rejectedDataPoint = chartData.find(
-        (point) => point.name === "Rejected",
+        (point) => point.name === "已拒绝",
       );
 
       expect(rejectedDataPoint).toEqual(
-        expect.objectContaining({ name: "Rejected", value: 2 }),
+        expect.objectContaining({ name: "已拒绝", value: 2 }),
       );
     });
   });

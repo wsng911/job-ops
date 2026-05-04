@@ -1,9 +1,9 @@
-import { SettingsSectionFrame } from "@client/pages/settings/components/SettingsSectionFrame";
+import { 设置SectionFrame } from "@client/pages/settings/components/设置SectionFrame";
 import {
   ALL_JOB_STATUSES,
   STATUS_DESCRIPTIONS,
 } from "@client/pages/settings/constants";
-import type { JobStatus } from "@shared/types";
+import type { Job状态 } from "@shared/types";
 import { AlertTriangle, Trash2 } from "lucide-react";
 
 import type React from "react";
@@ -12,12 +12,12 @@ import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
+  AlertDialog取消,
   AlertDialogContent,
-  AlertDialogDescription,
+  AlertDialog描述,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialog标题,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
@@ -25,9 +25,9 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 
 type DangerZoneSectionProps = {
-  statusesToClear: JobStatus[];
-  toggleStatusToClear: (status: JobStatus) => void;
-  handleClearByStatuses: () => void;
+  statusesToClear: Job状态[];
+  toggle状态ToClear: (status: Job状态) => void;
+  handleClearBy状态es: () => void;
   handleClearDatabase: () => void;
   handleClearByScore?: (threshold: number) => void;
   isLoading: boolean;
@@ -37,8 +37,8 @@ type DangerZoneSectionProps = {
 
 export const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
   statusesToClear,
-  toggleStatusToClear,
-  handleClearByStatuses,
+  toggle状态ToClear,
+  handleClearBy状态es,
   handleClearDatabase,
   handleClearByScore,
   isLoading,
@@ -52,61 +52,61 @@ export const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
     parsedThreshold >= 0 &&
     parsedThreshold <= 100;
   return (
-    <SettingsSectionFrame
+    <设置SectionFrame
       mode={layoutMode}
       tone="danger"
       title={
-        <div className="flex items-center gap-2 text-destructive">
-          <AlertTriangle className="h-4 w-4" />
-          <span className="text-base font-semibold tracking-wider">
+        <div class名称="flex items-center gap-2 text-destructive">
+          <AlertTriangle class名称="h-4 w-4" />
+          <span class名称="text-base font-semibold tracking-wider">
             Danger Zone
           </span>
         </div>
       }
       value="danger-zone"
     >
-      <div className="space-y-4 pt-2">
-        <div className="p-3 rounded-md space-y-4">
-          <div className="space-y-0.5">
-            <div className="text-sm font-semibold text-destructive">
-              Clear Jobs by Status
+      <div class名称="space-y-4 pt-2">
+        <div class名称="p-3 rounded-md space-y-4">
+          <div class名称="space-y-0.5">
+            <div class名称="text-sm font-semibold text-destructive">
+              Clear Jobs by 状态
             </div>
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Select which job statuses you want to clear.
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <div class名称="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {ALL_JOB_STATUSES.map((status) => {
               const isSelected = statusesToClear.includes(status);
               return (
                 <button
                   key={status}
                   type="button"
-                  onClick={() => toggleStatusToClear(status)}
+                  onClick={() => toggle状态ToClear(status)}
                   disabled={isLoading || isSaving}
-                  className={`flex items-start gap-3 rounded-lg border p-3 text-left transition-colors hover:bg-destructive/20 disabled:cursor-not-allowed disabled:opacity-50 ${
+                  class名称={`flex items-start gap-3 rounded-lg border p-3 text-left transition-colors hover:bg-destructive/20 disabled:cursor-not-allowed disabled:opacity-50 ${
                     isSelected
                       ? "border-destructive bg-destructive/10"
                       : "border-border"
                   }`}
                 >
                   <div
-                    className={`mt-0.5 h-4 w-4 rounded-full border-2 flex items-center justify-center ${
+                    class名称={`mt-0.5 h-4 w-4 rounded-full border-2 flex items-center justify-center ${
                       isSelected
                         ? "border-destructive"
                         : "border-muted-foreground"
                     }`}
                   >
                     {isSelected && (
-                      <div className="h-2 w-2 rounded-full bg-destructive" />
+                      <div class名称="h-2 w-2 rounded-full bg-destructive" />
                     )}
                   </div>
-                  <div className="grid gap-0.5">
-                    <span className="text-sm font-medium capitalize">
+                  <div class名称="grid gap-0.5">
+                    <span class名称="text-sm font-medium capitalize">
                       {status}
                     </span>
-                    <span className="text-xs text-muted-foreground">
+                    <span class名称="text-xs text-muted-foreground">
                       {STATUS_DESCRIPTIONS[status]}
                     </span>
                   </div>
@@ -122,23 +122,23 @@ export const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
                 size="sm"
                 disabled={isLoading || isSaving || statusesToClear.length === 0}
               >
-                <Trash2 className="mr-2 h-4 w-4" />
+                <Trash2 class名称="mr-2 h-4 w-4" />
                 Clear Selected ({statusesToClear.length})
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Clear jobs by status?</AlertDialogTitle>
-                <AlertDialogDescription>
+                <AlertDialog标题>Clear jobs by status?</AlertDialog标题>
+                <AlertDialog描述>
                   This will delete all jobs with the following statuses:{" "}
                   {statusesToClear.join(", ")}. This action cannot be undone.
-                </AlertDialogDescription>
+                </AlertDialog描述>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialog取消>取消</AlertDialog取消>
                 <AlertDialogAction
-                  onClick={handleClearByStatuses}
-                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  onClick={handleClearBy状态es}
+                  class名称="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                 >
                   Clear {statusesToClear.length} status
                   {statusesToClear.length !== 1 ? "es" : ""}
@@ -152,22 +152,22 @@ export const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
 
         {/* Clear Jobs Below Score */}
         {handleClearByScore && (
-          <div className="p-3 rounded-md space-y-4">
-            <div className="space-y-0.5">
-              <div className="text-sm font-semibold text-destructive">
+          <div class名称="p-3 rounded-md space-y-4">
+            <div class名称="space-y-0.5">
+              <div class名称="text-sm font-semibold text-destructive">
                 Clear Jobs Below Score
               </div>
-              <div className="text-xs text-muted-foreground">
-                Remove all jobs with a suitability score below the specified
+              <div class名称="text-xs text-muted-foreground">
+                移除 all jobs with a suitability score below the specified
                 threshold. Applied jobs will not be deleted.
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-              <div className="flex-1">
+            <div class名称="flex flex-col gap-3 sm:flex-row sm:items-end">
+              <div class名称="flex-1">
                 <label
                   htmlFor="score-threshold"
-                  className="text-sm font-medium mb-1.5 block"
+                  class名称="text-sm font-medium mb-1.5 block"
                 >
                   Score Threshold (0-100)
                 </label>
@@ -182,7 +182,7 @@ export const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
                   value={scoreThreshold}
                   onChange={(e) => setScoreThreshold(e.target.value)}
                   disabled={isLoading || isSaving}
-                  className="w-full"
+                  class名称="w-full"
                 />
               </div>
               <AlertDialog>
@@ -192,23 +192,23 @@ export const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
                     size="default"
                     disabled={isLoading || isSaving || !isValidThreshold}
                   >
-                    <Trash2 className="mr-2 h-4 w-4" />
+                    <Trash2 class名称="mr-2 h-4 w-4" />
                     Clear Below {isValidThreshold ? parsedThreshold : "..."}
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>
+                    <AlertDialog标题>
                       Clear jobs below score {parsedThreshold}?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
+                    </AlertDialog标题>
+                    <AlertDialog描述>
                       This will permanently delete all jobs with a suitability
                       score below {parsedThreshold}. Applied jobs will be
                       preserved. This action cannot be undone.
-                    </AlertDialogDescription>
+                    </AlertDialog描述>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialog取消>取消</AlertDialog取消>
                     <AlertDialogAction
                       onClick={() => {
                         if (isValidThreshold) {
@@ -216,7 +216,7 @@ export const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
                           setScoreThreshold("");
                         }
                       }}
-                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                      class名称="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                     >
                       Clear jobs
                     </AlertDialogAction>
@@ -229,13 +229,13 @@ export const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
 
         <Separator />
 
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between p-3 rounded-md">
-          <div className="space-y-0.5">
-            <div className="text-sm font-semibold text-destructive">
+        <div class名称="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between p-3 rounded-md">
+          <div class名称="space-y-0.5">
+            <div class名称="text-sm font-semibold text-destructive">
               Clear Entire Database
             </div>
-            <div className="text-xs text-muted-foreground">
-              Delete all jobs and pipeline runs from the database.
+            <div class名称="text-xs text-muted-foreground">
+              删除 all jobs and pipeline runs from the database.
             </div>
           </div>
           <AlertDialog>
@@ -245,23 +245,23 @@ export const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
                 size="sm"
                 disabled={isLoading || isSaving}
               >
-                <Trash2 className="mr-2 h-4 w-4" />
+                <Trash2 class名称="mr-2 h-4 w-4" />
                 Clear Database
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Clear all jobs?</AlertDialogTitle>
-                <AlertDialogDescription>
+                <AlertDialog标题>Clear all jobs?</AlertDialog标题>
+                <AlertDialog描述>
                   This deletes all jobs and pipeline runs from the database.
                   This action cannot be undone.
-                </AlertDialogDescription>
+                </AlertDialog描述>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialog取消>取消</AlertDialog取消>
                 <AlertDialogAction
                   onClick={handleClearDatabase}
-                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  class名称="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                 >
                   Clear database
                 </AlertDialogAction>
@@ -270,6 +270,6 @@ export const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
           </AlertDialog>
         </div>
       </div>
-    </SettingsSectionFrame>
+    </设置SectionFrame>
   );
 };

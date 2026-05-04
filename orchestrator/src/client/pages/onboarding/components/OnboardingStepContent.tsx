@@ -1,5 +1,5 @@
 import type { LlmProviderId } from "@client/pages/settings/utils";
-import type { SearchTermsSuggestionResponse } from "@shared/types.js";
+import type { 搜索TermsSuggestionResponse } from "@shared/types.js";
 import type React from "react";
 import type { Control } from "react-hook-form";
 import type {
@@ -12,22 +12,22 @@ import type {
 import { BaseResumeStep } from "./BaseResumeStep";
 import { BasicAuthStep } from "./BasicAuthStep";
 import { LlmConnectionStep } from "./LlmConnectionStep";
-import { SearchTermsStep } from "./SearchTermsStep";
+import { 搜索TermsStep } from "./搜索TermsStep";
 
 export const OnboardingStepContent: React.FC<{
   baseResumeValidation: ValidationState;
   baseResumeValue: string | null;
   basicAuthChoice: BasicAuthChoice;
-  basicAuthPassword: string;
+  basicAuth密码: string;
   basicAuthUser: string;
   control: Control<OnboardingFormData>;
   currentStep: StepId;
   isBusy: boolean;
   isImportingResume: boolean;
-  isGeneratingSearchTerms: boolean;
+  isGenerating搜索Terms: boolean;
   isResumeReady: boolean;
   isRxResumeSelfHosted: boolean;
-  hasSavedSearchTermsInSession: boolean;
+  has保存d搜索TermsInSession: boolean;
   llmKeyHint: string | null;
   llmValidation: ValidationState;
   resumeSetupMode: ResumeSetupMode;
@@ -37,20 +37,20 @@ export const OnboardingStepContent: React.FC<{
   rxresumeValidation: ValidationState;
   searchTermDraft: string;
   searchTerms: string[];
-  searchTermsSource: SearchTermsSuggestionResponse["source"] | null;
+  searchTermsSource: 搜索TermsSuggestionResponse["source"] | null;
   searchTermsStale: boolean;
   selectedProvider: LlmProviderId;
   onBasicAuthChoiceChange: (choice: BasicAuthChoice) => void;
-  onBasicAuthPasswordChange: (value: string) => void;
+  onBasicAuth密码Change: (value: string) => void;
   onBasicAuthUserChange: (value: string) => void;
   onImportResumeFile: (file: File) => Promise<void>;
-  onRegenerateSearchTerms: () => Promise<void>;
+  onRegenerate搜索Terms: () => Promise<void>;
   onRxresumeApiKeyChange: (value: string) => void;
   onRxresumeSelfHostedChange: (next: boolean) => void;
   onRxresumeUrlChange: (value: string) => void;
   onResumeSetupModeChange: (mode: ResumeSetupMode) => void;
-  onSearchTermDraftChange: (value: string) => void;
-  onSearchTermsChange: (values: string[]) => void;
+  on搜索TermDraftChange: (value: string) => void;
+  on搜索TermsChange: (values: string[]) => void;
   onTemplateResumeChange: (value: string | null) => void;
 }> = (props) => {
   if (props.currentStep === "llm") {
@@ -92,17 +92,17 @@ export const OnboardingStepContent: React.FC<{
 
   if (props.currentStep === "searchterms") {
     return (
-      <SearchTermsStep
-        hasSavedSearchTermsInSession={props.hasSavedSearchTermsInSession}
+      <搜索TermsStep
+        has保存d搜索TermsInSession={props.has保存d搜索TermsInSession}
         isBusy={props.isBusy}
-        isGeneratingSearchTerms={props.isGeneratingSearchTerms}
+        isGenerating搜索Terms={props.isGenerating搜索Terms}
         searchTermDraft={props.searchTermDraft}
         searchTerms={props.searchTerms}
         searchTermsSource={props.searchTermsSource}
         searchTermsStale={props.searchTermsStale}
-        onRegenerate={props.onRegenerateSearchTerms}
-        onSearchTermDraftChange={props.onSearchTermDraftChange}
-        onSearchTermsChange={props.onSearchTermsChange}
+        onRegenerate={props.onRegenerate搜索Terms}
+        on搜索TermDraftChange={props.on搜索TermDraftChange}
+        on搜索TermsChange={props.on搜索TermsChange}
       />
     );
   }
@@ -110,11 +110,11 @@ export const OnboardingStepContent: React.FC<{
   return (
     <BasicAuthStep
       basicAuthChoice={props.basicAuthChoice}
-      basicAuthPassword={props.basicAuthPassword}
+      basicAuth密码={props.basicAuth密码}
       basicAuthUser={props.basicAuthUser}
       isBusy={props.isBusy}
       onBasicAuthChoiceChange={props.onBasicAuthChoiceChange}
-      onBasicAuthPasswordChange={props.onBasicAuthPasswordChange}
+      onBasicAuth密码Change={props.onBasicAuth密码Change}
       onBasicAuthUserChange={props.onBasicAuthUserChange}
     />
   );

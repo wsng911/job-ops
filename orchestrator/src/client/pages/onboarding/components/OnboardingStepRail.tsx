@@ -2,7 +2,7 @@ import type React from "react";
 import { cn } from "@/lib/utils";
 import type { OnboardingStep, StepId } from "../types";
 
-function StepStatusBadge({
+function Step状态Badge({
   active,
   complete,
   index,
@@ -13,7 +13,7 @@ function StepStatusBadge({
 }) {
   return (
     <span
-      className={cn(
+      class名称={cn(
         "flex h-8 w-8 items-center justify-center rounded-md border text-xs font-medium transition-colors",
         complete
           ? "border-emerald-500/60 bg-emerald-500/15 text-emerald-700"
@@ -34,20 +34,20 @@ export const OnboardingStepRail: React.FC<{
   steps: OnboardingStep[];
 }> = ({ currentStep, onStepSelect, progressValue, steps }) => (
   <>
-    <div className="space-y-2">
-      <div className="flex items-center justify-between text-xs text-muted-foreground">
+    <div class名称="space-y-2">
+      <div class名称="flex items-center justify-between text-xs text-muted-foreground">
         <span>Progress</span>
         <span>{progressValue}%</span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-muted">
+      <div class名称="h-2 overflow-hidden rounded-full bg-muted">
         <div
-          className="h-full bg-primary transition-all"
+          class名称="h-full bg-primary transition-all"
           style={{ width: `${progressValue}%` }}
         />
       </div>
     </div>
 
-    <div className="space-y-2">
+    <div class名称="space-y-2">
       {steps.map((step, index) => {
         const active = step.id === currentStep;
         return (
@@ -56,7 +56,7 @@ export const OnboardingStepRail: React.FC<{
             type="button"
             disabled={step.disabled}
             onClick={() => onStepSelect(step.id)}
-            className={cn(
+            class名称={cn(
               "flex w-full items-start gap-3 rounded-lg px-3 py-3 text-left transition-colors",
               step.disabled
                 ? "cursor-not-allowed opacity-50"
@@ -65,14 +65,14 @@ export const OnboardingStepRail: React.FC<{
                   : "hover:bg-muted/30",
             )}
           >
-            <StepStatusBadge
+            <Step状态Badge
               active={active}
               complete={step.complete}
               index={index}
             />
-            <div className="min-w-0 space-y-0.5">
-              <div className="text-sm font-medium">{step.label}</div>
-              <div className="text-xs text-muted-foreground">
+            <div class名称="min-w-0 space-y-0.5">
+              <div class名称="text-sm font-medium">{step.label}</div>
+              <div class名称="text-xs text-muted-foreground">
                 {step.subtitle}
               </div>
             </div>

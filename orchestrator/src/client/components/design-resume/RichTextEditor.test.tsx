@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { RichTextEditor } from "./RichTextEditor";
+import { RichText编辑or } from "./RichText编辑or";
 
-describe("RichTextEditor", () => {
+describe("RichText编辑or", () => {
   it("renders heading content and exposes heading controls", async () => {
     const { container } = render(
-      <RichTextEditor
+      <RichText编辑or
         value="<h2>Why this role</h2><p>Because the team and mission fit.</p>"
         onChange={vi.fn()}
         formatLabel={null}

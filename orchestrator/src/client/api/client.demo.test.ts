@@ -44,7 +44,7 @@ describe("API client demo toasts", () => {
     } as Response);
 
     await expect(
-      api.updateSettings({ llmProvider: "openrouter" }),
+      api.update设置({ llmProvider: "openrouter" }),
     ).rejects.toThrow("Blocked");
     expect(customToast).toHaveBeenCalledTimes(1);
   });

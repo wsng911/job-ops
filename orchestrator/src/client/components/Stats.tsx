@@ -2,28 +2,28 @@
  * Stats dashboard showing job counts by status.
  */
 
-import type { JobStatus } from "@shared/types.js";
+import type { Job状态 } from "@shared/types.js";
 import {
   CheckCircle2,
   Clock,
   Loader2,
-  Search,
+  搜索,
   Sparkles,
   XCircle,
 } from "lucide-react";
 import type React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, Card标题 } from "@/components/ui/card";
 
 interface StatsProps {
-  stats: Record<JobStatus, number>;
+  stats: Record<Job状态, number>;
 }
 
 const statConfig: Array<{
-  key: JobStatus;
+  key: Job状态;
   label: string;
-  Icon: React.ComponentType<{ className?: string }>;
+  Icon: React.ComponentType<{ class名称?: string }>;
 }> = [
-  { key: "discovered", label: "Discovered", Icon: Search },
+  { key: "discovered", label: "Discovered", Icon: 搜索 },
   { key: "processing", label: "Processing", Icon: Loader2 },
   { key: "ready", label: "Ready", Icon: Sparkles },
   { key: "applied", label: "Applied", Icon: CheckCircle2 },
@@ -37,31 +37,31 @@ export const Stats: React.FC<StatsProps> = ({ stats }) => {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0">
-        <CardTitle>Overview</CardTitle>
-        <div className="text-sm text-muted-foreground">{total} total jobs</div>
+      <CardHeader class名称="flex flex-row items-center justify-between space-y-0">
+        <Card标题>Overview</Card标题>
+        <div class名称="text-sm text-muted-foreground">{total} total jobs</div>
       </CardHeader>
 
       <CardContent>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
+        <div class名称="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
           {statConfig.map(({ key, label, Icon }) => (
-            <Card key={key} className="bg-muted/20">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-md bg-background/40 text-muted-foreground">
+            <Card key={key} class名称="bg-muted/20">
+              <CardContent class名称="p-4">
+                <div class名称="flex items-center gap-3">
+                  <div class名称="flex h-9 w-9 items-center justify-center rounded-md bg-background/40 text-muted-foreground">
                     <Icon
-                      className={
+                      class名称={
                         key === "processing"
                           ? "h-4 w-4 animate-spin"
                           : "h-4 w-4"
                       }
                     />
                   </div>
-                  <div className="min-w-0">
-                    <div className="text-2xl font-semibold tabular-nums leading-none">
+                  <div class名称="min-w-0">
+                    <div class名称="text-2xl font-semibold tabular-nums leading-none">
                       {stats[key] || 0}
                     </div>
-                    <div className="mt-1 truncate text-xs text-muted-foreground">
+                    <div class名称="mt-1 truncate text-xs text-muted-foreground">
                       {label}
                     </div>
                   </div>

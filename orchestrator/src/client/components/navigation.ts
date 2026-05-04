@@ -3,9 +3,9 @@ import {
   FilePenLine,
   Home,
   Inbox,
-  LayoutDashboard,
+  Layout仪表盘,
   Link2,
-  Settings,
+  设置,
   Shield,
 } from "lucide-react";
 
@@ -21,7 +21,7 @@ export const NAV_LINKS: NavLink[] = [
   {
     to: "/jobs/ready",
     label: "Jobs",
-    icon: LayoutDashboard,
+    icon: Layout仪表盘,
     activePaths: [
       "/jobs/ready",
       "/jobs/discovered",
@@ -49,7 +49,7 @@ export const NAV_LINKS: NavLink[] = [
     activePaths: ["/tracer-links"],
   },
   { to: "/visa-sponsors", label: "Visa Sponsors", icon: Shield },
-  { to: "/settings", label: "Settings", icon: Settings },
+  { to: "/settings", label: "设置", icon: 设置 },
 ];
 
 export const isNavActive = (

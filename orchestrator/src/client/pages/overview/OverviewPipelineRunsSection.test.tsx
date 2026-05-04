@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { OverviewPipelineRunsSection } from "./OverviewPipelineRunsSection";
 
 vi.mock("@client/api", () => ({
-  getPipelineStatus: vi.fn(),
+  getPipeline状态: vi.fn(),
   getPipelineRuns: vi.fn(),
   getPipelineRunInsights: vi.fn(),
 }));
@@ -22,7 +22,7 @@ describe("OverviewPipelineRunsSection", () => {
   });
 
   it("renders the last run summary and recent run statuses", async () => {
-    vi.mocked(api.getPipelineStatus).mockResolvedValue({
+    vi.mocked(api.getPipeline状态).mockResolvedValue({
       isRunning: false,
       lastRun: {
         id: "run-last",
@@ -91,11 +91,11 @@ describe("OverviewPipelineRunsSection", () => {
           searchCities: ["London"],
           searchTermsCount: 3,
           workplaceTypes: ["remote", "hybrid"],
-          locationSearchScope: "selected_only",
+          location搜索Scope: "selected_only",
           locationMatchStrictness: "exact_only",
           compatibleSources: ["linkedin", "indeed"],
           skippedSources: [],
-          blockedCompanyKeywordsCount: 2,
+          blocked公司KeywordsCount: 2,
           sourceLimits: {
             ukvisajobsMaxJobs: 50,
             adzunaMaxJobsPerTerm: 50,
@@ -126,8 +126,8 @@ describe("OverviewPipelineRunsSection", () => {
         },
       },
       inferredMetrics: {
-        jobsCreated: { value: 4, quality: "inferred_from_timestamps" },
-        jobsUpdated: { value: 4, quality: "inferred_from_timestamps" },
+        jobs创建d: { value: 4, quality: "inferred_from_timestamps" },
+        jobs更新d: { value: 4, quality: "inferred_from_timestamps" },
         jobsProcessed: { value: 0, quality: "inferred_from_timestamps" },
       },
     });
@@ -149,10 +149,10 @@ describe("OverviewPipelineRunsSection", () => {
       expect(api.getPipelineRunInsights).toHaveBeenCalledWith("run-failed"),
     );
     expect(await screen.findByText("Run details")).toBeInTheDocument();
-    expect(screen.getByText("Saved settings")).toBeInTheDocument();
+    expect(screen.getByText("保存d settings")).toBeInTheDocument();
     expect(screen.getByText("Requested run")).toBeInTheDocument();
     expect(screen.getByText("Effective settings")).toBeInTheDocument();
-    expect(screen.getByText("Saved execution summary")).toBeInTheDocument();
+    expect(screen.getByText("保存d execution summary")).toBeInTheDocument();
     expect(screen.getByText("What changed")).toBeInTheDocument();
     expect(screen.getByText("Inferred from timestamps")).toBeInTheDocument();
     expect(screen.getByText("Scoring failed")).toBeInTheDocument();
@@ -162,7 +162,7 @@ describe("OverviewPipelineRunsSection", () => {
   });
 
   it("shows live progress when a run is active", async () => {
-    vi.mocked(api.getPipelineStatus).mockResolvedValue({
+    vi.mocked(api.getPipeline状态).mockResolvedValue({
       isRunning: true,
       lastRun: {
         id: "run-active",
@@ -199,8 +199,8 @@ describe("OverviewPipelineRunsSection", () => {
       exactMetrics: { durationMs: null },
       savedDetails: null,
       inferredMetrics: {
-        jobsCreated: { value: null, quality: "unavailable" },
-        jobsUpdated: { value: null, quality: "unavailable" },
+        jobs创建d: { value: null, quality: "unavailable" },
+        jobs更新d: { value: null, quality: "unavailable" },
         jobsProcessed: { value: null, quality: "unavailable" },
       },
     });

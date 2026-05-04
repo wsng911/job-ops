@@ -16,7 +16,7 @@ export type OnboardingFormData = {
   searchTerms: string[];
   searchTermDraft: string;
   basicAuthUser: string;
-  basicAuthPassword: string;
+  basicAuth密码: string;
 };
 
 export type StepId = "llm" | "baseresume" | "searchterms" | "basicauth";

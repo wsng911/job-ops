@@ -4,7 +4,7 @@ import { TailoringWorkspace } from "../tailoring/TailoringWorkspace";
 
 interface TailorModeProps {
   job: Job;
-  onBack: () => void;
+  on返回: () => void;
   onFinalize: () => void;
   isFinalizing: boolean;
   onDirtyChange?: (isDirty: boolean) => void;
@@ -13,7 +13,7 @@ interface TailorModeProps {
 
 export const TailorMode: React.FC<TailorModeProps> = ({
   job,
-  onBack,
+  on返回,
   onFinalize,
   isFinalizing,
   onDirtyChange,
@@ -23,7 +23,7 @@ export const TailorMode: React.FC<TailorModeProps> = ({
     <TailoringWorkspace
       mode="tailor"
       job={job}
-      onBack={onBack}
+      on返回={on返回}
       onFinalize={onFinalize}
       isFinalizing={isFinalizing}
       onDirtyChange={onDirtyChange}

@@ -1,8 +1,8 @@
-import { useSettings } from "@client/hooks/useSettings";
+import { use设置 } from "@client/hooks/use设置";
 import type { Job } from "@shared/types.js";
 import {
   ChevronUp,
-  Edit2,
+  编辑2,
   Loader2,
   RefreshCcw,
   Sparkles,
@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";
-import { JobDescriptionMarkdown } from "@/client/components/JobDescriptionMarkdown";
+import { Job描述Markdown } from "@/client/components/Job描述Markdown";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -23,7 +23,7 @@ import { FitAssessment, JobHeader, TailoredSummary } from "..";
 import { KbdHint } from "../KbdHint";
 import { OpenJobListingButton } from "../OpenJobListingButton";
 import { CollapsibleSection } from "./CollapsibleSection";
-import { getRenderableJobDescription } from "./helpers";
+import { getRenderableJob描述 } from "./helpers";
 
 interface DecideModeProps {
   job: Job;
@@ -32,7 +32,7 @@ interface DecideModeProps {
   isSkipping: boolean;
   onRescore: () => void;
   isRescoring: boolean;
-  onEditDetails: () => void;
+  on编辑Details: () => void;
   onCheckSponsor?: () => Promise<void>;
 }
 
@@ -43,31 +43,31 @@ export const DecideMode: React.FC<DecideModeProps> = ({
   isSkipping,
   onRescore,
   isRescoring,
-  onEditDetails,
+  on编辑Details,
   onCheckSponsor,
 }) => {
-  const [showDescription, setShowDescription] = useState(false);
+  const [show描述, setShow描述] = useState(false);
   const jobLink = job.applicationLink || job.jobUrl;
-  const { renderMarkdownInJobDescriptions } = useSettings();
-  const handleEditDetailsSelect = () => {
-    window.setTimeout(() => onEditDetails(), 0);
+  const { renderMarkdownInJob描述s } = use设置();
+  const handle编辑DetailsSelect = () => {
+    window.setTimeout(() => on编辑Details(), 0);
   };
 
   const description = useMemo(
-    () => getRenderableJobDescription(job.jobDescription),
-    [job.jobDescription],
+    () => getRenderableJob描述(job.job描述),
+    [job.job描述],
   );
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="space-y-4 pb-4">
+    <div class名称="flex flex-col h-full">
+      <div class名称="space-y-4 pb-4">
         <JobHeader job={job} onCheckSponsor={onCheckSponsor} />
 
-        <div className="flex flex-col gap-2.5 pt-2 sm:flex-row">
+        <div class名称="flex flex-col gap-2.5 pt-2 sm:flex-row">
           {jobLink ? (
             <OpenJobListingButton
               href={jobLink}
-              className="flex-1 h-11 text-sm sm:h-10 sm:text-xs"
+              class名称="flex-1 h-11 text-sm sm:h-10 sm:text-xs"
             />
           ) : null}
           <Button
@@ -75,44 +75,44 @@ export const DecideMode: React.FC<DecideModeProps> = ({
             size="default"
             onClick={onSkip}
             disabled={isSkipping}
-            className="flex-1 h-11 text-sm text-muted-foreground hover:text-rose-500 hover:border-rose-500/30 hover:bg-rose-500/5 sm:h-10 sm:text-xs"
+            class名称="flex-1 h-11 text-sm text-muted-foreground hover:text-rose-500 hover:border-rose-500/30 hover:bg-rose-500/5 sm:h-10 sm:text-xs"
           >
             {isSkipping ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Loader2 class名称="mr-2 h-4 w-4 animate-spin" />
             ) : (
-              <XCircle className="mr-2 h-4 w-4" />
+              <XCircle class名称="mr-2 h-4 w-4" />
             )}
             Skip Job
-            <KbdHint shortcut="s" className="ml-1.5" />
+            <KbdHint shortcut="s" class名称="ml-1.5" />
           </Button>
           <Button
             size="default"
             onClick={onTailor}
-            className="flex-1 h-11 text-sm bg-primary/90 hover:bg-primary sm:h-10 sm:text-xs shadow-sm"
+            class名称="flex-1 h-11 text-sm bg-primary/90 hover:bg-primary sm:h-10 sm:text-xs shadow-sm"
           >
-            <Sparkles className="mr-2 h-4 w-4" />
+            <Sparkles class名称="mr-2 h-4 w-4" />
             Start Tailoring
-            <KbdHint shortcut="t" className="ml-1.5" />
+            <KbdHint shortcut="t" class名称="ml-1.5" />
           </Button>
         </div>
       </div>
 
-      <Separator className="opacity-40" />
+      <Separator class名称="opacity-40" />
 
-      <div className="flex-1 py-6 space-y-6 overflow-y-auto">
+      <div class名称="flex-1 py-6 space-y-6 overflow-y-auto">
         <FitAssessment job={job} />
         <TailoredSummary job={job} />
 
         <CollapsibleSection
-          isOpen={showDescription}
-          onToggle={() => setShowDescription((prev) => !prev)}
-          label={`${showDescription ? "Hide" : "View"} Full Job Description`}
+          isOpen={show描述}
+          onToggle={() => setShow描述((prev) => !prev)}
+          label={`${show描述 ? "Hide" : "View"} Full Job 描述`}
         >
-          <div className="rounded-xl border border-border/40 bg-muted/5 p-4 mt-2 max-h-[400px] overflow-y-auto shadow-inner">
-            {renderMarkdownInJobDescriptions ? (
-              <JobDescriptionMarkdown description={description} />
+          <div class名称="rounded-xl border border-border/40 bg-muted/5 p-4 mt-2 max-h-[400px] overflow-y-auto shadow-inner">
+            {renderMarkdownInJob描述s ? (
+              <Job描述Markdown description={description} />
             ) : (
-              <p className="text-xs text-muted-foreground/90 whitespace-pre-wrap leading-relaxed">
+              <p class名称="text-xs text-muted-foreground/90 whitespace-pre-wrap leading-relaxed">
                 {description}
               </p>
             )}
@@ -120,28 +120,28 @@ export const DecideMode: React.FC<DecideModeProps> = ({
         </CollapsibleSection>
       </div>
 
-      <Separator className="opacity-40" />
+      <Separator class名称="opacity-40" />
 
-      <div className="pt-4 pb-2 space-y-4">
+      <div class名称="pt-4 pb-2 space-y-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
               size="sm"
-              className="w-full h-8 gap-2 text-xs text-muted-foreground hover:text-foreground justify-center"
+              class名称="w-full h-8 gap-2 text-xs text-muted-foreground hover:text-foreground justify-center"
             >
               More actions
-              <ChevronUp className="h-3 w-3 ml-1" />
+              <ChevronUp class名称="h-3 w-3 ml-1" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="center" className="w-56">
-            <DropdownMenuItem onSelect={handleEditDetailsSelect}>
-              <Edit2 className="mr-2 h-4 w-4" />
-              Edit details
+          <DropdownMenuContent align="center" class名称="w-56">
+            <DropdownMenuItem onSelect={handle编辑DetailsSelect}>
+              <编辑2 class名称="mr-2 h-4 w-4" />
+              编辑 details
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={onRescore} disabled={isRescoring}>
               <RefreshCcw
-                className={
+                class名称={
                   isRescoring ? "mr-2 h-4 w-4 animate-spin" : "mr-2 h-4 w-4"
                 }
               />

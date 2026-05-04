@@ -9,7 +9,7 @@ const render = (ui: Parameters<typeof renderWithQueryClient>[0]) =>
   renderWithQueryClient(ui);
 
 vi.mock("../api", () => ({
-  postApplicationProviderStatus: vi.fn(),
+  postApplicationProvider状态: vi.fn(),
   getPostApplicationInbox: vi.fn(),
   getPostApplicationRuns: vi.fn(),
   getJobs: vi.fn(),
@@ -32,10 +32,10 @@ function makeInboxItem() {
       syncRunId: null,
       externalMessageId: "ext-1",
       externalThreadId: null,
-      fromAddress: "jobs@example.com",
+      from添加ress: "jobs@example.com",
       fromDomain: "example.com",
-      senderName: "Recruiting",
-      subject: "Interview invite",
+      sender名称: "Recruiting",
+      subject: "面试 invite",
       receivedAt: Date.now(),
       snippet: "Let's schedule",
       classificationLabel: "interview",
@@ -48,7 +48,7 @@ function makeInboxItem() {
       stageTarget: "technical_interview" as const,
       messageType: "interview" as const,
       stageEventPayload: null,
-      processingStatus: "pending_user" as const,
+      processing状态: "pending_user" as const,
       decidedAt: null,
       decidedBy: null,
       errorCode: null,
@@ -67,7 +67,7 @@ function makeInboxItem() {
 beforeEach(() => {
   vi.clearAllMocks();
 
-  vi.mocked(api.postApplicationProviderStatus).mockResolvedValue({
+  vi.mocked(api.postApplicationProvider状态).mockResolvedValue({
     provider: "gmail",
     action: "status",
     accountKey: "default",
@@ -79,7 +79,7 @@ beforeEach(() => {
         id: "int-1",
         provider: "gmail",
         accountKey: "default",
-        displayName: null,
+        display名称: null,
         status: "connected",
         credentials: null,
         lastConnectedAt: null,
@@ -148,7 +148,7 @@ beforeEach(() => {
       },
     ],
     total: 2,
-    byStatus: {
+    by状态: {
       discovered: 0,
       processing: 0,
       ready: 0,
@@ -165,7 +165,7 @@ beforeEach(() => {
   vi.mocked(api.denyPostApplicationInboxItem).mockResolvedValue({
     message: {
       ...makeInboxItem().message,
-      processingStatus: "ignored",
+      processing状态: "ignored",
       matchedJobId: null,
     },
   });
@@ -204,7 +204,7 @@ describe("TrackingInboxPage", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText("Interview invite")).toBeInTheDocument();
+      expect(screen.getByText("面试 invite")).toBeInTheDocument();
     });
   });
 
@@ -216,11 +216,11 @@ describe("TrackingInboxPage", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText("Interview invite")).toBeInTheDocument();
+      expect(screen.getByText("面试 invite")).toBeInTheDocument();
     });
 
     fireEvent.click(
-      screen.getByRole("button", { name: "Confirm email-job match" }),
+      screen.getByRole("button", { name: "确认 email-job match" }),
     );
 
     await waitFor(() => {

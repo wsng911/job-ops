@@ -1,6 +1,6 @@
 import { CodexAuthPanel } from "@client/components/CodexAuthPanel";
 import { GeminiCliSetupHint } from "@client/components/GeminiCliSetupHint";
-import { SettingsInput } from "@client/pages/settings/components/SettingsInput";
+import { 设置Input } from "@client/pages/settings/components/设置Input";
 import {
   getLlmProviderConfig,
   LLM_PROVIDER_LABELS,
@@ -22,7 +22,7 @@ import { InlineValidation } from "./InlineValidation";
 function renderKeyHelper(
   helperText: string,
   helperHref: string | null,
-  keepSavedKey: boolean,
+  keep保存dKey: boolean,
 ) {
   return (
     <>
@@ -31,14 +31,14 @@ function renderKeyHelper(
           href={helperHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline decoration-border underline-offset-4 transition-colors hover:text-foreground"
+          class名称="underline decoration-border underline-offset-4 transition-colors hover:text-foreground"
         >
           {helperText}
         </a>
       ) : (
         helperText
       )}
-      {keepSavedKey ? ". Leave blank to keep the saved key." : null}
+      {keep保存dKey ? ". Leave blank to keep the saved key." : null}
     </>
   );
 }
@@ -57,10 +57,10 @@ export const LlmConnectionStep: React.FC<{
     providerConfig.normalizedProvider === "gemini_cli";
 
   return (
-    <div className="space-y-6">
-      <div className="grid gap-5 lg:grid-cols-2">
-        <div className="space-y-2">
-          <label htmlFor="llmProvider" className="text-sm font-medium">
+    <div class名称="space-y-6">
+      <div class名称="grid gap-5 lg:grid-cols-2">
+        <div class名称="space-y-2">
+          <label htmlFor="llmProvider" class名称="text-sm font-medium">
             Provider
           </label>
           <Controller
@@ -72,7 +72,7 @@ export const LlmConnectionStep: React.FC<{
                 onValueChange={(value) => field.onChange(value)}
                 disabled={isBusy}
               >
-                <SelectTrigger id="llmProvider" className="h-10">
+                <SelectTrigger id="llmProvider" class名称="h-10">
                   <SelectValue placeholder="Select provider" />
                 </SelectTrigger>
                 <SelectContent>
@@ -85,7 +85,7 @@ export const LlmConnectionStep: React.FC<{
               </Select>
             )}
           />
-          <p className="text-sm text-muted-foreground">
+          <p class名称="text-sm text-muted-foreground">
             {providerConfig.providerHint}
           </p>
           {isCodexProvider ? <CodexAuthPanel isBusy={isBusy} /> : null}
@@ -97,7 +97,7 @@ export const LlmConnectionStep: React.FC<{
             name="llmBaseUrl"
             control={control}
             render={({ field }) => (
-              <SettingsInput
+              <设置Input
                 label="Base URL"
                 inputProps={{
                   name: "llmBaseUrl",
@@ -113,13 +113,13 @@ export const LlmConnectionStep: React.FC<{
         ) : null}
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div class名称="grid gap-5 lg:grid-cols-[minmax(0,1fr)_18rem]">
         {showApiKey ? (
           <Controller
             name="llmApiKey"
             control={control}
             render={({ field }) => (
-              <SettingsInput
+              <设置Input
                 label="API key"
                 inputProps={{
                   name: "llmApiKey",
@@ -138,8 +138,8 @@ export const LlmConnectionStep: React.FC<{
             )}
           />
         ) : (
-          <div className="rounded-lg border border-dashed border-border/60 bg-muted/20 px-4 py-4 text-sm text-muted-foreground">
-            No API key is required for this provider.
+          <div class名称="rounded-lg border border-dashed border-border/60 bg-muted/20 px-4 py-4 text-sm text-muted-foreground">
+            否 API key is required for this provider.
           </div>
         )}
       </div>

@@ -1,8 +1,8 @@
-import type { JobListItem, JobStatus } from "@shared/types.js";
+import type { JobListItem, Job状态 } from "@shared/types.js";
 import type { FilterTab } from "./constants";
 
 export type CommandGroupId = "ready" | "discovered" | "applied" | "other";
-export type StatusLock =
+export type 状态Lock =
   | "ready"
   | "discovered"
   | "applied"
@@ -27,7 +27,7 @@ export type CommandBarRow =
       kind: "option";
       optionKind: "lockSuggestion" | "job";
       groupId: CommandGroupId | "filters";
-      lock?: StatusLock;
+      lock?: 状态Lock;
       job?: JobListItem;
     };
 
@@ -39,7 +39,7 @@ export const commandGroupMeta: Array<{ id: CommandGroupId; heading: string }> =
     { id: "other", heading: "Other" },
   ];
 
-const lockAliases: Record<StatusLock, string[]> = {
+const lockAliases: Record<状态Lock, string[]> = {
   ready: ["ready", "rdy"],
   discovered: ["discovered", "discover", "disc"],
   applied: ["applied", "apply", "app"],
@@ -48,7 +48,7 @@ const lockAliases: Record<StatusLock, string[]> = {
   expired: ["expired", "expire", "exp"],
 };
 
-export const lockLabel: Record<StatusLock, string> = {
+export const lockLabel: Record<状态Lock, string> = {
   ready: "ready",
   discovered: "discovered",
   applied: "applied",
@@ -96,14 +96,14 @@ const computeFieldMatchScore = (fieldRaw: string, needleRaw: string) => {
   return 0;
 };
 
-export const getCommandGroup = (status: JobStatus): CommandGroupId => {
+export const getCommandGroup = (status: Job状态): CommandGroupId => {
   if (status === "ready") return "ready";
   if (status === "discovered" || status === "processing") return "discovered";
   if (status === "applied") return "applied";
   return "other";
 };
 
-export const getFilterTab = (status: JobStatus): FilterTab => {
+export const getFilterTab = (status: Job状态): FilterTab => {
   if (status === "ready") return "ready";
   if (status === "discovered" || status === "processing") return "discovered";
   if (status === "applied") return "applied";
@@ -121,13 +121,13 @@ export const stripLeadingAtToken = (input: string) =>
 
 export const getLockMatchesFromAliasPrefix = (
   rawToken: string,
-): StatusLock[] => {
+): 状态Lock[] => {
   const token = rawToken.trim().toLowerCase();
-  if (!token) return Object.keys(lockAliases) as StatusLock[];
+  if (!token) return Object.keys(lockAliases) as 状态Lock[];
 
-  const matches: StatusLock[] = [];
+  const matches: 状态Lock[] = [];
   for (const [status, aliases] of Object.entries(lockAliases) as Array<
-    [StatusLock, string[]]
+    [状态Lock, string[]]
   >) {
     if (aliases.some((alias) => alias.startsWith(token))) {
       matches.push(status);
@@ -138,13 +138,13 @@ export const getLockMatchesFromAliasPrefix = (
 
 export const resolveLockFromAliasPrefix = (
   rawToken: string,
-): StatusLock | null => {
+): 状态Lock | null => {
   const matches = getLockMatchesFromAliasPrefix(rawToken);
   if (matches.length !== 1) return null;
   return matches[0];
 };
 
-export const jobMatchesLock = (job: JobListItem, lock: StatusLock) => {
+export const jobMatchesLock = (job: JobListItem, lock: 状态Lock) => {
   if (lock === "ready") return job.status === "ready";
   if (lock === "discovered") return job.status === "discovered";
   if (lock === "applied") return job.status === "applied";
@@ -247,9 +247,9 @@ export const buildCommandBarRows = ({
   lockSuggestions,
   orderedGroups,
 }: {
-  activeLock: StatusLock | null;
+  activeLock: 状态Lock | null;
   groupedJobs: Record<CommandGroupId, JobListItem[]>;
-  lockSuggestions: StatusLock[];
+  lockSuggestions: 状态Lock[];
   orderedGroups: Array<{ id: CommandGroupId; heading: string }>;
 }): CommandBarRow[] => {
   const rows: CommandBarRow[] = [];

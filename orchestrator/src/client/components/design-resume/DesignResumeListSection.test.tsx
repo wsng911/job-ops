@@ -7,7 +7,7 @@ import type { ItemDefinition } from "./definitions";
 const projectsDefinition: ItemDefinition = {
   key: "projects",
   title: "Projects",
-  singularTitle: "Project",
+  singular标题: "Project",
   description: "Projects used for tailoring.",
   primaryField: "name",
   secondaryField: "period",
@@ -24,57 +24,57 @@ const projects = [
   { id: "project-2", name: "Beacon", period: "2025" },
 ];
 
-function renderListSection(onUpdateItems = vi.fn()) {
+function renderListSection(on更新Items = vi.fn()) {
   render(
     <Accordion type="multiple" defaultValue={["projects"]}>
       <DesignResumeListSection
         definition={projectsDefinition}
         items={projects}
-        onAdd={vi.fn()}
-        onEdit={vi.fn()}
-        onUpdateItems={onUpdateItems}
+        on添加={vi.fn()}
+        on编辑={vi.fn()}
+        on更新Items={on更新Items}
       />
     </Accordion>,
   );
-  return onUpdateItems;
+  return on更新Items;
 }
 
 describe("DesignResumeListSection", () => {
   it("asks for confirmation before removing an item", () => {
-    const onUpdateItems = renderListSection();
+    const on更新Items = renderListSection();
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Remove" })[0]);
+    fireEvent.click(screen.getAllByRole("button", { name: "移除" })[0]);
 
     expect(
-      screen.getByRole("alertdialog", { name: "Remove project?" }),
+      screen.getByRole("alertdialog", { name: "移除 project?" }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
         "This will remove Apollo from your Design Resume. You can add it again later, but this change will be saved.",
       ),
     ).toBeInTheDocument();
-    expect(onUpdateItems).not.toHaveBeenCalled();
+    expect(on更新Items).not.toHaveBeenCalled();
   });
 
   it("does not remove an item when confirmation is cancelled", () => {
-    const onUpdateItems = renderListSection();
+    const on更新Items = renderListSection();
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Remove" })[0]);
-    fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+    fireEvent.click(screen.getAllByRole("button", { name: "移除" })[0]);
+    fireEvent.click(screen.getByRole("button", { name: "取消" }));
 
     expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
-    expect(onUpdateItems).not.toHaveBeenCalled();
+    expect(on更新Items).not.toHaveBeenCalled();
   });
 
   it("removes the selected item after confirmation", () => {
-    const onUpdateItems = renderListSection();
+    const on更新Items = renderListSection();
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Remove" })[1]);
+    fireEvent.click(screen.getAllByRole("button", { name: "移除" })[1]);
     const dialog = screen.getByRole("alertdialog", {
-      name: "Remove project?",
+      name: "移除 project?",
     });
-    fireEvent.click(within(dialog).getByRole("button", { name: "Remove" }));
+    fireEvent.click(within(dialog).getByRole("button", { name: "移除" }));
 
-    expect(onUpdateItems).toHaveBeenCalledWith([projects[0]]);
+    expect(on更新Items).toHaveBeenCalledWith([projects[0]]);
   });
 });

@@ -104,8 +104,8 @@ describe("pipeline client helpers", () => {
           exactMetrics: { durationMs: 300000 },
           savedDetails: null,
           inferredMetrics: {
-            jobsCreated: { value: 5, quality: "inferred_from_timestamps" },
-            jobsUpdated: { value: 4, quality: "inferred_from_timestamps" },
+            jobs创建d: { value: 5, quality: "inferred_from_timestamps" },
+            jobs更新d: { value: 4, quality: "inferred_from_timestamps" },
             jobsProcessed: { value: 2, quality: "inferred_from_timestamps" },
           },
         },

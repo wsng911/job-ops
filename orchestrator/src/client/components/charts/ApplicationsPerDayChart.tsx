@@ -1,5 +1,5 @@
 /**
- * Applications Per Day Chart
+ * 申请记录 Per Day Chart
  * Shows daily application volume over a selected time range.
  */
 
@@ -10,9 +10,9 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import {
   Card,
   CardContent,
-  CardDescription,
+  Card描述,
   CardHeader,
-  CardTitle,
+  Card标题,
 } from "@/components/ui/card";
 import {
   ChartContainer,
@@ -20,14 +20,14 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-type DailyApplications = {
+type Daily申请记录 = {
   date: string;
   applications: number;
 };
 
 const chartConfig = {
   applications: {
-    label: "Applications",
+    label: "申请记录",
     color: "var(--chart-1)",
   },
 };
@@ -39,7 +39,7 @@ const toDateKey = (value: Date) => {
   return `${year}-${month}-${day}`;
 };
 
-const buildApplicationsPerDay = (
+const build申请记录PerDay = (
   appliedAt: Array<string | null>,
   daysToShow: number,
 ) => {
@@ -59,7 +59,7 @@ const buildApplicationsPerDay = (
     counts.set(key, (counts.get(key) ?? 0) + 1);
   }
 
-  const data: DailyApplications[] = [];
+  const data: Daily申请记录[] = [];
   for (
     let day = new Date(start);
     day <= end;
@@ -95,25 +95,25 @@ const buildApplicationsPerDay = (
   return { data, total, trend };
 };
 
-interface ApplicationsPerDayChartProps {
+interface 申请记录PerDayChartProps {
   appliedAt: Array<string | null>;
   isLoading: boolean;
   error: string | null;
   daysToShow: number;
 }
 
-export function ApplicationsPerDayChart({
+export function 申请记录PerDayChart({
   appliedAt,
   isLoading,
   error,
   daysToShow,
-}: ApplicationsPerDayChartProps) {
+}: 申请记录PerDayChartProps) {
   const {
     data: chartData,
     total,
     trend,
   } = useMemo(() => {
-    return buildApplicationsPerDay(appliedAt, daysToShow);
+    return build申请记录PerDay(appliedAt, daysToShow);
   }, [appliedAt, daysToShow]);
 
   const average = useMemo(() => {
@@ -125,39 +125,39 @@ export function ApplicationsPerDayChart({
   const showTrendDown = typeof trend === "number" ? trend < -5 : false;
 
   return (
-    <Card className="py-0">
-      <CardHeader className="flex flex-col gap-2 border-b !p-0 sm:flex-row sm:items-stretch">
-        <div className="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:!py-0">
-          <CardTitle>Applications per day</CardTitle>
-          <CardDescription>
+    <Card class名称="py-0">
+      <CardHeader class名称="flex flex-col gap-2 border-b !p-0 sm:flex-row sm:items-stretch">
+        <div class名称="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:!py-0">
+          <Card标题>申请记录 per day</Card标题>
+          <Card描述>
             {isLoading
               ? "Loading applied jobs..."
               : `Last ${daysToShow} days · ${total.toLocaleString()} total`}
-          </CardDescription>
+          </Card描述>
         </div>
-        <div className="flex flex-col items-start justify-center gap-3 border-t px-6 py-4 text-left sm:border-t-0 sm:border-l sm:px-8 sm:py-6">
-          <div className="flex flex-col gap-1">
-            <span className="text-xs text-muted-foreground">Avg / day</span>
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-bold leading-none sm:text-3xl">
+        <div class名称="flex flex-col items-start justify-center gap-3 border-t px-6 py-4 text-left sm:border-t-0 sm:border-l sm:px-8 sm:py-6">
+          <div class名称="flex flex-col gap-1">
+            <span class名称="text-xs text-muted-foreground">Avg / day</span>
+            <div class名称="flex items-center gap-2">
+              <span class名称="text-lg font-bold leading-none sm:text-3xl">
                 {average.toFixed(1)}
               </span>
               {showTrendUp ? (
-                <TrendingUp className="h-4 w-4 text-emerald-500" />
+                <TrendingUp class名称="h-4 w-4 text-emerald-500" />
               ) : showTrendDown ? (
-                <TrendingDown className="h-4 w-4 text-destructive" />
+                <TrendingDown class名称="h-4 w-4 text-destructive" />
               ) : null}
             </div>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="px-2 sm:p-6">
+      <CardContent class名称="px-2 sm:p-6">
         {error ? (
-          <div className="px-4 py-6 text-sm text-destructive">{error}</div>
+          <div class名称="px-4 py-6 text-sm text-destructive">{error}</div>
         ) : (
           <ChartContainer
             config={chartConfig}
-            className="aspect-auto h-[280px] w-full"
+            class名称="aspect-auto h-[280px] w-full"
           >
             <BarChart
               accessibilityLayer
@@ -183,7 +183,7 @@ export function ApplicationsPerDayChart({
                 cursor={{ fill: "var(--chart-1)", opacity: 0.3 }}
                 content={
                   <ChartTooltipContent
-                    className="w-[160px]"
+                    class名称="w-[160px]"
                     nameKey="applications"
                     labelFormatter={(value) =>
                       new Date(value as string).toLocaleDateString("en-GB", {

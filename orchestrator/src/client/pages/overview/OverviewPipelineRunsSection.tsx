@@ -19,28 +19,28 @@ import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
-  CardDescription,
+  Card描述,
   CardHeader,
-  CardTitle,
+  Card标题,
 } from "@/components/ui/card";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
+  Sheet描述,
   SheetHeader,
-  SheetTitle,
+  Sheet标题,
 } from "@/components/ui/sheet";
 import { formatDateTime } from "@/lib/utils";
 import {
   formatPipelineDuration,
-  getPipelineRunDisplayStatus,
-  getPipelineRunStatusLabel,
-  type PipelineRunDisplayStatus,
+  getPipelineRunDisplay状态,
+  getPipelineRun状态Label,
+  type PipelineRunDisplay状态,
 } from "./pipelineRuns";
 
 const RECENT_RUN_LIMIT = 8;
 
-const statusBadgeClasses: Record<PipelineRunDisplayStatus, string> = {
+const statusBadgeClasses: Record<PipelineRunDisplay状态, string> = {
   running: "border-sky-500/30 bg-sky-500/10 text-sky-200",
   completed: "border-emerald-500/30 bg-emerald-500/10 text-emerald-200",
   failed: "border-rose-500/30 bg-rose-500/10 text-rose-200",
@@ -58,11 +58,11 @@ function getDurationMs(run: PipelineRun): number | null {
 
 function getRunReason(
   run: PipelineRun,
-  displayStatus: PipelineRunDisplayStatus,
+  display状态: PipelineRunDisplay状态,
 ) {
   if (run.errorMessage) return run.errorMessage;
-  if (displayStatus === "cancelled") return "Run cancelled before completion.";
-  if (displayStatus === "incomplete") {
+  if (display状态 === "cancelled") return "Run cancelled before completion.";
+  if (display状态 === "incomplete") {
     return "This historical run never recorded a completion timestamp.";
   }
   return null;
@@ -70,32 +70,32 @@ function getRunReason(
 
 function MetricCard(props: {
   label: string;
-  value: React.ReactNode;
+  value: React.React否de;
   hint?: string | null;
 }) {
   return (
-    <div className="rounded-lg border border-border/60 bg-muted/20 p-3">
-      <div className="text-xs text-muted-foreground">{props.label}</div>
-      <div className="mt-1 text-lg font-semibold tabular-nums">
+    <div class名称="rounded-lg border border-border/60 bg-muted/20 p-3">
+      <div class名称="text-xs text-muted-foreground">{props.label}</div>
+      <div class名称="mt-1 text-lg font-semibold tabular-nums">
         {props.value}
       </div>
       {props.hint ? (
-        <div className="mt-1 text-xs text-muted-foreground">{props.hint}</div>
+        <div class名称="mt-1 text-xs text-muted-foreground">{props.hint}</div>
       ) : null}
     </div>
   );
 }
 
-function RunStatusBadge(props: { status: PipelineRunDisplayStatus }) {
+function Run状态Badge(props: { status: PipelineRunDisplay状态 }) {
   return (
-    <Badge variant="outline" className={statusBadgeClasses[props.status]}>
-      {getPipelineRunStatusLabel(props.status)}
+    <Badge variant="outline" class名称={statusBadgeClasses[props.status]}>
+      {getPipelineRun状态Label(props.status)}
     </Badge>
   );
 }
 
 function formatSourceList(sources: string[]) {
-  if (sources.length === 0) return "None";
+  if (sources.length === 0) return "否ne";
   return sources.join(", ");
 }
 
@@ -114,17 +114,17 @@ function RunsList(props: {
   onSelectRun: (runId: string) => void;
 }) {
   return (
-    <div className="space-y-2">
-      <div className="hidden grid-cols-[minmax(0,1.6fr)_auto_auto_auto] gap-3 px-3 text-xs text-muted-foreground md:grid">
+    <div class名称="space-y-2">
+      <div class名称="hidden grid-cols-[minmax(0,1.6fr)_auto_auto_auto] gap-3 px-3 text-xs text-muted-foreground md:grid">
         <div>Run</div>
-        <div>Status</div>
+        <div>状态</div>
         <div>Discovered</div>
         <div>Processed</div>
       </div>
 
-      <div className="space-y-2">
+      <div class名称="space-y-2">
         {props.runs.map((run) => {
-          const displayStatus = getPipelineRunDisplayStatus(run, {
+          const display状态 = getPipelineRunDisplay状态(run, {
             isActive: props.activeRunId === run.id,
           });
           const duration = formatPipelineDuration(getDurationMs(run));
@@ -135,41 +135,41 @@ function RunsList(props: {
               key={run.id}
               onClick={() => props.onSelectRun(run.id)}
               selected={isSelected}
-              className={`grid gap-3 rounded-lg border px-3 py-3 md:grid-cols-[minmax(0,1.6fr)_auto_auto_auto] ${
+              class名称={`grid gap-3 rounded-lg border px-3 py-3 md:grid-cols-[minmax(0,1.6fr)_auto_auto_auto] ${
                 isSelected
                   ? "border-primary/40 bg-primary/5"
                   : "border-border/60 hover:bg-muted/30"
               }`}
             >
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-medium">
+              <div class名称="min-w-0">
+                <div class名称="flex flex-wrap items-center gap-2">
+                  <span class名称="font-medium">
                     {formatDateTime(run.startedAt) ?? run.startedAt}
                   </span>
-                  <span className="text-xs text-muted-foreground">
+                  <span class名称="text-xs text-muted-foreground">
                     Run {run.id.slice(0, 8)}
                   </span>
                 </div>
-                <div className="mt-1 text-sm text-muted-foreground">
+                <div class名称="mt-1 text-sm text-muted-foreground">
                   Duration {duration}
                 </div>
               </div>
-              <div className="md:self-center">
-                <RunStatusBadge status={displayStatus} />
+              <div class名称="md:self-center">
+                <Run状态Badge status={display状态} />
               </div>
-              <div className="md:self-center md:text-right">
-                <div className="text-xs text-muted-foreground md:hidden">
+              <div class名称="md:self-center md:text-right">
+                <div class名称="text-xs text-muted-foreground md:hidden">
                   Discovered
                 </div>
-                <div className="font-medium tabular-nums">
+                <div class名称="font-medium tabular-nums">
                   {run.jobsDiscovered.toLocaleString()}
                 </div>
               </div>
-              <div className="md:self-center md:text-right">
-                <div className="text-xs text-muted-foreground md:hidden">
+              <div class名称="md:self-center md:text-right">
+                <div class名称="text-xs text-muted-foreground md:hidden">
                   Processed
                 </div>
-                <div className="font-medium tabular-nums">
+                <div class名称="font-medium tabular-nums">
                   {run.jobsProcessed.toLocaleString()}
                 </div>
               </div>
@@ -187,25 +187,25 @@ function RunInsightsBody(props: {
 }) {
   const { run, exactMetrics, inferredMetrics } = props.insights;
   const savedDetails = props.insights.savedDetails;
-  const displayStatus = getPipelineRunDisplayStatus(run, {
+  const display状态 = getPipelineRunDisplay状态(run, {
     isActive: props.isActiveRun,
   });
-  const runReason = getRunReason(run, displayStatus);
+  const runReason = getRunReason(run, display状态);
   const inferredHint =
-    inferredMetrics.jobsCreated.quality === "unavailable"
+    inferredMetrics.jobs创建d.quality === "unavailable"
       ? "Unavailable for incomplete runs."
       : "Approximate counts inferred from job timestamps in the run window. Other job activity in the same period may be included.";
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-2">
-        <RunStatusBadge status={displayStatus} />
-        <span className="text-sm text-muted-foreground">
+    <div class名称="space-y-6">
+      <div class名称="flex flex-wrap items-center gap-2">
+        <Run状态Badge status={display状态} />
+        <span class名称="text-sm text-muted-foreground">
           Started {formatDateTime(run.startedAt) ?? run.startedAt}
         </span>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div class名称="grid gap-3 sm:grid-cols-2">
         <MetricCard
           label="Duration"
           value={formatPipelineDuration(exactMetrics.durationMs)}
@@ -220,24 +220,24 @@ function RunInsightsBody(props: {
         />
         <MetricCard
           label="Completed"
-          value={formatDateTime(run.completedAt) ?? "Not recorded"}
+          value={formatDateTime(run.completedAt) ?? "否t recorded"}
         />
       </div>
 
       {runReason ? (
-        <div className="rounded-lg border border-border/60 bg-muted/20 p-3 text-sm">
-          <div className="font-medium">Notes</div>
-          <div className="mt-1 text-muted-foreground">{runReason}</div>
+        <div class名称="rounded-lg border border-border/60 bg-muted/20 p-3 text-sm">
+          <div class名称="font-medium">否tes</div>
+          <div class名称="mt-1 text-muted-foreground">{runReason}</div>
         </div>
       ) : null}
 
-      <div className="space-y-3">
-        <div className="font-medium">Saved settings</div>
+      <div class名称="space-y-3">
+        <div class名称="font-medium">保存d settings</div>
         {savedDetails ? (
-          <div className="space-y-4">
-            <div className="rounded-lg border border-border/60 bg-muted/20 p-3">
-              <div className="text-sm font-medium">Requested run</div>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          <div class名称="space-y-4">
+            <div class名称="rounded-lg border border-border/60 bg-muted/20 p-3">
+              <div class名称="text-sm font-medium">Requested run</div>
+              <div class名称="mt-3 grid gap-3 sm:grid-cols-2">
                 <MetricCard
                   label="Top N"
                   value={savedDetails.requestedConfig.topN.toLocaleString()}
@@ -279,14 +279,14 @@ function RunInsightsBody(props: {
               </div>
             </div>
 
-            <div className="rounded-lg border border-border/60 bg-muted/20 p-3">
-              <div className="text-sm font-medium">Effective settings</div>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            <div class名称="rounded-lg border border-border/60 bg-muted/20 p-3">
+              <div class名称="text-sm font-medium">Effective settings</div>
+              <div class名称="mt-3 grid gap-3 sm:grid-cols-2">
                 <MetricCard
                   label="Country"
                   value={
                     savedDetails.effectiveConfig.countryLabel ??
-                    "Not restricted"
+                    "否t restricted"
                   }
                 />
                 <MetricCard
@@ -294,7 +294,7 @@ function RunInsightsBody(props: {
                   value={
                     savedDetails.effectiveConfig.searchCities.length > 0
                       ? savedDetails.effectiveConfig.searchCities.join(", ")
-                      : "Not restricted"
+                      : "否t restricted"
                   }
                 />
                 <MetricCard
@@ -302,13 +302,13 @@ function RunInsightsBody(props: {
                   value={
                     savedDetails.effectiveConfig.workplaceTypes.length > 0
                       ? savedDetails.effectiveConfig.workplaceTypes.join(", ")
-                      : "Not restricted"
+                      : "否t restricted"
                   }
                 />
                 <MetricCard
                   label="Location matching"
                   value={`${formatStageLabel(
-                    savedDetails.effectiveConfig.locationSearchScope,
+                    savedDetails.effectiveConfig.location搜索Scope,
                   )}; ${formatStageLabel(
                     savedDetails.effectiveConfig.locationMatchStrictness,
                   )}`}
@@ -328,7 +328,7 @@ function RunInsightsBody(props: {
                       ? savedDetails.effectiveConfig.skippedSources
                           .map((entry) => sourceLabel(entry.source))
                           .join(", ")
-                      : "None"
+                      : "否ne"
                   }
                   hint={
                     savedDetails.effectiveConfig.skippedSources.length > 0
@@ -339,12 +339,12 @@ function RunInsightsBody(props: {
                   }
                 />
                 <MetricCard
-                  label="Search terms"
+                  label="搜索 terms"
                   value={savedDetails.effectiveConfig.searchTermsCount.toLocaleString()}
                 />
                 <MetricCard
                   label="Blocked company filters"
-                  value={savedDetails.effectiveConfig.blockedCompanyKeywordsCount.toLocaleString()}
+                  value={savedDetails.effectiveConfig.blocked公司KeywordsCount.toLocaleString()}
                 />
                 <MetricCard
                   label="Auto-skip threshold"
@@ -376,9 +376,9 @@ function RunInsightsBody(props: {
               </div>
             </div>
 
-            <div className="rounded-lg border border-border/60 bg-muted/20 p-3">
-              <div className="text-sm font-medium">Saved execution summary</div>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            <div class名称="rounded-lg border border-border/60 bg-muted/20 p-3">
+              <div class名称="text-sm font-medium">保存d execution summary</div>
+              <div class名称="mt-3 grid gap-3 sm:grid-cols-2">
                 <MetricCard
                   label="Last recorded stage"
                   value={formatStageLabel(savedDetails.resultSummary.stage)}
@@ -387,7 +387,7 @@ function RunInsightsBody(props: {
                   label="Jobs scored"
                   value={
                     savedDetails.resultSummary.jobsScored == null
-                      ? "Not recorded"
+                      ? "否t recorded"
                       : savedDetails.resultSummary.jobsScored.toLocaleString()
                   }
                 />
@@ -395,7 +395,7 @@ function RunInsightsBody(props: {
                   label="Jobs selected"
                   value={
                     savedDetails.resultSummary.jobsSelected == null
-                      ? "Not recorded"
+                      ? "否t recorded"
                       : savedDetails.resultSummary.jobsSelected.toLocaleString()
                   }
                 />
@@ -405,47 +405,47 @@ function RunInsightsBody(props: {
                 />
               </div>
               {savedDetails.resultSummary.sourceErrors.length > 0 ? (
-                <div className="mt-3 rounded-lg border border-border/60 bg-background/40 p-3 text-sm text-muted-foreground">
+                <div class名称="mt-3 rounded-lg border border-border/60 bg-background/40 p-3 text-sm text-muted-foreground">
                   {savedDetails.resultSummary.sourceErrors.join(" ")}
                 </div>
               ) : null}
             </div>
           </div>
         ) : (
-          <div className="rounded-lg border border-border/60 bg-muted/20 p-3 text-sm text-muted-foreground">
-            Saved run settings are available for newer pipeline runs.
+          <div class名称="rounded-lg border border-border/60 bg-muted/20 p-3 text-sm text-muted-foreground">
+            保存d run settings are available for newer pipeline runs.
           </div>
         )}
       </div>
 
-      <div className="space-y-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="font-medium">What changed</div>
+      <div class名称="space-y-3">
+        <div class名称="flex flex-wrap items-center gap-2">
+          <div class名称="font-medium">What changed</div>
           <Badge variant="outline">Inferred from timestamps</Badge>
         </div>
-        <p className="text-sm text-muted-foreground">{inferredHint}</p>
-        <div className="grid gap-3 sm:grid-cols-3">
+        <p class名称="text-sm text-muted-foreground">{inferredHint}</p>
+        <div class名称="grid gap-3 sm:grid-cols-3">
           <MetricCard
             label="Jobs created"
             value={
-              inferredMetrics.jobsCreated.value == null
-                ? "Not available"
-                : inferredMetrics.jobsCreated.value.toLocaleString()
+              inferredMetrics.jobs创建d.value == null
+                ? "否t available"
+                : inferredMetrics.jobs创建d.value.toLocaleString()
             }
           />
           <MetricCard
             label="Jobs updated"
             value={
-              inferredMetrics.jobsUpdated.value == null
-                ? "Not available"
-                : inferredMetrics.jobsUpdated.value.toLocaleString()
+              inferredMetrics.jobs更新d.value == null
+                ? "否t available"
+                : inferredMetrics.jobs更新d.value.toLocaleString()
             }
           />
           <MetricCard
             label="Jobs processed"
             value={
               inferredMetrics.jobsProcessed.value == null
-                ? "Not available"
+                ? "否t available"
                 : inferredMetrics.jobsProcessed.value.toLocaleString()
             }
           />
@@ -458,17 +458,17 @@ function RunInsightsBody(props: {
 export const OverviewPipelineRunsSection: React.FC = () => {
   const [selectedRunId, setSelectedRunId] = useState<string | null>(null);
 
-  const pipelineStatusQuery = useQuery({
+  const pipeline状态Query = useQuery({
     queryKey: queryKeys.pipeline.status(),
-    queryFn: api.getPipelineStatus,
+    queryFn: api.getPipeline状态,
     refetchInterval: 15000,
-    refetchIntervalInBackground: true,
+    refetchIntervalIn返回ground: true,
   });
   const pipelineRunsQuery = useQuery({
     queryKey: queryKeys.pipeline.runs(),
     queryFn: api.getPipelineRuns,
     refetchInterval: 30000,
-    refetchIntervalInBackground: true,
+    refetchIntervalIn返回ground: true,
   });
   const runInsightsQuery = useQuery({
     queryKey: queryKeys.pipeline.runInsights(selectedRunId ?? ""),
@@ -480,21 +480,21 @@ export const OverviewPipelineRunsSection: React.FC = () => {
     () => (pipelineRunsQuery.data ?? []).slice(0, RECENT_RUN_LIMIT),
     [pipelineRunsQuery.data],
   );
-  const latestRun = pipelineStatusQuery.data?.lastRun ?? recentRuns[0] ?? null;
-  const activeRunId = pipelineStatusQuery.data?.isRunning
+  const latestRun = pipeline状态Query.data?.lastRun ?? recentRuns[0] ?? null;
+  const activeRunId = pipeline状态Query.data?.isRunning
     ? (latestRun?.id ?? null)
     : null;
-  const currentStatus = latestRun
-    ? getPipelineRunDisplayStatus(latestRun, {
+  const current状态 = latestRun
+    ? getPipelineRunDisplay状态(latestRun, {
         isActive: activeRunId === latestRun.id,
       })
     : null;
-  const currentStatusText = pipelineStatusQuery.data?.isRunning
+  const current状态Text = pipeline状态Query.data?.isRunning
     ? "A pipeline run is currently in progress."
     : latestRun
-      ? (getRunReason(latestRun, currentStatus as PipelineRunDisplayStatus) ??
+      ? (getRunReason(latestRun, current状态 as PipelineRunDisplay状态) ??
         "The most recent pipeline activity is shown below.")
-      : "No pipeline runs recorded yet.";
+      : "否 pipeline runs recorded yet.";
   const selectedRun = useMemo(
     () =>
       (pipelineRunsQuery.data ?? []).find((run) => run.id === selectedRunId) ??
@@ -503,48 +503,48 @@ export const OverviewPipelineRunsSection: React.FC = () => {
   );
 
   const isLoading =
-    pipelineStatusQuery.isLoading ||
+    pipeline状态Query.isLoading ||
     pipelineRunsQuery.isLoading ||
     (selectedRunId != null && runInsightsQuery.isLoading);
   const error =
-    pipelineStatusQuery.error ??
+    pipeline状态Query.error ??
     pipelineRunsQuery.error ??
     runInsightsQuery.error;
-  const statusError = pipelineStatusQuery.error;
+  const statusError = pipeline状态Query.error;
   const runsError = pipelineRunsQuery.error;
 
   return (
     <>
-      <Card className="border-border/60 bg-card/40 shadow-none">
-        <CardHeader className="gap-3">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <History className="h-4 w-4 text-muted-foreground" />
-                <CardTitle>Pipeline runs</CardTitle>
+      <Card class名称="border-border/60 bg-card/40 shadow-none">
+        <CardHeader class名称="gap-3">
+          <div class名称="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div class名称="space-y-1">
+              <div class名称="flex items-center gap-2">
+                <History class名称="h-4 w-4 text-muted-foreground" />
+                <Card标题>Pipeline runs</Card标题>
               </div>
-              <CardDescription>
+              <Card描述>
                 Review recent pipeline activity without leaving Overview.
-              </CardDescription>
+              </Card描述>
             </div>
-            {currentStatus ? <RunStatusBadge status={currentStatus} /> : null}
+            {current状态 ? <Run状态Badge status={current状态} /> : null}
           </div>
         </CardHeader>
 
-        <CardContent className="space-y-6">
-          {pipelineStatusQuery.data?.isRunning ? (
+        <CardContent class名称="space-y-6">
+          {pipeline状态Query.data?.isRunning ? (
             <PipelineProgress isRunning />
           ) : null}
 
           {isLoading && !latestRun && recentRuns.length === 0 ? (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Loader2 className="h-4 w-4 animate-spin" />
+            <div class名称="flex items-center gap-2 text-sm text-muted-foreground">
+              <Loader2 class名称="h-4 w-4 animate-spin" />
               <span>Loading pipeline history…</span>
             </div>
           ) : null}
 
           {error && !latestRun && recentRuns.length === 0 ? (
-            <div className="rounded-lg border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">
+            <div class名称="rounded-lg border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">
               {error instanceof Error
                 ? error.message
                 : "Failed to load pipeline history"}
@@ -553,37 +553,37 @@ export const OverviewPipelineRunsSection: React.FC = () => {
 
           {latestRun ? (
             <>
-              <div className="grid gap-3 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,2fr)]">
-                <div className="rounded-lg border border-border/60 bg-muted/20 p-4">
-                  <div className="flex items-center gap-2 text-sm font-medium">
-                    <Activity className="h-4 w-4 text-muted-foreground" />
+              <div class名称="grid gap-3 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,2fr)]">
+                <div class名称="rounded-lg border border-border/60 bg-muted/20 p-4">
+                  <div class名称="flex items-center gap-2 text-sm font-medium">
+                    <Activity class名称="h-4 w-4 text-muted-foreground" />
                     <span>Current status</span>
                   </div>
                   {statusError ? (
-                    <div className="mt-3 rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-sm text-amber-100">
+                    <div class名称="mt-3 rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-sm text-amber-100">
                       Live status is temporarily unavailable. Showing the latest
                       persisted run history.
                     </div>
                   ) : null}
-                  <div className="mt-3 flex flex-wrap items-center gap-2">
-                    {currentStatus ? (
-                      <RunStatusBadge status={currentStatus} />
+                  <div class名称="mt-3 flex flex-wrap items-center gap-2">
+                    {current状态 ? (
+                      <Run状态Badge status={current状态} />
                     ) : null}
-                    <span className="text-sm text-muted-foreground">
-                      {currentStatusText}
+                    <span class名称="text-sm text-muted-foreground">
+                      {current状态Text}
                     </span>
                   </div>
-                  {pipelineStatusQuery.data?.nextScheduledRun ? (
-                    <div className="mt-3 text-xs text-muted-foreground">
+                  {pipeline状态Query.data?.nextScheduledRun ? (
+                    <div class名称="mt-3 text-xs text-muted-foreground">
                       Next scheduled run{" "}
                       {formatDateTime(
-                        pipelineStatusQuery.data.nextScheduledRun,
-                      ) ?? pipelineStatusQuery.data.nextScheduledRun}
+                        pipeline状态Query.data.nextScheduledRun,
+                      ) ?? pipeline状态Query.data.nextScheduledRun}
                     </div>
                   ) : null}
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                <div class名称="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                   <MetricCard
                     label="Last run"
                     value={
@@ -605,13 +605,13 @@ export const OverviewPipelineRunsSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <Clock3 className="h-4 w-4 text-muted-foreground" />
-                  <div className="font-medium">Recent runs</div>
+              <div class名称="space-y-3">
+                <div class名称="flex items-center gap-2">
+                  <Clock3 class名称="h-4 w-4 text-muted-foreground" />
+                  <div class名称="font-medium">Recent runs</div>
                 </div>
                 {runsError ? (
-                  <div className="rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-sm text-amber-100">
+                  <div class名称="rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-sm text-amber-100">
                     Recent run history could not be refreshed just now.
                   </div>
                 ) : null}
@@ -626,9 +626,9 @@ export const OverviewPipelineRunsSection: React.FC = () => {
           ) : null}
 
           {!isLoading && !error && !latestRun ? (
-            <div className="rounded-lg border border-dashed border-border/60 px-4 py-8 text-center">
-              <div className="font-medium">No pipeline runs yet</div>
-              <div className="mt-1 text-sm text-muted-foreground">
+            <div class名称="rounded-lg border border-dashed border-border/60 px-4 py-8 text-center">
+              <div class名称="font-medium">否 pipeline runs yet</div>
+              <div class名称="mt-1 text-sm text-muted-foreground">
                 Once the pipeline runs, this section will show status, recent
                 history, and inferred changes.
               </div>
@@ -645,33 +645,33 @@ export const OverviewPipelineRunsSection: React.FC = () => {
       >
         <SheetContent
           side="right"
-          className="w-full overflow-y-auto sm:max-w-2xl"
+          class名称="w-full overflow-y-auto sm:max-w-2xl"
         >
           <SheetHeader>
-            <SheetTitle className="flex items-center gap-2">
-              <GitCompareArrows className="h-4 w-4" />
+            <Sheet标题 class名称="flex items-center gap-2">
+              <GitCompareArrows class名称="h-4 w-4" />
               Run details
-            </SheetTitle>
-            <SheetDescription>
+            </Sheet标题>
+            <Sheet描述>
               {selectedRun
                 ? `Inspect exact and inferred signals for run ${selectedRun.id.slice(
                     0,
                     8,
                   )}.`
                 : "Inspect exact and inferred signals for the selected run."}
-            </SheetDescription>
+            </Sheet描述>
           </SheetHeader>
 
-          <div className="mt-6">
+          <div class名称="mt-6">
             {runInsightsQuery.isLoading ? (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Loader2 className="h-4 w-4 animate-spin" />
+              <div class名称="flex items-center gap-2 text-sm text-muted-foreground">
+                <Loader2 class名称="h-4 w-4 animate-spin" />
                 <span>Loading run details…</span>
               </div>
             ) : null}
 
             {runInsightsQuery.error ? (
-              <div className="rounded-lg border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">
+              <div class名称="rounded-lg border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">
                 {runInsightsQuery.error instanceof Error
                   ? runInsightsQuery.error.message
                   : "Failed to load run details"}
@@ -689,12 +689,12 @@ export const OverviewPipelineRunsSection: React.FC = () => {
             !runInsightsQuery.error &&
             selectedRunId != null &&
             !runInsightsQuery.data ? (
-              <div className="rounded-lg border border-border/60 bg-muted/20 p-4 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2 font-medium text-foreground">
-                  <AlertCircle className="h-4 w-4" />
+              <div class名称="rounded-lg border border-border/60 bg-muted/20 p-4 text-sm text-muted-foreground">
+                <div class名称="flex items-center gap-2 font-medium text-foreground">
+                  <AlertCircle class名称="h-4 w-4" />
                   <span>Run details unavailable</span>
                 </div>
-                <div className="mt-2">
+                <div class名称="mt-2">
                   The selected run could not be loaded. Try selecting it again.
                 </div>
               </div>

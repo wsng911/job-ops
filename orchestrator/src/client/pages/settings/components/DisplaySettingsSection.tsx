@@ -1,35 +1,35 @@
-import { SettingsSectionFrame } from "@client/pages/settings/components/SettingsSectionFrame";
+import { 设置SectionFrame } from "@client/pages/settings/components/设置SectionFrame";
 import type { DisplayValues } from "@client/pages/settings/types";
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import type React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 
-type DisplaySettingsSectionProps = {
+type Display设置SectionProps = {
   values: DisplayValues;
   isLoading: boolean;
   isSaving: boolean;
   layoutMode?: "accordion" | "panel";
 };
 
-export const DisplaySettingsSection: React.FC<DisplaySettingsSectionProps> = ({
+export const Display设置Section: React.FC<Display设置SectionProps> = ({
   values,
   isLoading,
   isSaving,
   layoutMode,
 }) => {
-  const { showSponsorInfo, renderMarkdownInJobDescriptions } = values;
-  const { control } = useFormContext<UpdateSettingsInput>();
+  const { showSponsorInfo, renderMarkdownInJob描述s } = values;
+  const { control } = useFormContext<更新设置Input>();
 
   return (
-    <SettingsSectionFrame
+    <设置SectionFrame
       mode={layoutMode}
-      title="Display Settings"
+      title="Display 设置"
       value="display"
     >
-      <div className="space-y-4">
-        <div className="flex items-start space-x-3">
+      <div class名称="space-y-4">
+        <div class名称="flex items-start space-x-3">
           <Controller
             name="showSponsorInfo"
             control={control}
@@ -46,14 +46,14 @@ export const DisplaySettingsSection: React.FC<DisplaySettingsSectionProps> = ({
               />
             )}
           />
-          <div className="flex flex-col gap-1.5">
+          <div class名称="flex flex-col gap-1.5">
             <label
               htmlFor="showSponsorInfo"
-              className="text-sm font-medium leading-none cursor-pointer"
+              class名称="text-sm font-medium leading-none cursor-pointer"
             >
               Show visa sponsor information
             </label>
-            <p className="text-xs text-muted-foreground">
+            <p class名称="text-xs text-muted-foreground">
               Display a badge next to the employer name showing the match
               percentage with the UK visa sponsor list. This helps identify
               employers that are licensed to sponsor work visas.
@@ -63,14 +63,14 @@ export const DisplaySettingsSection: React.FC<DisplaySettingsSectionProps> = ({
 
         <Separator />
 
-        <div className="flex items-start space-x-3">
+        <div class名称="flex items-start space-x-3">
           <Controller
-            name="renderMarkdownInJobDescriptions"
+            name="renderMarkdownInJob描述s"
             control={control}
             render={({ field }) => (
               <Checkbox
-                id="renderMarkdownInJobDescriptions"
-                checked={field.value ?? renderMarkdownInJobDescriptions.default}
+                id="renderMarkdownInJob描述s"
+                checked={field.value ?? renderMarkdownInJob描述s.default}
                 onCheckedChange={(checked) => {
                   field.onChange(
                     checked === "indeterminate" ? null : checked === true,
@@ -80,14 +80,14 @@ export const DisplaySettingsSection: React.FC<DisplaySettingsSectionProps> = ({
               />
             )}
           />
-          <div className="flex flex-col gap-1.5">
+          <div class名称="flex flex-col gap-1.5">
             <label
-              htmlFor="renderMarkdownInJobDescriptions"
-              className="text-sm font-medium leading-none cursor-pointer"
+              htmlFor="renderMarkdownInJob描述s"
+              class名称="text-sm font-medium leading-none cursor-pointer"
             >
               Render Markdown in job descriptions
             </label>
-            <p className="text-xs text-muted-foreground">
+            <p class名称="text-xs text-muted-foreground">
               Show headings, bold text, lists, and code blocks as formatted
               content when you expand a full job description. Turn this off if
               you prefer the raw source text.
@@ -97,43 +97,43 @@ export const DisplaySettingsSection: React.FC<DisplaySettingsSectionProps> = ({
 
         <Separator />
 
-        <div className="grid gap-3 text-sm sm:grid-cols-2">
+        <div class名称="grid gap-3 text-sm sm:grid-cols-2">
           <div>
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Sponsor info effective
             </div>
-            <div className="break-words font-mono text-xs">
+            <div class名称="break-words font-mono text-xs">
               {showSponsorInfo.effective ? "Enabled" : "Disabled"}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Sponsor info default
             </div>
-            <div className="break-words font-mono text-xs font-semibold">
+            <div class名称="break-words font-mono text-xs font-semibold">
               {showSponsorInfo.default ? "Enabled" : "Disabled"}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Markdown rendering effective
             </div>
-            <div className="break-words font-mono text-xs">
-              {renderMarkdownInJobDescriptions.effective
+            <div class名称="break-words font-mono text-xs">
+              {renderMarkdownInJob描述s.effective
                 ? "Enabled"
                 : "Disabled"}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">
+            <div class名称="text-xs text-muted-foreground">
               Markdown rendering default
             </div>
-            <div className="break-words font-mono text-xs font-semibold">
-              {renderMarkdownInJobDescriptions.default ? "Enabled" : "Disabled"}
+            <div class名称="break-words font-mono text-xs font-semibold">
+              {renderMarkdownInJob描述s.default ? "Enabled" : "Disabled"}
             </div>
           </div>
         </div>
       </div>
-    </SettingsSectionFrame>
+    </设置SectionFrame>
   );
 };

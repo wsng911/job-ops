@@ -1,34 +1,34 @@
 /**
- * ApplicationsPerDayChart Edge Case Tests
+ * 申请记录PerDayChart Edge Case Tests
  * Tests real-world edge cases and data transformation logic
  */
 
 import { render, screen } from "@testing-library/react";
 import type React from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ApplicationsPerDayChart } from "./ApplicationsPerDayChart";
+import { 申请记录PerDayChart } from "./申请记录PerDayChart";
 
 // Mock UI components
 vi.mock("@/components/ui/card", () => ({
-  Card: ({ children }: { children: React.ReactNode }) => (
+  Card: ({ children }: { children: React.React否de }) => (
     <div data-testid="card">{children}</div>
   ),
-  CardContent: ({ children }: { children: React.ReactNode }) => (
+  CardContent: ({ children }: { children: React.React否de }) => (
     <div data-testid="card-content">{children}</div>
   ),
-  CardHeader: ({ children }: { children: React.ReactNode }) => (
+  CardHeader: ({ children }: { children: React.React否de }) => (
     <div data-testid="card-header">{children}</div>
   ),
-  CardTitle: ({ children }: { children: React.ReactNode }) => (
+  Card标题: ({ children }: { children: React.React否de }) => (
     <div data-testid="card-title">{children}</div>
   ),
-  CardDescription: ({ children }: { children: React.ReactNode }) => (
+  Card描述: ({ children }: { children: React.React否de }) => (
     <div data-testid="card-description">{children}</div>
   ),
 }));
 
 vi.mock("@/components/ui/chart", () => ({
-  ChartContainer: ({ children }: { children: React.ReactNode }) => (
+  ChartContainer: ({ children }: { children: React.React否de }) => (
     <div data-testid="chart-container">{children}</div>
   ),
   ChartTooltip: () => <div data-testid="chart-tooltip">Tooltip</div>,
@@ -38,7 +38,7 @@ vi.mock("@/components/ui/chart", () => ({
 }));
 
 vi.mock("recharts", () => ({
-  BarChart: ({ children }: { children: React.ReactNode }) => (
+  BarChart: ({ children }: { children: React.React否de }) => (
     <div data-testid="bar-chart">{children}</div>
   ),
   Bar: () => <div data-testid="bar">Bar</div>,
@@ -51,7 +51,7 @@ vi.mock("lucide-react", () => ({
   TrendingDown: () => <div data-testid="trending-down">TrendingDown</div>,
 }));
 
-describe("ApplicationsPerDayChart - Edge Cases", () => {
+describe("申请记录PerDayChart - Edge Cases", () => {
   const mockDate = new Date("2025-01-15T12:00:00Z");
 
   beforeEach(() => {
@@ -66,7 +66,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
   describe("Empty and Null Data", () => {
     it("handles empty appliedAt array - shows zero total and average", () => {
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={[]}
           isLoading={false}
           error={null}
@@ -80,7 +80,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
 
     it("handles appliedAt with all null values - filters out nulls correctly", () => {
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={[null, null, null]}
           isLoading={false}
           error={null}
@@ -95,7 +95,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
     it("handles mixed null and valid dates - counts only valid dates", () => {
       const today = mockDate.toISOString();
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={[null, today, null, today, today]}
           isLoading={false}
           error={null}
@@ -111,7 +111,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
     it("filters out invalid date strings", () => {
       const today = mockDate.toISOString();
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={["invalid-date", today, "", "not-a-date", today]}
           isLoading={false}
           error={null}
@@ -125,7 +125,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
     it("handles malformed ISO dates gracefully", () => {
       const today = mockDate.toISOString();
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={["2025-13-45", today, "2025-01-00", today]}
           isLoading={false}
           error={null}
@@ -142,7 +142,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
       const today = mockDate.toISOString();
       const oldDate = "2025-01-01T00:00:00Z"; // Before 7-day window
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={[oldDate, today, today]}
           isLoading={false}
           error={null}
@@ -157,7 +157,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
       const today = mockDate.toISOString();
       const futureDate = "2025-01-20T00:00:00Z"; // After today
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={[today, futureDate, today]}
           isLoading={false}
           error={null}
@@ -172,7 +172,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
       const today = mockDate.toISOString();
       const yesterday = "2025-01-14T00:00:00Z";
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={[today, yesterday, today]}
           isLoading={false}
           error={null}
@@ -188,7 +188,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
     it("shows neutral trend when first half average is 0 and second half is also 0", () => {
       // All zeros - no trend indicator should show
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={[]}
           isLoading={false}
           error={null}
@@ -207,7 +207,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
         "2025-01-15T00:00:00Z",
       ];
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={dates}
           isLoading={false}
           error={null}
@@ -227,7 +227,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
         "2025-01-15T00:00:00Z",
       ];
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={dates}
           isLoading={false}
           error={null}
@@ -247,7 +247,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
         "2025-01-15T00:00:00Z", // Second half - 1 app
       ];
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={dates}
           isLoading={false}
           error={null}
@@ -262,7 +262,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
   describe("Loading and Error States", () => {
     it("shows loading state description", () => {
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={[]}
           isLoading={true}
           error={null}
@@ -275,7 +275,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
 
     it("displays error message when error prop is set", () => {
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={[]}
           isLoading={false}
           error="Failed to load application data"
@@ -291,7 +291,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
 
     it("renders chart when no error", () => {
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={[]}
           isLoading={false}
           error={null}
@@ -309,7 +309,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
       const largeData = Array(1000).fill(today);
 
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={largeData}
           isLoading={false}
           error={null}
@@ -332,7 +332,7 @@ describe("ApplicationsPerDayChart - Edge Cases", () => {
         "2025-01-15T00:00:00Z",
       ];
       render(
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={dates}
           isLoading={false}
           error={null}

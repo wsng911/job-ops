@@ -1,17 +1,17 @@
-import type { AppSettings } from "@shared/types";
+import type { App设置 } from "@shared/types";
 
 type OnboardingStepId = "llm" | "baseresume" | "searchterms" | "basicauth";
 
 export function hasCompletedBasicAuthOnboarding(
-  settings: AppSettings | null | undefined,
+  settings: App设置 | null | undefined,
 ): boolean {
   return Boolean(
     settings?.basicAuthActive || settings?.onboardingBasicAuthDecision !== null,
   );
 }
 
-export function hasSavedSearchTermsOnboarding(
-  settings: AppSettings | null | undefined,
+export function has保存d搜索TermsOnboarding(
+  settings: App设置 | null | undefined,
 ): boolean {
   return Boolean(
     Array.isArray(settings?.searchTerms?.override) &&
@@ -21,7 +21,7 @@ export function hasSavedSearchTermsOnboarding(
 
 export function isOnboardingComplete(input: {
   demoMode: boolean;
-  settings: AppSettings | null | undefined;
+  settings: App设置 | null | undefined;
   llmValid: boolean;
   baseResumeValid: boolean;
   searchTermsValid?: boolean;
@@ -37,7 +37,7 @@ export function isOnboardingComplete(input: {
     input.completedStepId === "searchterms"
       ? true
       : (input.searchTermsValid ??
-        hasSavedSearchTermsOnboarding(input.settings));
+        has保存d搜索TermsOnboarding(input.settings));
 
   return Boolean(
     llmValid &&

@@ -2,7 +2,7 @@ import * as api from "@client/api";
 import { fileToDataUrl } from "@client/components/design-resume/utils";
 import { useDemoInfo } from "@client/hooks/useDemoInfo";
 import { useRxResumeConfigState } from "@client/hooks/useRxResumeConfigState";
-import { useSettings } from "@client/hooks/useSettings";
+import { use设置 } from "@client/hooks/use设置";
 import {
   hasCompletedBasicAuthOnboarding,
   isOnboardingComplete,
@@ -18,13 +18,13 @@ import {
   normalizeLlmProvider,
 } from "@client/pages/settings/utils";
 import { getDefaultModelForProvider } from "@shared/settings-registry";
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import type {
-  AppSettings,
-  SearchTermsSuggestionResponse,
+  App设置,
+  搜索TermsSuggestionResponse,
   ValidationResult,
 } from "@shared/types.js";
-import { normalizeSearchTerms } from "@shared/utils/search-terms";
+import { normalize搜索Terms } from "@shared/utils/search-terms";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -43,7 +43,7 @@ import type {
 
 export function useOnboardingFlow() {
   const queryClient = useQueryClient();
-  const { settings, isLoading: settingsLoading } = useSettings();
+  const { settings, isLoading: settingsLoading } = use设置();
   const { storedRxResume, setBaseResumeId, syncBaseResumeId } =
     useRxResumeConfigState(settings);
   const demoInfo = useDemoInfo();
@@ -54,7 +54,7 @@ export function useOnboardingFlow() {
   const [isValidatingRxresume, setIsValidatingRxresume] = useState(false);
   const [isValidatingBaseResume, setIsValidatingBaseResume] = useState(false);
   const [isImportingResume, setIsImportingResume] = useState(false);
-  const [isGeneratingSearchTerms, setIsGeneratingSearchTerms] = useState(false);
+  const [isGenerating搜索Terms, setIsGenerating搜索Terms] = useState(false);
   const [llmValidation, setLlmValidation] = useState<ValidationState>(
     EMPTY_VALIDATION_STATE,
   );
@@ -68,13 +68,13 @@ export function useOnboardingFlow() {
   const [isRxResumeSelfHosted, setIsRxResumeSelfHosted] = useState(false);
   const [resumeSetupMode, setResumeSetupMode] =
     useState<ResumeSetupMode>("upload");
-  const [searchTermsSaved, setSearchTermsSaved] = useState(false);
-  const [hasSavedSearchTermsInSession, setHasSavedSearchTermsInSession] =
+  const [searchTerms保存d, set搜索Terms保存d] = useState(false);
+  const [has保存d搜索TermsInSession, setHas保存d搜索TermsInSession] =
     useState(false);
-  const [searchTermsSource, setSearchTermsSource] = useState<
-    SearchTermsSuggestionResponse["source"] | null
+  const [searchTermsSource, set搜索TermsSource] = useState<
+    搜索TermsSuggestionResponse["source"] | null
   >(null);
-  const [searchTermsStale, setSearchTermsStale] = useState(false);
+  const [searchTermsStale, set搜索TermsStale] = useState(false);
   const [currentStep, setCurrentStep] = useState<StepId | null>(null);
   const resumeSetupModeTouchedRef = useRef(false);
   const searchTermsOverrideKeyRef = useRef<string | null>(null);
@@ -93,13 +93,13 @@ export function useOnboardingFlow() {
         searchTerms: [],
         searchTermDraft: "",
         basicAuthUser: "",
-        basicAuthPassword: "",
+        basicAuth密码: "",
       },
     });
 
-  const syncSettingsCache = useCallback(
-    (nextSettings: AppSettings) => {
-      queryClient.setQueryData(queryKeys.settings.current(), nextSettings);
+  const sync设置Cache = useCallback(
+    (next设置: App设置) => {
+      queryClient.setQueryData(queryKeys.settings.current(), next设置);
     },
     [queryClient],
   );
@@ -109,7 +109,7 @@ export function useOnboardingFlow() {
 
     const selectedId = syncBaseResumeId();
     const searchTermsOverride = settings.searchTerms?.override ?? null;
-    const hasExplicitSearchTermsOverride =
+    const hasExplicit搜索TermsOverride =
       Array.isArray(searchTermsOverride) && searchTermsOverride.length > 0;
     const searchTermsOverrideKey = JSON.stringify(searchTermsOverride);
     setLlmValidation(EMPTY_VALIDATION_STATE);
@@ -126,7 +126,7 @@ export function useOnboardingFlow() {
       searchTerms: settings.searchTerms?.value ?? [],
       searchTermDraft: "",
       basicAuthUser: settings.basicAuthUser ?? "",
-      basicAuthPassword: "",
+      basicAuth密码: "",
     });
     setBasicAuthChoice(
       settings.basicAuthActive
@@ -141,11 +141,11 @@ export function useOnboardingFlow() {
     }
     if (searchTermsOverrideKeyRef.current !== searchTermsOverrideKey) {
       searchTermsOverrideKeyRef.current = searchTermsOverrideKey;
-      setSearchTermsSaved(hasExplicitSearchTermsOverride);
-      setHasSavedSearchTermsInSession(hasExplicitSearchTermsOverride);
-      setSearchTermsSource(null);
-      setSearchTermsStale(false);
-      autoSuggestionAttemptedRef.current = hasExplicitSearchTermsOverride;
+      set搜索Terms保存d(hasExplicit搜索TermsOverride);
+      setHas保存d搜索TermsInSession(hasExplicit搜索TermsOverride);
+      set搜索TermsSource(null);
+      set搜索TermsStale(false);
+      autoSuggestionAttemptedRef.current = hasExplicit搜索TermsOverride;
     }
   }, [reset, settings, syncBaseResumeId]);
 
@@ -165,10 +165,10 @@ export function useOnboardingFlow() {
   const hasLlmKey = Boolean(llmKeyHint);
   const llmValidated = llmValidation.valid;
   const searchTermsOverride = settings?.searchTerms?.override ?? null;
-  const hasExplicitSearchTermsOverride = Boolean(
+  const hasExplicit搜索TermsOverride = Boolean(
     Array.isArray(searchTermsOverride) && searchTermsOverride.length > 0,
   );
-  const searchTermsComplete = searchTermsSaved && !searchTermsStale;
+  const searchTermsComplete = searchTerms保存d && !searchTermsStale;
   const basicAuthComplete = hasCompletedBasicAuthOnboarding(settings);
 
   const toValidationState = useCallback(
@@ -266,7 +266,7 @@ export function useOnboardingFlow() {
             : undefined,
           validate: api.validateRxresume,
           getPrecheckMessage: () =>
-            "v5 API key required. Add a v5 API key, then test again.",
+            "v5 API key required. 添加 a v5 API key, then test again.",
           getValidationErrorMessage: (error: unknown) =>
             error instanceof Error
               ? error.message
@@ -341,8 +341,8 @@ export function useOnboardingFlow() {
       },
       {
         id: "searchterms",
-        label: "Search terms",
-        subtitle: "Titles to search for",
+        label: "搜索 terms",
+        subtitle: "标题s to search for",
         complete: searchTermsComplete,
         disabled: false,
       },
@@ -388,13 +388,13 @@ export function useOnboardingFlow() {
     searchTermsValid: searchTermsComplete,
   });
 
-  const handleSaveLlm = useCallback(async () => {
+  const handle保存Llm = useCallback(async () => {
     const values = getValues();
     const apiKeyValue = values.llmApiKey.trim();
     const baseUrlValue = values.llmBaseUrl.trim();
 
     if (requiresLlmKey && !apiKeyValue && !hasLlmKey) {
-      toast.info("Add your LLM API key to continue");
+      toast.info("添加 your LLM API key to continue");
       return null;
     }
 
@@ -405,7 +405,7 @@ export function useOnboardingFlow() {
       return null;
     }
 
-    const update: Partial<UpdateSettingsInput> = {
+    const update: Partial<更新设置Input> = {
       llmProvider: normalizedProvider,
       llmBaseUrl: showBaseUrl ? baseUrlValue || null : null,
       model: null,
@@ -420,8 +420,8 @@ export function useOnboardingFlow() {
 
     try {
       setIsSaving(true);
-      const nextSettings = await api.updateSettings(update);
-      syncSettingsCache(nextSettings);
+      const next设置 = await api.update设置(update);
+      sync设置Cache(next设置);
       setValue("llmApiKey", "");
       const defaultModel = getDefaultModelForProvider(normalizedProvider);
       toast.success("LLM provider connected", {
@@ -430,9 +430,9 @@ export function useOnboardingFlow() {
           normalizedProvider === "gemini" ||
           normalizedProvider === "gemini_cli"
             ? `Default for ${providerConfig.label}: ${defaultModel}.`
-            : "You can fine-tune models later in Settings.",
+            : "You can fine-tune models later in 设置.",
       });
-      return nextSettings;
+      return next设置;
     } catch (error) {
       showErrorToast(error, "Failed to save LLM settings");
       return null;
@@ -448,11 +448,11 @@ export function useOnboardingFlow() {
     setValue,
     showApiKey,
     showBaseUrl,
-    syncSettingsCache,
+    sync设置Cache,
     validateLlm,
   ]);
 
-  const handleSaveRxresume = useCallback(async () => {
+  const handle保存Rxresume = useCallback(async () => {
     const values = getValues();
     const draftCredentials = getRxResumeCredentialDrafts({
       ...values,
@@ -472,7 +472,7 @@ export function useOnboardingFlow() {
 
     try {
       setIsValidatingRxresume(true);
-      let nextSettings: AppSettings | null = null;
+      let next设置: App设置 | null = null;
       const preserveBlankFields = isRxResumeSelfHosted
         ? undefined
         : (["baseUrl"] as const);
@@ -485,22 +485,22 @@ export function useOnboardingFlow() {
             }
           : undefined,
         validate: api.validateRxresume,
-        persist: async (update: Parameters<typeof api.updateSettings>[0]) => {
+        persist: async (update: Parameters<typeof api.update设置>[0]) => {
           setIsSaving(true);
           try {
-            nextSettings = await api.updateSettings({
+            next设置 = await api.update设置({
               ...update,
               pdfRenderer: "rxresume",
               rxresumeBaseResumeId: values.rxresumeBaseResumeId,
             });
-            syncSettingsCache(nextSettings);
+            sync设置Cache(next设置);
           } finally {
             setIsSaving(false);
           }
         },
         persistOnSuccess: true,
         getPrecheckMessage: () =>
-          "v5 API key required. Add a v5 API key, then test again.",
+          "v5 API key required. 添加 a v5 API key, then test again.",
         getValidationErrorMessage: (error: unknown) =>
           formatUserFacingError(error, "RxResume validation failed"),
         getPersistErrorMessage: (error: unknown) =>
@@ -517,7 +517,7 @@ export function useOnboardingFlow() {
       const resumeValidation = await validateBaseResume();
       if (resumeValidation.valid) {
         toast.success("Reactive Resume connected");
-        return nextSettings ?? settings;
+        return next设置 ?? settings;
       }
 
       toast.info("Reactive Resume connected", {
@@ -525,7 +525,7 @@ export function useOnboardingFlow() {
           resumeValidation.message ||
           "Choose a template resume to finish this step.",
       });
-      return nextSettings ?? settings;
+      return next设置 ?? settings;
     } catch (error) {
       toast.error(
         error instanceof Error
@@ -543,7 +543,7 @@ export function useOnboardingFlow() {
     settings,
     setValue,
     storedRxResume,
-    syncSettingsCache,
+    sync设置Cache,
     toValidationState,
     validateBaseResume,
   ]);
@@ -563,27 +563,27 @@ export function useOnboardingFlow() {
     setResumeSetupMode(mode);
   }, []);
 
-  const markSearchTermsStale = useCallback(() => {
+  const mark搜索TermsStale = useCallback(() => {
     const currentTerms = getValues().searchTerms;
-    if (currentTerms.length === 0 && !hasSavedSearchTermsInSession) return;
-    setSearchTermsSaved(false);
-    setSearchTermsStale(true);
-    setSearchTermsSource(null);
-  }, [getValues, hasSavedSearchTermsInSession]);
+    if (currentTerms.length === 0 && !has保存d搜索TermsInSession) return;
+    set搜索Terms保存d(false);
+    set搜索TermsStale(true);
+    set搜索TermsSource(null);
+  }, [getValues, has保存d搜索TermsInSession]);
 
-  const handleGenerateSearchTerms = useCallback(
+  const handleGenerate搜索Terms = useCallback(
     async (options?: { showToast?: boolean }) => {
       try {
-        setIsGeneratingSearchTerms(true);
-        const result = await api.suggestOnboardingSearchTerms();
+        setIsGenerating搜索Terms(true);
+        const result = await api.suggestOnboarding搜索Terms();
         setValue("searchTerms", result.terms, { shouldDirty: true });
         setValue("searchTermDraft", "");
-        setSearchTermsSaved(false);
-        setSearchTermsSource(result.source);
-        setSearchTermsStale(false);
+        set搜索Terms保存d(false);
+        set搜索TermsSource(result.source);
+        set搜索TermsStale(false);
 
         if (options?.showToast) {
-          toast.success("Search terms refreshed", {
+          toast.success("搜索 terms refreshed", {
             description:
               result.source === "ai"
                 ? "Job titles were generated from your current resume."
@@ -600,7 +600,7 @@ export function useOnboardingFlow() {
         );
         return null;
       } finally {
-        setIsGeneratingSearchTerms(false);
+        setIsGenerating搜索Terms(false);
       }
     },
     [setValue],
@@ -608,20 +608,20 @@ export function useOnboardingFlow() {
 
   useEffect(() => {
     if (currentStep !== "searchterms") return;
-    if (hasExplicitSearchTermsOverride) return;
+    if (hasExplicit搜索TermsOverride) return;
     if (!baseResumeValidation.valid) return;
     if (autoSuggestionAttemptedRef.current) return;
 
     autoSuggestionAttemptedRef.current = true;
-    void handleGenerateSearchTerms();
+    void handleGenerate搜索Terms();
   }, [
     baseResumeValidation.valid,
     currentStep,
-    handleGenerateSearchTerms,
-    hasExplicitSearchTermsOverride,
+    handleGenerate搜索Terms,
+    hasExplicit搜索TermsOverride,
   ]);
 
-  const handleSaveBaseResume = useCallback(async () => {
+  const handle保存BaseResume = useCallback(async () => {
     try {
       const validation = await validateBaseResume();
       if (!validation.valid) {
@@ -649,7 +649,7 @@ export function useOnboardingFlow() {
         }
 
         const document = await api.importDesignResumeFromFile({
-          fileName: file.name,
+          file名称: file.name,
           mediaType: file.type || match[1],
           dataBase64: match[2],
         });
@@ -662,10 +662,10 @@ export function useOnboardingFlow() {
         });
 
         if (settings?.pdfRenderer?.value !== "latex") {
-          const nextSettings = await api.updateSettings({
+          const next设置 = await api.update设置({
             pdfRenderer: "latex",
           });
-          syncSettingsCache(nextSettings);
+          sync设置Cache(next设置);
           setValue("pdfRenderer", "latex");
         }
 
@@ -680,7 +680,7 @@ export function useOnboardingFlow() {
               ? "Your local Design Resume is ready."
               : "Your local Design Resume is ready and PDF rendering was switched to LaTeX.",
         });
-        markSearchTermsStale();
+        mark搜索TermsStale();
       } catch (error) {
         toast.error(
           error instanceof Error
@@ -693,53 +693,53 @@ export function useOnboardingFlow() {
     },
     [
       queryClient,
-      markSearchTermsStale,
+      mark搜索TermsStale,
       settings?.pdfRenderer?.value,
       setValue,
-      syncSettingsCache,
+      sync设置Cache,
       validateBaseResume,
     ],
   );
 
-  const handleSaveSearchTerms = useCallback(async () => {
-    const nextTerms = normalizeSearchTerms(getValues().searchTerms);
+  const handle保存搜索Terms = useCallback(async () => {
+    const nextTerms = normalize搜索Terms(getValues().searchTerms);
 
     if (nextTerms.length === 0) {
-      toast.info("Add at least one job title to continue");
+      toast.info("添加 at least one job title to continue");
       return null;
     }
 
     try {
       setIsSaving(true);
-      const nextSettings = await api.updateSettings({
+      const next设置 = await api.update设置({
         searchTerms: nextTerms,
       });
-      syncSettingsCache(nextSettings);
+      sync设置Cache(next设置);
       setValue("searchTerms", nextTerms);
       setValue("searchTermDraft", "");
-      setSearchTermsSaved(true);
-      setHasSavedSearchTermsInSession(true);
-      setSearchTermsStale(false);
-      toast.success("Search terms saved");
-      return nextSettings;
+      set搜索Terms保存d(true);
+      setHas保存d搜索TermsInSession(true);
+      set搜索TermsStale(false);
+      toast.success("搜索 terms saved");
+      return next设置;
     } catch (error) {
       showErrorToast(error, "Failed to save search terms");
       return null;
     } finally {
       setIsSaving(false);
     }
-  }, [getValues, setValue, syncSettingsCache]);
+  }, [getValues, setValue, sync设置Cache]);
 
   const handleCompleteBasicAuth = useCallback(async () => {
     if (basicAuthChoice === "skip") {
       try {
         setIsSaving(true);
-        const nextSettings = await api.updateSettings({
+        const next设置 = await api.update设置({
           onboardingBasicAuthDecision: "skipped",
         });
-        syncSettingsCache(nextSettings);
+        sync设置Cache(next设置);
         toast.success("Authentication skipped for now");
-        return nextSettings;
+        return next设置;
       } catch (error) {
         toast.error(
           error instanceof Error
@@ -757,27 +757,27 @@ export function useOnboardingFlow() {
       return null;
     }
 
-    const { basicAuthUser, basicAuthPassword } = getValues();
+    const { basicAuthUser, basicAuth密码 } = getValues();
     const normalizedUser = basicAuthUser.trim();
-    const normalizedPassword = basicAuthPassword.trim();
+    const normalized密码 = basicAuth密码.trim();
 
-    if (!normalizedUser || !normalizedPassword) {
+    if (!normalizedUser || !normalized密码) {
       toast.info("Enter both a username and password to enable authentication");
       return null;
     }
 
     try {
       setIsSaving(true);
-      const nextSettings = await api.updateSettings({
+      const next设置 = await api.update设置({
         enableBasicAuth: true,
         basicAuthUser: normalizedUser,
-        basicAuthPassword: normalizedPassword,
+        basicAuth密码: normalized密码,
         onboardingBasicAuthDecision: "enabled",
       });
-      syncSettingsCache(nextSettings);
-      setValue("basicAuthPassword", "");
+      sync设置Cache(next设置);
+      setValue("basicAuth密码", "");
       toast.success("Authentication enabled");
-      return nextSettings;
+      return next设置;
     } catch (error) {
       toast.error(
         error instanceof Error
@@ -788,42 +788,42 @@ export function useOnboardingFlow() {
     } finally {
       setIsSaving(false);
     }
-  }, [basicAuthChoice, getValues, setValue, syncSettingsCache]);
+  }, [basicAuthChoice, getValues, setValue, sync设置Cache]);
 
   const handlePrimaryAction = useCallback(async () => {
     if (!currentStep) return null;
     if (currentStep === "llm") {
-      return await handleSaveLlm();
+      return await handle保存Llm();
     }
     if (currentStep === "baseresume") {
       if (resumeSetupMode === "rxresume") {
-        return await handleSaveRxresume();
+        return await handle保存Rxresume();
       }
-      return await handleSaveBaseResume();
+      return await handle保存BaseResume();
     }
     if (currentStep === "searchterms") {
-      return await handleSaveSearchTerms();
+      return await handle保存搜索Terms();
     }
     return await handleCompleteBasicAuth();
   }, [
     currentStep,
     handleCompleteBasicAuth,
-    handleSaveBaseResume,
-    handleSaveLlm,
-    handleSaveSearchTerms,
-    handleSaveRxresume,
+    handle保存BaseResume,
+    handle保存Llm,
+    handle保存搜索Terms,
+    handle保存Rxresume,
     resumeSetupMode,
   ]);
 
   const stepIndex = currentStep
     ? steps.findIndex((step) => step.id === currentStep)
     : 0;
-  const canGoBack = stepIndex > 0;
+  const canGo返回 = stepIndex > 0;
   const isBusy =
     isSaving ||
     settingsLoading ||
     isImportingResume ||
-    isGeneratingSearchTerms ||
+    isGenerating搜索Terms ||
     isValidatingLlm ||
     isValidatingRxresume ||
     isValidatingBaseResume;
@@ -835,21 +835,21 @@ export function useOnboardingFlow() {
     currentStep === "llm"
       ? llmValidated
         ? "Revalidate connection"
-        : "Save connection"
+        : "保存 connection"
       : currentStep === "baseresume"
         ? resumeSetupMode === "rxresume"
           ? rxresumeValidation.valid
             ? baseResumeValue
               ? "Recheck Reactive Resume"
-              : "Confirm Resume Template"
+              : "确认 Resume Template"
             : "Connect Reactive Resume"
           : baseResumeValidation.valid
             ? "Recheck resume"
             : "Check resume"
         : currentStep === "searchterms"
-          ? hasSavedSearchTermsInSession
-            ? "Update search terms"
-            : "Save search terms"
+          ? has保存d搜索TermsInSession
+            ? "更新 search terms"
+            : "保存 search terms"
           : basicAuthChoice === "enable"
             ? "Enable authentication"
             : basicAuthChoice === "skip"
@@ -860,7 +860,7 @@ export function useOnboardingFlow() {
     baseResumeValidation,
     baseResumeValue,
     basicAuthChoice,
-    canGoBack,
+    canGo返回,
     complete,
     control,
     currentCopy,
@@ -869,10 +869,10 @@ export function useOnboardingFlow() {
     handleRxresumeSelfHostedChange,
     handleImportResumeFile,
     isBusy,
-    isGeneratingSearchTerms,
+    isGenerating搜索Terms,
     isImportingResume,
     isRxResumeSelfHosted,
-    hasSavedSearchTermsInSession,
+    has保存d搜索TermsInSession,
     llmKeyHint,
     llmValidated,
     llmValidation,
@@ -893,18 +893,18 @@ export function useOnboardingFlow() {
     setResumeSetupMode: handleResumeSetupModeChange,
     setValue,
     setBaseResumeId,
-    handleRegenerateSearchTerms: async () => {
-      await handleGenerateSearchTerms({ showToast: true });
+    handleRegenerate搜索Terms: async () => {
+      await handleGenerate搜索Terms({ showToast: true });
     },
-    handleBack: () => {
-      if (!canGoBack) return;
+    handle返回: () => {
+      if (!canGo返回) return;
       setCurrentStep(steps[stepIndex - 1]?.id ?? currentStep);
     },
     handlePrimaryAction,
     handleTemplateResumeChange: (value: string | null) => {
       const currentValue = getValues().rxresumeBaseResumeId;
       if (currentValue !== value) {
-        markSearchTermsStale();
+        mark搜索TermsStale();
       }
       setBaseResumeId(value);
       setValue("rxresumeBaseResumeId", value);

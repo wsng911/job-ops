@@ -1,8 +1,8 @@
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import type { ValidationResult } from "@shared/types.js";
 import { formatUserFacingError } from "@/client/lib/error-format";
 
-export type RxResumeSettingsLike =
+export type RxResume设置Like =
   | {
       rxresumeUrl?: string | null;
       rxresumeApiKeyHint?: string | null;
@@ -12,18 +12,18 @@ export type RxResumeSettingsLike =
   | undefined;
 
 export const RXRESUME_PRECHECK_MESSAGES = {
-  "missing-v5-api-key": "Add an API key, then test again.",
+  "missing-v5-api-key": "添加 an API key, then test again.",
 } as const;
 
 export const getStoredRxResumeCredentialAvailability = (
-  settings: RxResumeSettingsLike,
+  settings: RxResume设置Like,
 ) => {
   const apiKey = Boolean(settings?.rxresumeApiKeyHint);
   return { apiKey, hasV5: apiKey };
 };
 
 export const getRxResumeBaseResumeSelection = (
-  settings: RxResumeSettingsLike,
+  settings: RxResume设置Like,
 ) => {
   return { selectedId: settings?.rxresumeBaseResumeId ?? null };
 };
@@ -94,17 +94,17 @@ export const isRxResumeAvailabilityValidationFailure = (
   (validation.status === 0 ||
     (typeof validation.status === "number" && validation.status >= 500));
 
-export const buildRxResumeSettingsUpdate = (
+export const buildRxResume设置更新 = (
   draft: RxResumeCredentialDrafts,
-): Partial<UpdateSettingsInput> => {
-  const update: Partial<UpdateSettingsInput> = {
+): Partial<更新设置Input> => {
+  const update: Partial<更新设置Input> = {
     rxresumeUrl: draft.baseUrl || null,
   };
   if (draft.apiKey) update.rxresumeApiKey = draft.apiKey;
   return update;
 };
 
-type ValidateAndMaybePersistRxResumeModeInput<TSettings> = {
+type ValidateAndMaybePersistRxResumeModeInput<T设置> = {
   stored: RxResumeStoredCredentialAvailability;
   draft: RxResumeCredentialDrafts;
   validationPayloadOptions?: {
@@ -113,7 +113,7 @@ type ValidateAndMaybePersistRxResumeModeInput<TSettings> = {
   validate: (
     payload: ReturnType<typeof toRxResumeValidationPayload>,
   ) => Promise<ValidationResult>;
-  persist?: (update: Partial<UpdateSettingsInput>) => Promise<TSettings>;
+  persist?: (update: Partial<更新设置Input>) => Promise<T设置>;
   persistOnSuccess?: boolean;
   skipPrecheck?: boolean;
   getPrecheckMessage?: (
@@ -123,15 +123,15 @@ type ValidateAndMaybePersistRxResumeModeInput<TSettings> = {
   getPersistErrorMessage?: (error: unknown) => string;
 };
 
-export type ValidateAndMaybePersistRxResumeModeResult<TSettings> = {
+export type ValidateAndMaybePersistRxResumeModeResult<T设置> = {
   validation: ValidationResult;
   precheckFailure: RxResumeCredentialPrecheckFailure;
-  updatedSettings: TSettings | null;
+  updated设置: T设置 | null;
 };
 
-export const validateAndMaybePersistRxResumeMode = async <TSettings>(
-  input: ValidateAndMaybePersistRxResumeModeInput<TSettings>,
-): Promise<ValidateAndMaybePersistRxResumeModeResult<TSettings>> => {
+export const validateAndMaybePersistRxResumeMode = async <T设置>(
+  input: ValidateAndMaybePersistRxResumeModeInput<T设置>,
+): Promise<ValidateAndMaybePersistRxResumeModeResult<T设置>> => {
   const {
     stored,
     draft,
@@ -161,7 +161,7 @@ export const validateAndMaybePersistRxResumeMode = async <TSettings>(
         status: 400,
       },
       precheckFailure,
-      updatedSettings: null,
+      updated设置: null,
     };
   }
 
@@ -178,7 +178,7 @@ export const validateAndMaybePersistRxResumeMode = async <TSettings>(
         status: 0,
       },
       precheckFailure: null,
-      updatedSettings: null,
+      updated设置: null,
     };
   }
 
@@ -190,12 +190,12 @@ export const validateAndMaybePersistRxResumeMode = async <TSettings>(
         status: validation.valid ? null : (validation.status ?? null),
       },
       precheckFailure: null,
-      updatedSettings: null,
+      updated设置: null,
     };
   }
 
   try {
-    const updatedSettings = await persist(buildRxResumeSettingsUpdate(draft));
+    const updated设置 = await persist(buildRxResume设置更新(draft));
     return {
       validation: {
         valid: true,
@@ -203,7 +203,7 @@ export const validateAndMaybePersistRxResumeMode = async <TSettings>(
         status: null,
       },
       precheckFailure: null,
-      updatedSettings,
+      updated设置,
     };
   } catch (error) {
     return {
@@ -213,7 +213,7 @@ export const validateAndMaybePersistRxResumeMode = async <TSettings>(
         status: 0,
       },
       precheckFailure: null,
-      updatedSettings: null,
+      updated设置: null,
     };
   }
 };

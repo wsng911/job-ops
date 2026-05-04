@@ -6,12 +6,12 @@ import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 import {
   AlertDialog,
-  AlertDialogCancel,
+  AlertDialog取消,
   AlertDialogContent,
-  AlertDialogDescription,
+  AlertDialog描述,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialog标题,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
@@ -27,7 +27,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 const logEventSchema = z.object({
   stage: z.string(),
-  title: z.string().min(1, "Title is required"),
+  title: z.string().min(1, "标题 is required"),
   date: z.string().min(1, "Date is required"),
   notes: z.string().optional(),
   reasonCode: z.string().optional(),
@@ -38,13 +38,13 @@ export type LogEventFormValues = z.infer<typeof logEventSchema>;
 
 interface LogEventModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  on关闭: () => void;
   onLog: (values: LogEventFormValues, eventId?: string) => Promise<void>;
   editingEvent?: StageEvent | null;
 }
 
 const STAGE_OPTIONS = [
-  { label: "No Stage Change (Keep current status)", value: "no_change" },
+  { label: "否 Stage Change (Keep current status)", value: "no_change" },
   { label: STAGE_LABELS.applied, value: "applied" },
   { label: STAGE_LABELS.recruiter_screen, value: "recruiter_screen" },
   { label: STAGE_LABELS.assessment, value: "assessment" },
@@ -52,7 +52,7 @@ const STAGE_OPTIONS = [
   { label: STAGE_LABELS.technical_interview, value: "technical_interview" },
   { label: STAGE_LABELS.onsite, value: "onsite" },
   { label: STAGE_LABELS.offer, value: "offer" },
-  { label: "Rejected", value: "rejected" },
+  { label: "已拒绝", value: "rejected" },
   { label: "Withdrawn", value: "withdrawn" },
   { label: STAGE_LABELS.closed, value: "closed" },
 ];
@@ -68,23 +68,23 @@ const toDateTimeLocal = (value: Date) => {
 
 export const LogEventModal: React.FC<LogEventModalProps> = ({
   isOpen,
-  onClose,
+  on关闭,
   onLog,
   editingEvent,
 }) => {
   const {
     register,
-    handleSubmit,
+    handle提交,
     control,
     watch,
     setValue,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors, is提交ting },
   } = useForm<LogEventFormValues>({
     resolver: zodResolver(logEventSchema),
     defaultValues: {
       stage: "no_change",
-      title: "Update",
+      title: "更新",
       date: toDateTimeLocal(new Date()),
       notes: "",
     },
@@ -108,7 +108,7 @@ export const LogEventModal: React.FC<LogEventModalProps> = ({
       } else {
         reset({
           stage: "no_change",
-          title: "Update",
+          title: "更新",
           date: toDateTimeLocal(new Date()),
           notes: "",
         });
@@ -120,7 +120,7 @@ export const LogEventModal: React.FC<LogEventModalProps> = ({
     // Only auto-update title if we're not editing or if the title is empty/default
     if (!editingEvent) {
       if (selectedStage === "no_change") {
-        setValue("title", "Update");
+        setValue("title", "更新");
       } else {
         const option = STAGE_OPTIONS.find((o) => o.value === selectedStage);
         if (option) {
@@ -130,37 +130,37 @@ export const LogEventModal: React.FC<LogEventModalProps> = ({
     }
   }, [selectedStage, setValue, editingEvent]);
 
-  const onSubmit = async (values: LogEventFormValues) => {
+  const on提交 = async (values: LogEventFormValues) => {
     await onLog(values, editingEvent?.id);
-    onClose();
+    on关闭();
   };
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <AlertDialog open={isOpen} onOpenChange={(open) => !open && on关闭()}>
       <AlertDialogContent
         data-testid="log-event-modal"
-        className="max-h-[calc(100vh-2rem)] max-w-md overflow-y-auto"
+        class名称="max-h-[calc(100vh-2rem)] max-w-md overflow-y-auto"
       >
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {editingEvent ? "Edit Event" : "Log Event"}
-          </AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialog标题>
+            {editingEvent ? "编辑 Event" : "Log Event"}
+          </AlertDialog标题>
+          <AlertDialog描述>
             {editingEvent
-              ? "Update the details of this event."
+              ? "更新 the details of this event."
               : "Record a new update or stage change for this application."}
-          </AlertDialogDescription>
+          </AlertDialog描述>
         </AlertDialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form on提交={handle提交(on提交)} class名称="space-y-4">
           <Field>
-            <FieldLabel>New Stage</FieldLabel>
+            <FieldLabel>新建 Stage</FieldLabel>
             <Controller
               name="stage"
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger class名称="w-full">
                     <SelectValue placeholder="Select stage" />
                   </SelectTrigger>
                   <SelectContent>
@@ -177,7 +177,7 @@ export const LogEventModal: React.FC<LogEventModalProps> = ({
           </Field>
 
           <Field>
-            <FieldLabel>Event Title</FieldLabel>
+            <FieldLabel>Event 标题</FieldLabel>
             <Input {...register("title")} placeholder="e.g. Recruiter Screen" />
             <FieldError errors={[errors.title]} />
           </Field>
@@ -189,20 +189,20 @@ export const LogEventModal: React.FC<LogEventModalProps> = ({
           </Field>
 
           <Field>
-            <FieldLabel>Notes (Optional)</FieldLabel>
-            <Textarea {...register("notes")} placeholder="Add details..." />
+            <FieldLabel>否tes (Optional)</FieldLabel>
+            <Textarea {...register("notes")} placeholder="添加 details..." />
             <FieldError errors={[errors.notes]} />
           </Field>
 
           {selectedStage === "rejected" && (
-            <Field className="animate-in fade-in slide-in-from-top-1 duration-200">
+            <Field class名称="animate-in fade-in slide-in-from-top-1 duration-200">
               <FieldLabel>Reason</FieldLabel>
               <Controller
                 name="reasonCode"
                 control={control}
                 render={({ field }) => (
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger class名称="w-full">
                       <SelectValue placeholder="Select reason" />
                     </SelectTrigger>
                     <SelectContent>
@@ -219,21 +219,21 @@ export const LogEventModal: React.FC<LogEventModalProps> = ({
           )}
 
           {selectedStage === "offer" && (
-            <Field className="animate-in fade-in slide-in-from-top-1 duration-200">
+            <Field class名称="animate-in fade-in slide-in-from-top-1 duration-200">
               <FieldLabel>Salary / Details</FieldLabel>
               <Input {...register("salary")} placeholder="e.g. £50k + bonus" />
             </Field>
           )}
 
-          <AlertDialogFooter className="pt-4">
-            <AlertDialogCancel type="button" onClick={onClose}>
-              Cancel
-            </AlertDialogCancel>
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting
+          <AlertDialogFooter class名称="pt-4">
+            <AlertDialog取消 type="button" onClick={on关闭}>
+              取消
+            </AlertDialog取消>
+            <Button type="submit" disabled={is提交ting}>
+              {is提交ting
                 ? "Saving..."
                 : editingEvent
-                  ? "Save Changes"
+                  ? "保存 Changes"
                   : "Log Event"}
             </Button>
           </AlertDialogFooter>

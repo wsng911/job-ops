@@ -6,24 +6,24 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as api from "../api";
 import { _resetTracerReadinessCache } from "../hooks/useTracerReadiness";
 import { renderWithQueryClient } from "../test/renderWithQueryClient";
-import { JobDetailsEditDrawer } from "./JobDetailsEditDrawer";
+import { JobDetails编辑Drawer } from "./JobDetails编辑Drawer";
 
 const render = (ui: Parameters<typeof renderWithQueryClient>[0]) =>
   renderWithQueryClient(ui);
 
 vi.mock("@/components/ui/sheet", () => ({
-  Sheet: ({ open, children }: { open: boolean; children: React.ReactNode }) =>
+  Sheet: ({ open, children }: { open: boolean; children: React.React否de }) =>
     open ? <div>{children}</div> : null,
-  SheetContent: ({ children }: { children: React.ReactNode }) => (
+  SheetContent: ({ children }: { children: React.React否de }) => (
     <div>{children}</div>
   ),
-  SheetHeader: ({ children }: { children: React.ReactNode }) => (
+  SheetHeader: ({ children }: { children: React.React否de }) => (
     <div>{children}</div>
   ),
-  SheetTitle: ({ children }: { children: React.ReactNode }) => (
+  Sheet标题: ({ children }: { children: React.React否de }) => (
     <h2>{children}</h2>
   ),
-  SheetDescription: ({ children }: { children: React.ReactNode }) => (
+  Sheet描述: ({ children }: { children: React.React否de }) => (
     <p>{children}</p>
   ),
 }));
@@ -42,7 +42,7 @@ vi.mock("sonner", () => ({
   },
 }));
 
-describe("JobDetailsEditDrawer", () => {
+describe("JobDetails编辑Drawer", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     _resetTracerReadinessCache();
@@ -59,22 +59,22 @@ describe("JobDetailsEditDrawer", () => {
   });
 
   it("saves details and reruns sponsor check when employer changes", async () => {
-    const onJobUpdated = vi.fn().mockResolvedValue(undefined);
+    const onJob更新d = vi.fn().mockResolvedValue(undefined);
     const onOpenChange = vi.fn();
     vi.mocked(api.updateJob).mockResolvedValue({} as Job);
     vi.mocked(api.checkSponsor).mockResolvedValue({} as Job);
 
     render(
-      <JobDetailsEditDrawer
+      <JobDetails编辑Drawer
         open
         onOpenChange={onOpenChange}
         job={createJob()}
-        onJobUpdated={onJobUpdated}
+        onJob更新d={onJob更新d}
       />,
     );
 
     fireEvent.change(screen.getByLabelText("Employer *"), {
-      target: { value: "NewCo" },
+      target: { value: "新建Co" },
     });
 
     fireEvent.click(screen.getByRole("button", { name: /save details/i }));
@@ -83,53 +83,53 @@ describe("JobDetailsEditDrawer", () => {
       expect(api.updateJob).toHaveBeenCalledWith(
         "job-1",
         expect.objectContaining({
-          employer: "NewCo",
-          title: "Backend Engineer",
+          employer: "新建Co",
+          title: "返回end Engineer",
         }),
       ),
     );
     expect(api.checkSponsor).toHaveBeenCalledWith("job-1");
-    expect(onJobUpdated).toHaveBeenCalledTimes(1);
+    expect(onJob更新d).toHaveBeenCalledTimes(1);
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
   it("validates required fields before saving", async () => {
-    const onJobUpdated = vi.fn().mockResolvedValue(undefined);
+    const onJob更新d = vi.fn().mockResolvedValue(undefined);
     const onOpenChange = vi.fn();
 
     render(
-      <JobDetailsEditDrawer
+      <JobDetails编辑Drawer
         open
         onOpenChange={onOpenChange}
         job={createJob()}
-        onJobUpdated={onJobUpdated}
+        onJob更新d={onJob更新d}
       />,
     );
 
-    fireEvent.change(screen.getByLabelText("Title *"), {
+    fireEvent.change(screen.getByLabelText("标题 *"), {
       target: { value: "   " },
     });
 
     fireEvent.click(screen.getByRole("button", { name: /save details/i }));
 
-    expect(await screen.findByText("Title is required.")).toBeInTheDocument();
+    expect(await screen.findByText("标题 is required.")).toBeInTheDocument();
     expect(api.updateJob).not.toHaveBeenCalled();
-    expect(onJobUpdated).not.toHaveBeenCalled();
+    expect(onJob更新d).not.toHaveBeenCalled();
   });
 
   it("offers a rescore action after successful save", async () => {
-    const onJobUpdated = vi.fn().mockResolvedValue(undefined);
+    const onJob更新d = vi.fn().mockResolvedValue(undefined);
     const onOpenChange = vi.fn();
     const { toast } = await import("sonner");
     vi.mocked(api.updateJob).mockResolvedValue({} as Job);
     vi.mocked(api.rescoreJob).mockResolvedValue({} as Job);
 
     render(
-      <JobDetailsEditDrawer
+      <JobDetails编辑Drawer
         open
         onOpenChange={onOpenChange}
         job={createJob()}
-        onJobUpdated={onJobUpdated}
+        onJob更新d={onJob更新d}
       />,
     );
 
@@ -153,20 +153,20 @@ describe("JobDetailsEditDrawer", () => {
     (payload as { action?: { onClick?: () => void } }).action?.onClick?.();
 
     await waitFor(() => expect(api.rescoreJob).toHaveBeenCalledWith("job-1"));
-    expect(onJobUpdated).toHaveBeenCalledTimes(2);
+    expect(onJob更新d).toHaveBeenCalledTimes(2);
   });
 
   it("persists tracer-links toggle with job updates", async () => {
-    const onJobUpdated = vi.fn().mockResolvedValue(undefined);
+    const onJob更新d = vi.fn().mockResolvedValue(undefined);
     const onOpenChange = vi.fn();
     vi.mocked(api.updateJob).mockResolvedValue({} as Job);
 
     render(
-      <JobDetailsEditDrawer
+      <JobDetails编辑Drawer
         open
         onOpenChange={onOpenChange}
         job={createJob({ tracerLinksEnabled: false })}
-        onJobUpdated={onJobUpdated}
+        onJob更新d={onJob更新d}
       />,
     );
 

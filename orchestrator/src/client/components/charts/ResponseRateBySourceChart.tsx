@@ -22,9 +22,9 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
+  Card描述,
   CardHeader,
-  CardTitle,
+  Card标题,
 } from "@/components/ui/card";
 import { ChartContainer } from "@/components/ui/chart";
 import { Label } from "@/components/ui/label";
@@ -53,7 +53,7 @@ const chartConfig = {
 };
 
 /**
- * Non-rejection response: the application reached screening, interview, or offer.
+ * 否n-rejection response: the application reached screening, interview, or offer.
  * Ghosted (no events) and rejected (outcome=rejected) are both excluded.
  */
 const RESPONSE_STAGES = new Set([
@@ -149,13 +149,13 @@ export function ResponseRateBySourceChart({
   );
 
   return (
-    <Card className="py-0">
-      <CardHeader className="flex flex-col gap-2 border-b !p-0 sm:flex-row sm:items-stretch">
-        <div className="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:!py-0">
-          <CardTitle>Response Rate by Source</CardTitle>
-          <CardDescription>
+    <Card class名称="py-0">
+      <CardHeader class名称="flex flex-col gap-2 border-b !p-0 sm:flex-row sm:items-stretch">
+        <div class名称="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:!py-0">
+          <Card标题>Response Rate by Source</Card标题>
+          <Card描述>
             % of applications that got a response (not rejected or ghosted).
-          </CardDescription>
+          </Card描述>
         </div>
         <ChartKpiPanel
           label="Response Rate"
@@ -163,20 +163,20 @@ export function ResponseRateBySourceChart({
           subtext={`${totalResponded} of ${totalApplied} applications`}
         />
       </CardHeader>
-      <CardContent className="px-2 sm:p-6">
+      <CardContent class名称="px-2 sm:p-6">
         {error ? (
-          <div className="px-4 py-6 text-sm text-destructive">{error}</div>
+          <div class名称="px-4 py-6 text-sm text-destructive">{error}</div>
         ) : allData.length === 0 ? (
-          <div className="px-4 py-6 text-sm text-muted-foreground">
-            No application data available.
+          <div class名称="px-4 py-6 text-sm text-muted-foreground">
+            否 application data available.
           </div>
         ) : (
-          <div className="space-y-4">
+          <div class名称="space-y-4">
             {/* Minimum sample toggle */}
-            <div className="flex items-center justify-end gap-2">
+            <div class名称="flex items-center justify-end gap-2">
               <Label
                 htmlFor="include-small-toggle"
-                className="text-xs text-muted-foreground cursor-pointer"
+                class名称="text-xs text-muted-foreground cursor-pointer"
               >
                 {includeSmall ? (
                   "All sources"
@@ -184,7 +184,7 @@ export function ResponseRateBySourceChart({
                   <>
                     n &lt; {MIN_SAMPLE_DEFAULT} hidden
                     {hiddenCount > 0 && (
-                      <span className="ml-1 text-muted-foreground/60">
+                      <span class名称="ml-1 text-muted-foreground/60">
                         ({hiddenCount})
                       </span>
                     )}
@@ -200,14 +200,14 @@ export function ResponseRateBySourceChart({
             </div>
 
             {data.length === 0 ? (
-              <div className="px-4 py-4 text-sm text-muted-foreground">
+              <div class名称="px-4 py-4 text-sm text-muted-foreground">
                 All sources have fewer than {MIN_SAMPLE_DEFAULT} applications.
                 Enable the toggle above to show them.
               </div>
             ) : (
               <ChartContainer
                 config={chartConfig}
-                className="w-full"
+                class名称="w-full"
                 style={{ height: chartHeight }}
               >
                 <ResponsiveContainer width="100%" height="100%">
@@ -239,23 +239,23 @@ export function ResponseRateBySourceChart({
                         if (!active || !payload?.length) return null;
                         const d = payload[0].payload as SourceRateDataPoint;
                         return (
-                          <div className="rounded-lg border border-border/60 bg-background px-3 py-2 text-xs shadow-sm">
-                            <div className="mb-1.5 font-medium">{d.source}</div>
-                            <div className="space-y-1 text-muted-foreground">
-                              <div className="flex items-center justify-between gap-4">
+                          <div class名称="rounded-lg border border-border/60 bg-background px-3 py-2 text-xs shadow-sm">
+                            <div class名称="mb-1.5 font-medium">{d.source}</div>
+                            <div class名称="space-y-1 text-muted-foreground">
+                              <div class名称="flex items-center justify-between gap-4">
                                 <span>Response rate</span>
-                                <span className="font-semibold text-foreground">
+                                <span class名称="font-semibold text-foreground">
                                   {d.rate.toFixed(1)}%
                                 </span>
                               </div>
-                              <div className="flex items-center justify-between gap-4">
+                              <div class名称="flex items-center justify-between gap-4">
                                 <span>Responded</span>
-                                <span className="font-semibold text-foreground">
+                                <span class名称="font-semibold text-foreground">
                                   {d.responded}
                                 </span>
                               </div>
                             </div>
-                            <div className="mt-2 border-t pt-1.5 text-[10px] text-muted-foreground/70">
+                            <div class名称="mt-2 border-t pt-1.5 text-[10px] text-muted-foreground/70">
                               Screening, interview, or offer only
                             </div>
                           </div>
@@ -273,7 +273,7 @@ export function ResponseRateBySourceChart({
                         dataKey="rate"
                         position="right"
                         formatter={(v: number) => `${v.toFixed(0)}%`}
-                        className="text-xs fill-foreground"
+                        class名称="text-xs fill-foreground"
                       />
                     </Bar>
                   </BarChart>

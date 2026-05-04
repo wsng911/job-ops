@@ -28,9 +28,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+  Dialog描述,
   DialogHeader,
-  DialogTitle,
+  Dialog标题,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -69,7 +69,7 @@ function formatRecentActivity(value: number | null): string {
     minute: "2-digit",
   });
   if (date >= today) return `Today ${timeText}`;
-  if (date >= yesterday) return `Yesterday ${timeText}`;
+  if (date >= yesterday) return `是terday ${timeText}`;
   return date.toLocaleDateString([], {
     month: "short",
     day: "numeric",
@@ -100,7 +100,7 @@ function formatDayLabel(day: string): string {
 }
 
 function formatRelativeTime(value: number | null): string {
-  if (value === null || !Number.isFinite(value)) return "No activity yet";
+  if (value === null || !Number.isFinite(value)) return "否 activity yet";
   const diffSeconds = Math.max(0, Math.floor(Date.now() / 1000) - value);
   if (diffSeconds < 60) return "just now";
   const diffMinutes = Math.floor(diffSeconds / 60);
@@ -291,15 +291,15 @@ export const TracerLinksPage: React.FC = () => {
       />
 
       <PageMain>
-        <SectionCard className="p-0">
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="filters" className="border-none">
-              <AccordionTrigger className="px-4 py-3 hover:no-underline">
-                <div className="text-sm font-semibold">Filters</div>
+        <SectionCard class名称="p-0">
+          <Accordion type="single" collapsible class名称="w-full">
+            <AccordionItem value="filters" class名称="border-none">
+              <AccordionTrigger class名称="px-4 py-3 hover:no-underline">
+                <div class名称="text-sm font-semibold">Filters</div>
               </AccordionTrigger>
-              <AccordionContent className="px-4 pb-4">
-                <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
-                  <div className="space-y-1">
+              <AccordionContent class名称="px-4 pb-4">
+                <div class名称="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
+                  <div class名称="space-y-1">
                     <Label htmlFor="tracer-from-date">From date</Label>
                     <Input
                       id="tracer-from-date"
@@ -309,7 +309,7 @@ export const TracerLinksPage: React.FC = () => {
                       onBlur={trackFiltersApplied}
                     />
                   </div>
-                  <div className="space-y-1">
+                  <div class名称="space-y-1">
                     <Label htmlFor="tracer-to-date">To date</Label>
                     <Input
                       id="tracer-to-date"
@@ -321,7 +321,7 @@ export const TracerLinksPage: React.FC = () => {
                   </div>
                   <label
                     htmlFor="tracer-include-bots"
-                    className="flex cursor-pointer items-end gap-2 pb-2"
+                    class名称="flex cursor-pointer items-end gap-2 pb-2"
                   >
                     <Checkbox
                       id="tracer-include-bots"
@@ -336,7 +336,7 @@ export const TracerLinksPage: React.FC = () => {
                         });
                       }}
                     />
-                    <span className="text-sm">Include likely bots</span>
+                    <span class名称="text-sm">Include likely bots</span>
                   </label>
                 </div>
               </AccordionContent>
@@ -346,49 +346,49 @@ export const TracerLinksPage: React.FC = () => {
 
         {error && (
           <SectionCard>
-            <p className="text-sm text-destructive">{error}</p>
+            <p class名称="text-sm text-destructive">{error}</p>
           </SectionCard>
         )}
 
-        <div className="grid gap-3 md:grid-cols-3">
-          <SectionCard className="space-y-1">
-            <p className="text-xs text-muted-foreground">Total Views</p>
-            <p className="text-3xl font-semibold tabular-nums">
+        <div class名称="grid gap-3 md:grid-cols-3">
+          <SectionCard class名称="space-y-1">
+            <p class名称="text-xs text-muted-foreground">Total Views</p>
+            <p class名称="text-3xl font-semibold tabular-nums">
               {totalViews.toLocaleString()}
             </p>
           </SectionCard>
-          <SectionCard className="space-y-1">
-            <p className="text-xs text-muted-foreground">Unique Jobs Reached</p>
-            <p className="text-3xl font-semibold tabular-nums">
+          <SectionCard class名称="space-y-1">
+            <p class名称="text-xs text-muted-foreground">Unique Jobs Reached</p>
+            <p class名称="text-3xl font-semibold tabular-nums">
               {uniqueJobsReached.toLocaleString()}
             </p>
           </SectionCard>
-          <SectionCard className="space-y-1">
-            <p className="text-xs text-muted-foreground">Human Clicks</p>
-            <p className="text-3xl font-semibold tabular-nums">
+          <SectionCard class名称="space-y-1">
+            <p class名称="text-xs text-muted-foreground">Human Clicks</p>
+            <p class名称="text-3xl font-semibold tabular-nums">
               {humanClicks.toLocaleString()}
             </p>
           </SectionCard>
         </div>
 
-        <SectionCard className="space-y-4">
-          <div className="flex items-center justify-between gap-4">
+        <SectionCard class名称="space-y-4">
+          <div class名称="flex items-center justify-between gap-4">
             <div>
-              <h2 className="text-sm font-semibold">
+              <h2 class名称="text-sm font-semibold">
                 Resume Clicks Last {visibleDays} Days
               </h2>
-              <p className="text-xs text-muted-foreground">
+              <p class名称="text-xs text-muted-foreground">
                 Daily click activity from tracer links.
               </p>
             </div>
           </div>
           {isLoading ? (
-            <div className="flex h-[240px] items-center justify-center gap-2 text-sm text-muted-foreground">
-              <Loader2 className="h-4 w-4 animate-spin" />
+            <div class名称="flex h-[240px] items-center justify-center gap-2 text-sm text-muted-foreground">
+              <Loader2 class名称="h-4 w-4 animate-spin" />
               Loading analytics...
             </div>
           ) : (
-            <ChartContainer config={chartConfig} className="h-[240px] w-full">
+            <ChartContainer config={chartConfig} class名称="h-[240px] w-full">
               <BarChart
                 data={chartData}
                 margin={{ top: 8, right: 8, left: -12, bottom: 0 }}
@@ -423,30 +423,30 @@ export const TracerLinksPage: React.FC = () => {
         </SectionCard>
 
         <SectionCard>
-          <div className="mb-3">
-            <h3 className="text-sm font-semibold">Application Activity</h3>
+          <div class名称="mb-3">
+            <h3 class名称="text-sm font-semibold">Application Activity</h3>
           </div>
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Job</TableHead>
-                <TableHead className="w-[90px]">Clicks</TableHead>
-                <TableHead className="w-[140px]">Last active</TableHead>
+                <TableHead class名称="w-[90px]">Clicks</TableHead>
+                <TableHead class名称="w-[140px]">Last active</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {(analytics?.topJobs ?? []).map((row, index) => (
                 <TableRow
                   key={row.jobId}
-                  className="cursor-pointer"
+                  class名称="cursor-pointer"
                   data-state={
                     selectedJobId === row.jobId ? "selected" : undefined
                   }
                   onClick={() => handleSelectTopJob(row, index + 1)}
                 >
                   <TableCell>
-                    <div className="font-medium">{row.title}</div>
-                    <div className="text-xs text-muted-foreground">
+                    <div class名称="font-medium">{row.title}</div>
+                    <div class名称="text-xs text-muted-foreground">
                       {row.employer}
                     </div>
                   </TableCell>
@@ -460,9 +460,9 @@ export const TracerLinksPage: React.FC = () => {
                 <TableRow>
                   <TableCell
                     colSpan={3}
-                    className="text-sm text-muted-foreground"
+                    class名称="text-sm text-muted-foreground"
                   >
-                    No tracer-link activity yet.
+                    否 tracer-link activity yet.
                   </TableCell>
                 </TableRow>
               )}
@@ -471,47 +471,47 @@ export const TracerLinksPage: React.FC = () => {
         </SectionCard>
 
         <Dialog open={isDrilldownOpen} onOpenChange={setIsDrilldownOpen}>
-          <DialogContent className="max-h-[80vh] max-w-3xl overflow-hidden">
+          <DialogContent class名称="max-h-[80vh] max-w-3xl overflow-hidden">
             <DialogHeader>
-              <DialogTitle>
+              <Dialog标题>
                 Job Links{jobDrilldown ? `: ${jobDrilldown.job.title}` : ""}
-              </DialogTitle>
-              <DialogDescription>
+              </Dialog标题>
+              <Dialog描述>
                 Destination links and click activity for the selected job.
-              </DialogDescription>
+              </Dialog描述>
             </DialogHeader>
-            <div className="space-y-2 overflow-y-auto pr-1">
+            <div class名称="space-y-2 overflow-y-auto pr-1">
               {isDrilldownLoading ? (
-                <div className="flex items-center gap-2 py-2 text-sm text-muted-foreground">
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                <div class名称="flex items-center gap-2 py-2 text-sm text-muted-foreground">
+                  <Loader2 class名称="h-4 w-4 animate-spin" />
                   Loading links...
                 </div>
               ) : jobDrilldown ? (
                 <>
-                  <div className="rounded-md border border-border/60 bg-muted/20 px-3 py-2">
-                    <div className="grid gap-2 text-xs sm:grid-cols-3">
+                  <div class名称="rounded-md border border-border/60 bg-muted/20 px-3 py-2">
+                    <div class名称="grid gap-2 text-xs sm:grid-cols-3">
                       <p>
                         Human clicks:{" "}
-                        <span className="font-semibold tabular-nums">
+                        <span class名称="font-semibold tabular-nums">
                           {drilldownSummary?.humanClicks ?? 0}
                         </span>
                       </p>
                       <p>
                         Total clicks:{" "}
-                        <span className="font-semibold tabular-nums">
+                        <span class名称="font-semibold tabular-nums">
                           {drilldownSummary?.totalClicks ?? 0}
                         </span>
                       </p>
                       <p>
                         Last activity:{" "}
-                        <span className="font-semibold">
+                        <span class名称="font-semibold">
                           {formatRelativeTime(
                             drilldownSummary?.lastActivityAt ?? null,
                           )}
                         </span>
                       </p>
                     </div>
-                    <div className="mt-2 flex gap-2">
+                    <div class名称="mt-2 flex gap-2">
                       <Button
                         type="button"
                         size="sm"
@@ -537,23 +537,23 @@ export const TracerLinksPage: React.FC = () => {
                   {drilldownGroupedLinks.active.map((row) => (
                     <div
                       key={row.tracerLinkId}
-                      className="flex items-center justify-between gap-3 rounded-md border border-border/60 px-3 py-2"
+                      class名称="flex items-center justify-between gap-3 rounded-md border border-border/60 px-3 py-2"
                     >
-                      <div className="min-w-0">
-                        <p className="truncate text-sm">{row.destinationUrl}</p>
-                        <p className="truncate text-xs text-muted-foreground">
+                      <div class名称="min-w-0">
+                        <p class名称="truncate text-sm">{row.destinationUrl}</p>
+                        <p class名称="truncate text-xs text-muted-foreground">
                           Last click: {formatUnixTimestamp(row.lastClickedAt)}
                         </p>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <p className="text-sm font-semibold tabular-nums">
+                      <div class名称="flex items-center gap-2">
+                        <p class名称="text-sm font-semibold tabular-nums">
                           {getRowClicks(row)} Clicks
                         </p>
                         <a
                           href={row.destinationUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex"
+                          class名称="inline-flex"
                           onClick={() =>
                             trackProductEvent("tracer_external_link_opened", {
                               origin: "drilldown",
@@ -565,56 +565,56 @@ export const TracerLinksPage: React.FC = () => {
                             type="button"
                             size="icon"
                             variant="ghost"
-                            className="h-7 w-7"
+                            class名称="h-7 w-7"
                           >
-                            <ExternalLink className="h-4 w-4" />
+                            <ExternalLink class名称="h-4 w-4" />
                           </Button>
                         </a>
                         <Button
                           type="button"
                           size="icon"
                           variant="ghost"
-                          className="h-7 w-7"
+                          class名称="h-7 w-7"
                           onClick={() =>
                             void handleCopyDestination(row.destinationUrl, true)
                           }
                         >
-                          <Copy className="h-4 w-4" />
+                          <Copy class名称="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
                   ))}
                   {drilldownGroupedLinks.inactive.length > 0 && (
-                    <Accordion type="single" collapsible className="w-full">
+                    <Accordion type="single" collapsible class名称="w-full">
                       <AccordionItem value="inactive-links">
-                        <AccordionTrigger className="py-2 text-sm hover:no-underline">
-                          No activity yet (
+                        <AccordionTrigger class名称="py-2 text-sm hover:no-underline">
+                          否 activity yet (
                           {drilldownGroupedLinks.inactive.length})
                         </AccordionTrigger>
-                        <AccordionContent className="space-y-2 pt-1">
+                        <AccordionContent class名称="space-y-2 pt-1">
                           {drilldownGroupedLinks.inactive.map((row) => (
                             <div
                               key={row.tracerLinkId}
-                              className="flex items-center justify-between gap-3 rounded-md border border-border/60 px-3 py-2"
+                              class名称="flex items-center justify-between gap-3 rounded-md border border-border/60 px-3 py-2"
                             >
-                              <div className="min-w-0">
-                                <p className="truncate text-sm">
+                              <div class名称="min-w-0">
+                                <p class名称="truncate text-sm">
                                   {row.destinationUrl}
                                 </p>
-                                <p className="truncate text-xs text-muted-foreground">
+                                <p class名称="truncate text-xs text-muted-foreground">
                                   Last click:{" "}
                                   {formatUnixTimestamp(row.lastClickedAt)}
                                 </p>
                               </div>
-                              <div className="flex items-center gap-2">
-                                <p className="text-sm font-semibold tabular-nums">
+                              <div class名称="flex items-center gap-2">
+                                <p class名称="text-sm font-semibold tabular-nums">
                                   {getRowClicks(row)} Clicks
                                 </p>
                                 <a
                                   href={row.destinationUrl}
                                   target="_blank"
                                   rel="noreferrer"
-                                  className="inline-flex"
+                                  class名称="inline-flex"
                                   onClick={() =>
                                     trackProductEvent(
                                       "tracer_external_link_opened",
@@ -629,16 +629,16 @@ export const TracerLinksPage: React.FC = () => {
                                     type="button"
                                     size="icon"
                                     variant="ghost"
-                                    className="h-7 w-7"
+                                    class名称="h-7 w-7"
                                   >
-                                    <ExternalLink className="h-4 w-4" />
+                                    <ExternalLink class名称="h-4 w-4" />
                                   </Button>
                                 </a>
                                 <Button
                                   type="button"
                                   size="icon"
                                   variant="ghost"
-                                  className="h-7 w-7"
+                                  class名称="h-7 w-7"
                                   onClick={() =>
                                     void handleCopyDestination(
                                       row.destinationUrl,
@@ -646,7 +646,7 @@ export const TracerLinksPage: React.FC = () => {
                                     )
                                   }
                                 >
-                                  <Copy className="h-4 w-4" />
+                                  <Copy class名称="h-4 w-4" />
                                 </Button>
                               </div>
                             </div>
@@ -656,13 +656,13 @@ export const TracerLinksPage: React.FC = () => {
                     </Accordion>
                   )}
                   {jobDrilldown.links.length === 0 && (
-                    <p className="text-sm text-muted-foreground">
-                      No tracer links recorded for this job yet.
+                    <p class名称="text-sm text-muted-foreground">
+                      否 tracer links recorded for this job yet.
                     </p>
                   )}
                 </>
               ) : (
-                <p className="text-sm text-muted-foreground">
+                <p class名称="text-sm text-muted-foreground">
                   Select a job from Application Activity.
                 </p>
               )}

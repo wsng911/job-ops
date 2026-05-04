@@ -1,4 +1,4 @@
-import { createAppSettings } from "@shared/testing/factories.js";
+import { createApp设置 } from "@shared/testing/factories.js";
 import type { JobSource } from "@shared/types";
 import {
   fireEvent,
@@ -18,14 +18,14 @@ const { getDetectedCountryKeyMock } = vi.hoisted(() => ({
 }));
 
 vi.mock("@/components/ui/tooltip", () => ({
-  TooltipProvider: ({ children }: { children: React.ReactNode }) => (
+  TooltipProvider: ({ children }: { children: React.React否de }) => (
     <>{children}</>
   ),
-  Tooltip: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  TooltipTrigger: ({ children }: { children: React.ReactNode }) => (
+  Tooltip: ({ children }: { children: React.React否de }) => <>{children}</>,
+  TooltipTrigger: ({ children }: { children: React.React否de }) => (
     <>{children}</>
   ),
-  TooltipContent: ({ children }: { children: React.ReactNode }) => (
+  TooltipContent: ({ children }: { children: React.React否de }) => (
     <>{children}</>
   ),
 }));
@@ -110,13 +110,13 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings()}
+        settings={createApp设置()}
         enabledSources={["linkedin", "gradcracker", "ukvisajobs"]}
         pipelineSources={["linkedin"]}
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -135,13 +135,13 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings()}
+        settings={createApp设置()}
         enabledSources={["linkedin", "gradcracker", "ukvisajobs"]}
         pipelineSources={["linkedin"]}
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -159,13 +159,13 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings()}
+        settings={createApp设置()}
         enabledSources={["linkedin"]}
         pipelineSources={["linkedin"]}
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -181,7 +181,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           searchTerms: {
             value: ["backend engineer"],
             default: ["backend engineer"],
@@ -199,7 +199,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -212,7 +212,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           searchTerms: {
             value: ["backend engineer"],
             default: ["backend engineer"],
@@ -230,7 +230,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -245,7 +245,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           searchTerms: {
             value: ["backend engineer"],
             default: ["backend engineer"],
@@ -263,7 +263,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={onSetPipelineSources}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -283,7 +283,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           searchTerms: {
             value: ["backend engineer"],
             default: ["backend engineer"],
@@ -301,7 +301,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={onSetPipelineSources}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -324,7 +324,7 @@ describe("AutomaticRunTab", () => {
       return (
         <AutomaticRunTab
           open
-          settings={createAppSettings({
+          settings={createApp设置({
             jobspyCountryIndeed: {
               value: "united kingdom",
               default: "united kingdom",
@@ -347,7 +347,7 @@ describe("AutomaticRunTab", () => {
           }}
           onSetPipelineSources={vi.fn()}
           isPipelineRunning={false}
-          onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+          on保存AndRun={vi.fn().mockResolvedValue(undefined)}
         />
       );
     };
@@ -378,7 +378,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           searchTerms: {
             value: ["backend engineer"],
             default: ["backend engineer"],
@@ -396,14 +396,14 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
     openSourcePicker();
 
     expect(
-      screen.getByTitle(
+      screen.getBy标题(
         "Gradcracker is available only when country is United Kingdom.",
       ),
     ).toBeInTheDocument();
@@ -415,7 +415,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           searchTerms: {
             value: ["backend engineer"],
             default: ["backend engineer"],
@@ -433,7 +433,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={onSetPipelineSources}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -456,7 +456,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           searchTerms: {
             value: ["backend engineer"],
             default: ["backend engineer"],
@@ -478,7 +478,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={onSetPipelineSources}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -491,7 +491,7 @@ describe("AutomaticRunTab", () => {
     const glassdoorButton = screen.getByRole("button", { name: "Glassdoor" });
     expect(glassdoorButton).toBeDisabled();
     expect(glassdoorButton.getAttribute("title")).toContain(
-      "Add at least one city in Location preferences to enable Glassdoor.",
+      "添加 at least one city in Location preferences to enable Glassdoor.",
     );
   });
 
@@ -499,7 +499,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           jobspyCountryIndeed: {
             value: "united kingdom",
             default: "united kingdom",
@@ -516,22 +516,22 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
     fireEvent.focus(screen.getByLabelText("Cities"));
 
     expect(
-      screen.queryByRole("button", { name: /Remove city/i }),
+      screen.queryByRole("button", { name: /移除 city/i }),
     ).not.toBeInTheDocument();
   });
 
-  it("does not remove existing search terms when Backspace is pressed on an empty input", () => {
+  it("does not remove existing search terms when 返回space is pressed on an empty input", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           searchTerms: {
             value: ["backend engineer", "frontend engineer"],
             default: ["backend engineer", "frontend engineer"],
@@ -549,19 +549,19 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
     const input = screen.getByPlaceholderText("Type and press Enter");
     fireEvent.focus(input);
-    fireEvent.keyDown(input, { key: "Backspace" });
+    fireEvent.keyDown(input, { key: "返回space" });
 
     expect(
-      screen.getByRole("button", { name: "Remove backend engineer" }),
+      screen.getByRole("button", { name: "移除 backend engineer" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Remove frontend engineer" }),
+      screen.getByRole("button", { name: "移除 frontend engineer" }),
     ).toBeInTheDocument();
   });
 
@@ -569,7 +569,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           searchTerms: {
             value: ["backend engineer"],
             default: ["backend engineer"],
@@ -591,7 +591,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -601,17 +601,17 @@ describe("AutomaticRunTab", () => {
     expect(within(collapsedTokens).getByText("London")).toBeInTheDocument();
     expect(within(collapsedTokens).getByText("Manchester")).toBeInTheDocument();
     expect(
-      screen.queryByRole("button", { name: "Remove city London" }),
+      screen.queryByRole("button", { name: "移除 city London" }),
     ).not.toBeInTheDocument();
 
     fireEvent.focus(screen.getByLabelText("Cities"));
     openSourcePicker();
 
     expect(
-      screen.getByRole("button", { name: "Remove city London" }),
+      screen.getByRole("button", { name: "移除 city London" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Remove city Manchester" }),
+      screen.getByRole("button", { name: "移除 city Manchester" }),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Glassdoor" })).toBeEnabled();
   });
@@ -620,7 +620,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           workplaceTypes: {
             value: ["remote", "onsite"],
             default: ["remote", "hybrid", "onsite"],
@@ -632,7 +632,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -646,7 +646,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           jobspyCountryIndeed: {
             value: "croatia",
             default: "",
@@ -663,7 +663,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -676,7 +676,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           jobspyCountryIndeed: {
             value: "croatia",
             default: "",
@@ -688,7 +688,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -709,7 +709,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           workplaceTypes: {
             value: ["remote", "hybrid"],
             default: ["remote", "hybrid", "onsite"],
@@ -721,7 +721,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -732,13 +732,13 @@ describe("AutomaticRunTab", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("submits workplace types in onSaveAndRun values", async () => {
-    const onSaveAndRun = vi.fn().mockResolvedValue(undefined);
+  it("submits workplace types in on保存AndRun values", async () => {
+    const on保存AndRun = vi.fn().mockResolvedValue(undefined);
 
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           jobspyCountryIndeed: {
             value: "croatia",
             default: "",
@@ -750,7 +750,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={onSaveAndRun}
+        on保存AndRun={on保存AndRun}
       />,
     );
 
@@ -760,7 +760,7 @@ describe("AutomaticRunTab", () => {
     fireEvent.click(screen.getByRole("button", { name: "Start run now" }));
 
     await waitFor(() => {
-      expect(onSaveAndRun).toHaveBeenCalledWith(
+      expect(on保存AndRun).toHaveBeenCalledWith(
         expect.objectContaining({
           workplaceTypes: ["remote"],
         }),
@@ -769,12 +769,12 @@ describe("AutomaticRunTab", () => {
   });
 
   it("clamps max jobs discovered to 50 before submitting", async () => {
-    const onSaveAndRun = vi.fn().mockResolvedValue(undefined);
+    const on保存AndRun = vi.fn().mockResolvedValue(undefined);
 
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           jobspyCountryIndeed: {
             value: "croatia",
             default: "",
@@ -786,7 +786,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={onSaveAndRun}
+        on保存AndRun={on保存AndRun}
       />,
     );
 
@@ -797,7 +797,7 @@ describe("AutomaticRunTab", () => {
     fireEvent.click(screen.getByRole("button", { name: "Start run now" }));
 
     await waitFor(() => {
-      expect(onSaveAndRun).toHaveBeenCalledWith(
+      expect(on保存AndRun).toHaveBeenCalledWith(
         expect.objectContaining({
           runBudget: 50,
         }),
@@ -806,12 +806,12 @@ describe("AutomaticRunTab", () => {
   });
 
   it("remembers the balanced preset and its budget across reopen", async () => {
-    const onSaveAndRun = vi.fn().mockResolvedValue(undefined);
+    const on保存AndRun = vi.fn().mockResolvedValue(undefined);
 
     const { unmount } = render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           jobspyCountryIndeed: {
             value: "croatia",
             default: "",
@@ -828,7 +828,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={onSaveAndRun}
+        on保存AndRun={on保存AndRun}
       />,
     );
 
@@ -836,7 +836,7 @@ describe("AutomaticRunTab", () => {
     fireEvent.click(screen.getByRole("button", { name: "Start run now" }));
 
     await waitFor(() => {
-      expect(onSaveAndRun).toHaveBeenCalled();
+      expect(on保存AndRun).toHaveBeenCalled();
     });
 
     expect(
@@ -853,7 +853,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           jobspyCountryIndeed: {
             value: "croatia",
             default: "",
@@ -870,7 +870,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -889,12 +889,12 @@ describe("AutomaticRunTab", () => {
   });
 
   it("remembers custom mode even when the values match Balanced", async () => {
-    const onSaveAndRun = vi.fn().mockResolvedValue(undefined);
+    const on保存AndRun = vi.fn().mockResolvedValue(undefined);
 
     const { unmount } = render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           jobspyCountryIndeed: {
             value: "croatia",
             default: "",
@@ -911,7 +911,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={onSaveAndRun}
+        on保存AndRun={on保存AndRun}
       />,
     );
 
@@ -920,7 +920,7 @@ describe("AutomaticRunTab", () => {
     fireEvent.click(screen.getByRole("button", { name: "Start run now" }));
 
     await waitFor(() => {
-      expect(onSaveAndRun).toHaveBeenCalled();
+      expect(on保存AndRun).toHaveBeenCalled();
     });
 
     expect(
@@ -937,7 +937,7 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           jobspyCountryIndeed: {
             value: "croatia",
             default: "",
@@ -954,7 +954,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 
@@ -976,13 +976,13 @@ describe("AutomaticRunTab", () => {
     render(
       <AutomaticRunTab
         open
-        settings={createAppSettings({
+        settings={createApp设置({
           jobspyCountryIndeed: {
             value: "croatia",
             default: "",
             override: "croatia",
           },
-          locationSearchScope: {
+          location搜索Scope: {
             value: "selected_plus_remote_worldwide",
             default: "selected_only",
             override: "selected_plus_remote_worldwide",
@@ -1008,7 +1008,7 @@ describe("AutomaticRunTab", () => {
         onToggleSource={vi.fn()}
         onSetPipelineSources={vi.fn()}
         isPipelineRunning={false}
-        onSaveAndRun={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRun={vi.fn().mockResolvedValue(undefined)}
       />,
     );
 

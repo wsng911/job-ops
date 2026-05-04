@@ -3,7 +3,7 @@ import {
   EXTRACTOR_SOURCE_METADATA,
   PIPELINE_EXTRACTOR_SOURCE_IDS,
 } from "@shared/extractors";
-import type { JobSource, JobStatus } from "@shared/types";
+import type { JobSource, Job状态 } from "@shared/types";
 
 export const DEFAULT_PIPELINE_SOURCES: JobSource[] = [
   "gradcracker",
@@ -27,7 +27,7 @@ export const orderedFilterSources: JobSource[] = [...EXTRACTOR_SOURCE_IDS].sort(
 );
 
 export const statusTokens: Record<
-  JobStatus,
+  Job状态,
   { label: string; badge: string; dot: string }
 > = {
   discovered: {
@@ -67,7 +67,7 @@ export const statusTokens: Record<
   },
 };
 
-export const defaultStatusToken = {
+export const default状态Token = {
   label: "Unknown",
   badge: "border-muted-foreground/20 bg-muted/30 text-muted-foreground",
   dot: "bg-muted-foreground",
@@ -130,8 +130,8 @@ export const sortLabels: Record<JobSort["key"], string> = {
   discoveredAt: "Discovered",
   score: "Score",
   salary: "Salary",
-  title: "Title",
-  employer: "Company",
+  title: "标题",
+  employer: "公司",
 };
 
 export const defaultSortDirection: Record<JobSort["key"], SortDirection> = {
@@ -146,7 +146,7 @@ export const defaultSortDirection: Record<JobSort["key"], SortDirection> = {
 export const tabs: Array<{
   id: FilterTab;
   label: string;
-  statuses: JobStatus[];
+  statuses: Job状态[];
 }> = [
   { id: "ready", label: "Ready", statuses: ["ready"] },
   {
@@ -162,13 +162,13 @@ export const emptyStateCopy: Record<FilterTab, string> = {
   ready: "Run the pipeline to discover and process new jobs.",
   discovered: "All discovered jobs have been processed.",
   applied: "You have not applied to any jobs yet.",
-  all: "No jobs in the system yet. Run the pipeline to get started.",
+  all: "否 jobs in the system yet. Run the pipeline to get started.",
 };
 
 export const dateFilterDimensionLabels: Record<DateFilterDimension, string> = {
   ready: "Ready",
   applied: "Applied",
-  closed: "Closed",
+  closed: "关闭d",
   discovered: "Discovered",
 };
 

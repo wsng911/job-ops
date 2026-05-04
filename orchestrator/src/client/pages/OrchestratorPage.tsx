@@ -1,16 +1,16 @@
 import { useKeyboardAvailability } from "@client/hooks/useKeyboardAvailability";
-import { useSettings } from "@client/hooks/useSettings";
+import { use设置 } from "@client/hooks/use设置";
 import type React from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { VirtualListHandle } from "@/client/lib/virtual-list";
 import { Button } from "@/components/ui/button";
-import { Drawer, DrawerClose, DrawerContent } from "@/components/ui/drawer";
+import { Drawer, Drawer关闭, DrawerContent } from "@/components/ui/drawer";
 import { KeyboardShortcutBar } from "../components/KeyboardShortcutBar";
 import { KeyboardShortcutDialog } from "../components/KeyboardShortcutDialog";
 import { useDemoInfo } from "../hooks/useDemoInfo";
 import { type FilterTab, tabs } from "./orchestrator/constants";
-import { FloatingJobActionsBar } from "./orchestrator/FloatingJobActionsBar";
+import { FloatingJob操作Bar } from "./orchestrator/FloatingJob操作Bar";
 import { JobCommandBar } from "./orchestrator/JobCommandBar";
 import { JobDetailPanel } from "./orchestrator/JobDetailPanel";
 import { JobListPanel } from "./orchestrator/JobListPanel";
@@ -19,7 +19,7 @@ import { OrchestratorHeader } from "./orchestrator/OrchestratorHeader";
 import { OrchestratorSummary } from "./orchestrator/OrchestratorSummary";
 import { RunModeModal } from "./orchestrator/RunModeModal";
 import { useFilteredJobs } from "./orchestrator/useFilteredJobs";
-import { useJobSelectionActions } from "./orchestrator/useJobSelectionActions";
+import { useJobSelection操作 } from "./orchestrator/useJobSelection操作";
 import { useKeyboardShortcuts } from "./orchestrator/useKeyboardShortcuts";
 import { useOrchestratorData } from "./orchestrator/useOrchestratorData";
 import { useOrchestratorFilters } from "./orchestrator/useOrchestratorFilters";
@@ -106,7 +106,7 @@ export const OrchestratorPage: React.FC = () => {
     [navigateWithContext, activeTab],
   );
 
-  const { settings } = useSettings();
+  const { settings } = use设置();
   const demoInfo = useDemoInfo();
   const {
     jobs,
@@ -131,10 +131,10 @@ export const OrchestratorPage: React.FC = () => {
     setIsRunModeModalOpen,
     runMode,
     setRunMode,
-    isCancelling,
+    is取消ling,
     openRunMode,
-    handleCancelPipeline,
-    handleSaveAndRunAutomatic,
+    handle取消Pipeline,
+    handle保存AndRunAutomatic,
     handleManualImported,
   } = usePipelineControls({
     isPipelineRunning,
@@ -196,7 +196,7 @@ export const OrchestratorPage: React.FC = () => {
     toggleSelectAll,
     clearSelection,
     runJobAction,
-  } = useJobSelectionActions({
+  } = useJobSelection操作({
     activeJobs,
     activeTab,
     loadJobs,
@@ -270,7 +270,7 @@ export const OrchestratorPage: React.FC = () => {
   const handleCommandSelectJob = useCallback(
     (targetTab: FilterTab, id: string) => {
       requestScrollToJob(id, { ensureSelected: true });
-      const nextParams = new URLSearchParams(searchParams);
+      const nextParams = new URL搜索Params(searchParams);
       for (const key of [
         "source",
         "sponsor",
@@ -394,7 +394,7 @@ export const OrchestratorPage: React.FC = () => {
       return undefined;
     }
 
-    return "No jobs match the selected date filters.";
+    return "否 jobs match the selected date filters.";
   }, [dateFilter.dimensions.length]);
 
   return (
@@ -403,14 +403,14 @@ export const OrchestratorPage: React.FC = () => {
         navOpen={navOpen}
         onNavOpenChange={setNavOpen}
         isPipelineRunning={isPipelineRunning}
-        isCancelling={isCancelling}
+        is取消ling={is取消ling}
         pipelineSources={pipelineSources}
         onOpenAutomaticRun={() => openRunMode("automatic")}
-        onCancelPipeline={handleCancelPipeline}
+        on取消Pipeline={handle取消Pipeline}
       />
 
       <main
-        className={`container mx-auto space-y-6 px-4 py-6 ${
+        class名称={`container mx-auto space-y-6 px-4 py-6 ${
           selectedJobIds.size > 0 ? "pb-36 lg:pb-12" : "pb-12"
         }`}
       >
@@ -420,7 +420,7 @@ export const OrchestratorPage: React.FC = () => {
         />
 
         {/* Main content: tabs/filters -> list/detail */}
-        <section className="space-y-4">
+        <section class名称="space-y-4">
           <JobCommandBar
             jobs={jobs}
             onSelectJob={handleCommandSelectJob}
@@ -451,7 +451,7 @@ export const OrchestratorPage: React.FC = () => {
           />
 
           {/* List/Detail grid - directly under tabs, no extra section */}
-          <div className="grid gap-4 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)]">
+          <div class名称="grid gap-4 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)]">
             {/* Primary region: Job list with highest visual weight */}
             <JobListPanel
               ref={jobListHandleRef}
@@ -471,13 +471,13 @@ export const OrchestratorPage: React.FC = () => {
 
             {/* Inspector panel: visually subordinate to list */}
             {isDesktop && (
-              <div className="min-w-0 rounded-lg border border-border/40 bg-muted/5 p-4 lg:sticky lg:top-24 lg:self-start lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
+              <div class名称="min-w-0 rounded-lg border border-border/40 bg-muted/5 p-4 lg:sticky lg:top-24 lg:self-start lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
                 <JobDetailPanel
                   activeTab={activeTab}
                   activeJobs={activeJobs}
                   selectedJob={visibleSelectedJob}
                   onSelectJobId={handleSelectJobId}
-                  onJobUpdated={loadJobs}
+                  onJob更新d={loadJobs}
                   onPauseRefreshChange={setIsRefreshPaused}
                 />
               </div>
@@ -486,7 +486,7 @@ export const OrchestratorPage: React.FC = () => {
         </section>
       </main>
 
-      <FloatingJobActionsBar
+      <FloatingJob操作Bar
         selectedCount={selectedJobIds.size}
         canMoveSelected={canMoveSelected}
         canSkipSelected={canSkipSelected}
@@ -509,30 +509,30 @@ export const OrchestratorPage: React.FC = () => {
         isPipelineRunning={isPipelineRunning}
         onOpenChange={setIsRunModeModalOpen}
         onModeChange={setRunMode}
-        onSaveAndRunAutomatic={handleSaveAndRunAutomatic}
+        on保存AndRunAutomatic={handle保存AndRunAutomatic}
         onManualImported={handleManualImported}
       />
 
       {!isDesktop && (
         <Drawer open={isDetailDrawerOpen} onOpenChange={onDrawerOpenChange}>
-          <DrawerContent className="max-h-[90vh]">
-            <div className="flex items-center justify-between px-4 pt-2">
-              <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          <DrawerContent class名称="max-h-[90vh]">
+            <div class名称="flex items-center justify-between px-4 pt-2">
+              <div class名称="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Job details
               </div>
-              <DrawerClose asChild>
-                <Button variant="ghost" size="sm" className="h-8 px-2 text-xs">
-                  Close
+              <Drawer关闭 asChild>
+                <Button variant="ghost" size="sm" class名称="h-8 px-2 text-xs">
+                  关闭
                 </Button>
-              </DrawerClose>
+              </Drawer关闭>
             </div>
-            <div className="max-h-[calc(90vh-3.5rem)] overflow-y-auto px-4 pb-6 pt-3">
+            <div class名称="max-h-[calc(90vh-3.5rem)] overflow-y-auto px-4 pb-6 pt-3">
               <JobDetailPanel
                 activeTab={activeTab}
                 activeJobs={activeJobs}
                 selectedJob={visibleSelectedJob}
                 onSelectJobId={handleSelectJobId}
-                onJobUpdated={loadJobs}
+                onJob更新d={loadJobs}
                 onPauseRefreshChange={setIsRefreshPaused}
               />
             </div>

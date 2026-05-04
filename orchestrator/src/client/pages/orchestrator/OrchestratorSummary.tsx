@@ -1,10 +1,10 @@
 import { PipelineProgress } from "@client/components";
 import { useWelcomeMessage } from "@client/hooks/useWelcomeMessage";
-import type { JobStatus } from "@shared/types.js";
+import type { Job状态 } from "@shared/types.js";
 import type React from "react";
 
 interface OrchestratorSummaryProps {
-  stats: Record<JobStatus, number>;
+  stats: Record<Job状态, number>;
   isPipelineRunning: boolean;
 }
 
@@ -14,13 +14,13 @@ export const OrchestratorSummary: React.FC<OrchestratorSummaryProps> = ({
   const welcomeText = useWelcomeMessage();
 
   return (
-    <section className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-lg font-medium tracking-tight">{welcomeText}</h1>
+    <section class名称="space-y-4">
+      <div class名称="flex items-center justify-between">
+        <h1 class名称="text-lg font-medium tracking-tight">{welcomeText}</h1>
       </div>
 
       {isPipelineRunning && (
-        <div className="max-w-3xl">
+        <div class名称="max-w-3xl">
           <PipelineProgress isRunning={isPipelineRunning} />
         </div>
       )}

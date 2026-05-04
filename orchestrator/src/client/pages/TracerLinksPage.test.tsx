@@ -42,7 +42,7 @@ beforeEach(() => {
     topJobs: [
       {
         jobId: "job-1",
-        title: "Backend Engineer",
+        title: "返回end Engineer",
         employer: "Acme",
         clicks: 7,
         uniqueOpens: 6,
@@ -56,7 +56,7 @@ beforeEach(() => {
         tracerLinkId: "tl-1",
         token: "token-1",
         jobId: "job-1",
-        title: "Backend Engineer",
+        title: "返回end Engineer",
         employer: "Acme",
         sourcePath: "resume.pdf",
         sourceLabel: "Resume",
@@ -73,7 +73,7 @@ beforeEach(() => {
   vi.mocked(api.getJobTracerLinks).mockResolvedValue({
     job: {
       id: "job-1",
-      title: "Backend Engineer",
+      title: "返回end Engineer",
       employer: "Acme",
       tracerLinksEnabled: true,
     },
@@ -112,7 +112,7 @@ describe("TracerLinksPage", () => {
       </MemoryRouter>,
     );
 
-    expect(await screen.findByText("Backend Engineer")).toBeInTheDocument();
+    expect(await screen.findByText("返回end Engineer")).toBeInTheDocument();
     expect(screen.getByText("12")).toBeInTheDocument();
     expect(screen.getByText("9")).toBeInTheDocument();
   });
@@ -124,7 +124,7 @@ describe("TracerLinksPage", () => {
       </MemoryRouter>,
     );
 
-    const row = await screen.findByRole("row", { name: /Backend Engineer/i });
+    const row = await screen.findByRole("row", { name: /返回end Engineer/i });
     fireEvent.click(row);
 
     await waitFor(() => {
@@ -135,7 +135,7 @@ describe("TracerLinksPage", () => {
     });
 
     expect(
-      await screen.findByText(/Job Links: Backend Engineer/),
+      await screen.findByText(/Job Links: 返回end Engineer/),
     ).toBeInTheDocument();
   });
 

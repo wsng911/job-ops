@@ -4,7 +4,7 @@ import {
   useSkipJobMutation,
 } from "@client/hooks/queries/useJobMutations";
 import { useHotkeys } from "@client/hooks/useHotkeys";
-import { useProfile } from "@client/hooks/useProfile";
+import { use个人资料 } from "@client/hooks/use个人资料";
 import { downloadJobPdf, openJobPdf } from "@client/lib/private-pdf";
 import { SHORTCUTS } from "@client/lib/shortcut-map";
 import type { JobAction, JobListItem } from "@shared/types.js";
@@ -61,7 +61,7 @@ export function useKeyboardShortcuts(args: UseKeyboardShortcutsArgs): void {
   const shortcutActionInFlight = useRef(false);
   const markAsAppliedMutation = useMarkAsAppliedMutation();
   const skipJobMutation = useSkipJobMutation();
-  const { personName } = useProfile();
+  const { person名称 } = use个人资料();
 
   const navigateJobList = useCallback(
     (direction: 1 | -1) => {
@@ -238,7 +238,7 @@ export function useKeyboardShortcuts(args: UseKeyboardShortcutsArgs): void {
         if (activeTab !== "ready") return;
         void downloadJobPdf(
           selectedJob.id,
-          `${safeFilenamePart(personName || "Unknown")}_${safeFilenamePart(selectedJob.employer)}.pdf`,
+          `${safeFilenamePart(person名称 || "Unknown")}_${safeFilenamePart(selectedJob.employer)}.pdf`,
         ).catch((error) => {
           showErrorToast(error, "Could not download PDF");
         });
@@ -264,7 +264,7 @@ export function useKeyboardShortcuts(args: UseKeyboardShortcutsArgs): void {
 
   useHotkeys(
     {
-      // ── Search ──────────────────────────────────────────────────────────
+      // ── 搜索 ──────────────────────────────────────────────────────────
       [SHORTCUTS.searchSlash.key]: (e) => {
         e.preventDefault();
         setIsCommandBarOpen(true);

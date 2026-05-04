@@ -1,15 +1,15 @@
-import { SettingsSectionFrame } from "@client/pages/settings/components/SettingsSectionFrame";
+import { 设置SectionFrame } from "@client/pages/settings/components/设置SectionFrame";
 import type { PromptTemplatesValues } from "@client/pages/settings/types";
 import {
   PROMPT_TEMPLATE_DEFINITIONS,
   PROMPT_TEMPLATE_SETTING_KEYS,
   type PromptTemplateSettingKey,
 } from "@shared/prompt-template-definitions.js";
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import { AlertTriangle, RotateCcw } from "lucide-react";
 import type React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, Alert描述, Alert标题 } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -29,7 +29,7 @@ export const PromptTemplatesSection: React.FC<PromptTemplatesSectionProps> = ({
   isSaving,
   layoutMode,
 }) => {
-  const { control, setValue } = useFormContext<UpdateSettingsInput>();
+  const { control, setValue } = useFormContext<更新设置Input>();
 
   const handleResetOne = (key: PromptTemplateSettingKey) => {
     setValue(key, values[key].default, { shouldDirty: true });
@@ -42,28 +42,28 @@ export const PromptTemplatesSection: React.FC<PromptTemplatesSectionProps> = ({
   };
 
   return (
-    <SettingsSectionFrame
+    <设置SectionFrame
       mode={layoutMode}
       title="Prompt Templates"
       value="prompt-templates"
     >
-      <div className="space-y-4">
-        <p className="text-sm text-muted-foreground">
-          Edit the base AI instructions used by Ghostwriter, resume tailoring,
+      <div class名称="space-y-4">
+        <p class名称="text-sm text-muted-foreground">
+          编辑 the base AI instructions used by Ghostwriter, resume tailoring,
           and scoring.
         </p>
 
         <Alert variant="warning">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>Advanced setting</AlertTitle>
-          <AlertDescription>
+          <AlertTriangle class名称="h-4 w-4" />
+          <Alert标题>Advanced setting</Alert标题>
+          <Alert描述>
             Changing these templates can degrade or break AI behavior. Removing
             important instructions or placeholders may produce poor results. Use
             reset to restore the default templates.
-          </AlertDescription>
+          </Alert描述>
         </Alert>
 
-        <div className="flex justify-end">
+        <div class名称="flex justify-end">
           <Button
             type="button"
             variant="outline"
@@ -71,7 +71,7 @@ export const PromptTemplatesSection: React.FC<PromptTemplatesSectionProps> = ({
             onClick={handleResetAll}
             disabled={isLoading || isSaving}
           >
-            <RotateCcw className="h-4 w-4" />
+            <RotateCcw class名称="h-4 w-4" />
             Reset all prompts
           </Button>
         </div>
@@ -80,13 +80,13 @@ export const PromptTemplatesSection: React.FC<PromptTemplatesSectionProps> = ({
           const definition = PROMPT_TEMPLATE_DEFINITIONS[key];
 
           return (
-            <div key={key} className="space-y-3 rounded-lg border p-4">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div className="space-y-1">
-                  <label htmlFor={key} className="text-sm font-medium">
+            <div key={key} class名称="space-y-3 rounded-lg border p-4">
+              <div class名称="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div class名称="space-y-1">
+                  <label htmlFor={key} class名称="text-sm font-medium">
                     {definition.label}
                   </label>
-                  <p className="text-xs text-muted-foreground">
+                  <p class名称="text-xs text-muted-foreground">
                     {definition.description}
                   </p>
                 </div>
@@ -112,20 +112,20 @@ export const PromptTemplatesSection: React.FC<PromptTemplatesSectionProps> = ({
                     onChange={(event) => field.onChange(event.target.value)}
                     disabled={isLoading || isSaving}
                     maxLength={12000}
-                    className="min-h-[220px] font-mono text-xs"
+                    class名称="min-h-[220px] font-mono text-xs"
                   />
                 )}
               />
 
-              <div className="space-y-2">
-                <div className="text-xs font-medium text-muted-foreground">
+              <div class名称="space-y-2">
+                <div class名称="text-xs font-medium text-muted-foreground">
                   Supported placeholders
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div class名称="flex flex-wrap gap-2">
                   {definition.placeholders.map((placeholder) => (
                     <span
                       key={placeholder}
-                      className="rounded bg-muted px-2 py-1 font-mono text-xs text-muted-foreground"
+                      class名称="rounded bg-muted px-2 py-1 font-mono text-xs text-muted-foreground"
                     >
                       {`{{${placeholder}}}`}
                     </span>
@@ -136,6 +136,6 @@ export const PromptTemplatesSection: React.FC<PromptTemplatesSectionProps> = ({
           );
         })}
       </div>
-    </SettingsSectionFrame>
+    </设置SectionFrame>
   );
 };

@@ -47,7 +47,7 @@ describe("JobPageLeftSidebar application details", () => {
     renderSidebar({ appliedAt: null });
 
     expect(screen.queryByText("Applied")).not.toBeInTheDocument();
-    expect(screen.queryByText("Not marked")).not.toBeInTheDocument();
+    expect(screen.queryByText("否t marked")).not.toBeInTheDocument();
   });
 
   it("shows the applied row when the job has an applied timestamp", () => {

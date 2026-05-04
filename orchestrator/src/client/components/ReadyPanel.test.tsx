@@ -14,13 +14,13 @@ const render = (ui: Parameters<typeof renderWithQueryClient>[0]) =>
 
 vi.mock("@/components/ui/dropdown-menu", () => {
   return {
-    DropdownMenu: ({ children }: { children: React.ReactNode }) => (
+    DropdownMenu: ({ children }: { children: React.React否de }) => (
       <div>{children}</div>
     ),
-    DropdownMenuTrigger: ({ children }: { children: React.ReactNode }) => (
+    DropdownMenuTrigger: ({ children }: { children: React.React否de }) => (
       <>{children}</>
     ),
-    DropdownMenuContent: ({ children }: { children: React.ReactNode }) => (
+    DropdownMenuContent: ({ children }: { children: React.React否de }) => (
       <div role="menu">{children}</div>
     ),
     DropdownMenuItem: ({
@@ -28,7 +28,7 @@ vi.mock("@/components/ui/dropdown-menu", () => {
       onSelect,
       ...props
     }: {
-      children: React.ReactNode;
+      children: React.React否de;
       onSelect?: () => void;
     }) => (
       <button
@@ -44,12 +44,12 @@ vi.mock("@/components/ui/dropdown-menu", () => {
   };
 });
 
-vi.mock("../hooks/useProfile", () => ({
-  useProfile: () => ({ personName: "Test" }),
+vi.mock("../hooks/use个人资料", () => ({
+  use个人资料: () => ({ person名称: "Test" }),
 }));
 
-vi.mock("../hooks/useSettings", () => ({
-  useSettings: () => ({ showSponsorInfo: false }),
+vi.mock("../hooks/use设置", () => ({
+  use设置: () => ({ showSponsorInfo: false }),
 }));
 
 vi.mock("../api", () => ({
@@ -62,26 +62,26 @@ vi.mock("../api", () => ({
   updateJob: vi.fn(),
 }));
 
-vi.mock("./JobDetailsEditDrawer", () => ({
-  JobDetailsEditDrawer: ({
+vi.mock("./JobDetails编辑Drawer", () => ({
+  JobDetails编辑Drawer: ({
     open,
     onOpenChange,
-    onJobUpdated,
+    onJob更新d,
   }: {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    onJobUpdated: () => void | Promise<void>;
+    onJob更新d: () => void | Promise<void>;
   }) =>
     open ? (
       <div data-testid="job-details-edit-drawer">
         <button
           type="button"
           onClick={() => {
-            void onJobUpdated();
+            void onJob更新d();
             onOpenChange(false);
           }}
         >
-          Save details
+          保存 details
         </button>
       </div>
     ) : null,
@@ -101,7 +101,7 @@ describe("ReadyPanel", () => {
   });
 
   it("re-runs the fit assessment from the menu", async () => {
-    const onJobUpdated = vi.fn().mockResolvedValue(undefined);
+    const onJob更新d = vi.fn().mockResolvedValue(undefined);
     const job = createJob();
     vi.mocked(api.rescoreJob).mockResolvedValue(job as Job);
 
@@ -109,7 +109,7 @@ describe("ReadyPanel", () => {
       <MemoryRouter>
         <ReadyPanel
           job={job}
-          onJobUpdated={onJobUpdated}
+          onJob更新d={onJob更新d}
           onJobMoved={vi.fn()}
         />
       </MemoryRouter>,
@@ -120,19 +120,19 @@ describe("ReadyPanel", () => {
     );
 
     await waitFor(() => expect(api.rescoreJob).toHaveBeenCalledWith("job-1"));
-    expect(onJobUpdated).toHaveBeenCalled();
+    expect(onJob更新d).toHaveBeenCalled();
     expect(toast.success).toHaveBeenCalledWith("Match recalculated");
   });
 
   it("opens edit details drawer from more actions", async () => {
-    const onJobUpdated = vi.fn().mockResolvedValue(undefined);
+    const onJob更新d = vi.fn().mockResolvedValue(undefined);
     const job = createJob();
 
     render(
       <MemoryRouter>
         <ReadyPanel
           job={job}
-          onJobUpdated={onJobUpdated}
+          onJob更新d={onJob更新d}
           onJobMoved={vi.fn()}
         />
       </MemoryRouter>,
@@ -144,7 +144,7 @@ describe("ReadyPanel", () => {
     ).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: /save details/i }));
-    await waitFor(() => expect(onJobUpdated).toHaveBeenCalled());
+    await waitFor(() => expect(onJob更新d).toHaveBeenCalled());
     expect(
       screen.queryByTestId("job-details-edit-drawer"),
     ).not.toBeInTheDocument();
@@ -159,7 +159,7 @@ describe("ReadyPanel", () => {
             title: "Frontend Engineer",
             skills: "Wolf Security, React, TypeScript",
           })}
-          onJobUpdated={vi.fn()}
+          onJob更新d={vi.fn()}
           onJobMoved={vi.fn()}
         />
       </MemoryRouter>,

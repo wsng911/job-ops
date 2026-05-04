@@ -1,8 +1,8 @@
-import { SettingsInput } from "@client/pages/settings/components/SettingsInput";
-import { SettingsSectionFrame } from "@client/pages/settings/components/SettingsSectionFrame";
+import { 设置Input } from "@client/pages/settings/components/设置Input";
+import { 设置SectionFrame } from "@client/pages/settings/components/设置SectionFrame";
 import type { WebhookValues } from "@client/pages/settings/types";
 import { formatSecretHint } from "@client/pages/settings/utils";
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import type React from "react";
 import { useFormContext } from "react-hook-form";
 import { Separator } from "@/components/ui/separator";
@@ -27,14 +27,14 @@ export const WebhooksSection: React.FC<WebhooksSectionProps> = ({
   const {
     register,
     formState: { errors },
-  } = useFormContext<UpdateSettingsInput>();
+  } = useFormContext<更新设置Input>();
 
   return (
-    <SettingsSectionFrame mode={layoutMode} title="Webhooks" value="webhooks">
-      <div className="space-y-6">
-        <div className="space-y-4">
-          <div className="text-sm font-medium">Pipeline Status</div>
-          <SettingsInput
+    <设置SectionFrame mode={layoutMode} title="Webhooks" value="webhooks">
+      <div class名称="space-y-6">
+        <div class名称="space-y-4">
+          <div class名称="text-sm font-medium">Pipeline 状态</div>
+          <设置Input
             label="Webhook URL"
             inputProps={register("pipelineWebhookUrl")}
             placeholder={pipelineWebhook.default || "https://..."}
@@ -47,10 +47,10 @@ export const WebhooksSection: React.FC<WebhooksSectionProps> = ({
 
         <Separator />
 
-        <div className="space-y-4">
-          <div className="text-sm font-medium">Job Completion</div>
-          <div className="space-y-4">
-            <SettingsInput
+        <div class名称="space-y-4">
+          <div class名称="text-sm font-medium">Job Completion</div>
+          <div class名称="space-y-4">
+            <设置Input
               label="Webhook URL"
               inputProps={register("jobCompleteWebhookUrl")}
               placeholder={jobCompleteWebhook.default || "https://..."}
@@ -62,7 +62,7 @@ export const WebhooksSection: React.FC<WebhooksSectionProps> = ({
               current={jobCompleteWebhook.effective || "—"}
             />
 
-            <SettingsInput
+            <设置Input
               label="Webhook Secret"
               inputProps={register("webhookSecret")}
               type="password"
@@ -75,6 +75,6 @@ export const WebhooksSection: React.FC<WebhooksSectionProps> = ({
           </div>
         </div>
       </div>
-    </SettingsSectionFrame>
+    </设置SectionFrame>
   );
 };

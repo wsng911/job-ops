@@ -1,11 +1,11 @@
 import * as api from "@client/api";
 import type { ManualImportResult } from "@client/components/ManualImportFlow";
-import { useSettings } from "@client/hooks/useSettings";
+import { use设置 } from "@client/hooks/use设置";
 import {
   createLocationIntent,
   planLocationSources,
 } from "@shared/location-intelligence.js";
-import type { AppSettings, JobSource } from "@shared/types.js";
+import type { App设置, JobSource } from "@shared/types.js";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { showErrorToast } from "@/client/lib/error-toast";
@@ -35,12 +35,12 @@ export type UsePipelineControlsResult = {
   setIsRunModeModalOpen: (open: boolean) => void;
   runMode: RunMode;
   setRunMode: (mode: RunMode) => void;
-  isCancelling: boolean;
+  is取消ling: boolean;
   openRunMode: (mode: RunMode) => void;
-  handleCancelPipeline: () => Promise<void>;
-  handleSaveAndRunAutomatic: (values: AutomaticRunValues) => Promise<void>;
+  handle取消Pipeline: () => Promise<void>;
+  handle保存AndRunAutomatic: (values: AutomaticRunValues) => Promise<void>;
   handleManualImported: (result: ManualImportResult) => Promise<void>;
-  refreshSettings: () => Promise<AppSettings | null>;
+  refresh设置: () => Promise<App设置 | null>;
 };
 
 export function usePipelineControls(
@@ -57,14 +57,14 @@ export function usePipelineControls(
 
   const [isRunModeModalOpen, setIsRunModeModalOpen] = useState(false);
   const [runMode, setRunMode] = useState<RunMode>("automatic");
-  const [isCancelling, setIsCancelling] = useState(false);
+  const [is取消ling, setIs取消ling] = useState(false);
 
-  const { refreshSettings } = useSettings();
+  const { refresh设置 } = use设置();
 
   useEffect(() => {
     if (!pipelineTerminalEvent) return;
     setIsPipelineRunning(false);
-    setIsCancelling(false);
+    setIs取消ling(false);
 
     if (pipelineTerminalEvent.status === "cancelled") {
       trackProductEvent("jobs_pipeline_run_finished", {
@@ -111,7 +111,7 @@ export function usePipelineControls(
     }) => {
       try {
         setIsPipelineRunning(true);
-        setIsCancelling(false);
+        setIs取消ling(false);
         await api.runPipeline({
           topN: config.topN,
           minSuitabilityScore: config.minSuitabilityScore,
@@ -129,30 +129,30 @@ export function usePipelineControls(
         });
       } catch (error) {
         setIsPipelineRunning(false);
-        setIsCancelling(false);
+        setIs取消ling(false);
         showErrorToast(error, "Failed to start pipeline");
       }
     },
     [setIsPipelineRunning],
   );
 
-  const handleCancelPipeline = useCallback(async () => {
-    if (isCancelling || !isPipelineRunning) return;
+  const handle取消Pipeline = useCallback(async () => {
+    if (is取消ling || !isPipelineRunning) return;
 
     try {
-      setIsCancelling(true);
+      setIs取消ling(true);
       trackProductEvent("jobs_pipeline_run_cancel_requested", {
         was_running: isPipelineRunning,
       });
       const result = await api.cancelPipeline();
       toast.message(result.message);
     } catch (error) {
-      setIsCancelling(false);
+      setIs取消ling(false);
       showErrorToast(error, "Failed to cancel pipeline");
     }
-  }, [isCancelling, isPipelineRunning]);
+  }, [is取消ling, isPipelineRunning]);
 
-  const handleSaveAndRunAutomatic = useCallback(
+  const handle保存AndRunAutomatic = useCallback(
     async (values: AutomaticRunValues) => {
       const locationIntent = createLocationIntent({
         selectedCountry: values.country,
@@ -178,7 +178,7 @@ export function usePipelineControls(
 
       if (compatibleSources.length === 0) {
         toast.error(
-          "No compatible sources for the selected location setup. Choose another country, city, or source.",
+          "否 compatible sources for the selected location setup. Choose another country, city, or source.",
         );
         return;
       }
@@ -189,10 +189,10 @@ export function usePipelineControls(
         sources: compatibleSources,
       });
       const searchCities = serializeCityLocationsSetting(values.cityLocations);
-      await api.updateSettings({
+      await api.update设置({
         searchTerms: values.searchTerms,
         workplaceTypes: values.workplaceTypes,
-        locationSearchScope: values.searchScope,
+        location搜索Scope: values.searchScope,
         locationMatchStrictness: values.matchStrictness,
         jobspyResultsWanted: limits.jobspyResultsWanted,
         gradcrackerMaxJobsPerTerm: limits.gradcrackerMaxJobsPerTerm,
@@ -205,7 +205,7 @@ export function usePipelineControls(
         jobspyCountryIndeed: values.country,
         searchCities,
       });
-      await refreshSettings();
+      await refresh设置();
       await startPipelineRun({
         ...values,
         sources: compatibleSources,
@@ -214,7 +214,7 @@ export function usePipelineControls(
       });
       setIsRunModeModalOpen(false);
     },
-    [pipelineSources, refreshSettings, startPipelineRun],
+    [pipelineSources, refresh设置, startPipelineRun],
   );
 
   const handleManualImported = useCallback(
@@ -234,11 +234,11 @@ export function usePipelineControls(
     setIsRunModeModalOpen,
     runMode,
     setRunMode,
-    isCancelling,
+    is取消ling,
     openRunMode,
-    handleCancelPipeline,
-    handleSaveAndRunAutomatic,
+    handle取消Pipeline,
+    handle保存AndRunAutomatic,
     handleManualImported,
-    refreshSettings,
+    refresh设置,
   };
 }

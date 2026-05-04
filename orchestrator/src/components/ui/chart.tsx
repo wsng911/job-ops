@@ -10,8 +10,8 @@ import { cn } from "@/lib/utils";
 export type ChartConfig = Record<
   string,
   {
-    label?: React.ReactNode;
-    icon?: React.ComponentType<{ className?: string }>;
+    label?: React.React否de;
+    icon?: React.ComponentType<{ class名称?: string }>;
     color?: string;
   }
 >;
@@ -44,7 +44,7 @@ export const ChartContainer = React.forwardRef<
     config: ChartConfig;
     children?: React.ReactElement | null;
   }
->(({ id, className, children, config, ...props }, ref) => {
+>(({ id, class名称, children, config, ...props }, ref) => {
   const generatedId = React.useId();
   const chartId = id ?? generatedId;
 
@@ -53,7 +53,7 @@ export const ChartContainer = React.forwardRef<
       <div
         ref={ref}
         data-chart={chartId}
-        className={cn("flex aspect-video justify-center text-xs", className)}
+        class名称={cn("flex aspect-video justify-center text-xs", class名称)}
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
@@ -64,20 +64,20 @@ export const ChartContainer = React.forwardRef<
     </ChartConfigContext.Provider>
   );
 });
-ChartContainer.displayName = "ChartContainer";
+ChartContainer.display名称 = "ChartContainer";
 
 export const ChartTooltip = RechartsTooltip;
 
 export type ChartTooltipContentProps = React.ComponentPropsWithoutRef<"div"> &
   Pick<TooltipProps<number, string>, "active" | "payload" | "label"> & {
     indicator?: "dot" | "line" | "dashed";
-    labelFormatter?: (value: unknown, payload: unknown[]) => React.ReactNode;
+    labelFormatter?: (value: unknown, payload: unknown[]) => React.React否de;
     formatter?: (
       value: unknown,
       name: string,
       item: unknown,
       index: number,
-    ) => React.ReactNode;
+    ) => React.React否de;
     nameKey?: string;
   };
 
@@ -90,7 +90,7 @@ export const ChartTooltipContent = React.forwardRef<
       active,
       payload,
       label,
-      className,
+      class名称,
       indicator = "dot",
       labelFormatter,
       formatter,
@@ -108,18 +108,18 @@ export const ChartTooltipContent = React.forwardRef<
     return (
       <div
         ref={ref}
-        className={cn(
+        class名称={cn(
           "rounded-lg border border-border/60 bg-background px-3 py-2 text-xs shadow-sm",
-          className,
+          class名称,
         )}
         {...props}
       >
         {formattedLabel ? (
-          <div className="mb-2 text-[11px] font-medium text-muted-foreground">
+          <div class名称="mb-2 text-[11px] font-medium text-muted-foreground">
             {formattedLabel}
           </div>
         ) : null}
-        <div className="space-y-1">
+        <div class名称="space-y-1">
           {payload.map((item, index) => {
             const dataKey = String(item.dataKey ?? item.name ?? "");
             const configKey = nameKey ?? dataKey;
@@ -135,14 +135,14 @@ export const ChartTooltipContent = React.forwardRef<
             return (
               <div
                 key={`${dataKey}-${String(index)}`}
-                className="flex items-center justify-between gap-3"
+                class名称="flex items-center justify-between gap-3"
               >
-                <div className="flex items-center gap-2 text-muted-foreground">
+                <div class名称="flex items-center gap-2 text-muted-foreground">
                   {IndicatorIcon ? (
-                    <IndicatorIcon className="h-3.5 w-3.5" />
+                    <IndicatorIcon class名称="h-3.5 w-3.5" />
                   ) : (
                     <span
-                      className={cn(
+                      class名称={cn(
                         "inline-block",
                         indicator === "dot" && "h-2 w-2 rounded-full",
                         indicator === "line" && "h-0.5 w-3 rounded-full",
@@ -161,10 +161,10 @@ export const ChartTooltipContent = React.forwardRef<
                   )}
                   <span>{labelText}</span>
                 </div>
-                <span className="font-semibold text-foreground">
+                <span class名称="font-semibold text-foreground">
                   {typeof value === "number"
                     ? value.toLocaleString()
-                    : (value as React.ReactNode)}
+                    : (value as React.React否de)}
                 </span>
               </div>
             );
@@ -174,4 +174,4 @@ export const ChartTooltipContent = React.forwardRef<
     );
   },
 );
-ChartTooltipContent.displayName = "ChartTooltipContent";
+ChartTooltipContent.display名称 = "ChartTooltipContent";

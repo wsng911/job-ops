@@ -10,8 +10,8 @@ vi.mock("./hooks/useDemoInfo", () => ({
 }));
 
 vi.mock("react-transition-group", () => ({
-  SwitchTransition: ({ children }: { children: React.ReactNode }) => children,
-  CSSTransition: ({ children }: { children: React.ReactNode }) => children,
+  SwitchTransition: ({ children }: { children: React.React否de }) => children,
+  CSSTransition: ({ children }: { children: React.React否de }) => children,
 }));
 
 vi.mock("@/components/ui/sonner", () => ({
@@ -46,8 +46,8 @@ vi.mock("./pages/OrchestratorPage", () => ({
   OrchestratorPage: () => null,
 }));
 
-vi.mock("./pages/SettingsPage", () => ({
-  SettingsPage: () => null,
+vi.mock("./pages/设置Page", () => ({
+  设置Page: () => null,
 }));
 
 vi.mock("./pages/SignInPage", () => ({
@@ -75,7 +75,7 @@ describe("App demo banner", () => {
       lastResetAt: null,
       nextResetAt: null,
       baselineVersion: null,
-      baselineName: null,
+      baseline名称: null,
     });
 
     render(
@@ -98,7 +98,7 @@ describe("App demo banner", () => {
       lastResetAt: null,
       nextResetAt: null,
       baselineVersion: null,
-      baselineName: null,
+      baseline名称: null,
     });
 
     render(
@@ -117,7 +117,7 @@ describe("App demo banner", () => {
       lastResetAt: null,
       nextResetAt: null,
       baselineVersion: null,
-      baselineName: null,
+      baseline名称: null,
     });
 
     render(

@@ -3,12 +3,12 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import type React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { useSettings } from "../hooks/useSettings";
+import { use设置 } from "../hooks/use设置";
 import { JobHeader } from "./JobHeader";
 
-// Mock useSettings
-vi.mock("../hooks/useSettings", () => ({
-  useSettings: vi.fn(),
+// Mock use设置
+vi.mock("../hooks/use设置", () => ({
+  use设置: vi.fn(),
 }));
 
 // Mock api
@@ -18,14 +18,14 @@ vi.mock("../api", () => ({
 
 // Mock Tooltip components to simplify testing
 vi.mock("@/components/ui/tooltip", () => ({
-  TooltipProvider: ({ children }: { children: React.ReactNode }) => (
+  TooltipProvider: ({ children }: { children: React.React否de }) => (
     <>{children}</>
   ),
-  Tooltip: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  TooltipTrigger: ({ children }: { children: React.ReactNode }) => (
+  Tooltip: ({ children }: { children: React.React否de }) => <>{children}</>,
+  TooltipTrigger: ({ children }: { children: React.React否de }) => (
     <>{children}</>
   ),
-  TooltipContent: ({ children }: { children: React.ReactNode }) => (
+  TooltipContent: ({ children }: { children: React.React否de }) => (
     <div data-testid="tooltip-content">{children}</div>
   ),
 }));
@@ -49,7 +49,7 @@ describe("JobHeader", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (useSettings as any).mockReturnValue({
+    (use设置 as any).mockReturnValue({
       showSponsorInfo: true,
     });
   });
@@ -74,13 +74,13 @@ describe("JobHeader", () => {
     );
   });
 
-  it("shows 'Check Sponsorship Status' button when sponsorMatchScore is null", async () => {
+  it("shows 'Check Sponsorship 状态' button when sponsorMatchScore is null", async () => {
     const onCheckSponsor = vi.fn().mockResolvedValue(undefined);
     renderWithRouter(
       <JobHeader job={mockJob} onCheckSponsor={onCheckSponsor} />,
     );
 
-    const button = screen.getByText("Check Sponsorship Status");
+    const button = screen.getByText("Check Sponsorship 状态");
     expect(button).toBeInTheDocument();
 
     await act(async () => {
@@ -90,37 +90,37 @@ describe("JobHeader", () => {
     expect(onCheckSponsor).toHaveBeenCalled();
   });
 
-  it("shows 'Confirmed Sponsor' when score >= 95", () => {
+  it("shows '确认ed Sponsor' when score >= 95", () => {
     const jobWithSponsor = {
       ...mockJob,
       sponsorMatchScore: 98,
-      sponsorMatchNames: '["Tech Corp Ltd"]',
+      sponsorMatch名称s: '["Tech Corp Ltd"]',
     };
     renderWithRouter(<JobHeader job={jobWithSponsor} />);
 
-    expect(screen.getByText("Confirmed Sponsor")).toBeInTheDocument();
+    expect(screen.getByText("确认ed Sponsor")).toBeInTheDocument();
   });
 
   it("shows 'Potential Sponsor' when score is between 80 and 94", () => {
     const jobWithPotential = {
       ...mockJob,
       sponsorMatchScore: 85,
-      sponsorMatchNames: '["Techy Corp"]',
+      sponsorMatch名称s: '["Techy Corp"]',
     };
     renderWithRouter(<JobHeader job={jobWithPotential} />);
 
     expect(screen.getByText("Potential Sponsor")).toBeInTheDocument();
   });
 
-  it("shows 'Sponsor Not Found' when score < 80", () => {
-    const jobNoSponsor = {
+  it("shows 'Sponsor 否t Found' when score < 80", () => {
+    const job否Sponsor = {
       ...mockJob,
       sponsorMatchScore: 40,
-      sponsorMatchNames: '["Other Corp"]',
+      sponsorMatch名称s: '["Other Corp"]',
     };
-    renderWithRouter(<JobHeader job={jobNoSponsor} />);
+    renderWithRouter(<JobHeader job={job否Sponsor} />);
 
-    expect(screen.getByText("Sponsor Not Found")).toBeInTheDocument();
+    expect(screen.getByText("Sponsor 否t Found")).toBeInTheDocument();
   });
 
   it("shows a previously applied status indicator with match details", () => {
@@ -155,7 +155,7 @@ describe("JobHeader", () => {
     renderWithRouter(<JobHeader job={jobWithTooltips} />);
 
     expect(
-      screen.getByText("Found by the pipeline. Not tailored yet."),
+      screen.getByText("Found by the pipeline. 否t tailored yet."),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -181,16 +181,16 @@ describe("JobHeader", () => {
   });
 
   it("hides sponsor info when showSponsorInfo is false", () => {
-    (useSettings as any).mockReturnValue({
+    (use设置 as any).mockReturnValue({
       showSponsorInfo: false,
     });
 
     const jobWithSponsor = { ...mockJob, sponsorMatchScore: 98 };
     renderWithRouter(<JobHeader job={jobWithSponsor} />);
 
-    expect(screen.queryByText("Confirmed Sponsor")).not.toBeInTheDocument();
+    expect(screen.queryByText("确认ed Sponsor")).not.toBeInTheDocument();
     expect(
-      screen.queryByText("Check Sponsorship Status"),
+      screen.queryByText("Check Sponsorship 状态"),
     ).not.toBeInTheDocument();
   });
 

@@ -1,8 +1,8 @@
 import * as api from "@client/api";
 import { JobHeader, TailoredSummary } from "@client/components";
 import { GhostwriterDrawer } from "@client/components/ghostwriter/GhostwriterDrawer";
-import { JobDescriptionMarkdown } from "@client/components/JobDescriptionMarkdown";
-import { JobDetailsEditDrawer } from "@client/components/JobDetailsEditDrawer";
+import { Job描述Markdown } from "@client/components/Job描述Markdown";
+import { JobDetails编辑Drawer } from "@client/components/JobDetails编辑Drawer";
 import { KbdHint } from "@client/components/KbdHint";
 import { OpenJobListingButton } from "@client/components/OpenJobListingButton";
 import { TailoringWorkspace } from "@client/components/tailoring/TailoringWorkspace";
@@ -10,11 +10,11 @@ import {
   useMarkAsAppliedMutation,
   useSkipJobMutation,
 } from "@client/hooks/queries/useJobMutations";
-import { useProfile } from "@client/hooks/useProfile";
+import { use个人资料 } from "@client/hooks/use个人资料";
 import { useRescoreJob } from "@client/hooks/useRescoreJob";
-import { useSettings } from "@client/hooks/useSettings";
+import { use设置 } from "@client/hooks/use设置";
 import { uploadJobPdfFromFile } from "@client/lib/job-pdf-upload";
-import { getRenderableJobDescription } from "@client/lib/jobDescription";
+import { getRenderableJob描述 } from "@client/lib/job描述";
 import { downloadJobPdf, openJobPdf } from "@client/lib/private-pdf";
 import type {
   Job,
@@ -25,14 +25,14 @@ import {
   CheckCircle2,
   Copy,
   Download,
-  Edit2,
+  编辑2,
   ExternalLink,
   FileText,
   FolderKanban,
   Loader2,
   MoreHorizontal,
   RefreshCcw,
-  Save,
+  保存,
   Sparkles,
   Upload,
   XCircle,
@@ -71,7 +71,7 @@ interface JobDetailPanelProps {
   activeJobs: JobListItem[];
   selectedJob: Job | null;
   onSelectJobId: (jobId: string | null) => void;
-  onJobUpdated: () => Promise<void>;
+  onJob更新d: () => Promise<void>;
   onPauseRefreshChange?: (paused: boolean) => void;
 }
 
@@ -82,27 +82,27 @@ const tabCopy: Record<
   {
     label: string;
     description: string;
-    dotClassName: string;
-    selectedClassName: string;
+    dotClass名称: string;
+    selectedClass名称: string;
   }
 > = {
   brief: {
     label: "Brief",
     description: "Read the role, fit, and job description.",
-    dotClassName: "bg-sky-500/70",
-    selectedClassName: "!border-sky-400/65 !bg-sky-500/20 !text-sky-100",
+    dotClass名称: "bg-sky-500/70",
+    selectedClass名称: "!border-sky-400/65 !bg-sky-500/20 !text-sky-100",
   },
   tailoring: {
     label: "Tailoring",
     description: "Shape the resume material for this job.",
-    dotClassName: "bg-amber-500/70",
-    selectedClassName: "!border-amber-400/65 !bg-amber-500/20 !text-amber-100",
+    dotClass名称: "bg-amber-500/70",
+    selectedClass名称: "!border-amber-400/65 !bg-amber-500/20 !text-amber-100",
   },
   apply: {
     label: "Apply",
     description: "Use the generated kit, Ghostwriter, and final actions.",
-    dotClassName: "bg-emerald-500/70",
-    selectedClassName:
+    dotClass名称: "bg-emerald-500/70",
+    selectedClass名称:
       "!border-emerald-400/65 !bg-emerald-500/20 !text-emerald-100",
   },
 };
@@ -175,12 +175,12 @@ const getDefaultInspectorTab = (
   return "brief";
 };
 
-const getJobStageNote = (job: Job): string => {
+const getJobStage否te = (job: Job): string => {
   if (job.status === "ready") {
     return "Ready to apply. Review the brief, use the application kit, then mark it applied.";
   }
   if (job.status === "discovered") {
-    return "Newly discovered. Decide if it is worth tailoring, then generate the application kit.";
+    return "新建ly discovered. Decide if it is worth tailoring, then generate the application kit.";
   }
   if (job.status === "processing") {
     return "JobOps is analyzing this role and preparing the first draft.";
@@ -200,18 +200,18 @@ const Stat: React.FC<{
   tone?: "blue" | "green" | "neutral";
 }> = ({ label, value, tone = "neutral" }) => {
   if (!value) return null;
-  const toneClassName =
+  const toneClass名称 =
     tone === "blue"
       ? "border-sky-400/10 bg-muted/5"
       : tone === "green"
         ? "border-emerald-400/10 bg-muted/5"
         : "border-border/35 bg-muted/5";
   return (
-    <div className={cn("min-w-0 rounded-md border px-3 py-2", toneClassName)}>
-      <div className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground/60">
+    <div class名称={cn("min-w-0 rounded-md border px-3 py-2", toneClass名称)}>
+      <div class名称="text-[10px] font-medium uppercase tracking-wide text-muted-foreground/60">
         {label}
       </div>
-      <div className="mt-1 truncate text-xs font-medium text-foreground/85">
+      <div class名称="mt-1 truncate text-xs font-medium text-foreground/85">
         {value}
       </div>
     </div>
@@ -224,49 +224,49 @@ const FitSignal: React.FC<{ job: Job }> = ({ job }) => {
   const score = job.suitabilityScore ?? 0;
   const isStrong = score >= 75;
   const isRisk = score > 0 && score < 55;
-  const toneClassName = isStrong
+  const toneClass名称 = isStrong
     ? "border-emerald-400/20 bg-muted/5"
     : isRisk
       ? "border-rose-400/25 bg-muted/5"
       : "border-amber-400/25 bg-muted/5";
   const label = isStrong ? "Strong fit" : isRisk ? "Fit risk" : "Fit check";
-  const iconClassName = isStrong
+  const iconClass名称 = isStrong
     ? "text-emerald-300"
     : isRisk
       ? "text-rose-300"
       : "text-amber-300";
 
   return (
-    <div className={cn("rounded-lg border px-3 py-3", toneClassName)}>
+    <div class名称={cn("rounded-lg border px-3 py-3", toneClass名称)}>
       <div
-        className={cn(
+        class名称={cn(
           "mb-2 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide",
-          iconClassName,
+          iconClass名称,
         )}
       >
-        <Sparkles className="h-3.5 w-3.5" />
+        <Sparkles class名称="h-3.5 w-3.5" />
         {label}
         {job.suitabilityScore != null ? (
-          <span className="ml-auto text-[10px] tabular-nums opacity-80">
+          <span class名称="ml-auto text-[10px] tabular-nums opacity-80">
             {job.suitabilityScore}/100
           </span>
         ) : null}
       </div>
-      <p className="text-sm leading-relaxed text-foreground/85">
+      <p class名称="text-sm leading-relaxed text-foreground/85">
         {job.suitabilityReason}
       </p>
     </div>
   );
 };
 
-const KitStatus: React.FC<{ label: string; ready: boolean }> = ({
+const Kit状态: React.FC<{ label: string; ready: boolean }> = ({
   label,
   ready,
 }) => (
-  <div className="flex items-center justify-between gap-3 rounded-md border border-border/35 bg-background/30 px-3 py-2">
-    <span className="text-xs text-muted-foreground">{label}</span>
+  <div class名称="flex items-center justify-between gap-3 rounded-md border border-border/35 bg-background/30 px-3 py-2">
+    <span class名称="text-xs text-muted-foreground">{label}</span>
     <span
-      className={cn(
+      class名称={cn(
         "rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
         ready
           ? "bg-emerald-500/10 text-emerald-300"
@@ -283,36 +283,36 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
   activeJobs,
   selectedJob,
   onSelectJobId,
-  onJobUpdated,
+  onJob更新d,
   onPauseRefreshChange,
 }) => {
   const [inspectorTab, setInspectorTab] = useState<InspectorTab>("brief");
-  const [isEditingDescription, setIsEditingDescription] = useState(false);
-  const [editedDescription, setEditedDescription] = useState("");
-  const [isSavingDescription, setIsSavingDescription] = useState(false);
+  const [is编辑ing描述, setIs编辑ing描述] = useState(false);
+  const [edited描述, set编辑ed描述] = useState("");
+  const [isSaving描述, setIsSaving描述] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isApplying, setIsApplying] = useState(false);
   const [isMoving, setIsMoving] = useState(false);
-  const [isEditDetailsOpen, setIsEditDetailsOpen] = useState(false);
+  const [is编辑DetailsOpen, setIs编辑DetailsOpen] = useState(false);
   const [catalog, setCatalog] = useState<ResumeProjectCatalogItem[]>([]);
   const [isUploadingPdf, setIsUploadingPdf] = useState(false);
   const uploadPdfInputRef = useRef<HTMLInputElement | null>(null);
   const previousSelectionKeyRef = useRef<string | null>(null);
   const markAsAppliedMutation = useMarkAsAppliedMutation();
   const skipJobMutation = useSkipJobMutation();
-  const { isRescoring, rescoreJob } = useRescoreJob(onJobUpdated);
-  const { personName } = useProfile();
-  const { renderMarkdownInJobDescriptions } = useSettings();
+  const { isRescoring, rescoreJob } = useRescoreJob(onJob更新d);
+  const { person名称 } = use个人资料();
+  const { renderMarkdownInJob描述s } = use设置();
 
   const jobLink = selectedJob
     ? selectedJob.applicationLink || selectedJob.jobUrl
     : "#";
   const selectedPdfFilename = selectedJob
-    ? `${safeFilenamePart(personName || "Unknown")}_${safeFilenamePart(selectedJob.employer || "Unknown")}.pdf`
+    ? `${safeFilenamePart(person名称 || "Unknown")}_${safeFilenamePart(selectedJob.employer || "Unknown")}.pdf`
     : "resume.pdf";
   const description = useMemo(
-    () => getRenderableJobDescription(selectedJob?.jobDescription),
-    [selectedJob?.jobDescription],
+    () => getRenderableJob描述(selectedJob?.job描述),
+    [selectedJob?.job描述],
   );
   const selectedProjectIds = useMemo(
     () => selectedJob?.selectedProjectIds?.split(",").filter(Boolean) ?? [],
@@ -344,16 +344,16 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
     if (previousSelectionKeyRef.current === currentSelectionKey) return;
     previousSelectionKeyRef.current = currentSelectionKey;
     setInspectorTab(getDefaultInspectorTab(selectedJob, activeTab));
-    setIsEditingDescription(false);
-    setEditedDescription(selectedJob?.jobDescription || "");
-    setIsEditDetailsOpen(false);
+    setIs编辑ing描述(false);
+    set编辑ed描述(selectedJob?.job描述 || "");
+    setIs编辑DetailsOpen(false);
     onPauseRefreshChange?.(false);
   }, [activeTab, selectedJob, onPauseRefreshChange]);
 
   useEffect(() => {
-    if (!selectedJob || isEditingDescription) return;
-    setEditedDescription(selectedJob.jobDescription || "");
-  }, [selectedJob, isEditingDescription]);
+    if (!selectedJob || is编辑ing描述) return;
+    set编辑ed描述(selectedJob.job描述 || "");
+  }, [selectedJob, is编辑ing描述]);
 
   useEffect(() => {
     return () => onPauseRefreshChange?.(false);
@@ -369,25 +369,25 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
     [activeJobs, onSelectJobId],
   );
 
-  const handleSaveDescription = useCallback(async () => {
+  const handle保存描述 = useCallback(async () => {
     if (!selectedJob) return;
     try {
-      setIsSavingDescription(true);
+      setIsSaving描述(true);
       await api.updateJob(selectedJob.id, {
-        jobDescription: editedDescription,
+        job描述: edited描述,
       });
       toast.success("Job description updated");
-      setIsEditingDescription(false);
-      await onJobUpdated();
+      setIs编辑ing描述(false);
+      await onJob更新d();
     } catch (error) {
       showErrorToast(error, "Failed to update description");
     } finally {
-      setIsSavingDescription(false);
+      setIsSaving描述(false);
     }
-  }, [editedDescription, onJobUpdated, selectedJob]);
+  }, [edited描述, onJob更新d, selectedJob]);
 
-  const openEditDetails = useCallback(() => {
-    window.setTimeout(() => setIsEditDetailsOpen(true), 0);
+  const open编辑Details = useCallback(() => {
+    window.setTimeout(() => setIs编辑DetailsOpen(true), 0);
   }, []);
 
   const handleCopyInfo = useCallback(async () => {
@@ -426,13 +426,13 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
         });
         handleJobMoved(selectedJob.id);
       }
-      await onJobUpdated();
+      await onJob更新d();
     } catch (error) {
       showErrorToast(error, "Failed to process job");
     } finally {
       setIsProcessing(false);
     }
-  }, [handleJobMoved, onJobUpdated, selectedJob]);
+  }, [handleJobMoved, onJob更新d, selectedJob]);
 
   const handlePrimaryAction = useCallback(async () => {
     if (!selectedJob) return;
@@ -454,7 +454,7 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
           description: `${selectedJob.title} at ${selectedJob.employer}`,
         });
         handleJobMoved(selectedJob.id);
-        await onJobUpdated();
+        await onJob更新d();
       } catch (error) {
         showErrorToast(error, "Failed to mark as applied");
       } finally {
@@ -473,7 +473,7 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
           to_status: "in_progress",
         });
         toast.success("Moved to in progress");
-        await onJobUpdated();
+        await onJob更新d();
       } catch (error) {
         showErrorToast(error, "Failed to move to in progress");
       } finally {
@@ -482,7 +482,7 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
       return;
     }
     setInspectorTab("brief");
-  }, [handleJobMoved, markAsAppliedMutation, onJobUpdated, selectedJob]);
+  }, [handleJobMoved, markAsAppliedMutation, onJob更新d, selectedJob]);
 
   const handleSkip = useCallback(async () => {
     if (!selectedJob) return;
@@ -496,11 +496,11 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
       });
       toast.message("Job skipped");
       handleJobMoved(selectedJob.id);
-      await onJobUpdated();
+      await onJob更新d();
     } catch (error) {
       showErrorToast(error, "Failed to skip");
     }
-  }, [handleJobMoved, onJobUpdated, selectedJob, skipJobMutation]);
+  }, [handleJobMoved, onJob更新d, selectedJob, skipJobMutation]);
 
   const handleOpenPdf = useCallback(() => {
     if (!selectedJob) return;
@@ -523,7 +523,7 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
         setIsUploadingPdf(true);
         await uploadJobPdfFromFile(selectedJob.id, file);
         toast.success(selectedJob.pdfPath ? "PDF replaced" : "PDF attached");
-        await onJobUpdated();
+        await onJob更新d();
       } catch (error) {
         showErrorToast(error, "Failed to upload PDF");
       } finally {
@@ -533,19 +533,19 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
         }
       }
     },
-    [onJobUpdated, selectedJob],
+    [onJob更新d, selectedJob],
   );
 
   if (!selectedJob) {
     return (
-      <div className="flex h-full min-h-[260px] flex-col items-center justify-center gap-2 text-center">
-        <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-border/50 bg-muted/20">
-          <FileText className="h-5 w-5 text-muted-foreground" />
+      <div class名称="flex h-full min-h-[260px] flex-col items-center justify-center gap-2 text-center">
+        <div class名称="flex h-11 w-11 items-center justify-center rounded-lg border border-border/50 bg-muted/20">
+          <FileText class名称="h-5 w-5 text-muted-foreground" />
         </div>
-        <div className="text-sm font-medium text-muted-foreground">
-          No job selected
+        <div class名称="text-sm font-medium text-muted-foreground">
+          否 job selected
         </div>
-        <p className="max-w-[220px] text-xs text-muted-foreground/70">
+        <p class名称="max-w-[220px] text-xs text-muted-foreground/70">
           Select a job to see the brief, tailoring, and application kit.
         </p>
       </div>
@@ -562,54 +562,54 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
   const tone = statusTone[selectedJob.status];
 
   return (
-    <div className="flex min-h-[520px] flex-col gap-4">
-      <div className="space-y-4">
+    <div class名称="flex min-h-[520px] flex-col gap-4">
+      <div class名称="space-y-4">
         <JobHeader
           job={selectedJob}
           onCheckSponsor={async () => {
             await api.checkSponsor(selectedJob.id);
-            await onJobUpdated();
+            await onJob更新d();
           }}
         />
 
         <div
-          className={cn(
+          class名称={cn(
             "relative overflow-hidden rounded-lg border p-3",
             tone.shell,
           )}
         >
-          <div className={cn("absolute inset-y-0 left-0 w-1", tone.icon)} />
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
+          <div class名称={cn("absolute inset-y-0 left-0 w-1", tone.icon)} />
+          <div class名称="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div class名称="min-w-0">
               <div
-                className={cn(
+                class名称={cn(
                   "text-[10px] font-semibold uppercase tracking-wide",
                   tone.eyebrow,
                 )}
               >
                 Next step
               </div>
-              <p className="mt-1 text-xs text-foreground/80">
-                {getJobStageNote(selectedJob)}
+              <p class名称="mt-1 text-xs text-foreground/80">
+                {getJobStage否te(selectedJob)}
               </p>
             </div>
-            <div className="flex shrink-0 gap-2">
+            <div class名称="flex shrink-0 gap-2">
               <Button
                 size="sm"
                 onClick={() => void handlePrimaryAction()}
                 disabled={primaryBusy || selectedJob.status === "processing"}
-                className={cn("h-9 gap-1.5 px-3 text-xs", tone.button)}
+                class名称={cn("h-9 gap-1.5 px-3 text-xs", tone.button)}
               >
                 {primaryBusy ? (
-                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  <Loader2 class名称="h-3.5 w-3.5 animate-spin" />
                 ) : selectedJob.status === "discovered" ? (
-                  <Sparkles className="h-3.5 w-3.5" />
+                  <Sparkles class名称="h-3.5 w-3.5" />
                 ) : (
-                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  <CheckCircle2 class名称="h-3.5 w-3.5" />
                 )}
                 {getPrimaryAction(selectedJob)}
                 {selectedJob.status === "ready" ? (
-                  <KbdHint shortcut="a" className="ml-1" />
+                  <KbdHint shortcut="a" class名称="ml-1" />
                 ) : null}
               </Button>
 
@@ -618,28 +618,28 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="h-9 w-9"
+                    class名称="h-9 w-9"
                     aria-label="More actions"
                   >
-                    <MoreHorizontal className="h-4 w-4" />
+                    <MoreHorizontal class名称="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuItem onSelect={openEditDetails}>
-                    <Edit2 className="mr-2 h-4 w-4" />
-                    Edit details
+                <DropdownMenuContent align="end" class名称="w-56">
+                  <DropdownMenuItem onSelect={open编辑Details}>
+                    <编辑2 class名称="mr-2 h-4 w-4" />
+                    编辑 details
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onSelect={() => {
                       setInspectorTab("brief");
-                      setIsEditingDescription(true);
+                      setIs编辑ing描述(true);
                     }}
                   >
-                    <Edit2 className="mr-2 h-4 w-4" />
-                    Edit job description
+                    <编辑2 class名称="mr-2 h-4 w-4" />
+                    编辑 job description
                   </DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => void handleCopyInfo()}>
-                    <Copy className="mr-2 h-4 w-4" />
+                    <Copy class名称="mr-2 h-4 w-4" />
                     Copy job info
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -647,7 +647,7 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
                     disabled={isRescoring}
                   >
                     <RefreshCcw
-                      className={cn(
+                      class名称={cn(
                         "mr-2 h-4 w-4",
                         isRescoring && "animate-spin",
                       )}
@@ -661,7 +661,7 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
                       disabled={isProcessing}
                     >
                       <RefreshCcw
-                        className={cn(
+                        class名称={cn(
                           "mr-2 h-4 w-4",
                           isProcessing && "animate-spin",
                         )}
@@ -675,7 +675,7 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
                     onSelect={() => uploadPdfInputRef.current?.click()}
                     disabled={isUploadingPdf}
                   >
-                    <Upload className="mr-2 h-4 w-4" />
+                    <Upload class名称="mr-2 h-4 w-4" />
                     {isUploadingPdf
                       ? "Uploading PDF..."
                       : selectedJob.pdfPath
@@ -685,11 +685,11 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
                   {selectedJob.pdfPath && (
                     <>
                       <DropdownMenuItem onSelect={handleOpenPdf}>
-                        <ExternalLink className="mr-2 h-4 w-4" />
+                        <ExternalLink class名称="mr-2 h-4 w-4" />
                         View PDF
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleDownloadPdf}>
-                        <Download className="mr-2 h-4 w-4" />
+                        <Download class名称="mr-2 h-4 w-4" />
                         Download PDF
                       </DropdownMenuItem>
                     </>
@@ -699,9 +699,9 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
                       <DropdownMenuSeparator />
                       <DropdownMenuItem
                         onSelect={() => void handleSkip()}
-                        className="text-destructive focus:text-destructive"
+                        class名称="text-destructive focus:text-destructive"
                       >
-                        <XCircle className="mr-2 h-4 w-4" />
+                        <XCircle class名称="mr-2 h-4 w-4" />
                         Skip job
                       </DropdownMenuItem>
                     </>
@@ -716,25 +716,25 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
       <Tabs
         value={inspectorTab}
         onValueChange={(value) => setInspectorTab(value as InspectorTab)}
-        className="flex min-h-0 flex-1 flex-col"
+        class名称="flex min-h-0 flex-1 flex-col"
       >
         <TooltipProvider delayDuration={0}>
-          <TabsList className="grid h-auto grid-cols-3 gap-1 rounded-lg border border-border/35 bg-background/30 p-1 text-xs">
+          <TabsList class名称="grid h-auto grid-cols-3 gap-1 rounded-lg border border-border/35 bg-background/30 p-1 text-xs">
             {Object.entries(tabCopy).map(([value, copy]) => {
               const isSelected = inspectorTab === value;
               const trigger = (
                 <TabsTrigger
                   key={value}
                   value={value}
-                  className={cn(
+                  class名称={cn(
                     "h-9 gap-2 border border-transparent text-xs text-muted-foreground data-[state=active]:shadow-none",
-                    isSelected && copy.selectedClassName,
+                    isSelected && copy.selectedClass名称,
                   )}
                 >
                   <span
-                    className={cn(
+                    class名称={cn(
                       "h-1.5 w-1.5 rounded-full",
-                      copy.dotClassName,
+                      copy.dotClass名称,
                     )}
                   />
                   <span>{copy.label}</span>
@@ -744,7 +744,7 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
               return (
                 <Tooltip key={value}>
                   <TooltipTrigger asChild>{trigger}</TooltipTrigger>
-                  <TooltipContent className="max-w-xs text-center">
+                  <TooltipContent class名称="max-w-xs text-center">
                     <p>{copy.description}</p>
                   </TooltipContent>
                 </Tooltip>
@@ -753,12 +753,12 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
           </TabsList>
         </TooltipProvider>
 
-        <div className="mt-2 border-l border-border/50 pl-2 text-[10px] text-muted-foreground/65">
+        <div class名称="mt-2 border-l border-border/50 pl-2 text-[10px] text-muted-foreground/65">
           {tabCopy[inspectorTab].description}
         </div>
 
-        <TabsContent value="brief" className="min-h-0 flex-1 space-y-4 pt-3">
-          <div className="grid gap-2 sm:grid-cols-2">
+        <TabsContent value="brief" class名称="min-h-0 flex-1 space-y-4 pt-3">
+          <div class名称="grid gap-2 sm:grid-cols-2">
             <Stat label="Location" value={selectedJob.location} tone="blue" />
             <Stat label="Salary" value={selectedJob.salary} tone="green" />
             <Stat label="Level" value={selectedJob.jobLevel} />
@@ -770,25 +770,25 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
           <FitSignal job={selectedJob} />
           <TailoredSummary job={selectedJob} />
 
-          <div className="overflow-hidden rounded-lg border border-border/45 bg-muted/5">
-            <div className="flex items-center justify-between gap-2 border-b border-border/35 bg-muted/5 px-3 py-2.5">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2 text-xs font-semibold text-foreground/90">
-                  <FileText className="h-3.5 w-3.5 text-sky-400/80" />
+          <div class名称="overflow-hidden rounded-lg border border-border/45 bg-muted/5">
+            <div class名称="flex items-center justify-between gap-2 border-b border-border/35 bg-muted/5 px-3 py-2.5">
+              <div class名称="min-w-0">
+                <div class名称="flex items-center gap-2 text-xs font-semibold text-foreground/90">
+                  <FileText class名称="h-3.5 w-3.5 text-sky-400/80" />
                   Job description
                 </div>
-                <p className="mt-0.5 text-[10px] text-muted-foreground/65">
+                <p class名称="mt-0.5 text-[10px] text-muted-foreground/65">
                   The source material for deciding, tailoring, and applying.
                 </p>
               </div>
-              <div className="flex flex-wrap justify-end gap-1">
-                {!isEditingDescription ? (
+              <div class名称="flex flex-wrap justify-end gap-1">
+                {!is编辑ing描述 ? (
                   <>
                     {selectedJob.jobUrl ? (
                       <Button
                         size="sm"
                         variant="ghost"
-                        className="h-8 px-2 text-xs text-muted-foreground hover:text-foreground"
+                        class名称="h-8 px-2 text-xs text-muted-foreground hover:text-foreground"
                         asChild
                       >
                         <a
@@ -796,7 +796,7 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
+                          <ExternalLink class名称="mr-1.5 h-3.5 w-3.5" />
                           View job
                         </a>
                       </Button>
@@ -804,25 +804,25 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="h-8 px-2 text-xs text-muted-foreground hover:text-foreground"
+                      class名称="h-8 px-2 text-xs text-muted-foreground hover:text-foreground"
                       onClick={() => {
                         void copyTextToClipboard(
-                          selectedJob.jobDescription || "",
+                          selectedJob.job描述 || "",
                         );
                         toast.success("Copied job description");
                       }}
                     >
-                      <Copy className="mr-1.5 h-3.5 w-3.5" />
+                      <Copy class名称="mr-1.5 h-3.5 w-3.5" />
                       Copy
                     </Button>
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="h-8 px-2 text-xs text-muted-foreground hover:text-foreground"
-                      onClick={() => setIsEditingDescription(true)}
+                      class名称="h-8 px-2 text-xs text-muted-foreground hover:text-foreground"
+                      onClick={() => setIs编辑ing描述(true)}
                     >
-                      <Edit2 className="mr-1.5 h-3.5 w-3.5" />
-                      Edit
+                      <编辑2 class名称="mr-1.5 h-3.5 w-3.5" />
+                      编辑
                     </Button>
                   </>
                 ) : (
@@ -830,46 +830,46 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="h-8 px-2 text-xs text-muted-foreground hover:text-foreground"
+                      class名称="h-8 px-2 text-xs text-muted-foreground hover:text-foreground"
                       onClick={() => {
-                        setIsEditingDescription(false);
-                        setEditedDescription(selectedJob.jobDescription || "");
+                        setIs编辑ing描述(false);
+                        set编辑ed描述(selectedJob.job描述 || "");
                       }}
-                      disabled={isSavingDescription}
+                      disabled={isSaving描述}
                     >
-                      Cancel
+                      取消
                     </Button>
                     <Button
                       size="sm"
                       variant="secondary"
-                      className="h-8 px-2 text-xs"
-                      onClick={() => void handleSaveDescription()}
-                      disabled={isSavingDescription}
+                      class名称="h-8 px-2 text-xs"
+                      onClick={() => void handle保存描述()}
+                      disabled={isSaving描述}
                     >
-                      {isSavingDescription ? (
-                        <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+                      {isSaving描述 ? (
+                        <Loader2 class名称="mr-1.5 h-3.5 w-3.5 animate-spin" />
                       ) : (
-                        <Save className="mr-1.5 h-3.5 w-3.5" />
+                        <保存 class名称="mr-1.5 h-3.5 w-3.5" />
                       )}
-                      Save
+                      保存
                     </Button>
                   </>
                 )}
               </div>
             </div>
 
-            <div className="max-h-[420px] overflow-y-auto bg-background/20 p-4 text-sm text-foreground/75">
-              {isEditingDescription ? (
+            <div class名称="max-h-[420px] overflow-y-auto bg-background/20 p-4 text-sm text-foreground/75">
+              {is编辑ing描述 ? (
                 <Textarea
-                  value={editedDescription}
-                  onChange={(event) => setEditedDescription(event.target.value)}
-                  className="min-h-[360px] bg-background/70 font-mono text-sm leading-relaxed focus-visible:ring-1"
+                  value={edited描述}
+                  onChange={(event) => set编辑ed描述(event.target.value)}
+                  class名称="min-h-[360px] bg-background/70 font-mono text-sm leading-relaxed focus-visible:ring-1"
                   placeholder="Enter job description..."
                 />
-              ) : renderMarkdownInJobDescriptions ? (
-                <JobDescriptionMarkdown description={description} />
+              ) : renderMarkdownInJob描述s ? (
+                <Job描述Markdown description={description} />
               ) : (
-                <div className="whitespace-pre-wrap leading-7">
+                <div class名称="whitespace-pre-wrap leading-7">
                   {description}
                 </div>
               )}
@@ -879,66 +879,66 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
 
         <TabsContent
           value="tailoring"
-          className="min-h-0 flex-1 space-y-4 pt-3"
+          class名称="min-h-0 flex-1 space-y-4 pt-3"
         >
           <TailoringWorkspace
             mode="editor"
             job={selectedJob}
-            onUpdate={onJobUpdated}
+            on更新={onJob更新d}
             onDirtyChange={onPauseRefreshChange}
           />
         </TabsContent>
 
-        <TabsContent value="apply" className="min-h-0 flex-1 space-y-4 pt-3">
-          <div className="space-y-3 pb-1">
+        <TabsContent value="apply" class名称="min-h-0 flex-1 space-y-4 pt-3">
+          <div class名称="space-y-3 pb-1">
             <div>
-              <h3 className="text-sm font-semibold text-foreground/85">
+              <h3 class名称="text-sm font-semibold text-foreground/85">
                 Application kit
               </h3>
-              <p className="mt-0.5 text-[10px] text-muted-foreground/70">
+              <p class名称="mt-0.5 text-[10px] text-muted-foreground/70">
                 Open, write, and use the generated materials for this job.
               </p>
             </div>
-            <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+            <div class名称="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
               <GhostwriterDrawer
                 job={selectedJob}
-                triggerClassName="h-10 w-full justify-center gap-1.5 px-2 text-xs"
+                triggerClass名称="h-10 w-full justify-center gap-1.5 px-2 text-xs"
               />
               <OpenJobListingButton
                 href={jobLink}
-                className="h-10 w-full px-2 text-xs"
+                class名称="h-10 w-full px-2 text-xs"
                 shortcut="o"
               />
               <Button
                 variant="outline"
-                className="h-10 w-full gap-1.5 px-2 text-xs"
+                class名称="h-10 w-full gap-1.5 px-2 text-xs"
                 onClick={handleDownloadPdf}
                 disabled={!selectedJob.pdfPath}
               >
-                <Download className="h-3.5 w-3.5" />
+                <Download class名称="h-3.5 w-3.5" />
                 Download PDF
-                <KbdHint shortcut="d" className="ml-auto" />
+                <KbdHint shortcut="d" class名称="ml-auto" />
               </Button>
               <Button
                 variant="outline"
-                className="h-10 w-full gap-1.5 px-2 text-xs"
+                class名称="h-10 w-full gap-1.5 px-2 text-xs"
                 onClick={handleOpenPdf}
                 disabled={!selectedJob.pdfPath}
               >
-                <FileText className="h-3.5 w-3.5" />
+                <FileText class名称="h-3.5 w-3.5" />
                 View PDF
               </Button>
               {canGenerate && (
                 <Button
                   variant="outline"
-                  className="h-10 w-full gap-1.5 px-2 text-xs"
+                  class名称="h-10 w-full gap-1.5 px-2 text-xs"
                   onClick={() => void handleProcess()}
                   disabled={isProcessing}
                 >
                   {isProcessing ? (
-                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    <Loader2 class名称="h-3.5 w-3.5 animate-spin" />
                   ) : (
-                    <RefreshCcw className="h-3.5 w-3.5" />
+                    <RefreshCcw class名称="h-3.5 w-3.5" />
                   )}
                   {selectedJob.status === "ready"
                     ? "Regenerate PDF"
@@ -948,62 +948,62 @@ export const JobDetailPanel: React.FC<JobDetailPanelProps> = ({
             </div>
           </div>
 
-          <div className="rounded-lg border border-border/45 bg-muted/5 p-3">
-            <div className="mb-2 flex items-center gap-2 text-xs font-semibold text-foreground/90">
-              <FolderKanban className="h-3.5 w-3.5 text-amber-400/80" />
+          <div class名称="rounded-lg border border-border/45 bg-muted/5 p-3">
+            <div class名称="mb-2 flex items-center gap-2 text-xs font-semibold text-foreground/90">
+              <FolderKanban class名称="h-3.5 w-3.5 text-amber-400/80" />
               Selected projects
             </div>
             {selectedProjects.length > 0 ? (
-              <div className="flex flex-wrap gap-1.5">
+              <div class名称="flex flex-wrap gap-1.5">
                 {selectedProjects.map((project) => (
                   <span
                     key={project}
-                    className="rounded-md border border-border/35 bg-background/40 px-2 py-1 text-[11px] text-muted-foreground"
+                    class名称="rounded-md border border-border/35 bg-background/40 px-2 py-1 text-[11px] text-muted-foreground"
                   >
                     {project}
                   </span>
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-muted-foreground/70">
-                No projects selected yet. Use Tailoring to choose the evidence
+              <p class名称="text-xs text-muted-foreground/70">
+                否 projects selected yet. Use Tailoring to choose the evidence
                 for this role.
               </p>
             )}
           </div>
 
-          <div className="rounded-lg border border-border/45 bg-muted/5 p-3">
-            <div className="mb-3 flex items-center gap-2 text-xs font-semibold text-foreground/90">
-              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400/80" />
+          <div class名称="rounded-lg border border-border/45 bg-muted/5 p-3">
+            <div class名称="mb-3 flex items-center gap-2 text-xs font-semibold text-foreground/90">
+              <CheckCircle2 class名称="h-3.5 w-3.5 text-emerald-400/80" />
               Application kit
             </div>
-            <div className="space-y-2">
-              <KitStatus
+            <div class名称="space-y-2">
+              <Kit状态
                 label="Tailored summary"
                 ready={Boolean(selectedJob.tailoredSummary)}
               />
-              <KitStatus
+              <Kit状态
                 label="Tailored skills"
                 ready={Boolean(selectedJob.tailoredSkills)}
               />
-              <KitStatus label="PDF" ready={Boolean(selectedJob.pdfPath)} />
+              <Kit状态 label="PDF" ready={Boolean(selectedJob.pdfPath)} />
             </div>
           </div>
         </TabsContent>
       </Tabs>
 
-      <JobDetailsEditDrawer
-        open={isEditDetailsOpen}
-        onOpenChange={setIsEditDetailsOpen}
+      <JobDetails编辑Drawer
+        open={is编辑DetailsOpen}
+        onOpenChange={setIs编辑DetailsOpen}
         job={selectedJob}
-        onJobUpdated={onJobUpdated}
+        onJob更新d={onJob更新d}
       />
 
       <input
         ref={uploadPdfInputRef}
         type="file"
         accept="application/pdf,.pdf"
-        className="hidden"
+        class名称="hidden"
         onChange={(event) => {
           const file = event.currentTarget.files?.[0];
           if (file) {

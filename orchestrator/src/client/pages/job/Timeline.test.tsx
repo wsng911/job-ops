@@ -19,27 +19,27 @@ const baseEvent: StageEvent = {
 
 describe("JobTimeline", () => {
   it("renders edit and delete controls when callbacks are provided", () => {
-    const onEdit = vi.fn();
-    const onDelete = vi.fn();
+    const on编辑 = vi.fn();
+    const on删除 = vi.fn();
 
     render(
-      <JobTimeline events={[baseEvent]} onEdit={onEdit} onDelete={onDelete} />,
+      <JobTimeline events={[baseEvent]} on编辑={on编辑} on删除={on删除} />,
     );
 
-    const editButton = screen.getByTitle("Edit event");
-    const deleteButton = screen.getByTitle("Delete event");
+    const editButton = screen.getBy标题("编辑 event");
+    const deleteButton = screen.getBy标题("删除 event");
 
     fireEvent.click(editButton);
     fireEvent.click(deleteButton);
 
-    expect(onEdit).toHaveBeenCalledWith(baseEvent);
-    expect(onDelete).toHaveBeenCalledWith("event-1");
+    expect(on编辑).toHaveBeenCalledWith(baseEvent);
+    expect(on删除).toHaveBeenCalledWith("event-1");
   });
 
   it("omits edit and delete controls when callbacks are missing", () => {
     render(<JobTimeline events={[baseEvent]} />);
 
-    expect(screen.queryByTitle("Edit event")).not.toBeInTheDocument();
-    expect(screen.queryByTitle("Delete event")).not.toBeInTheDocument();
+    expect(screen.queryBy标题("编辑 event")).not.toBeInTheDocument();
+    expect(screen.queryBy标题("删除 event")).not.toBeInTheDocument();
   });
 });

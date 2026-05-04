@@ -26,7 +26,7 @@ describe("RunModeModal", () => {
         isPipelineRunning={false}
         onOpenChange={vi.fn()}
         onModeChange={vi.fn()}
-        onSaveAndRunAutomatic={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRunAutomatic={vi.fn().mockResolvedValue(undefined)}
         onManualImported={vi.fn().mockResolvedValue(undefined)}
       />,
     );
@@ -48,7 +48,7 @@ describe("RunModeModal", () => {
         isPipelineRunning={false}
         onOpenChange={vi.fn()}
         onModeChange={vi.fn()}
-        onSaveAndRunAutomatic={vi.fn().mockResolvedValue(undefined)}
+        on保存AndRunAutomatic={vi.fn().mockResolvedValue(undefined)}
         onManualImported={vi.fn().mockResolvedValue(undefined)}
       />,
     );

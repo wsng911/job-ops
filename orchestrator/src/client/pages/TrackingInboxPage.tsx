@@ -25,22 +25,22 @@ import { queryKeys } from "@/client/lib/queryKeys";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
+  AlertDialog取消,
   AlertDialogContent,
-  AlertDialogDescription,
+  AlertDialog描述,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialog标题,
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, Card标题 } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+  Dialog描述,
   DialogHeader,
-  DialogTitle,
+  Dialog标题,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -55,7 +55,7 @@ import { trackProductEvent } from "@/lib/analytics";
 import { formatDateTime } from "@/lib/utils";
 import * as api from "../api";
 import { EmptyState, PageHeader, PageMain } from "../components";
-import { EmailViewerList } from "./tracking-inbox/EmailViewerList";
+import { 邮箱ViewerList } from "./tracking-inbox/邮箱ViewerList";
 
 const PROVIDER_OPTIONS: PostApplicationProvider[] = [
   ...POST_APPLICATION_PROVIDERS,
@@ -81,7 +81,7 @@ export const TrackingInboxPage: React.FC = () => {
   const [provider, setProvider] = useState<PostApplicationProvider>("gmail");
   const [accountKey, setAccountKey] = useState("default");
   const [maxMessages, setMaxMessages] = useState("100");
-  const [searchDays, setSearchDays] = useState("90");
+  const [searchDays, set搜索Days] = useState("90");
   const isDefaultAccountKey = accountKey.trim() === "default";
 
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -99,8 +99,8 @@ export const TrackingInboxPage: React.FC = () => {
     Record<string, string>
   >({});
   const statusQuery = useQuery({
-    queryKey: queryKeys.postApplication.providerStatus(provider, accountKey),
-    queryFn: () => api.postApplicationProviderStatus({ provider, accountKey }),
+    queryKey: queryKeys.postApplication.provider状态(provider, accountKey),
+    queryFn: () => api.postApplicationProvider状态({ provider, accountKey }),
     enabled: Boolean(provider && accountKey),
   });
   const inboxQuery = useQuery({
@@ -349,14 +349,14 @@ export const TrackingInboxPage: React.FC = () => {
           toast.success("Provider connected");
         } else if (action === "sync") {
           const parsedMaxMessages = Number.parseInt(maxMessages, 10);
-          const parsedSearchDays = Number.parseInt(searchDays, 10);
+          const parsed搜索Days = Number.parseInt(searchDays, 10);
           if (
             !Number.isFinite(parsedMaxMessages) ||
             parsedMaxMessages < 1 ||
             parsedMaxMessages > 500 ||
-            !Number.isFinite(parsedSearchDays) ||
-            parsedSearchDays < 1 ||
-            parsedSearchDays > 365
+            !Number.isFinite(parsed搜索Days) ||
+            parsed搜索Days < 1 ||
+            parsed搜索Days > 365
           ) {
             toast.error(
               "Max messages must be 1-500 and search days must be 1-365 before syncing.",
@@ -369,14 +369,14 @@ export const TrackingInboxPage: React.FC = () => {
           trackProductEvent("tracking_inbox_sync_started", {
             provider,
             max_messages: parsedMaxMessages,
-            search_days: parsedSearchDays,
+            search_days: parsed搜索Days,
           });
 
           await api.postApplicationProviderSync({
             provider,
             accountKey,
             maxMessages: parsedMaxMessages,
-            searchDays: parsedSearchDays,
+            searchDays: parsed搜索Days,
           });
           trackProductEvent("tracking_inbox_sync_completed", {
             provider,
@@ -566,8 +566,8 @@ export const TrackingInboxPage: React.FC = () => {
       if (eligibleCount === 0) {
         toast.error(
           action === "approve"
-            ? "No messages with suggested job matches to approve"
-            : "No messages to ignore",
+            ? "否 messages with suggested job matches to approve"
+            : "否 messages to ignore",
         );
         return;
       }
@@ -632,26 +632,26 @@ export const TrackingInboxPage: React.FC = () => {
             variant="outline"
             onClick={() => void refresh()}
             disabled={isRefreshing || isLoading}
-            className="gap-2"
+            class名称="gap-2"
           >
             {isRefreshing ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <Loader2 class名称="h-4 w-4 animate-spin" />
             ) : (
-              <RefreshCcw className="h-4 w-4" />
+              <RefreshCcw class名称="h-4 w-4" />
             )}
             Refresh
           </Button>
         }
       />
 
-      <PageMain className="space-y-4">
-        <section className="space-y-1 px-1">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold tracking-tight">
+      <PageMain class名称="space-y-4">
+        <section class名称="space-y-1 px-1">
+          <div class名称="flex items-center justify-between">
+            <h1 class名称="text-2xl font-bold tracking-tight">
               Application Inbox Matching
             </h1>
           </div>
-          <p className="text-sm text-muted-foreground">
+          <p class名称="text-sm text-muted-foreground">
             Connect your inbox to ingest related emails, review the suggested
             job matches, and approve or deny to automatically update your
             tracking timeline.
@@ -659,12 +659,12 @@ export const TrackingInboxPage: React.FC = () => {
         </section>
 
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base">Provider Controls</CardTitle>
+          <CardHeader class名称="pb-3">
+            <Card标题 class名称="text-base">Provider Controls</Card标题>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid gap-3 md:grid-cols-2">
-              <div className="space-y-2">
+          <CardContent class名称="space-y-4">
+            <div class名称="grid gap-3 md:grid-cols-2">
+              <div class名称="space-y-2">
                 <Label htmlFor="provider">Provider</Label>
                 <Select
                   value={provider}
@@ -685,7 +685,7 @@ export const TrackingInboxPage: React.FC = () => {
                 </Select>
               </div>
 
-              <div className="space-y-2">
+              <div class名称="space-y-2">
                 <Label htmlFor="accountKey">Account Key</Label>
                 <Input
                   id="accountKey"
@@ -694,13 +694,13 @@ export const TrackingInboxPage: React.FC = () => {
                 />
               </div>
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p class名称="text-xs text-muted-foreground">
               Gmail connect uses Google OAuth popup and stores credentials
-              server-side. No manual refresh token paste is needed.
+              server-side. 否 manual refresh token paste is needed.
             </p>
 
-            <div className="grid gap-3 md:grid-cols-4">
-              <div className="space-y-2">
+            <div class名称="grid gap-3 md:grid-cols-4">
+              <div class名称="space-y-2">
                 <Label htmlFor="maxMessages">Max Messages</Label>
                 <Input
                   id="maxMessages"
@@ -709,23 +709,23 @@ export const TrackingInboxPage: React.FC = () => {
                   onChange={(event) => setMaxMessages(event.target.value)}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="searchDays">Search Days</Label>
+              <div class名称="space-y-2">
+                <Label htmlFor="searchDays">搜索 Days</Label>
                 <Input
                   id="searchDays"
                   inputMode="numeric"
                   value={searchDays}
-                  onChange={(event) => setSearchDays(event.target.value)}
+                  onChange={(event) => set搜索Days(event.target.value)}
                 />
               </div>
-              <div className="md:col-span-2 flex flex-wrap items-end gap-2">
+              <div class名称="md:col-span-2 flex flex-wrap items-end gap-2">
                 {!isConnected ? (
                   <Button
                     onClick={() => void runProviderAction("connect")}
                     disabled={isActionLoading}
-                    className="gap-2"
+                    class名称="gap-2"
                   >
-                    <Link2 className="h-4 w-4" />
+                    <Link2 class名称="h-4 w-4" />
                     Connect
                   </Button>
                 ) : null}
@@ -733,12 +733,12 @@ export const TrackingInboxPage: React.FC = () => {
                   onClick={() => void runProviderAction("sync")}
                   disabled={isActionLoading || !isConnected}
                   variant="secondary"
-                  className="gap-2"
+                  class名称="gap-2"
                 >
                   {activeAction === "sync" ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <Loader2 class名称="h-4 w-4 animate-spin" />
                   ) : (
-                    <Upload className="h-4 w-4" />
+                    <Upload class名称="h-4 w-4" />
                   )}
                   {activeAction === "sync" ? "Syncing..." : "Sync"}
                 </Button>
@@ -747,25 +747,25 @@ export const TrackingInboxPage: React.FC = () => {
                     onClick={() => void runProviderAction("disconnect")}
                     disabled={isActionLoading}
                     variant="outline"
-                    className="gap-2"
+                    class名称="gap-2"
                   >
-                    <Unplug className="h-4 w-4" />
+                    <Unplug class名称="h-4 w-4" />
                     Disconnect
                   </Button>
                 ) : null}
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 text-sm">
+            <div class名称="flex flex-wrap items-center gap-3 text-sm">
               <Badge variant={status?.connected ? "default" : "outline"}>
                 {connectionLabel}
               </Badge>
-              <span className="text-muted-foreground">
+              <span class名称="text-muted-foreground">
                 Pending review:{" "}
-                <span className="font-semibold">{pendingCount}</span>
+                <span class名称="font-semibold">{pendingCount}</span>
               </span>
               {status?.integration?.lastSyncedAt ? (
-                <span className="text-muted-foreground">
+                <span class名称="text-muted-foreground">
                   Last synced: {formatEpochMs(status.integration.lastSyncedAt)}
                 </span>
               ) : null}
@@ -774,28 +774,28 @@ export const TrackingInboxPage: React.FC = () => {
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-3">
-            <CardTitle className="text-base">Pending Review Queue</CardTitle>
+          <CardHeader class名称="flex flex-row items-center justify-between pb-3">
+            <Card标题 class名称="text-base">Pending Review Queue</Card标题>
             {inbox.length > 0 && (
-              <div className="flex gap-2">
+              <div class名称="flex gap-2">
                 <Button
                   variant="outline"
                   size="sm"
-                  className="gap-1"
+                  class名称="gap-1"
                   disabled={isActionLoading}
                   onClick={() => openInboxActionDialog("approve")}
                 >
-                  <CheckCircle className="h-4 w-4" />
+                  <CheckCircle class名称="h-4 w-4" />
                   Approve All
                 </Button>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="gap-1"
+                  class名称="gap-1"
                   disabled={isActionLoading}
                   onClick={() => openInboxActionDialog("deny")}
                 >
-                  <XCircle className="h-4 w-4" />
+                  <XCircle class名称="h-4 w-4" />
                   Ignore All
                 </Button>
               </div>
@@ -803,17 +803,17 @@ export const TrackingInboxPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Loader2 className="h-4 w-4 animate-spin" />
+              <div class名称="flex items-center gap-2 text-sm text-muted-foreground">
+                <Loader2 class名称="h-4 w-4 animate-spin" />
                 Loading inbox...
               </div>
             ) : inbox.length === 0 ? (
               <EmptyState
-                title="No pending messages"
+                title="否 pending messages"
                 description="Run sync to ingest new job-application emails."
               />
             ) : (
-              <EmailViewerList
+              <邮箱ViewerList
                 items={inbox}
                 appliedJobs={appliedJobs}
                 appliedJobByMessageId={appliedJobByMessageId}
@@ -829,35 +829,35 @@ export const TrackingInboxPage: React.FC = () => {
         </Card>
 
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base">Recent Sync Runs</CardTitle>
+          <CardHeader class名称="pb-3">
+            <Card标题 class名称="text-base">Recent Sync Runs</Card标题>
           </CardHeader>
           <CardContent>
             {runs.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No sync runs yet.</p>
+              <p class名称="text-sm text-muted-foreground">否 sync runs yet.</p>
             ) : (
-              <div className="space-y-2">
+              <div class名称="space-y-2">
                 {runs.map((run) => (
                   <button
                     key={run.id}
                     type="button"
-                    className="w-full rounded-lg border px-3 py-2 text-left transition-colors hover:bg-muted/30"
+                    class名称="w-full rounded-lg border px-3 py-2 text-left transition-colors hover:bg-muted/30"
                     onClick={() => void handleOpenRunMessages(run)}
                   >
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div className="text-xs text-muted-foreground">
+                    <div class名称="flex flex-wrap items-center justify-between gap-2">
+                      <div class名称="text-xs text-muted-foreground">
                         <p>{run.id}</p>
                         <p>{formatEpochMs(run.startedAt)}</p>
                       </div>
-                      <div className="flex items-center gap-2 text-xs">
+                      <div class名称="flex items-center gap-2 text-xs">
                         <Badge variant="outline">{run.status}</Badge>
-                        <span className="text-muted-foreground">
+                        <span class名称="text-muted-foreground">
                           discovered {run.messagesDiscovered}
                         </span>
-                        <span className="text-muted-foreground">
+                        <span class名称="text-muted-foreground">
                           relevant {run.messagesRelevant}
                         </span>
-                        <span className="text-muted-foreground">
+                        <span class名称="text-muted-foreground">
                           matched {run.messagesMatched}
                         </span>
                       </div>
@@ -879,28 +879,28 @@ export const TrackingInboxPage: React.FC = () => {
           }
         }}
       >
-        <DialogContent className="max-h-[85vh] max-w-6xl overflow-hidden p-0">
-          <DialogHeader className="border-b px-6 py-4">
-            <DialogTitle>Run Messages</DialogTitle>
-            <DialogDescription>
+        <DialogContent class名称="max-h-[85vh] max-w-6xl overflow-hidden p-0">
+          <DialogHeader class名称="border-b px-6 py-4">
+            <Dialog标题>Run Messages</Dialog标题>
+            <Dialog描述>
               {selectedRun
                 ? `Run ${selectedRun.id} • discovered ${selectedRun.messagesDiscovered} • relevant ${selectedRun.messagesRelevant} • matched ${selectedRun.messagesMatched}`
                 : "Review all messages captured in this sync run, including partial matches."}
-            </DialogDescription>
+            </Dialog描述>
           </DialogHeader>
 
-          <div className="max-h-[calc(85vh-92px)] overflow-auto px-6 pb-6">
+          <div class名称="max-h-[calc(85vh-92px)] overflow-auto px-6 pb-6">
             {isRunMessagesLoading ? (
-              <div className="flex items-center gap-2 py-4 text-sm text-muted-foreground">
-                <Loader2 className="h-4 w-4 animate-spin" />
+              <div class名称="flex items-center gap-2 py-4 text-sm text-muted-foreground">
+                <Loader2 class名称="h-4 w-4 animate-spin" />
                 Loading run messages...
               </div>
             ) : selectedRunItems.length === 0 ? (
-              <p className="py-4 text-sm text-muted-foreground">
-                No messages found for this run.
+              <p class名称="py-4 text-sm text-muted-foreground">
+                否 messages found for this run.
               </p>
             ) : (
-              <EmailViewerList
+              <邮箱ViewerList
                 items={selectedRunItems}
                 appliedJobs={appliedJobs}
                 appliedJobByMessageId={appliedJobByMessageId}
@@ -924,19 +924,19 @@ export const TrackingInboxPage: React.FC = () => {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
+            <AlertDialog标题>
               {inboxActionDialog.action === "approve"
                 ? "Approve All Messages?"
                 : "Ignore All Messages?"}
-            </AlertDialogTitle>
-            <AlertDialogDescription>
+            </AlertDialog标题>
+            <AlertDialog描述>
               {inboxActionDialog.action === "approve"
                 ? `This will approve ${inboxActionDialog.itemCount} message${inboxActionDialog.itemCount === 1 ? "" : "s"} with suggested job matches. Messages without matches will be skipped.`
                 : `This will ignore all ${inboxActionDialog.itemCount} pending message${inboxActionDialog.itemCount === 1 ? "" : "s"}.`}
-            </AlertDialogDescription>
+            </AlertDialog描述>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialog取消>取消</AlertDialog取消>
             <AlertDialogAction
               onClick={() => {
                 if (inboxActionDialog.action) {

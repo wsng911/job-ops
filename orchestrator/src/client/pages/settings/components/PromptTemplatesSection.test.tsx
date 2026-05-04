@@ -1,5 +1,5 @@
 import { getDefaultPromptTemplate } from "@shared/prompt-template-definitions.js";
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { FormProvider, useForm } from "react-hook-form";
 import { describe, expect, it } from "vitest";
@@ -7,7 +7,7 @@ import { Accordion } from "@/components/ui/accordion";
 import { PromptTemplatesSection } from "./PromptTemplatesSection";
 
 const PromptTemplatesHarness = () => {
-  const methods = useForm<UpdateSettingsInput>({
+  const methods = useForm<更新设置Input>({
     defaultValues: {
       ghostwriterSystemPromptTemplate: "Custom Ghostwriter",
       tailoringPromptTemplate: "Custom Tailoring",

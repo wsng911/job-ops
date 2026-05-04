@@ -1,6 +1,6 @@
 import * as api from "@client/api";
 import { useDemoInfo } from "@client/hooks/useDemoInfo";
-import { useSettings } from "@client/hooks/useSettings";
+import { use设置 } from "@client/hooks/use设置";
 import { waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHookWithQueryClient } from "../test/renderWithQueryClient";
@@ -16,8 +16,8 @@ vi.mock("@client/hooks/useDemoInfo", () => ({
   useDemoInfo: vi.fn(),
 }));
 
-vi.mock("@client/hooks/useSettings", () => ({
-  useSettings: vi.fn(),
+vi.mock("@client/hooks/use设置", () => ({
+  use设置: vi.fn(),
 }));
 
 describe("useOnboardingRequirement", () => {
@@ -30,7 +30,7 @@ describe("useOnboardingRequirement", () => {
       lastResetAt: null,
       nextResetAt: null,
       baselineVersion: null,
-      baselineName: null,
+      baseline名称: null,
     });
 
     vi.mocked(api.validateRxresume).mockResolvedValue({
@@ -48,7 +48,7 @@ describe("useOnboardingRequirement", () => {
   });
 
   it("treats the persisted onboarding basic-auth decision as the source of truth", async () => {
-    let currentSettings: any = {
+    let current设置: any = {
       llmProvider: { value: "lmstudio", default: "lmstudio", override: null },
       llmBaseUrl: {
         value: "http://localhost:1234",
@@ -65,13 +65,13 @@ describe("useOnboardingRequirement", () => {
       onboardingBasicAuthDecision: null,
     };
 
-    vi.mocked(useSettings).mockImplementation(() => ({
-      settings: currentSettings,
+    vi.mocked(use设置).mockImplementation(() => ({
+      settings: current设置,
       isLoading: false,
-      refreshSettings: vi.fn(),
+      refresh设置: vi.fn(),
       error: null,
       showSponsorInfo: true,
-      renderMarkdownInJobDescriptions: true,
+      renderMarkdownInJob描述s: true,
     }));
 
     const { result, rerender } = renderHookWithQueryClient(() =>
@@ -83,8 +83,8 @@ describe("useOnboardingRequirement", () => {
     });
     expect(result.current.complete).toBe(false);
 
-    currentSettings = {
-      ...currentSettings,
+    current设置 = {
+      ...current设置,
       searchTerms: {
         value: ["Platform Engineer"],
         default: ["web developer"],
@@ -105,7 +105,7 @@ describe("useOnboardingRequirement", () => {
       message: "LM Studio is unreachable",
     });
 
-    const currentSettings: any = {
+    const current设置: any = {
       llmProvider: { value: "lmstudio", default: "lmstudio", override: null },
       llmBaseUrl: {
         value: "http://localhost:1234",
@@ -122,13 +122,13 @@ describe("useOnboardingRequirement", () => {
       onboardingBasicAuthDecision: "skipped",
     };
 
-    vi.mocked(useSettings).mockImplementation(() => ({
-      settings: currentSettings,
+    vi.mocked(use设置).mockImplementation(() => ({
+      settings: current设置,
       isLoading: false,
-      refreshSettings: vi.fn(),
+      refresh设置: vi.fn(),
       error: null,
       showSponsorInfo: true,
-      renderMarkdownInJobDescriptions: true,
+      renderMarkdownInJob描述s: true,
     }));
 
     const { result } = renderHookWithQueryClient(() =>
@@ -161,7 +161,7 @@ describe("useOnboardingRequirement", () => {
         message: null,
       });
 
-    let currentSettings: any = {
+    let current设置: any = {
       llmProvider: { value: "lmstudio", default: "lmstudio", override: null },
       llmBaseUrl: {
         value: "http://localhost:1234",
@@ -183,13 +183,13 @@ describe("useOnboardingRequirement", () => {
       onboardingBasicAuthDecision: "skipped",
     };
 
-    vi.mocked(useSettings).mockImplementation(() => ({
-      settings: currentSettings,
+    vi.mocked(use设置).mockImplementation(() => ({
+      settings: current设置,
       isLoading: false,
-      refreshSettings: vi.fn(),
+      refresh设置: vi.fn(),
       error: null,
       showSponsorInfo: true,
-      renderMarkdownInJobDescriptions: true,
+      renderMarkdownInJob描述s: true,
     }));
 
     const { result, rerender } = renderHookWithQueryClient(() =>
@@ -201,8 +201,8 @@ describe("useOnboardingRequirement", () => {
     });
     expect(result.current.complete).toBe(false);
 
-    currentSettings = {
-      ...currentSettings,
+    current设置 = {
+      ...current设置,
       llmBaseUrl: {
         value: "http://localhost:1235",
         default: "",
@@ -229,7 +229,7 @@ describe("useOnboardingRequirement", () => {
       message: "Reactive Resume is not configured",
     });
 
-    const currentSettings: any = {
+    const current设置: any = {
       llmProvider: {
         value: "openrouter",
         default: "openrouter",
@@ -255,13 +255,13 @@ describe("useOnboardingRequirement", () => {
       onboardingBasicAuthDecision: "skipped",
     };
 
-    vi.mocked(useSettings).mockImplementation(() => ({
-      settings: currentSettings,
+    vi.mocked(use设置).mockImplementation(() => ({
+      settings: current设置,
       isLoading: false,
-      refreshSettings: vi.fn(),
+      refresh设置: vi.fn(),
       error: null,
       showSponsorInfo: true,
-      renderMarkdownInJobDescriptions: true,
+      renderMarkdownInJob描述s: true,
     }));
 
     const { result } = renderHookWithQueryClient(() =>
@@ -282,7 +282,7 @@ describe("useOnboardingRequirement", () => {
       message: "Reactive Resume is not configured",
     });
 
-    const currentSettings: any = {
+    const current设置: any = {
       llmProvider: {
         value: "openrouter",
         default: "openrouter",
@@ -308,13 +308,13 @@ describe("useOnboardingRequirement", () => {
       onboardingBasicAuthDecision: "skipped",
     };
 
-    vi.mocked(useSettings).mockImplementation(() => ({
-      settings: currentSettings,
+    vi.mocked(use设置).mockImplementation(() => ({
+      settings: current设置,
       isLoading: false,
-      refreshSettings: vi.fn(),
+      refresh设置: vi.fn(),
       error: null,
       showSponsorInfo: true,
-      renderMarkdownInJobDescriptions: true,
+      renderMarkdownInJob描述s: true,
     }));
 
     const { result } = renderHookWithQueryClient(() =>
@@ -330,7 +330,7 @@ describe("useOnboardingRequirement", () => {
   });
 
   it("validates Reactive Resume when an RxResume base resume is configured", async () => {
-    const currentSettings: any = {
+    const current设置: any = {
       llmProvider: {
         value: "openrouter",
         default: "openrouter",
@@ -357,13 +357,13 @@ describe("useOnboardingRequirement", () => {
       onboardingBasicAuthDecision: "skipped",
     };
 
-    vi.mocked(useSettings).mockImplementation(() => ({
-      settings: currentSettings,
+    vi.mocked(use设置).mockImplementation(() => ({
+      settings: current设置,
       isLoading: false,
-      refreshSettings: vi.fn(),
+      refresh设置: vi.fn(),
       error: null,
       showSponsorInfo: true,
-      renderMarkdownInJobDescriptions: true,
+      renderMarkdownInJob描述s: true,
     }));
 
     const { result } = renderHookWithQueryClient(() =>
@@ -379,7 +379,7 @@ describe("useOnboardingRequirement", () => {
   });
 
   it("requires an explicit saved search-terms override before onboarding is complete", async () => {
-    const currentSettings: any = {
+    const current设置: any = {
       llmProvider: {
         value: "openrouter",
         default: "openrouter",
@@ -405,13 +405,13 @@ describe("useOnboardingRequirement", () => {
       onboardingBasicAuthDecision: "skipped",
     };
 
-    vi.mocked(useSettings).mockImplementation(() => ({
-      settings: currentSettings,
+    vi.mocked(use设置).mockImplementation(() => ({
+      settings: current设置,
       isLoading: false,
-      refreshSettings: vi.fn(),
+      refresh设置: vi.fn(),
       error: null,
       showSponsorInfo: true,
-      renderMarkdownInJobDescriptions: true,
+      renderMarkdownInJob描述s: true,
     }));
 
     const { result } = renderHookWithQueryClient(() =>

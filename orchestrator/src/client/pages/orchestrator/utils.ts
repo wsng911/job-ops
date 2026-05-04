@@ -1,4 +1,4 @@
-import type { AppSettings, JobListItem, JobSource } from "@shared/types";
+import type { App设置, JobListItem, JobSource } from "@shared/types";
 import type { DateFilterDimension, FilterTab, JobSort } from "./constants";
 import {
   DEFAULT_PIPELINE_SOURCES,
@@ -203,13 +203,13 @@ export const getSourcesWithJobs = (jobs: JobListItem[]): JobSource[] => {
 };
 
 export const getEnabledSources = (
-  settings: AppSettings | null,
+  settings: App设置 | null,
 ): JobSource[] => {
   if (!settings) return [...orderedSources];
 
   const enabled: JobSource[] = [];
   const hasUkVisaJobsAuth = Boolean(
-    settings.ukvisajobsEmail?.trim() && settings.ukvisajobsPasswordHint,
+    settings.ukvisajobs邮箱?.trim() && settings.ukvisajobs密码Hint,
   );
   const hasAdzunaAuth = Boolean(
     settings.adzunaAppId?.trim() && settings.adzunaAppKeyHint,

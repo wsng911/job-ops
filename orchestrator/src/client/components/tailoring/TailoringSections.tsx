@@ -16,15 +16,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ProjectSelector } from "../discovered-panel/ProjectSelector";
-import type { EditableSkillGroup } from "../tailoring-utils";
+import type { 编辑ableSkillGroup } from "../tailoring-utils";
 
 interface TailoringSectionsProps {
   catalog: ResumeProjectCatalogItem[];
   isCatalogLoading: boolean;
   summary: string;
   headline: string;
-  jobDescription: string;
-  skillsDraft: EditableSkillGroup[];
+  job描述: string;
+  skillsDraft: 编辑ableSkillGroup[];
   selectedIds: Set<string>;
   tracerLinksEnabled: boolean;
   tracerEnableBlocked: boolean;
@@ -47,15 +47,15 @@ interface TailoringSectionsProps {
   canRedoHeadline: boolean;
   canRedoSkills: boolean;
   undoDisabledReason?: string | null;
-  onDescriptionChange: (value: string) => void;
+  on描述Change: (value: string) => void;
   onSkillGroupOpenChange: (value: string) => void;
-  onAddSkillGroup: () => void;
-  onUpdateSkillGroup: (
+  on添加SkillGroup: () => void;
+  on更新SkillGroup: (
     id: string,
     key: "name" | "keywordsText",
     value: string,
   ) => void;
-  onRemoveSkillGroup: (id: string) => void;
+  on移除SkillGroup: (id: string) => void;
   onToggleProject: (id: string) => void;
   onTracerLinksEnabledChange: (value: boolean) => void;
 }
@@ -71,7 +71,7 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
   isCatalogLoading,
   summary,
   headline,
-  jobDescription,
+  job描述,
   skillsDraft,
   selectedIds,
   tracerLinksEnabled,
@@ -95,11 +95,11 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
   canRedoHeadline,
   canRedoSkills,
   undoDisabledReason = null,
-  onDescriptionChange,
+  on描述Change,
   onSkillGroupOpenChange,
-  onAddSkillGroup,
-  onUpdateSkillGroup,
-  onRemoveSkillGroup,
+  on添加SkillGroup,
+  on更新SkillGroup,
+  on移除SkillGroup,
   onToggleProject,
   onTracerLinksEnabledChange,
 }) => {
@@ -110,37 +110,37 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
 
   return (
     <TooltipProvider>
-      <Accordion type="multiple" className="space-y-3">
-        <AccordionItem value="job-description" className={sectionClass}>
-          <AccordionTrigger className={triggerClass}>
-            Job Description
+      <Accordion type="multiple" class名称="space-y-3">
+        <AccordionItem value="job-description" class名称={sectionClass}>
+          <AccordionTrigger class名称={triggerClass}>
+            Job 描述
           </AccordionTrigger>
-          <AccordionContent className="px-3 pb-3 pt-1">
-            <label htmlFor="tailor-jd-edit" className="sr-only">
-              Job Description
+          <AccordionContent class名称="px-3 pb-3 pt-1">
+            <label htmlFor="tailor-jd-edit" class名称="sr-only">
+              Job 描述
             </label>
             <textarea
               id="tailor-jd-edit"
-              className={`${inputClass} min-h-[120px] max-h-[250px]`}
-              value={jobDescription}
-              onChange={(event) => onDescriptionChange(event.target.value)}
+              class名称={`${inputClass} min-h-[120px] max-h-[250px]`}
+              value={job描述}
+              onChange={(event) => on描述Change(event.target.value)}
               placeholder="The raw job description..."
               disabled={disableInputs}
             />
           </AccordionContent>
         </AccordionItem>
 
-        <AccordionItem value="summary" className={sectionClass}>
-          <AccordionTrigger className={triggerClass}>Summary</AccordionTrigger>
-          <AccordionContent className="px-3 pb-3 pt-1">
-            <div className="mb-2 flex justify-end gap-1">
+        <AccordionItem value="summary" class名称={sectionClass}>
+          <AccordionTrigger class名称={triggerClass}>Summary</AccordionTrigger>
+          <AccordionContent class名称="px-3 pb-3 pt-1">
+            <div class名称="mb-2 flex justify-end gap-1">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
                     type="button"
                     size="icon"
                     variant="ghost"
-                    className="h-7 w-7"
+                    class名称="h-7 w-7"
                     onClick={onUndoSummary}
                     disabled={disableInputs || !canUndoSummary}
                     aria-label={undoTooltip}
@@ -150,7 +150,7 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
                         : undefined
                     }
                   >
-                    <Undo2 className="h-3.5 w-3.5" />
+                    <Undo2 class名称="h-3.5 w-3.5" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>{undoTooltip}</TooltipContent>
@@ -161,23 +161,23 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
                     type="button"
                     size="icon"
                     variant="ghost"
-                    className="h-7 w-7"
+                    class名称="h-7 w-7"
                     onClick={onRedoSummary}
                     disabled={disableInputs || !canRedoSummary}
                     aria-label={redoTooltip}
                   >
-                    <Redo2 className="h-3.5 w-3.5" />
+                    <Redo2 class名称="h-3.5 w-3.5" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>{redoTooltip}</TooltipContent>
               </Tooltip>
             </div>
-            <label htmlFor="tailor-summary-edit" className="sr-only">
+            <label htmlFor="tailor-summary-edit" class名称="sr-only">
               Tailored Summary
             </label>
             <textarea
               id="tailor-summary-edit"
-              className={`${inputClass} min-h-[120px]`}
+              class名称={`${inputClass} min-h-[120px]`}
               value={summary}
               onChange={(event) => onSummaryChange(event.target.value)}
               placeholder="Write a tailored summary for this role, or generate with AI..."
@@ -186,17 +186,17 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
           </AccordionContent>
         </AccordionItem>
 
-        <AccordionItem value="headline" className={sectionClass}>
-          <AccordionTrigger className={triggerClass}>Headline</AccordionTrigger>
-          <AccordionContent className="px-3 pb-3 pt-1">
-            <div className="mb-2 flex justify-end gap-1">
+        <AccordionItem value="headline" class名称={sectionClass}>
+          <AccordionTrigger class名称={triggerClass}>Headline</AccordionTrigger>
+          <AccordionContent class名称="px-3 pb-3 pt-1">
+            <div class名称="mb-2 flex justify-end gap-1">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
                     type="button"
                     size="icon"
                     variant="ghost"
-                    className="h-7 w-7"
+                    class名称="h-7 w-7"
                     onClick={onUndoHeadline}
                     disabled={disableInputs || !canUndoHeadline}
                     aria-label={undoTooltip}
@@ -206,7 +206,7 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
                         : undefined
                     }
                   >
-                    <Undo2 className="h-3.5 w-3.5" />
+                    <Undo2 class名称="h-3.5 w-3.5" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>{undoTooltip}</TooltipContent>
@@ -217,24 +217,24 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
                     type="button"
                     size="icon"
                     variant="ghost"
-                    className="h-7 w-7"
+                    class名称="h-7 w-7"
                     onClick={onRedoHeadline}
                     disabled={disableInputs || !canRedoHeadline}
                     aria-label={redoTooltip}
                   >
-                    <Redo2 className="h-3.5 w-3.5" />
+                    <Redo2 class名称="h-3.5 w-3.5" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>{redoTooltip}</TooltipContent>
               </Tooltip>
             </div>
-            <label htmlFor="tailor-headline-edit" className="sr-only">
+            <label htmlFor="tailor-headline-edit" class名称="sr-only">
               Tailored Headline
             </label>
             <input
               id="tailor-headline-edit"
               type="text"
-              className={inputClass}
+              class名称={inputClass}
               value={headline}
               onChange={(event) => onHeadlineChange(event.target.value)}
               placeholder="Write a concise headline tailored to this role..."
@@ -243,19 +243,19 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
           </AccordionContent>
         </AccordionItem>
 
-        <AccordionItem value="skills" className={sectionClass}>
-          <AccordionTrigger className={triggerClass}>
+        <AccordionItem value="skills" class名称={sectionClass}>
+          <AccordionTrigger class名称={triggerClass}>
             Tailored Skills
           </AccordionTrigger>
-          <AccordionContent className="px-3 pb-3 pt-1">
-            <div className="flex flex-wrap items-center justify-end gap-2 pb-2">
+          <AccordionContent class名称="px-3 pb-3 pt-1">
+            <div class名称="flex flex-wrap items-center justify-end gap-2 pb-2">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
                     type="button"
                     size="icon"
                     variant="ghost"
-                    className="h-7 w-7"
+                    class名称="h-7 w-7"
                     onClick={onUndoSkills}
                     disabled={disableInputs || !canUndoSkills}
                     aria-label={undoTooltip}
@@ -265,7 +265,7 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
                         : undefined
                     }
                   >
-                    <Undo2 className="h-3.5 w-3.5" />
+                    <Undo2 class名称="h-3.5 w-3.5" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>{undoTooltip}</TooltipContent>
@@ -276,12 +276,12 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
                     type="button"
                     size="icon"
                     variant="ghost"
-                    className="h-7 w-7"
+                    class名称="h-7 w-7"
                     onClick={onRedoSkills}
                     disabled={disableInputs || !canRedoSkills}
                     aria-label={redoTooltip}
                   >
-                    <Redo2 className="h-3.5 w-3.5" />
+                    <Redo2 class名称="h-3.5 w-3.5" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>{redoTooltip}</TooltipContent>
@@ -290,18 +290,18 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
                 type="button"
                 size="sm"
                 variant="outline"
-                className="h-7 text-[11px]"
-                onClick={onAddSkillGroup}
+                class名称="h-7 text-[11px]"
+                onClick={on添加SkillGroup}
                 disabled={disableInputs}
               >
-                <Plus className="mr-1 h-3.5 w-3.5" />
-                Add Skill Group
+                <Plus class名称="mr-1 h-3.5 w-3.5" />
+                添加 Skill Group
               </Button>
             </div>
 
             {skillsDraft.length === 0 ? (
-              <div className="rounded-lg border border-dashed border-border/60 px-3 py-4 text-center text-[11px] text-muted-foreground">
-                No skill groups yet. Add one to tailor keywords for this role.
+              <div class名称="rounded-lg border border-dashed border-border/60 px-3 py-4 text-center text-[11px] text-muted-foreground">
+                否 skill groups yet. 添加 one to tailor keywords for this role.
               </div>
             ) : (
               <Accordion
@@ -309,77 +309,77 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
                 collapsible
                 value={openSkillGroupId}
                 onValueChange={onSkillGroupOpenChange}
-                className="space-y-2"
+                class名称="space-y-2"
               >
                 {skillsDraft.map((group, index) => (
                   <AccordionItem
                     key={group.id}
                     value={group.id}
-                    className="rounded-lg border border-border/60 bg-background/40 px-0"
+                    class名称="rounded-lg border border-border/60 bg-background/40 px-0"
                   >
-                    <AccordionTrigger className="px-3 py-2 text-[11px] font-medium hover:no-underline">
+                    <AccordionTrigger class名称="px-3 py-2 text-[11px] font-medium hover:no-underline">
                       {group.name.trim() || `Skill Group ${index + 1}`}
                     </AccordionTrigger>
-                    <AccordionContent className="px-3 pb-3 pt-1">
-                      <div className="space-y-2">
-                        <div className="space-y-1">
+                    <AccordionContent class名称="px-3 pb-3 pt-1">
+                      <div class名称="space-y-2">
+                        <div class名称="space-y-1">
                           <label
                             htmlFor={`tailor-skill-group-name-${group.id}`}
-                            className="text-[11px] font-medium text-muted-foreground"
+                            class名称="text-[11px] font-medium text-muted-foreground"
                           >
                             Category
                           </label>
                           <input
                             id={`tailor-skill-group-name-${group.id}`}
                             type="text"
-                            className={inputClass}
+                            class名称={inputClass}
                             value={group.name}
                             onChange={(event) =>
-                              onUpdateSkillGroup(
+                              on更新SkillGroup(
                                 group.id,
                                 "name",
                                 event.target.value,
                               )
                             }
-                            placeholder="Backend, Frontend, Infrastructure..."
+                            placeholder="返回end, Frontend, Infrastructure..."
                             disabled={disableInputs}
                           />
                         </div>
 
-                        <div className="space-y-1">
+                        <div class名称="space-y-1">
                           <label
                             htmlFor={`tailor-skill-group-keywords-${group.id}`}
-                            className="text-[11px] font-medium text-muted-foreground"
+                            class名称="text-[11px] font-medium text-muted-foreground"
                           >
                             Keywords (comma-separated)
                           </label>
                           <textarea
                             id={`tailor-skill-group-keywords-${group.id}`}
-                            className={`${inputClass} min-h-[88px]`}
+                            class名称={`${inputClass} min-h-[88px]`}
                             value={group.keywordsText}
                             onChange={(event) =>
-                              onUpdateSkillGroup(
+                              on更新SkillGroup(
                                 group.id,
                                 "keywordsText",
                                 event.target.value,
                               )
                             }
-                            placeholder="TypeScript, Node.js, REST APIs..."
+                            placeholder="TypeScript, 否de.js, REST APIs..."
                             disabled={disableInputs}
                           />
                         </div>
 
-                        <div className="flex justify-end">
+                        <div class名称="flex justify-end">
                           <Button
                             type="button"
                             variant="ghost"
                             size="sm"
-                            className="h-7 px-2 text-[11px]"
-                            onClick={() => onRemoveSkillGroup(group.id)}
+                            class名称="h-7 px-2 text-[11px]"
+                            onClick={() => on移除SkillGroup(group.id)}
                             disabled={disableInputs}
                           >
-                            <Trash2 className="mr-1 h-3.5 w-3.5" />
-                            Remove
+                            <Trash2 class名称="mr-1 h-3.5 w-3.5" />
+                            移除
                           </Button>
                         </div>
                       </div>
@@ -392,18 +392,18 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
         </AccordionItem>
 
         {!isCatalogLoading && catalog.length > 0 && (
-          <AccordionItem value="projects" className={sectionClass}>
-            <AccordionTrigger className={triggerClass}>
-              <span className="inline-flex items-center gap-1">
+          <AccordionItem value="projects" class名称={sectionClass}>
+            <AccordionTrigger class名称={triggerClass}>
+              <span class名称="inline-flex items-center gap-1">
                 <span>Selected Projects</span>
                 {selectedIds.size > 3 ? (
-                  <span className="text-muted-foreground/70">
+                  <span class名称="text-muted-foreground/70">
                     ({selectedIds.size})
                   </span>
                 ) : null}
               </span>
             </AccordionTrigger>
-            <AccordionContent className="px-3 pb-3 pt-1">
+            <AccordionContent class名称="px-3 pb-3 pt-1">
               <ProjectSelector
                 catalog={catalog}
                 selectedIds={selectedIds}
@@ -415,15 +415,15 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
           </AccordionItem>
         )}
 
-        <AccordionItem value="tracer-links" className={sectionClass}>
-          <AccordionTrigger className={triggerClass}>
+        <AccordionItem value="tracer-links" class名称={sectionClass}>
+          <AccordionTrigger class名称={triggerClass}>
             Tracer Links
           </AccordionTrigger>
-          <AccordionContent className="px-3 pb-3 pt-1">
-            <div className="rounded-md border border-border/60 bg-background/60 p-3">
+          <AccordionContent class名称="px-3 pb-3 pt-1">
+            <div class名称="rounded-md border border-border/60 bg-background/60 p-3">
               <label
                 htmlFor="tailor-tracer-links-enabled"
-                className="flex cursor-pointer items-center gap-3"
+                class名称="flex cursor-pointer items-center gap-3"
               >
                 <Checkbox
                   id="tailor-tracer-links-enabled"
@@ -433,17 +433,17 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
                   }
                   disabled={tracerToggleDisabled}
                 />
-                <span className="text-sm font-medium text-foreground">
+                <span class名称="text-sm font-medium text-foreground">
                   Enable tracer links for this job
                 </span>
               </label>
-              <p className="mt-2 text-xs text-muted-foreground">
+              <p class名称="mt-2 text-xs text-muted-foreground">
                 {tracerReadinessChecking
                   ? "Checking tracer-link readiness..."
                   : "When enabled, outgoing resume links are rewritten to JobOps tracer links on the next PDF generation. Existing PDFs are unchanged."}
               </p>
               {tracerEnableBlockedReason && !tracerLinksEnabled ? (
-                <p className="mt-2 text-xs text-destructive">
+                <p class名称="mt-2 text-xs text-destructive">
                   Tracer links are unavailable: {tracerEnableBlockedReason}
                 </p>
               ) : null}

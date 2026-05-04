@@ -10,24 +10,24 @@ import { JobDetailPanel } from "./JobDetailPanel";
 const render = (ui: Parameters<typeof renderWithQueryClient>[0]) =>
   renderWithQueryClient(ui);
 
-const mockSettings = {
+const mock设置 = {
   settings: null,
   error: null,
   isLoading: false,
   showSponsorInfo: true,
-  renderMarkdownInJobDescriptions: true,
-  refreshSettings: vi.fn(),
+  renderMarkdownInJob描述s: true,
+  refresh设置: vi.fn(),
 };
 
 vi.mock("@/components/ui/dropdown-menu", () => {
   return {
-    DropdownMenu: ({ children }: { children: React.ReactNode }) => (
+    DropdownMenu: ({ children }: { children: React.React否de }) => (
       <div>{children}</div>
     ),
-    DropdownMenuTrigger: ({ children }: { children: React.ReactNode }) => (
+    DropdownMenuTrigger: ({ children }: { children: React.React否de }) => (
       <>{children}</>
     ),
-    DropdownMenuContent: ({ children }: { children: React.ReactNode }) => (
+    DropdownMenuContent: ({ children }: { children: React.React否de }) => (
       <div role="menu">{children}</div>
     ),
     DropdownMenuItem: ({
@@ -35,7 +35,7 @@ vi.mock("@/components/ui/dropdown-menu", () => {
       onSelect,
       ...props
     }: {
-      children: React.ReactNode;
+      children: React.React否de;
       onSelect?: () => void;
     }) => (
       <button
@@ -57,8 +57,8 @@ vi.mock("@client/components", () => ({
   TailoredSummary: () => <div data-testid="tailored-summary" />,
 }));
 
-vi.mock("@client/hooks/useSettings", () => ({
-  useSettings: () => mockSettings,
+vi.mock("@client/hooks/use设置", () => ({
+  use设置: () => mock设置,
 }));
 
 vi.mock("@client/components/tailoring/TailoringWorkspace", () => ({
@@ -78,16 +78,16 @@ vi.mock("@client/components/tailoring/TailoringWorkspace", () => ({
   ),
 }));
 
-vi.mock("@client/components/JobDetailsEditDrawer", () => ({
-  JobDetailsEditDrawer: ({
+vi.mock("@client/components/JobDetails编辑Drawer", () => ({
+  JobDetails编辑Drawer: ({
     open,
     onOpenChange,
-    onJobUpdated,
+    onJob更新d,
     job,
   }: {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    onJobUpdated: () => Promise<void>;
+    onJob更新d: () => Promise<void>;
     job: Job | null;
   }) =>
     open ? (
@@ -96,11 +96,11 @@ vi.mock("@client/components/JobDetailsEditDrawer", () => ({
         <button
           type="button"
           onClick={() => {
-            void onJobUpdated();
+            void onJob更新d();
             onOpenChange(false);
           }}
         >
-          Save details
+          保存 details
         </button>
       </div>
     ) : null,
@@ -121,7 +121,7 @@ vi.mock("@client/api", () => ({
   generateJobPdf: vi.fn(),
   markAsApplied: vi.fn(),
   skipJob: vi.fn(),
-  getProfile: vi.fn().mockResolvedValue({}),
+  get个人资料: vi.fn().mockResolvedValue({}),
   getResumeProjectsCatalog: vi.fn().mockResolvedValue([]),
 }));
 
@@ -146,7 +146,7 @@ const renderJobDetailPanel = async (
 describe("JobDetailPanel", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockSettings.renderMarkdownInJobDescriptions = true;
+    mock设置.renderMarkdownInJob描述s = true;
   });
 
   it("renders discovered jobs in the unified inspector", async () => {
@@ -157,7 +157,7 @@ describe("JobDetailPanel", () => {
       activeJobs: [job],
       selectedJob: job,
       onSelectJobId: vi.fn(),
-      onJobUpdated: vi.fn().mockResolvedValue(undefined),
+      onJob更新d: vi.fn().mockResolvedValue(undefined),
     });
 
     expect(screen.getByText("Start Tailoring")).toBeInTheDocument();
@@ -174,10 +174,10 @@ describe("JobDetailPanel", () => {
       activeJobs: [],
       selectedJob: null,
       onSelectJobId: vi.fn(),
-      onJobUpdated: vi.fn().mockResolvedValue(undefined),
+      onJob更新d: vi.fn().mockResolvedValue(undefined),
     });
 
-    expect(screen.getByText("No job selected")).toBeInTheDocument();
+    expect(screen.getByText("否 job selected")).toBeInTheDocument();
   });
 
   it("renders a stripped description preview for html content", async () => {
@@ -186,10 +186,10 @@ describe("JobDetailPanel", () => {
       activeJobs: [],
       selectedJob: createJob({
         status: "applied",
-        jobDescription: "<p>Hello <strong>world</strong></p>",
+        job描述: "<p>Hello <strong>world</strong></p>",
       }),
       onSelectJobId: vi.fn(),
-      onJobUpdated: vi.fn().mockResolvedValue(undefined),
+      onJob更新d: vi.fn().mockResolvedValue(undefined),
     });
 
     expect(screen.getByText("Hello world")).toBeInTheDocument();
@@ -201,10 +201,10 @@ describe("JobDetailPanel", () => {
       activeJobs: [],
       selectedJob: createJob({
         status: "applied",
-        jobDescription: "# Responsibilities\n\n- Build APIs",
+        job描述: "# Responsibilities\n\n- Build APIs",
       }),
       onSelectJobId: vi.fn(),
-      onJobUpdated: vi.fn().mockResolvedValue(undefined),
+      onJob更新d: vi.fn().mockResolvedValue(undefined),
     });
 
     expect(
@@ -223,7 +223,7 @@ describe("JobDetailPanel", () => {
         applicationLink: "https://example.com/apply/company",
       }),
       onSelectJobId: vi.fn(),
-      onJobUpdated: vi.fn().mockResolvedValue(undefined),
+      onJob更新d: vi.fn().mockResolvedValue(undefined),
     });
 
     const viewJobLink = screen.getByRole("link", { name: /view job/i });
@@ -237,23 +237,23 @@ describe("JobDetailPanel", () => {
   });
 
   it("renders raw markdown in the brief job description when disabled", async () => {
-    mockSettings.renderMarkdownInJobDescriptions = false;
+    mock设置.renderMarkdownInJob描述s = false;
 
     const rendered = await renderJobDetailPanel({
       activeTab: "all",
       activeJobs: [],
       selectedJob: createJob({
         status: "applied",
-        jobDescription: "# Responsibilities\n\n- Build APIs",
+        job描述: "# Responsibilities\n\n- Build APIs",
       }),
       onSelectJobId: vi.fn(),
-      onJobUpdated: vi.fn().mockResolvedValue(undefined),
+      onJob更新d: vi.fn().mockResolvedValue(undefined),
     });
 
-    const rawDescription = rendered.container.querySelector(
+    const raw描述 = rendered.container.querySelector(
       "div.whitespace-pre-wrap",
     );
-    expect(rawDescription?.textContent).toBe(
+    expect(raw描述?.textContent).toBe(
       "# Responsibilities\n\n- Build APIs",
     );
     expect(
@@ -262,42 +262,42 @@ describe("JobDetailPanel", () => {
   });
 
   it("saves an edited description", async () => {
-    const onJobUpdated = vi.fn().mockResolvedValue(undefined);
+    const onJob更新d = vi.fn().mockResolvedValue(undefined);
     vi.mocked(api.updateJob).mockResolvedValue(undefined as any);
 
     await renderJobDetailPanel({
       activeTab: "all",
       activeJobs: [],
-      selectedJob: createJob({ status: "applied", jobDescription: "Original" }),
+      selectedJob: createJob({ status: "applied", job描述: "Original" }),
       onSelectJobId: vi.fn(),
-      onJobUpdated,
+      onJob更新d,
     });
 
     fireEvent.click(await screen.findByRole("button", { name: /^edit$/i }));
 
     fireEvent.change(screen.getByPlaceholderText("Enter job description..."), {
-      target: { value: "Updated description" },
+      target: { value: "更新d description" },
     });
 
     fireEvent.click(screen.getByRole("button", { name: /^save$/i }));
 
     await waitFor(() =>
       expect(api.updateJob).toHaveBeenCalledWith("job-1", {
-        jobDescription: "Updated description",
+        job描述: "更新d description",
       }),
     );
-    expect(onJobUpdated).toHaveBeenCalled();
+    expect(onJob更新d).toHaveBeenCalled();
   });
 
   it("opens edit details drawer from menu and saves", async () => {
-    const onJobUpdated = vi.fn().mockResolvedValue(undefined);
+    const onJob更新d = vi.fn().mockResolvedValue(undefined);
 
     await renderJobDetailPanel({
       activeTab: "all",
       activeJobs: [],
-      selectedJob: createJob({ jobDescription: "Original" }),
+      selectedJob: createJob({ job描述: "Original" }),
       onSelectJobId: vi.fn(),
-      onJobUpdated,
+      onJob更新d,
     });
 
     fireEvent.click(screen.getByRole("menuitem", { name: /edit details/i }));
@@ -307,14 +307,14 @@ describe("JobDetailPanel", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /save details/i }));
 
-    await waitFor(() => expect(onJobUpdated).toHaveBeenCalled());
+    await waitFor(() => expect(onJob更新d).toHaveBeenCalled());
     expect(
       screen.queryByTestId("job-details-edit-drawer"),
     ).not.toBeInTheDocument();
   });
 
   it("marks a job as applied from the action button", async () => {
-    const onJobUpdated = vi.fn().mockResolvedValue(undefined);
+    const onJob更新d = vi.fn().mockResolvedValue(undefined);
     vi.mocked(api.markAsApplied).mockResolvedValue(undefined as any);
 
     await renderJobDetailPanel({
@@ -322,7 +322,7 @@ describe("JobDetailPanel", () => {
       activeJobs: [],
       selectedJob: createJob({ status: "ready" }),
       onSelectJobId: vi.fn(),
-      onJobUpdated,
+      onJob更新d,
     });
 
     fireEvent.click(screen.getByRole("button", { name: /applied/i }));
@@ -330,11 +330,11 @@ describe("JobDetailPanel", () => {
     await waitFor(() =>
       expect(api.markAsApplied).toHaveBeenCalledWith("job-1"),
     );
-    expect(onJobUpdated).toHaveBeenCalled();
+    expect(onJob更新d).toHaveBeenCalled();
   });
 
   it("moves an applied job to in progress from the action button", async () => {
-    const onJobUpdated = vi.fn().mockResolvedValue(undefined);
+    const onJob更新d = vi.fn().mockResolvedValue(undefined);
     vi.mocked(api.updateJob).mockResolvedValue(undefined as any);
 
     await renderJobDetailPanel({
@@ -342,7 +342,7 @@ describe("JobDetailPanel", () => {
       activeJobs: [],
       selectedJob: createJob({ status: "applied" }),
       onSelectJobId: vi.fn(),
-      onJobUpdated,
+      onJob更新d,
     });
 
     fireEvent.click(
@@ -354,11 +354,11 @@ describe("JobDetailPanel", () => {
         status: "in_progress",
       }),
     );
-    expect(onJobUpdated).toHaveBeenCalled();
+    expect(onJob更新d).toHaveBeenCalled();
   });
 
   it("skips a job from the menu", async () => {
-    const onJobUpdated = vi.fn().mockResolvedValue(undefined);
+    const onJob更新d = vi.fn().mockResolvedValue(undefined);
     vi.mocked(api.skipJob).mockResolvedValue(undefined as any);
 
     await renderJobDetailPanel({
@@ -366,7 +366,7 @@ describe("JobDetailPanel", () => {
       activeJobs: [],
       selectedJob: createJob({ status: "ready" }),
       onSelectJobId: vi.fn(),
-      onJobUpdated,
+      onJob更新d,
     });
 
     fireEvent.pointerDown(
@@ -376,7 +376,7 @@ describe("JobDetailPanel", () => {
     fireEvent.click(skipItem);
 
     await waitFor(() => expect(api.skipJob).toHaveBeenCalledWith("job-1"));
-    expect(onJobUpdated).toHaveBeenCalled();
+    expect(onJob更新d).toHaveBeenCalled();
   });
 
   it("forwards tailoring dirty state to refresh pause callback", async () => {
@@ -387,7 +387,7 @@ describe("JobDetailPanel", () => {
       activeJobs: [],
       selectedJob: createJob({ status: "ready" }),
       onSelectJobId: vi.fn(),
-      onJobUpdated: vi.fn().mockResolvedValue(undefined),
+      onJob更新d: vi.fn().mockResolvedValue(undefined),
       onPauseRefreshChange,
     });
 

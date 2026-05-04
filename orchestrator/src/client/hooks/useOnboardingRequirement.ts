@@ -1,6 +1,6 @@
 import * as api from "@client/api";
 import { useDemoInfo } from "@client/hooks/useDemoInfo";
-import { useSettings } from "@client/hooks/useSettings";
+import { use设置 } from "@client/hooks/use设置";
 import { isOnboardingComplete } from "@client/lib/onboarding";
 import { normalizeLlmProvider } from "@client/pages/settings/utils";
 import type { ValidationResult } from "@shared/types";
@@ -13,7 +13,7 @@ const EMPTY_VALIDATION_STATE: ValidationResult & { checked: boolean } = {
 };
 
 export function useOnboardingRequirement() {
-  const { settings, isLoading: settingsLoading } = useSettings();
+  const { settings, isLoading: settingsLoading } = use设置();
   const demoInfo = useDemoInfo();
   const demoMode = demoInfo?.demoMode ?? false;
 

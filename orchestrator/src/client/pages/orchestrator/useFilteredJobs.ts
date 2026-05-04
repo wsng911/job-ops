@@ -45,8 +45,8 @@ export const useFilteredJobs = (
     } else if (activeTab === "applied") {
       filtered = filtered.filter((job) => job.status === "applied");
     } else if (activeTab === "all") {
-      const includeClosedJobs = dateFilter.dimensions.includes("closed");
-      if (!includeClosedJobs) {
+      const include关闭dJobs = dateFilter.dimensions.includes("closed");
+      if (!include关闭dJobs) {
         filtered = filtered.filter((job) => job.closedAt == null);
       }
     }

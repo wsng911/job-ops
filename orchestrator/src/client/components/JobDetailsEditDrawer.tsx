@@ -1,5 +1,5 @@
 import type { Job } from "@shared/types.js";
-import { Loader2, Save } from "lucide-react";
+import { Loader2, 保存 } from "lucide-react";
 import type React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -10,19 +10,19 @@ import { Input } from "@/components/ui/input";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
+  Sheet描述,
   SheetHeader,
-  SheetTitle,
+  Sheet标题,
 } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
 import * as api from "../api";
 import { useTracerReadiness } from "../hooks/useTracerReadiness";
 
-interface JobDetailsEditDrawerProps {
+interface JobDetails编辑DrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   job: Job | null;
-  onJobUpdated: () => void | Promise<void>;
+  onJob更新d: () => void | Promise<void>;
 }
 
 type JobDetailsDraft = {
@@ -33,7 +33,7 @@ type JobDetailsDraft = {
   location: string;
   salary: string;
   deadline: string;
-  jobDescription: string;
+  job描述: string;
   tracerLinksEnabled: boolean;
 };
 
@@ -45,7 +45,7 @@ const emptyDraft: JobDetailsDraft = {
   location: "",
   salary: "",
   deadline: "",
-  jobDescription: "",
+  job描述: "",
   tracerLinksEnabled: false,
 };
 
@@ -64,7 +64,7 @@ const normalizeFromJob = (job: Job | null): JobDetailsDraft => {
     location: job.location ?? "",
     salary: job.salary ?? "",
     deadline: job.deadline ?? "",
-    jobDescription: job.jobDescription ?? "",
+    job描述: job.job描述 ?? "",
     tracerLinksEnabled: Boolean(job.tracerLinksEnabled),
   };
 };
@@ -78,11 +78,11 @@ function isValidUrl(value: string): boolean {
   }
 }
 
-export const JobDetailsEditDrawer: React.FC<JobDetailsEditDrawerProps> = ({
+export const JobDetails编辑Drawer: React.FC<JobDetails编辑DrawerProps> = ({
   open,
   onOpenChange,
   job,
-  onJobUpdated,
+  onJob更新d,
 }) => {
   const [draft, setDraft] = useState<JobDetailsDraft>(emptyDraft);
   const [validationError, setValidationError] = useState<string | null>(null);
@@ -103,7 +103,7 @@ export const JobDetailsEditDrawer: React.FC<JobDetailsEditDrawerProps> = ({
   const tracerEnableBlockedReason =
     tracerReadiness?.canEnable === false
       ? (tracerReadiness.reason ??
-        "Tracer links are unavailable right now. Verify Tracer Links in Settings.")
+        "Tracer links are unavailable right now. Verify Tracer Links in 设置.")
       : null;
 
   const isDirty = useMemo(() => {
@@ -117,12 +117,12 @@ export const JobDetailsEditDrawer: React.FC<JobDetailsEditDrawerProps> = ({
       draft.location !== current.location ||
       draft.salary !== current.salary ||
       draft.deadline !== current.deadline ||
-      draft.jobDescription !== current.jobDescription ||
+      draft.job描述 !== current.job描述 ||
       draft.tracerLinksEnabled !== current.tracerLinksEnabled
     );
   }, [draft, job]);
 
-  const handleSave = async () => {
+  const handle保存 = async () => {
     if (!job) return;
 
     const title = draft.title.trim();
@@ -131,7 +131,7 @@ export const JobDetailsEditDrawer: React.FC<JobDetailsEditDrawerProps> = ({
     const applicationLink = draft.applicationLink.trim();
 
     if (!title) {
-      setValidationError("Title is required.");
+      setValidationError("标题 is required.");
       return;
     }
     if (!employer) {
@@ -157,7 +157,7 @@ export const JobDetailsEditDrawer: React.FC<JobDetailsEditDrawerProps> = ({
     ) {
       setValidationError(
         tracerEnableBlockedReason ??
-          "Tracer links are unavailable right now. Verify Tracer Links in Settings.",
+          "Tracer links are unavailable right now. Verify Tracer Links in 设置.",
       );
       return;
     }
@@ -177,7 +177,7 @@ export const JobDetailsEditDrawer: React.FC<JobDetailsEditDrawerProps> = ({
         location: normalizeOptional(draft.location),
         salary: normalizeOptional(draft.salary),
         deadline: normalizeOptional(draft.deadline),
-        jobDescription: normalizeOptional(draft.jobDescription),
+        job描述: normalizeOptional(draft.job描述),
         tracerLinksEnabled: draft.tracerLinksEnabled,
       });
 
@@ -189,7 +189,7 @@ export const JobDetailsEditDrawer: React.FC<JobDetailsEditDrawerProps> = ({
         }
       }
 
-      await onJobUpdated();
+      await onJob更新d();
 
       toast.success("Job details updated", {
         action: {
@@ -198,7 +198,7 @@ export const JobDetailsEditDrawer: React.FC<JobDetailsEditDrawerProps> = ({
             void (async () => {
               try {
                 await api.rescoreJob(job.id);
-                await onJobUpdated();
+                await onJob更新d();
                 toast.success("Match recalculated");
               } catch (error) {
                 showErrorToast(error, "Failed to recalculate match");
@@ -218,26 +218,26 @@ export const JobDetailsEditDrawer: React.FC<JobDetailsEditDrawerProps> = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:max-w-2xl">
-        <div className="flex h-full flex-col">
+      <SheetContent side="right" class名称="w-full sm:max-w-2xl">
+        <div class名称="flex h-full flex-col">
           <SheetHeader>
-            <SheetTitle>Edit job details</SheetTitle>
-            <SheetDescription>
+            <Sheet标题>编辑 job details</Sheet标题>
+            <Sheet描述>
               Correct extracted metadata before continuing with this role.
-            </SheetDescription>
+            </Sheet描述>
           </SheetHeader>
 
           {!hasJob ? (
-            <div className="mt-6 rounded-lg border border-dashed border-border/60 p-4 text-sm text-muted-foreground">
+            <div class名称="mt-6 rounded-lg border border-dashed border-border/60 p-4 text-sm text-muted-foreground">
               Select a job to edit.
             </div>
           ) : (
             <>
-              <div className="mt-4 flex-1 overflow-y-auto pr-1">
-                <div className="grid gap-3 sm:grid-cols-2">
+              <div class名称="mt-4 flex-1 overflow-y-auto pr-1">
+                <div class名称="grid gap-3 sm:grid-cols-2">
                   <FieldInput
                     id="edit-job-title"
-                    label="Title *"
+                    label="标题 *"
                     value={draft.title}
                     onChange={(value) =>
                       setDraft((prev) => ({ ...prev, title: value }))
@@ -300,10 +300,10 @@ export const JobDetailsEditDrawer: React.FC<JobDetailsEditDrawerProps> = ({
                   />
                 </div>
 
-                <div className="mt-3 rounded-lg border border-border/60 bg-muted/10 px-3 py-3">
+                <div class名称="mt-3 rounded-lg border border-border/60 bg-muted/10 px-3 py-3">
                   <label
                     htmlFor="edit-tracer-links-enabled"
-                    className="flex cursor-pointer items-center gap-3"
+                    class名称="flex cursor-pointer items-center gap-3"
                   >
                     <Checkbox
                       id="edit-tracer-links-enabled"
@@ -316,74 +316,74 @@ export const JobDetailsEditDrawer: React.FC<JobDetailsEditDrawerProps> = ({
                       }
                       disabled={isSaving || tracerEnableBlocked}
                     />
-                    <span className="text-sm font-medium">
+                    <span class名称="text-sm font-medium">
                       Enable tracer links for this job
                     </span>
                   </label>
-                  <p className="mt-2 text-xs text-muted-foreground">
+                  <p class名称="mt-2 text-xs text-muted-foreground">
                     {isTracerReadinessChecking
                       ? "Checking tracer-link readiness..."
                       : "Applies on the next PDF generation. Existing PDFs are not modified."}
                   </p>
                   {tracerEnableBlockedReason && !draft.tracerLinksEnabled ? (
-                    <p className="mt-2 text-xs text-destructive">
+                    <p class名称="mt-2 text-xs text-destructive">
                       Tracer links are unavailable: {tracerEnableBlockedReason}
                     </p>
                   ) : null}
-                  <p className="mt-2 text-xs text-muted-foreground/80">
-                    No raw IP is stored. Analytics are privacy-safe and
+                  <p class名称="mt-2 text-xs text-muted-foreground/80">
+                    否 raw IP is stored. Analytics are privacy-safe and
                     anonymous.
                   </p>
                 </div>
 
-                <div className="mt-3 space-y-1">
+                <div class名称="mt-3 space-y-1">
                   <label
                     htmlFor="edit-job-description"
-                    className="text-xs font-medium text-muted-foreground"
+                    class名称="text-xs font-medium text-muted-foreground"
                   >
                     Job description
                   </label>
                   <Textarea
                     id="edit-job-description"
-                    value={draft.jobDescription}
+                    value={draft.job描述}
                     onChange={(event) =>
                       setDraft((prev) => ({
                         ...prev,
-                        jobDescription: event.target.value,
+                        job描述: event.target.value,
                       }))
                     }
                     placeholder="Paste or refine the job description..."
-                    className="min-h-[220px] font-mono text-sm leading-relaxed"
+                    class名称="min-h-[220px] font-mono text-sm leading-relaxed"
                   />
                 </div>
 
                 {validationError && (
-                  <div className="mt-3 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-xs text-destructive">
+                  <div class名称="mt-3 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-xs text-destructive">
                     {validationError}
                   </div>
                 )}
               </div>
 
-              <div className="mt-4 flex items-center justify-end gap-2 border-t pt-4">
+              <div class名称="mt-4 flex items-center justify-end gap-2 border-t pt-4">
                 <Button
                   type="button"
                   variant="ghost"
                   onClick={() => onOpenChange(false)}
                   disabled={isSaving}
                 >
-                  Cancel
+                  取消
                 </Button>
                 <Button
                   type="button"
-                  onClick={() => void handleSave()}
+                  onClick={() => void handle保存()}
                   disabled={isSaving || !isDirty}
                 >
                   {isSaving ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 class名称="mr-2 h-4 w-4 animate-spin" />
                   ) : (
-                    <Save className="mr-2 h-4 w-4" />
+                    <保存 class名称="mr-2 h-4 w-4" />
                   )}
-                  Save details
+                  保存 details
                 </Button>
               </div>
             </>
@@ -401,8 +401,8 @@ const FieldInput: React.FC<{
   onChange: (value: string) => void;
   placeholder: string;
 }> = ({ id, label, value, onChange, placeholder }) => (
-  <div className="space-y-1">
-    <label htmlFor={id} className="text-xs font-medium text-muted-foreground">
+  <div class名称="space-y-1">
+    <label htmlFor={id} class名称="text-xs font-medium text-muted-foreground">
       {label}
     </label>
     <Input

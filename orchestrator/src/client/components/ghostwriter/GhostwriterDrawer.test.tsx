@@ -38,7 +38,7 @@ vi.mock("@/components/ui/sheet", async () => {
     }: {
       open: boolean;
       onOpenChange: (open: boolean) => void;
-      children: React.ReactNode;
+      children: React.React否de;
     }) => (
       <SheetContext.Provider value={{ open, onOpenChange }}>
         {children}
@@ -50,34 +50,34 @@ vi.mock("@/components/ui/sheet", async () => {
         onClick: () => onOpenChange(true),
       });
     },
-    SheetClose: ({ children }: { children: React.ReactElement }) => {
+    Sheet关闭: ({ children }: { children: React.ReactElement }) => {
       const { onOpenChange } = useSheetContext();
       return ReactModule.cloneElement(children, {
         onClick: () => onOpenChange(false),
       });
     },
     SheetContent: ({
-      className,
+      class名称,
       children,
     }: {
-      className?: string;
-      children: React.ReactNode;
+      class名称?: string;
+      children: React.React否de;
     }) => {
       const { open } = useSheetContext();
       if (!open) return null;
       return (
-        <div data-testid="sheet-content" className={className}>
+        <div data-testid="sheet-content" class名称={class名称}>
           {children}
         </div>
       );
     },
-    SheetHeader: ({ children }: { children: React.ReactNode }) => (
+    SheetHeader: ({ children }: { children: React.React否de }) => (
       <div>{children}</div>
     ),
-    SheetTitle: ({ children }: { children: React.ReactNode }) => (
+    Sheet标题: ({ children }: { children: React.React否de }) => (
       <h2>{children}</h2>
     ),
-    SheetDescription: ({ children }: { children: React.ReactNode }) => (
+    Sheet描述: ({ children }: { children: React.React否de }) => (
       <p>{children}</p>
     ),
   };
@@ -125,8 +125,8 @@ describe("GhostwriterDrawer", () => {
     fireEvent.click(screen.getByRole("button", { name: "Ghostwriter" }));
 
     const content = screen.getByTestId("sheet-content");
-    expect(content.className).toContain("lg:w-[50vw]");
-    expect(content.className).not.toContain("w-screen");
+    expect(content.class名称).toContain("lg:w-[50vw]");
+    expect(content.class名称).not.toContain("w-screen");
     expect(
       screen.getByRole("button", { name: "Open Ghostwriter pop-up" }),
     ).toBeInTheDocument();
@@ -140,8 +140,8 @@ describe("GhostwriterDrawer", () => {
     fireEvent.click(screen.getByRole("button", { name: "Ghostwriter" }));
 
     const content = screen.getByTestId("sheet-content");
-    expect(content.className).toContain("w-screen");
-    expect(content.className).toContain("max-w-none");
+    expect(content.class名称).toContain("w-screen");
+    expect(content.class名称).toContain("max-w-none");
     expect(
       screen.getByRole("button", { name: "Restore Ghostwriter drawer" }),
     ).toBeInTheDocument();
@@ -159,7 +159,7 @@ describe("GhostwriterDrawer", () => {
     expect(window.localStorage.getItem(DISPLAY_MODE_STORAGE_KEY)).toBe(
       "fullscreen",
     );
-    expect(screen.getByTestId("sheet-content").className).toContain("w-screen");
+    expect(screen.getByTestId("sheet-content").class名称).toContain("w-screen");
 
     fireEvent.click(
       screen.getByRole("button", { name: "Restore Ghostwriter drawer" }),
@@ -167,7 +167,7 @@ describe("GhostwriterDrawer", () => {
     expect(window.localStorage.getItem(DISPLAY_MODE_STORAGE_KEY)).toBe(
       "drawer",
     );
-    expect(screen.getByTestId("sheet-content").className).toContain(
+    expect(screen.getByTestId("sheet-content").class名称).toContain(
       "lg:w-[50vw]",
     );
   });
@@ -180,8 +180,8 @@ describe("GhostwriterDrawer", () => {
     fireEvent.click(screen.getByRole("button", { name: "Ghostwriter" }));
 
     const content = screen.getByTestId("sheet-content");
-    expect(content.className).toContain("lg:w-[50vw]");
-    expect(content.className).not.toContain("w-screen");
+    expect(content.class名称).toContain("lg:w-[50vw]");
+    expect(content.class名称).not.toContain("w-screen");
     expect(
       screen.queryByRole("button", { name: "Open Ghostwriter pop-up" }),
     ).not.toBeInTheDocument();

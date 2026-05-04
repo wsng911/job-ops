@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import type React from "react";
 import { Button } from "@/components/ui/button";
 
-interface FloatingJobActionsBarProps {
+interface FloatingJob操作BarProps {
   selectedCount: number;
   canMoveSelected: boolean;
   canSkipSelected: boolean;
@@ -14,7 +14,7 @@ interface FloatingJobActionsBarProps {
   onClear: () => void;
 }
 
-export const FloatingJobActionsBar: React.FC<FloatingJobActionsBarProps> = ({
+export const FloatingJob操作Bar: React.FC<FloatingJob操作BarProps> = ({
   selectedCount,
   canMoveSelected,
   canSkipSelected,
@@ -29,23 +29,23 @@ export const FloatingJobActionsBar: React.FC<FloatingJobActionsBarProps> = ({
     <AnimatePresence initial={false}>
       {selectedCount > 0 ? (
         <motion.div
-          className="pointer-events-none fixed inset-x-0 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 flex justify-center px-3 sm:px-4"
+          class名称="pointer-events-none fixed inset-x-0 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 flex justify-center px-3 sm:px-4"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 16 }}
           transition={{ duration: 0.18, ease: "easeOut" }}
         >
-          <div className="pointer-events-auto flex w-full max-w-md flex-col items-stretch gap-2 rounded-xl border border-border/70 bg-card/95 px-3 py-2 shadow-xl backdrop-blur supports-[backdrop-filter]:bg-card/85 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center">
-            <div className="text-xs text-muted-foreground tabular-nums sm:mr-1">
+          <div class名称="pointer-events-auto flex w-full max-w-md flex-col items-stretch gap-2 rounded-xl border border-border/70 bg-card/95 px-3 py-2 shadow-xl backdrop-blur supports-[backdrop-filter]:bg-card/85 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center">
+            <div class名称="text-xs text-muted-foreground tabular-nums sm:mr-1">
               {selectedCount} selected
             </div>
-            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
+            <div class名称="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
               {canMoveSelected && (
                 <Button
                   type="button"
                   size="sm"
                   variant="outline"
-                  className="w-full sm:w-auto"
+                  class名称="w-full sm:w-auto"
                   disabled={jobActionInFlight}
                   onClick={onMoveToReady}
                 >
@@ -57,7 +57,7 @@ export const FloatingJobActionsBar: React.FC<FloatingJobActionsBarProps> = ({
                   type="button"
                   size="sm"
                   variant="outline"
-                  className="w-full sm:w-auto"
+                  class名称="w-full sm:w-auto"
                   disabled={jobActionInFlight}
                   onClick={onSkipSelected}
                 >
@@ -69,7 +69,7 @@ export const FloatingJobActionsBar: React.FC<FloatingJobActionsBarProps> = ({
                   type="button"
                   size="sm"
                   variant="outline"
-                  className="w-full sm:w-auto"
+                  class名称="w-full sm:w-auto"
                   disabled={jobActionInFlight}
                   onClick={onRescoreSelected}
                 >
@@ -80,7 +80,7 @@ export const FloatingJobActionsBar: React.FC<FloatingJobActionsBarProps> = ({
                 type="button"
                 size="sm"
                 variant="ghost"
-                className="w-full sm:w-auto"
+                class名称="w-full sm:w-auto"
                 onClick={onClear}
                 disabled={jobActionInFlight}
               >

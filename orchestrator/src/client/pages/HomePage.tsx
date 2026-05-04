@@ -1,6 +1,6 @@
 import * as api from "@client/api";
 import {
-  ApplicationsPerDayChart,
+  申请记录PerDayChart,
   ConversionAnalytics,
   DurationSelector,
   type DurationValue,
@@ -12,7 +12,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChartColumn } from "lucide-react";
 import type React from "react";
 import { useCallback, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { use搜索Params } from "react-router-dom";
 import { queryKeys } from "@/client/lib/queryKeys";
 import { OverviewPipelineRunsSection } from "./overview/OverviewPipelineRunsSection";
 
@@ -30,7 +30,7 @@ const DEFAULT_DURATION = 30;
 
 export const HomePage: React.FC = () => {
   const queryClient = useQueryClient();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, set搜索Params] = use搜索Params();
 
   // Read initial duration from URL
   const initialDuration: DurationValue = (() => {
@@ -114,8 +114,8 @@ export const HomePage: React.FC = () => {
   const handleDurationChange = useCallback(
     (newDuration: DurationValue) => {
       setDuration(newDuration);
-      setSearchParams((prev) => {
-        const next = new URLSearchParams(prev);
+      set搜索Params((prev) => {
+        const next = new URL搜索Params(prev);
         if (newDuration === DEFAULT_DURATION) {
           next.delete("duration");
         } else {
@@ -127,7 +127,7 @@ export const HomePage: React.FC = () => {
         return next;
       });
     },
-    [setSearchParams],
+    [set搜索Params],
   );
 
   return (
@@ -144,7 +144,7 @@ export const HomePage: React.FC = () => {
       <PageMain>
         <OverviewPipelineRunsSection />
 
-        <ApplicationsPerDayChart
+        <申请记录PerDayChart
           appliedAt={appliedDates}
           isLoading={isLoading}
           error={error}

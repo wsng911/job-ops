@@ -3,10 +3,10 @@ import type { Job } from "@shared/types.js";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as api from "../api";
-import { useProfile } from "../hooks/useProfile";
+import { use个人资料 } from "../hooks/use个人资料";
 import { _resetTracerReadinessCache } from "../hooks/useTracerReadiness";
 import { renderWithQueryClient } from "../test/renderWithQueryClient";
-import { TailoringEditor } from "./TailoringEditor";
+import { Tailoring编辑or } from "./Tailoring编辑or";
 
 const render = (ui: Parameters<typeof renderWithQueryClient>[0]) =>
   renderWithQueryClient(ui);
@@ -19,8 +19,8 @@ vi.mock("../api", () => ({
   getTracerReadiness: vi.fn(),
 }));
 
-vi.mock("../hooks/useProfile", () => ({
-  useProfile: vi.fn(),
+vi.mock("../hooks/use个人资料", () => ({
+  use个人资料: vi.fn(),
 }));
 
 vi.mock("sonner", () => ({
@@ -33,12 +33,12 @@ vi.mock("sonner", () => ({
 const createJob = (overrides: Partial<Job> = {}): Job =>
   createBaseJob({
     id: "job-1",
-    tailoredSummary: "Saved summary",
-    tailoredHeadline: "Saved headline",
+    tailoredSummary: "保存d summary",
+    tailoredHeadline: "保存d headline",
     tailoredSkills: JSON.stringify([
       { name: "Core", keywords: ["React", "TypeScript"] },
     ]),
-    jobDescription: "Saved description",
+    job描述: "保存d description",
     selectedProjectIds: "p1",
     ...overrides,
   });
@@ -50,7 +50,7 @@ const ensureAccordionOpen = (name: string) => {
   }
 };
 
-describe("TailoringEditor", () => {
+describe("Tailoring编辑or", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     _resetTracerReadinessCache();
@@ -64,7 +64,7 @@ describe("TailoringEditor", () => {
       lastSuccessAt: Date.now(),
       reason: null,
     });
-    vi.mocked(useProfile).mockReturnValue({
+    vi.mocked(use个人资料).mockReturnValue({
       profile: {
         basics: {
           summary: "Original base summary",
@@ -75,10 +75,10 @@ describe("TailoringEditor", () => {
             items: [
               {
                 id: "s1",
-                name: "Backend",
+                name: "返回end",
                 description: "",
                 level: 0,
-                keywords: ["Node.js", "TypeScript"],
+                keywords: ["否de.js", "TypeScript"],
                 visible: true,
               },
             ],
@@ -87,14 +87,14 @@ describe("TailoringEditor", () => {
       },
       error: null,
       isLoading: false,
-      personName: "Resume",
-      refreshProfile: vi.fn(),
+      person名称: "Resume",
+      refresh个人资料: vi.fn(),
     });
   });
 
   it("does not rehydrate local edits from same-job prop updates", async () => {
     const { rerender } = render(
-      <TailoringEditor job={createJob()} onUpdate={vi.fn()} />,
+      <Tailoring编辑or job={createJob()} on更新={vi.fn()} />,
     );
     await waitFor(() =>
       expect(api.getResumeProjectsCatalog).toHaveBeenCalled(),
@@ -106,9 +106,9 @@ describe("TailoringEditor", () => {
     });
 
     rerender(
-      <TailoringEditor
+      <Tailoring编辑or
         job={createJob({ tailoredSummary: "Older server value" })}
-        onUpdate={vi.fn()}
+        on更新={vi.fn()}
       />,
     );
     ensureAccordionOpen("Summary");
@@ -120,7 +120,7 @@ describe("TailoringEditor", () => {
 
   it("resets local state when job id changes", async () => {
     const { rerender } = render(
-      <TailoringEditor job={createJob()} onUpdate={vi.fn()} />,
+      <Tailoring编辑or job={createJob()} on更新={vi.fn()} />,
     );
     await waitFor(() =>
       expect(api.getResumeProjectsCatalog).toHaveBeenCalled(),
@@ -132,40 +132,40 @@ describe("TailoringEditor", () => {
     });
 
     rerender(
-      <TailoringEditor
+      <Tailoring编辑or
         job={createJob({
           id: "job-2",
-          tailoredSummary: "New job summary",
-          tailoredHeadline: "New job headline",
+          tailoredSummary: "新建 job summary",
+          tailoredHeadline: "新建 job headline",
           tailoredSkills: JSON.stringify([
-            { name: "Backend", keywords: ["Node.js", "Postgres"] },
+            { name: "返回end", keywords: ["否de.js", "Postgres"] },
           ]),
-          jobDescription: "New job description",
+          job描述: "新建 job description",
           selectedProjectIds: "",
         })}
-        onUpdate={vi.fn()}
+        on更新={vi.fn()}
       />,
     );
     ensureAccordionOpen("Summary");
     ensureAccordionOpen("Headline");
     ensureAccordionOpen("Tailored Skills");
-    ensureAccordionOpen("Backend");
+    ensureAccordionOpen("返回end");
 
     expect(screen.getByLabelText("Tailored Summary")).toHaveValue(
-      "New job summary",
+      "新建 job summary",
     );
     expect(screen.getByLabelText("Tailored Headline")).toHaveValue(
-      "New job headline",
+      "新建 job headline",
     );
-    expect(screen.getByDisplayValue("Node.js, Postgres")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("否de.js, Postgres")).toBeInTheDocument();
   });
 
   it("emits dirty state changes", async () => {
     const onDirtyChange = vi.fn();
     render(
-      <TailoringEditor
+      <Tailoring编辑or
         job={createJob()}
-        onUpdate={vi.fn()}
+        on更新={vi.fn()}
         onDirtyChange={onDirtyChange}
       />,
     );
@@ -183,7 +183,7 @@ describe("TailoringEditor", () => {
 
   it("does not sync same-job props while summary field is focused", async () => {
     const { rerender } = render(
-      <TailoringEditor job={createJob()} onUpdate={vi.fn()} />,
+      <Tailoring编辑or job={createJob()} on更新={vi.fn()} />,
     );
     await waitFor(() =>
       expect(api.getResumeProjectsCatalog).toHaveBeenCalled(),
@@ -194,21 +194,21 @@ describe("TailoringEditor", () => {
     fireEvent.focus(summary);
 
     rerender(
-      <TailoringEditor
+      <Tailoring编辑or
         job={createJob({ tailoredSummary: "Incoming from poll" })}
-        onUpdate={vi.fn()}
+        on更新={vi.fn()}
       />,
     );
     ensureAccordionOpen("Summary");
 
     expect(screen.getByLabelText("Tailored Summary")).toHaveValue(
-      "Saved summary",
+      "保存d summary",
     );
   });
 
   it("does not clobber local headline edits from same-job prop updates", async () => {
     const { rerender } = render(
-      <TailoringEditor job={createJob()} onUpdate={vi.fn()} />,
+      <Tailoring编辑or job={createJob()} on更新={vi.fn()} />,
     );
     await waitFor(() =>
       expect(api.getResumeProjectsCatalog).toHaveBeenCalled(),
@@ -220,9 +220,9 @@ describe("TailoringEditor", () => {
     });
 
     rerender(
-      <TailoringEditor
+      <Tailoring编辑or
         job={createJob({ tailoredHeadline: "Incoming headline from poll" })}
-        onUpdate={vi.fn()}
+        on更新={vi.fn()}
       />,
     );
     ensureAccordionOpen("Headline");
@@ -233,7 +233,7 @@ describe("TailoringEditor", () => {
   });
 
   it("saves headline and skills in update payload", async () => {
-    render(<TailoringEditor job={createJob()} onUpdate={vi.fn()} />);
+    render(<Tailoring编辑or job={createJob()} on更新={vi.fn()} />);
     await waitFor(() =>
       expect(api.getResumeProjectsCatalog).toHaveBeenCalled(),
     );
@@ -242,10 +242,10 @@ describe("TailoringEditor", () => {
     ensureAccordionOpen("Core");
 
     fireEvent.change(screen.getByLabelText("Tailored Headline"), {
-      target: { value: "Updated headline" },
+      target: { value: "更新d headline" },
     });
     fireEvent.change(screen.getByLabelText("Keywords (comma-separated)"), {
-      target: { value: "Node.js, TypeScript" },
+      target: { value: "否de.js, TypeScript" },
     });
 
     await waitFor(
@@ -253,9 +253,9 @@ describe("TailoringEditor", () => {
         expect(api.updateJob).toHaveBeenCalledWith(
           "job-1",
           expect.objectContaining({
-            tailoredHeadline: "Updated headline",
+            tailoredHeadline: "更新d headline",
             tailoredSkills:
-              '[{"name":"Core","keywords":["Node.js","TypeScript"]}]',
+              '[{"name":"Core","keywords":["否de.js","TypeScript"]}]',
           }),
         ),
       { timeout: 2000 },
@@ -268,11 +268,11 @@ describe("TailoringEditor", () => {
       tailoredSummary: "AI summary",
       tailoredHeadline: "AI headline",
       tailoredSkills: JSON.stringify([
-        { name: "Backend", keywords: ["Node.js", "Kafka"] },
+        { name: "返回end", keywords: ["否de.js", "Kafka"] },
       ]),
     } as Job);
 
-    render(<TailoringEditor job={createJob()} onUpdate={vi.fn()} />);
+    render(<Tailoring编辑or job={createJob()} on更新={vi.fn()} />);
     await waitFor(() =>
       expect(api.getResumeProjectsCatalog).toHaveBeenCalled(),
     );
@@ -284,16 +284,16 @@ describe("TailoringEditor", () => {
       "AI headline",
     );
     ensureAccordionOpen("Tailored Skills");
-    ensureAccordionOpen("Backend");
-    expect(screen.getByDisplayValue("Backend")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("Node.js, Kafka")).toBeInTheDocument();
+    ensureAccordionOpen("返回end");
+    expect(screen.getByDisplayValue("返回end")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("否de.js, Kafka")).toBeInTheDocument();
   });
 
   it("persists tracer-links toggle in tailoring save payload", async () => {
     render(
-      <TailoringEditor
+      <Tailoring编辑or
         job={createJob({ tracerLinksEnabled: false })}
-        onUpdate={vi.fn()}
+        on更新={vi.fn()}
       />,
     );
     await waitFor(() =>
@@ -317,7 +317,7 @@ describe("TailoringEditor", () => {
   });
 
   it("supports undo to template and redo to AI draft", async () => {
-    render(<TailoringEditor job={createJob()} onUpdate={vi.fn()} />);
+    render(<Tailoring编辑or job={createJob()} on更新={vi.fn()} />);
     await waitFor(() =>
       expect(api.getResumeProjectsCatalog).toHaveBeenCalled(),
     );
@@ -329,7 +329,7 @@ describe("TailoringEditor", () => {
     );
     fireEvent.click(screen.getAllByLabelText("Redo to AI draft")[0]);
     expect(screen.getByLabelText("Tailored Summary")).toHaveValue(
-      "Saved summary",
+      "保存d summary",
     );
 
     ensureAccordionOpen("Headline");
@@ -339,13 +339,13 @@ describe("TailoringEditor", () => {
     );
     fireEvent.click(screen.getAllByLabelText("Redo to AI draft")[1]);
     expect(screen.getByLabelText("Tailored Headline")).toHaveValue(
-      "Saved headline",
+      "保存d headline",
     );
 
     ensureAccordionOpen("Tailored Skills");
     fireEvent.click(screen.getAllByLabelText("Undo to template")[2]);
-    ensureAccordionOpen("Backend");
-    expect(screen.getByDisplayValue("Node.js, TypeScript")).toBeInTheDocument();
+    ensureAccordionOpen("返回end");
+    expect(screen.getByDisplayValue("否de.js, TypeScript")).toBeInTheDocument();
     fireEvent.click(screen.getAllByLabelText("Redo to AI draft")[2]);
     ensureAccordionOpen("Core");
     expect(screen.getByDisplayValue("React, TypeScript")).toBeInTheDocument();
@@ -353,7 +353,7 @@ describe("TailoringEditor", () => {
 
   it("resets redo baseline when switching jobs", async () => {
     const { rerender } = render(
-      <TailoringEditor job={createJob()} onUpdate={vi.fn()} />,
+      <Tailoring编辑or job={createJob()} on更新={vi.fn()} />,
     );
     await waitFor(() =>
       expect(api.getResumeProjectsCatalog).toHaveBeenCalled(),
@@ -366,12 +366,12 @@ describe("TailoringEditor", () => {
     );
 
     rerender(
-      <TailoringEditor
+      <Tailoring编辑or
         job={createJob({
           id: "job-2",
           tailoredSummary: "Second job summary",
         })}
-        onUpdate={vi.fn()}
+        on更新={vi.fn()}
       />,
     );
 
@@ -384,15 +384,15 @@ describe("TailoringEditor", () => {
   });
 
   it("keeps undo disabled until profile template is loaded", async () => {
-    vi.mocked(useProfile).mockReturnValue({
+    vi.mocked(use个人资料).mockReturnValue({
       profile: null,
       error: null,
       isLoading: true,
-      personName: "Resume",
-      refreshProfile: vi.fn(),
+      person名称: "Resume",
+      refresh个人资料: vi.fn(),
     });
 
-    render(<TailoringEditor job={createJob()} onUpdate={vi.fn()} />);
+    render(<Tailoring编辑or job={createJob()} on更新={vi.fn()} />);
     await waitFor(() =>
       expect(api.getResumeProjectsCatalog).toHaveBeenCalled(),
     );

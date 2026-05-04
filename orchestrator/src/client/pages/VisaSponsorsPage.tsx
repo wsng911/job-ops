@@ -1,8 +1,8 @@
 import { formatCountryLabel } from "@shared/location-support.js";
 import type {
   VisaSponsor,
-  VisaSponsorSearchResult,
-  VisaSponsorStatusResponse,
+  VisaSponsor搜索Result,
+  VisaSponsor状态Response,
 } from "@shared/types.js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -15,7 +15,7 @@ import {
   FileSpreadsheet,
   Loader2,
   MapPin,
-  Search,
+  搜索,
   Shield,
   X,
 } from "lucide-react";
@@ -27,7 +27,7 @@ import { showErrorToast } from "@/client/lib/error-toast";
 import { queryKeys } from "@/client/lib/queryKeys";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Drawer, DrawerClose, DrawerContent } from "@/components/ui/drawer";
+import { Drawer, Drawer关闭, DrawerContent } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -47,7 +47,7 @@ import {
   PageMain,
   ScoreMeter,
   SplitLayout,
-  StatusIndicator,
+  状态Indicator,
 } from "../components";
 
 const getScoreTokens = (score: number) => {
@@ -64,18 +64,18 @@ const getScoreTokens = (score: number) => {
 
 const ALL_SOURCES_VALUE = "__all_sources__";
 
-const getSearchScopeLabel = (countryLabel: string) =>
+const get搜索ScopeLabel = (countryLabel: string) =>
   countryLabel === "All sources" ? "all sources" : `the ${countryLabel} source`;
 
 const getResultKey = (
-  result: Pick<VisaSponsorSearchResult, "providerId" | "sponsor">,
-) => `${result.providerId}::${result.sponsor.organisationName}`;
+  result: Pick<VisaSponsor搜索Result, "providerId" | "sponsor">,
+) => `${result.providerId}::${result.sponsor.organisation名称}`;
 
 export const VisaSponsorsPage: React.FC = () => {
   const queryClient = useQueryClient();
   // State
-  const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+  const [searchQuery, set搜索Query] = useState("");
+  const [debounced搜索Query, setDebounced搜索Query] = useState("");
   const [selectedResultKey, setSelectedResultKey] = useState<string | null>(
     null,
   );
@@ -89,9 +89,9 @@ export const VisaSponsorsPage: React.FC = () => {
       : false,
   );
 
-  const statusQuery = useQuery<VisaSponsorStatusResponse>({
+  const statusQuery = useQuery<VisaSponsor状态Response>({
     queryKey: queryKeys.visaSponsors.status(),
-    queryFn: api.getVisaSponsorStatus,
+    queryFn: api.getVisaSponsor状态,
   });
   const status = statusQuery.data ?? null;
   useQueryErrorToast(statusQuery.error, "Failed to fetch status");
@@ -104,7 +104,7 @@ export const VisaSponsorsPage: React.FC = () => {
   const selectedCountryLabel =
     providerOptions.find((option) => option.value === selectedCountry)?.label ??
     "All sources";
-  const searchScopeLabel = getSearchScopeLabel(selectedCountryLabel);
+  const searchScopeLabel = get搜索ScopeLabel(selectedCountryLabel);
   const activeProviders = selectedCountry
     ? statusProviders.filter(
         (provider) => provider.countryKey === selectedCountry,
@@ -114,12 +114,12 @@ export const VisaSponsorsPage: React.FC = () => {
     (sum, provider) => sum + provider.totalSponsors,
     0,
   );
-  const latestUpdatedAt = activeProviders.reduce<string | null>(
+  const latest更新dAt = activeProviders.reduce<string | null>(
     (latest, provider) => {
-      if (!provider.lastUpdated) return latest;
-      if (!latest) return provider.lastUpdated;
-      return new Date(provider.lastUpdated) > new Date(latest)
-        ? provider.lastUpdated
+      if (!provider.last更新d) return latest;
+      if (!latest) return provider.last更新d;
+      return new Date(provider.last更新d) > new Date(latest)
+        ? provider.last更新d
         : latest;
     },
     null,
@@ -127,39 +127,39 @@ export const VisaSponsorsPage: React.FC = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDebouncedSearchQuery(searchQuery);
+      setDebounced搜索Query(searchQuery);
     }, 300);
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
   const searchQueryResult = useQuery({
     queryKey: queryKeys.visaSponsors.search(
-      debouncedSearchQuery.trim(),
+      debounced搜索Query.trim(),
       100,
       20,
       selectedCountry ?? undefined,
     ),
     queryFn: () =>
       api.searchVisaSponsors({
-        query: debouncedSearchQuery.trim(),
+        query: debounced搜索Query.trim(),
         limit: 100,
         minScore: 20,
         country: selectedCountry ?? undefined,
       }),
-    enabled: Boolean(debouncedSearchQuery.trim()),
+    enabled: Boolean(debounced搜索Query.trim()),
   });
-  useQueryErrorToast(searchQueryResult.error, "Search failed");
+  useQueryErrorToast(searchQueryResult.error, "搜索 failed");
 
-  const results = useMemo<VisaSponsorSearchResult[]>(() => {
-    if (!debouncedSearchQuery.trim()) return [];
+  const results = useMemo<VisaSponsor搜索Result[]>(() => {
+    if (!debounced搜索Query.trim()) return [];
     return searchQueryResult.data?.results ?? [];
-  }, [debouncedSearchQuery, searchQueryResult.data]);
+  }, [debounced搜索Query, searchQueryResult.data]);
 
   const selectedResult = useMemo(
     () => results.find((r) => getResultKey(r) === selectedResultKey) ?? null,
     [results, selectedResultKey],
   );
-  const selectedOrg = selectedResult?.sponsor.organisationName ?? null;
+  const selectedOrg = selectedResult?.sponsor.organisation名称 ?? null;
 
   const orgDetailsQuery = useQuery<VisaSponsor[]>({
     queryKey: queryKeys.visaSponsors.organization(
@@ -222,10 +222,10 @@ export const VisaSponsorsPage: React.FC = () => {
     mutationFn: api.updateVisaSponsorList,
     onSuccess: async (result) => {
       queryClient.setQueryData(queryKeys.visaSponsors.status(), result.status);
-      if (debouncedSearchQuery.trim()) {
+      if (debounced搜索Query.trim()) {
         await queryClient.invalidateQueries({
           queryKey: queryKeys.visaSponsors.search(
-            debouncedSearchQuery.trim(),
+            debounced搜索Query.trim(),
             100,
             20,
             selectedCountry ?? undefined,
@@ -235,11 +235,11 @@ export const VisaSponsorsPage: React.FC = () => {
       toast.success(result.message);
     },
     onError: (error) => {
-      showErrorToast(error, "Update failed");
+      showErrorToast(error, "更新 failed");
     },
   });
 
-  const handleUpdate = async () => {
+  const handle更新 = async () => {
     await updateListMutation.mutateAsync();
   };
 
@@ -256,36 +256,36 @@ export const VisaSponsorsPage: React.FC = () => {
     setIsDetailDrawerOpen(false);
   };
 
-  const isUpdateInProgress =
+  const is更新InProgress =
     updateListMutation.isPending ||
     statusProviders.some((provider) => provider.isUpdating);
-  const isLoadingStatus = statusQuery.isLoading;
-  const isSearching = searchQueryResult.isFetching;
+  const isLoading状态 = statusQuery.isLoading;
+  const is搜索ing = searchQueryResult.isFetching;
   const isLoadingDetails = orgDetailsQuery.isLoading;
 
   const detailPanelContent = !selectedResult ? (
-    <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
-      <div className="text-base font-semibold">Select a company</div>
-      <p className="text-sm text-muted-foreground">
+    <div class名称="flex h-full flex-col items-center justify-center gap-2 text-center">
+      <div class名称="text-base font-semibold">Select a company</div>
+      <p class名称="text-sm text-muted-foreground">
         Pick a company from the results to see details here.
       </p>
     </div>
   ) : isLoadingDetails ? (
-    <div className="flex items-center justify-center h-32">
-      <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+    <div class名称="flex items-center justify-center h-32">
+      <Loader2 class名称="h-6 w-6 animate-spin text-muted-foreground" />
     </div>
   ) : (
-    <div className="space-y-4">
+    <div class名称="space-y-4">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-2 mb-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-emerald-200">
-            <CheckCircle2 className="h-3 w-3" />
+        <div class名称="flex items-center gap-2 mb-2">
+          <span class名称="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-emerald-200">
+            <CheckCircle2 class名称="h-3 w-3" />
             Licensed Sponsor
           </span>
           {selectedResult && (
             <span
-              className={cn(
+              class名称={cn(
                 "inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide",
                 getScoreTokens(selectedResult.score).badge,
               )}
@@ -294,8 +294,8 @@ export const VisaSponsorsPage: React.FC = () => {
             </span>
           )}
         </div>
-        <h2 className="text-lg font-semibold text-foreground">{selectedOrg}</h2>
-        <p className="mt-1 text-xs text-muted-foreground">
+        <h2 class名称="text-lg font-semibold text-foreground">{selectedOrg}</h2>
+        <p class名称="mt-1 text-xs text-muted-foreground">
           Source: {formatCountryLabel(selectedResult.countryKey)}
         </p>
       </div>
@@ -304,11 +304,11 @@ export const VisaSponsorsPage: React.FC = () => {
       {orgDetails.length > 0 &&
         (orgDetails[0].townCity || orgDetails[0].county) && (
           <div>
-            <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-1">
+            <div class名称="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-1">
               Location
             </div>
-            <div className="flex items-center gap-2 text-sm text-foreground">
-              <MapPin className="h-4 w-4 text-muted-foreground" />
+            <div class名称="flex items-center gap-2 text-sm text-foreground">
+              <MapPin class名称="h-4 w-4 text-muted-foreground" />
               {[orgDetails[0].townCity, orgDetails[0].county]
                 .filter(Boolean)
                 .join(", ")}
@@ -318,22 +318,22 @@ export const VisaSponsorsPage: React.FC = () => {
 
       {/* Licence types / routes */}
       <div>
-        <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2">
+        <div class名称="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2">
           Licensed Routes ({orgDetails.length})
         </div>
-        <div className="space-y-2">
+        <div class名称="space-y-2">
           {orgDetails.map((entry) => (
             <div
               key={`${entry.route}-${entry.typeRating}`}
-              className="rounded-lg border border-border/60 bg-muted/20 p-3"
+              class名称="rounded-lg border border-border/60 bg-muted/20 p-3"
             >
-              <div className="flex items-start justify-between gap-2 mb-1">
-                <Badge variant="secondary" className="text-xs">
+              <div class名称="flex items-start justify-between gap-2 mb-1">
+                <Badge variant="secondary" class名称="text-xs">
                   {entry.route}
                 </Badge>
               </div>
-              <div className="text-xs text-muted-foreground">
-                <span className="font-medium text-foreground">
+              <div class名称="text-xs text-muted-foreground">
+                <span class名称="font-medium text-foreground">
                   Type & Rating:
                 </span>{" "}
                 {entry.typeRating}
@@ -344,11 +344,11 @@ export const VisaSponsorsPage: React.FC = () => {
       </div>
 
       {/* Info box */}
-      <div className="rounded-lg border border-sky-500/30 bg-sky-500/10 p-3 text-sm">
-        <div className="font-medium text-sky-200 mb-1">
+      <div class名称="rounded-lg border border-sky-500/30 bg-sky-500/10 p-3 text-sm">
+        <div class名称="font-medium text-sky-200 mb-1">
           What does this mean?
         </div>
-        <p className="text-xs text-sky-300/80">
+        <p class名称="text-xs text-sky-300/80">
           This organisation appears in the selected sponsor source and may be
           able to sponsor workers on the routes listed above. Always verify the
           latest source entry before relying on it.
@@ -363,34 +363,34 @@ export const VisaSponsorsPage: React.FC = () => {
         icon={Shield}
         title="Visa Sponsors"
         statusIndicator={
-          isUpdateInProgress ? <StatusIndicator label="Updating" /> : undefined
+          is更新InProgress ? <状态Indicator label="Updating" /> : undefined
         }
-        subtitle="Search sponsor data across available sources"
+        subtitle="搜索 sponsor data across available sources"
         actions={
           <>
             {status && (
-              <div className="hidden md:flex items-center gap-4 text-xs text-muted-foreground mr-2">
-                <span className="flex items-center gap-1.5">
-                  <FileSpreadsheet className="h-3.5 w-3.5" />
+              <div class名称="hidden md:flex items-center gap-4 text-xs text-muted-foreground mr-2">
+                <span class名称="flex items-center gap-1.5">
+                  <FileSpreadsheet class名称="h-3.5 w-3.5" />
                   {totalSponsors.toLocaleString()} sponsors
                 </span>
-                <span className="flex items-center gap-1.5">
-                  <Clock className="h-3.5 w-3.5" />
-                  {formatDateTime(latestUpdatedAt) || "Never"}
+                <span class名称="flex items-center gap-1.5">
+                  <Clock class名称="h-3.5 w-3.5" />
+                  {formatDateTime(latest更新dAt) || "Never"}
                 </span>
               </div>
             )}
             <Button
               variant="ghost"
               size="icon"
-              onClick={handleUpdate}
-              disabled={isUpdateInProgress}
-              aria-label="Update sponsor list"
+              onClick={handle更新}
+              disabled={is更新InProgress}
+              aria-label="更新 sponsor list"
             >
-              {isUpdateInProgress ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+              {is更新InProgress ? (
+                <Loader2 class名称="h-4 w-4 animate-spin" />
               ) : (
-                <Download className="h-4 w-4" />
+                <Download class名称="h-4 w-4" />
               )}
             </Button>
           </>
@@ -398,45 +398,45 @@ export const VisaSponsorsPage: React.FC = () => {
       />
 
       <PageMain>
-        {/* Search section */}
-        <section className="rounded-xl border border-border/60 bg-card/40 p-4">
-          <div className="grid gap-4">
-            <div className="space-y-2">
-              <div className="space-y-2">
+        {/* 搜索 section */}
+        <section class名称="rounded-xl border border-border/60 bg-card/40 p-4">
+          <div class名称="grid gap-4">
+            <div class名称="space-y-2">
+              <div class名称="space-y-2">
                 <label
                   htmlFor="sponsor-search"
-                  className="text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+                  class名称="text-xs font-semibold uppercase tracking-wide text-muted-foreground"
                 >
-                  Company name
+                  公司 name
                 </label>
-                <div className="relative">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <div class名称="relative">
+                  <搜索 class名称="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     id="sponsor-search"
-                    placeholder="Search for a company name..."
+                    placeholder="搜索 for a company name..."
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 pr-10 h-10"
+                    onChange={(e) => set搜索Query(e.target.value)}
+                    class名称="pl-10 pr-10 h-10"
                     autoFocus
                   />
                   {searchQuery && (
                     <button
                       type="button"
-                      onClick={() => setSearchQuery("")}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                      onClick={() => set搜索Query("")}
+                      class名称="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      <X className="h-4 w-4" />
+                      <X class名称="h-4 w-4" />
                     </button>
                   )}
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <p class名称="text-xs text-muted-foreground">
                   Enter a company name to check if they&apos;re a licensed visa
                   sponsor in {searchScopeLabel}.
                 </p>
               </div>
               <label
                 htmlFor="sponsor-source"
-                className="text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+                class名称="text-xs font-semibold uppercase tracking-wide text-muted-foreground"
               >
                 Source
               </label>
@@ -468,36 +468,36 @@ export const VisaSponsorsPage: React.FC = () => {
           <ListPanel
             footer={
               results.length > 0 ? (
-                <div className="text-xs text-muted-foreground">
+                <div class名称="text-xs text-muted-foreground">
                   {results.length} result{results.length !== 1 ? "s" : ""}
-                  {isSearching && (
-                    <span className="ml-2">
-                      <Loader2 className="inline h-3 w-3 animate-spin" />
+                  {is搜索ing && (
+                    <span class名称="ml-2">
+                      <Loader2 class名称="inline h-3 w-3 animate-spin" />
                     </span>
                   )}
                 </div>
               ) : null
             }
           >
-            {!isLoadingStatus && status && totalSponsors === 0 && (
+            {!isLoading状态 && status && totalSponsors === 0 && (
               <EmptyState
                 icon={AlertCircle}
-                title="No sponsor data available"
+                title="否 sponsor data available"
                 description="The visa sponsor list hasn't been downloaded yet."
                 action={
                   <Button
                     size="sm"
-                    onClick={handleUpdate}
-                    disabled={isUpdateInProgress}
+                    onClick={handle更新}
+                    disabled={is更新InProgress}
                   >
-                    {isUpdateInProgress ? (
+                    {is更新InProgress ? (
                       <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        <Loader2 class名称="h-4 w-4 mr-2 animate-spin" />
                         Downloading...
                       </>
                     ) : (
                       <>
-                        <Download className="h-4 w-4 mr-2" />
+                        <Download class名称="h-4 w-4 mr-2" />
                         Download List
                       </>
                     )}
@@ -508,17 +508,17 @@ export const VisaSponsorsPage: React.FC = () => {
 
             {status && totalSponsors > 0 && !searchQuery && (
               <EmptyState
-                icon={Search}
-                title="Search for a company"
+                icon={搜索}
+                title="搜索 for a company"
                 description={`Enter a company name above to search ${searchScopeLabel}.`}
               />
             )}
 
-            {searchQuery && !isSearching && results.length === 0 && (
+            {searchQuery && !is搜索ing && results.length === 0 && (
               <EmptyState
                 icon={AlertCircle}
-                title="No matches found"
-                description={`No sponsors match "${searchQuery}". Try a different spelling.`}
+                title="否 matches found"
+                description={`否 sponsors match "${searchQuery}". Try a different spelling.`}
               />
             )}
 
@@ -528,18 +528,18 @@ export const VisaSponsorsPage: React.FC = () => {
                   key={getResultKey(result)}
                   selected={selectedResultKey === getResultKey(result)}
                   onClick={() => handleSelectOrg(getResultKey(result))}
-                  className="gap-3"
+                  class名称="gap-3"
                 >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Building2 className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
-                      <span className="text-sm font-medium text-foreground truncate">
-                        {result.sponsor.organisationName}
+                  <div class名称="flex-1 min-w-0">
+                    <div class名称="flex items-center gap-2 mb-1">
+                      <Building2 class名称="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                      <span class名称="text-sm font-medium text-foreground truncate">
+                        {result.sponsor.organisation名称}
                       </span>
                     </div>
                     {(result.sponsor.townCity || result.sponsor.county) && (
-                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                        <MapPin className="h-3 w-3" />
+                      <div class名称="flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <MapPin class名称="h-3 w-3" />
                         {[
                           formatCountryLabel(result.countryKey),
                           result.sponsor.townCity,
@@ -552,39 +552,39 @@ export const VisaSponsorsPage: React.FC = () => {
                     {!result.sponsor.townCity &&
                       !result.sponsor.county &&
                       result.countryKey && (
-                        <div className="text-xs text-muted-foreground">
+                        <div class名称="text-xs text-muted-foreground">
                           {formatCountryLabel(result.countryKey)}
                         </div>
                       )}
                   </div>
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div class名称="flex items-center gap-2 shrink-0">
                     <ScoreMeter score={result.score} />
-                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                    <ChevronRight class名称="h-4 w-4 text-muted-foreground" />
                   </div>
                 </ListItem>
               ))}
           </ListPanel>
 
           {/* Right panel - Details */}
-          <DetailPanel className="hidden lg:block">
+          <DetailPanel class名称="hidden lg:block">
             {detailPanelContent}
           </DetailPanel>
         </SplitLayout>
       </PageMain>
 
       <Drawer open={isDetailDrawerOpen} onOpenChange={setIsDetailDrawerOpen}>
-        <DrawerContent className="max-h-[90vh]">
-          <div className="flex items-center justify-between px-4 pt-2">
-            <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <DrawerContent class名称="max-h-[90vh]">
+          <div class名称="flex items-center justify-between px-4 pt-2">
+            <div class名称="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               Sponsor details
             </div>
-            <DrawerClose asChild>
-              <Button variant="ghost" size="sm" className="h-8 px-2 text-xs">
-                Close
+            <Drawer关闭 asChild>
+              <Button variant="ghost" size="sm" class名称="h-8 px-2 text-xs">
+                关闭
               </Button>
-            </DrawerClose>
+            </Drawer关闭>
           </div>
-          <div className="max-h-[calc(90vh-3.5rem)] overflow-y-auto px-4 pb-6 pt-3">
+          <div class名称="max-h-[calc(90vh-3.5rem)] overflow-y-auto px-4 pb-6 pt-3">
             {detailPanelContent}
           </div>
         </DrawerContent>

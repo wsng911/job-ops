@@ -144,13 +144,13 @@ export const SHORTCUTS = {
   search: {
     key: "$mod+k",
     displayKey: "$mod+K",
-    label: "Search jobs",
+    label: "搜索 jobs",
     group: "meta",
   },
   searchSlash: {
     key: "/",
     displayKey: "/",
-    label: "Search jobs",
+    label: "搜索 jobs",
     group: "meta",
   },
   help: {

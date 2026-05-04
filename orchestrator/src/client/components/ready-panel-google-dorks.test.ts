@@ -35,14 +35,14 @@ describe("buildReadyPanelGoogleDorks", () => {
     const links = buildReadyPanelGoogleDorks(
       createJob({
         employer: "Acme",
-        title: "Backend Engineer",
+        title: "返回end Engineer",
         skills: null,
-        tailoredSkills: JSON.stringify(["Node.js", "TypeScript"]),
+        tailoredSkills: JSON.stringify(["否de.js", "TypeScript"]),
       }),
     );
 
     expect(links[0]?.query).toBe(
-      'site:linkedin.com/in "Acme" "Node.js" "TypeScript"',
+      'site:linkedin.com/in "Acme" "否de.js" "TypeScript"',
     );
   });
 

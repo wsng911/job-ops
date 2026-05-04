@@ -1,8 +1,8 @@
-import type { ResumeProjectsSettings } from "@shared/types.js";
+import type { ResumeProjects设置 } from "@shared/types.js";
 import { describe, expect, it } from "vitest";
 import { toggleAiSelectable, toggleMustInclude } from "./resume-projects-state";
 
-const baseSettings: ResumeProjectsSettings = {
+const base设置: ResumeProjects设置 = {
   maxProjects: 2,
   lockedProjectIds: [],
   aiSelectableProjectIds: ["p1", "p2"],
@@ -11,7 +11,7 @@ const baseSettings: ResumeProjectsSettings = {
 describe("resume-projects-state", () => {
   it("removes project from aiSelectable when must-include is enabled", () => {
     const next = toggleMustInclude({
-      settings: baseSettings,
+      settings: base设置,
       projectId: "p1",
       checked: true,
       maxProjectsTotal: 3,
@@ -22,7 +22,7 @@ describe("resume-projects-state", () => {
   });
 
   it("does not auto-add project to aiSelectable when must-include is disabled", () => {
-    const start: ResumeProjectsSettings = {
+    const start: ResumeProjects设置 = {
       maxProjects: 2,
       lockedProjectIds: ["p1"],
       aiSelectableProjectIds: [],
@@ -41,7 +41,7 @@ describe("resume-projects-state", () => {
 
   it("toggles aiSelectable explicitly", () => {
     const add = toggleAiSelectable({
-      settings: { ...baseSettings, aiSelectableProjectIds: ["p2"] },
+      settings: { ...base设置, aiSelectableProjectIds: ["p2"] },
       projectId: "p1",
       checked: true,
     });

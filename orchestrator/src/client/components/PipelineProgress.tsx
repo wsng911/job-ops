@@ -18,7 +18,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { subscribeToEventSource } from "@/client/lib/sse";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, Card标题 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
@@ -35,7 +35,7 @@ const stepLabels: Record<PipelineProgressState["step"], string> = {
   scoring: "Scoring",
   processing: "Processing",
   completed: "Complete",
-  cancelled: "Cancelled",
+  cancelled: "取消led",
   failed: "Failed",
 };
 
@@ -287,17 +287,17 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({
 
   return (
     <Card>
-      <CardHeader className="space-y-2">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-          <div className="flex min-w-0 flex-wrap items-center gap-2">
-            <CardTitle className="text-base">Pipeline</CardTitle>
+      <CardHeader class名称="space-y-2">
+        <div class名称="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+          <div class名称="flex min-w-0 flex-wrap items-center gap-2">
+            <Card标题 class名称="text-base">Pipeline</Card标题>
             <Badge
               variant="outline"
-              className={cn("uppercase tracking-wide", stepBadgeClasses[step])}
+              class名称={cn("uppercase tracking-wide", stepBadgeClasses[step])}
             >
               {stepLabels[step]}
             </Badge>
-            <span className="truncate text-xs text-muted-foreground">
+            <span class名称="truncate text-xs text-muted-foreground">
               {transport === "live"
                 ? "Live"
                 : transport === "polling"
@@ -306,24 +306,24 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            {isActive && <Loader2 className="h-4 w-4 animate-spin" />}
-            <span className="tabular-nums">{Math.round(percentage)}%</span>
+          <div class名称="flex items-center gap-2 text-sm text-muted-foreground">
+            {isActive && <Loader2 class名称="h-4 w-4 animate-spin" />}
+            <span class名称="tabular-nums">{Math.round(percentage)}%</span>
           </div>
         </div>
 
-        <Progress value={percentage} className="h-2" />
+        <Progress value={percentage} class名称="h-2" />
       </CardHeader>
 
       {progress && (
-        <CardContent className="space-y-4">
-          <div className="space-y-1">
-            <p className="text-sm">{progress.message}</p>
+        <CardContent class名称="space-y-4">
+          <div class名称="space-y-1">
+            <p class名称="text-sm">{progress.message}</p>
             {progress.detail && (
-              <p className="text-sm text-muted-foreground">{progress.detail}</p>
+              <p class名称="text-sm text-muted-foreground">{progress.detail}</p>
             )}
             {step === "crawling" && (
-              <p className="text-xs text-muted-foreground">
+              <p class名称="text-xs text-muted-foreground">
                 Source:{" "}
                 {progress.crawlingSource
                   ? resolveSourceLabel(progress.crawlingSource)
@@ -344,34 +344,34 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({
           {showStats && (
             <>
               <Separator />
-              <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+              <div class名称="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
                 {step === "crawling" ? (
                   <>
                     <div>
-                      <div className="text-xs text-muted-foreground">
+                      <div class名称="text-xs text-muted-foreground">
                         List pages
                       </div>
-                      <div className="tabular-nums">{listPagesText}</div>
+                      <div class名称="tabular-nums">{listPagesText}</div>
                     </div>
                     <div>
-                      <div className="text-xs text-muted-foreground">
+                      <div class名称="text-xs text-muted-foreground">
                         Job pages
                       </div>
-                      <div className="tabular-nums">{jobPagesText}</div>
+                      <div class名称="tabular-nums">{jobPagesText}</div>
                     </div>
                     <div>
-                      <div className="text-xs text-muted-foreground">
+                      <div class名称="text-xs text-muted-foreground">
                         Enqueued
                       </div>
-                      <div className="tabular-nums">
+                      <div class名称="tabular-nums">
                         {progress.crawlingJobPagesEnqueued}
                       </div>
                     </div>
                     <div>
-                      <div className="text-xs text-muted-foreground">
+                      <div class名称="text-xs text-muted-foreground">
                         Skipped
                       </div>
-                      <div className="tabular-nums">
+                      <div class名称="tabular-nums">
                         {progress.crawlingJobPagesSkipped}
                       </div>
                     </div>
@@ -379,34 +379,34 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({
                 ) : (
                   <>
                     <div>
-                      <div className="text-xs text-muted-foreground">
+                      <div class名称="text-xs text-muted-foreground">
                         Discovered
                       </div>
-                      <div className="tabular-nums">
+                      <div class名称="tabular-nums">
                         {progress.jobsDiscovered}
                       </div>
                     </div>
                     <div>
-                      <div className="text-xs text-muted-foreground">
+                      <div class名称="text-xs text-muted-foreground">
                         Scored
                       </div>
-                      <div className="tabular-nums">{progress.jobsScored}</div>
+                      <div class名称="tabular-nums">{progress.jobsScored}</div>
                     </div>
                     <div>
-                      <div className="text-xs text-muted-foreground">
+                      <div class名称="text-xs text-muted-foreground">
                         Processed
                       </div>
-                      <div className="tabular-nums">
+                      <div class名称="tabular-nums">
                         {progress.totalToProcess > 0
                           ? `${progress.jobsProcessed}/${progress.totalToProcess}`
                           : progress.jobsProcessed}
                       </div>
                     </div>
                     <div>
-                      <div className="text-xs text-muted-foreground">
+                      <div class名称="text-xs text-muted-foreground">
                         To process
                       </div>
-                      <div className="tabular-nums">
+                      <div class名称="tabular-nums">
                         {progress.totalToProcess}
                       </div>
                     </div>
@@ -419,21 +419,21 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({
           {step === "challenge_required" &&
             progress.pendingChallenges &&
             progress.pendingChallenges.length > 0 && (
-              <div className="space-y-2">
+              <div class名称="space-y-2">
                 <Separator />
                 {progress.pendingChallenges.map((challenge) => (
                   <div
                     key={challenge.extractorId}
-                    className="flex items-center justify-between rounded-md border border-orange-500/20 bg-orange-500/10 p-3"
+                    class名称="flex items-center justify-between rounded-md border border-orange-500/20 bg-orange-500/10 p-3"
                   >
-                    <div className="flex items-center gap-2 text-sm text-orange-400">
-                      <ShieldAlert className="h-4 w-4 shrink-0" />
-                      <span>{challenge.extractorName}</span>
+                    <div class名称="flex items-center gap-2 text-sm text-orange-400">
+                      <ShieldAlert class名称="h-4 w-4 shrink-0" />
+                      <span>{challenge.extractor名称}</span>
                     </div>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-orange-500/30 text-orange-400 hover:bg-orange-500/20"
+                      class名称="border-orange-500/30 text-orange-400 hover:bg-orange-500/20"
                       disabled={solvingExtractor === challenge.extractorId}
                       onClick={() =>
                         handleSolveChallenge(challenge.extractorId)
@@ -441,7 +441,7 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({
                     >
                       {solvingExtractor === challenge.extractorId ? (
                         <>
-                          <Loader2 className="mr-1.5 h-3 w-3 animate-spin" />
+                          <Loader2 class名称="mr-1.5 h-3 w-3 animate-spin" />
                           Solving…
                         </>
                       ) : (
@@ -454,7 +454,7 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({
             )}
 
           {step === "failed" && progress.error && (
-            <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">
+            <div class名称="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">
               {progress.error}
             </div>
           )}

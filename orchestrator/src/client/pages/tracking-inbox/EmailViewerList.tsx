@@ -2,10 +2,10 @@ import type { JobListItem, PostApplicationInboxItem } from "@shared/types";
 import { CheckCircle2, CircleUserRound, XCircle } from "lucide-react";
 import type React from "react";
 import { Button } from "@/components/ui/button";
-import { SearchableDropdown } from "@/components/ui/searchable-dropdown";
+import { 搜索ableDropdown } from "@/components/ui/searchable-dropdown";
 import { formatDateTime } from "@/lib/utils";
 
-type EmailViewerRowProps = {
+type 邮箱ViewerRowProps = {
   item: PostApplicationInboxItem;
   jobs: JobListItem[];
   selectedAppliedJobId: string;
@@ -16,7 +16,7 @@ type EmailViewerRowProps = {
   isAppliedJobsLoading: boolean;
 };
 
-export type EmailViewerListProps = {
+export type 邮箱ViewerListProps = {
   items: PostApplicationInboxItem[];
   appliedJobs: JobListItem[];
   appliedJobByMessageId: Record<string, string>;
@@ -35,12 +35,12 @@ function formatEpochMs(value?: number | null): string {
 }
 
 function getSenderLabel(
-  senderName: string | null,
-  fromAddress: string,
+  sender名称: string | null,
+  from添加ress: string,
 ): string {
-  const preferred = (senderName ?? "").trim();
+  const preferred = (sender名称 ?? "").trim();
   if (preferred) return preferred;
-  const trimmed = fromAddress.trim();
+  const trimmed = from添加ress.trim();
   if (!trimmed) return "Unknown sender";
   const bracketIndex = trimmed.indexOf("<");
   if (bracketIndex > 0) {
@@ -65,7 +65,7 @@ function formatAppliedJobLabel(job: JobListItem): string {
   return job.id;
 }
 
-const EmailViewerRow: React.FC<EmailViewerRowProps> = ({
+const 邮箱ViewerRow: React.FC<邮箱ViewerRowProps> = ({
   item,
   jobs,
   selectedAppliedJobId,
@@ -76,7 +76,7 @@ const EmailViewerRow: React.FC<EmailViewerRowProps> = ({
   isAppliedJobsLoading,
 }) => {
   const score = item.message.matchConfidence;
-  const isActionable = item.message.processingStatus === "pending_user";
+  const isActionable = item.message.processing状态 === "pending_user";
   const canDecide = isActionable && !!selectedAppliedJobId;
   const appliedJobOptions = jobs.map((job) => ({
     value: job.id,
@@ -85,67 +85,67 @@ const EmailViewerRow: React.FC<EmailViewerRowProps> = ({
   }));
 
   return (
-    <div className="flex flex-col gap-3 border-b bg-card/40 px-3 py-3 last:border-b-0 lg:flex-row lg:items-center">
-      <div className="min-w-0 space-y-2">
-        <div className="flex min-w-0 items-start gap-3">
-          <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-muted/50 text-muted-foreground">
-            <CircleUserRound className="h-3.5 w-3.5" />
+    <div class名称="flex flex-col gap-3 border-b bg-card/40 px-3 py-3 last:border-b-0 lg:flex-row lg:items-center">
+      <div class名称="min-w-0 space-y-2">
+        <div class名称="flex min-w-0 items-start gap-3">
+          <div class名称="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-muted/50 text-muted-foreground">
+            <CircleUserRound class名称="h-3.5 w-3.5" />
           </div>
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold">
+          <div class名称="min-w-0 flex-1">
+            <p class名称="truncate text-sm font-semibold">
               {getSenderLabel(
-                item.message.senderName,
-                item.message.fromAddress,
+                item.message.sender名称,
+                item.message.from添加ress,
               )}
             </p>
-            <p className="truncate text-xs text-muted-foreground">
-              {item.message.fromAddress} ·{" "}
+            <p class名称="truncate text-xs text-muted-foreground">
+              {item.message.from添加ress} ·{" "}
               {formatEpochMs(item.message.receivedAt)}
             </p>
           </div>
         </div>
 
-        <p className="truncate text-sm font-medium">{item.message.subject}</p>
+        <p class名称="truncate text-sm font-medium">{item.message.subject}</p>
         {item.message.matchedJobId ? null : (
-          <p className="text-xs text-amber-600">
+          <p class名称="text-xs text-amber-600">
             Relevant email with no reliable job match. Please select the correct
             job.
           </p>
         )}
       </div>
 
-      <div className="flex min-w-0 items-center gap-2 lg:ml-auto lg:w-[440px]">
-        <SearchableDropdown
+      <div class名称="flex min-w-0 items-center gap-2 lg:ml-auto lg:w-[440px]">
+        <搜索ableDropdown
           value={selectedAppliedJobId}
           options={appliedJobOptions}
           onValueChange={onAppliedJobChange}
           placeholder={isAppliedJobsLoading ? "Loading jobs..." : "Select job"}
-          searchPlaceholder="Search jobs..."
+          searchPlaceholder="搜索 jobs..."
           emptyText={
-            isAppliedJobsLoading ? "Loading jobs..." : "No jobs found."
+            isAppliedJobsLoading ? "Loading jobs..." : "否 jobs found."
           }
           disabled={isActionLoading}
-          triggerClassName="min-w-0 flex-1"
-          contentClassName="w-[360px]"
+          triggerClass名称="min-w-0 flex-1"
+          contentClass名称="w-[360px]"
           ariaLabel="Select job"
         />
 
         <span
-          className={`shrink-0 text-xs tabular-nums ${scoreTextClass(score)}`}
+          class名称={`shrink-0 text-xs tabular-nums ${scoreTextClass(score)}`}
         >
           {score === null ? "n/a" : `${Math.round(score)}%`}
         </span>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div class名称="flex shrink-0 items-center gap-2">
           <Button
             size="sm"
-            aria-label="Confirm email-job match"
-            title="Confirm email-job match"
+            aria-label="确认 email-job match"
+            title="确认 email-job match"
             onClick={onApprove}
             disabled={isActionLoading || !canDecide}
-            className="h-8 w-8 p-0"
+            class名称="h-8 w-8 p-0"
           >
-            <CheckCircle2 className="h-4 w-4" />
+            <CheckCircle2 class名称="h-4 w-4" />
           </Button>
           <Button
             size="sm"
@@ -154,9 +154,9 @@ const EmailViewerRow: React.FC<EmailViewerRowProps> = ({
             title="Ignore this match"
             onClick={onDeny}
             disabled={isActionLoading || !isActionable}
-            className="h-8 w-8 p-0"
+            class名称="h-8 w-8 p-0"
           >
-            <XCircle className="h-4 w-4" />
+            <XCircle class名称="h-4 w-4" />
           </Button>
         </div>
       </div>
@@ -164,7 +164,7 @@ const EmailViewerRow: React.FC<EmailViewerRowProps> = ({
   );
 };
 
-export const EmailViewerList: React.FC<EmailViewerListProps> = ({
+export const 邮箱ViewerList: React.FC<邮箱ViewerListProps> = ({
   items,
   appliedJobs,
   appliedJobByMessageId,
@@ -174,7 +174,7 @@ export const EmailViewerList: React.FC<EmailViewerListProps> = ({
   isAppliedJobsLoading,
 }) => {
   return (
-    <div className="overflow-hidden rounded-lg border">
+    <div class名称="overflow-hidden rounded-lg border">
       {items.map((item) => {
         const selectedAppliedJobId =
           appliedJobByMessageId[item.message.id] ||
@@ -182,7 +182,7 @@ export const EmailViewerList: React.FC<EmailViewerListProps> = ({
           "";
 
         return (
-          <EmailViewerRow
+          <邮箱ViewerRow
             key={item.message.id}
             item={item}
             jobs={appliedJobs}

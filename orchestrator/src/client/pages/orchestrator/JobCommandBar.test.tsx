@@ -9,7 +9,7 @@ const cleanupVirtualizerMock = installVirtualizerSizeMock();
 const createJob = (overrides: Partial<JobListItem> = {}): JobListItem => ({
   id: "job-1",
   source: "indeed",
-  title: "Backend Engineer",
+  title: "返回end Engineer",
   employer: "Acme",
   jobUrl: "https://example.com/jobs/job-1",
   applicationLink: null,
@@ -57,7 +57,7 @@ describe("JobCommandBar", () => {
 
     expect(
       screen.getByPlaceholderText(
-        "Search jobs by job title or company name...",
+        "搜索 jobs by job title or company name...",
       ),
     ).toBeInTheDocument();
   });
@@ -72,7 +72,7 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@disc" } });
     fireEvent.keyDown(input, { key: "Tab" });
@@ -90,7 +90,7 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@ready" } });
     fireEvent.keyDown(input, { key: "Enter" });
@@ -108,16 +108,16 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const dialog = screen.getByRole("dialog");
-    expect(dialog.className).not.toContain("border-sky-500/50");
+    expect(dialog.class名称).not.toContain("border-sky-500/50");
 
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@disc" } });
     fireEvent.keyDown(input, { key: "Tab" });
 
     expect(dialog).toHaveClass("border-sky-500/50");
-    expect(dialog.className).toContain(
+    expect(dialog.class名称).toContain(
       "shadow-[0_0_0_1px_rgba(14,165,233,0.2),0_0_36px_-12px_rgba(14,165,233,0.55)]",
     );
   });
@@ -138,13 +138,13 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@ready" } });
 
     const lockSuggestion = await screen.findByText("Lock to @ready");
     expect(lockSuggestion).toBeInTheDocument();
-    expect(screen.queryByText("No jobs found.")).not.toBeInTheDocument();
+    expect(screen.queryByText("否 jobs found.")).not.toBeInTheDocument();
 
     fireEvent.click(lockSuggestion);
 
@@ -162,7 +162,7 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@" } });
 
@@ -186,7 +186,7 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@prog" } });
     fireEvent.keyDown(input, { key: "Tab" });
@@ -199,7 +199,7 @@ describe("JobCommandBar", () => {
     const jobs: JobListItem[] = [
       createJob({
         id: "ready-job",
-        title: "Backend Engineer",
+        title: "返回end Engineer",
         status: "ready",
       }),
       createJob({
@@ -215,7 +215,7 @@ describe("JobCommandBar", () => {
     openWithKeyboard();
     fireEvent.change(
       screen.getByPlaceholderText(
-        "Search jobs by job title or company name...",
+        "搜索 jobs by job title or company name...",
       ),
       {
         target: { value: "Globex" },
@@ -243,7 +243,7 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@disc" } });
     fireEvent.keyDown(input, { key: "Tab" });
@@ -280,7 +280,7 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@disc" } });
     fireEvent.keyDown(input, { key: "Tab" });
@@ -303,7 +303,7 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@ready" } });
     fireEvent.keyDown(input, { key: "Tab" });
@@ -325,18 +325,18 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@ready" } });
     fireEvent.keyDown(input, { key: "Tab" });
 
     expect(screen.getByText("@ready")).toBeInTheDocument();
     expect(
-      screen.queryByLabelText("Remove ready filter"),
+      screen.queryByLabelText("移除 ready filter"),
     ).not.toBeInTheDocument();
   });
 
-  it("removes lock with Backspace when query is empty", () => {
+  it("removes lock with 返回space when query is empty", () => {
     render(
       <JobCommandBar
         jobs={[createJob({ id: "job-1", status: "ready" })]}
@@ -346,11 +346,11 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@ready" } });
     fireEvent.keyDown(input, { key: "Tab" });
-    fireEvent.keyDown(input, { key: "Backspace" });
+    fireEvent.keyDown(input, { key: "返回space" });
 
     expect(screen.queryByText("@ready")).not.toBeInTheDocument();
   });
@@ -365,7 +365,7 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@ready" } });
     fireEvent.keyDown(input, { key: "Tab" });
@@ -376,7 +376,7 @@ describe("JobCommandBar", () => {
     expect(screen.queryByText("@ready")).not.toBeInTheDocument();
     expect(
       screen.getByPlaceholderText(
-        "Search jobs by job title or company name...",
+        "搜索 jobs by job title or company name...",
       ),
     ).toBeInTheDocument();
   });
@@ -391,13 +391,13 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@ready" } });
     fireEvent.keyDown(input, { key: "Tab" });
     expect(screen.getByText("@ready")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: "Close" }));
+    fireEvent.click(screen.getByRole("button", { name: "关闭" }));
     openWithKeyboard();
 
     expect(screen.queryByText("@ready")).not.toBeInTheDocument();
@@ -413,7 +413,7 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "@all" } });
     fireEvent.keyDown(input, { key: "Tab" });
@@ -446,7 +446,7 @@ describe("JobCommandBar", () => {
     openWithKeyboard();
     fireEvent.change(
       screen.getByPlaceholderText(
-        "Search jobs by job title or company name...",
+        "搜索 jobs by job title or company name...",
       ),
       {
         target: { value: "Globex" },
@@ -495,7 +495,7 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     const lockTokens = ["@ready", "@disc", "@applied", "@skip", "@exp"];
 
@@ -525,7 +525,7 @@ describe("JobCommandBar", () => {
     openWithKeyboard();
     fireEvent.change(
       screen.getByPlaceholderText(
-        "Search jobs by job title or company name...",
+        "搜索 jobs by job title or company name...",
       ),
       {
         target: { value: "Engineer" },
@@ -555,7 +555,7 @@ describe("JobCommandBar", () => {
 
     openWithKeyboard();
     const input = screen.getByPlaceholderText(
-      "Search jobs by job title or company name...",
+      "搜索 jobs by job title or company name...",
     );
     fireEvent.change(input, { target: { value: "Engineer" } });
 

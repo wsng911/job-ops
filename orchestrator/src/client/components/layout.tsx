@@ -27,7 +27,7 @@ import {
   Sheet,
   SheetContent,
   SheetHeader,
-  SheetTitle,
+  Sheet标题,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import {
@@ -43,10 +43,10 @@ import {
   type RememberedAuthUser,
 } from "../lib/remembered-auth-users";
 import { isNavActive, NAV_LINKS } from "./navigation";
-import { StatusBadgeIndicator } from "./StatusIndicator";
+import { 状态BadgeIndicator } from "./状态Indicator";
 
 const buildSignInPath = (username: string, nextPath: string): string => {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   params.set("user", username);
   if (
     nextPath &&
@@ -63,12 +63,12 @@ const buildSignInPath = (username: string, nextPath: string): string => {
 // ============================================================================
 
 interface PageHeaderProps {
-  icon: LucideIcon | React.FC<{ className?: string }>;
+  icon: LucideIcon | React.FC<{ class名称?: string }>;
   title: string;
   subtitle: string;
   badge?: string;
-  statusIndicator?: React.ReactNode;
-  actions?: React.ReactNode;
+  statusIndicator?: React.React否de;
+  actions?: React.React否de;
   showVersionFooter?: boolean;
   navOpen?: boolean;
   onNavOpenChange?: (open: boolean) => void;
@@ -122,53 +122,53 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-        <div className="flex min-w-0 items-center gap-3">
+    <header class名称="sticky top-0 z-40 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div class名称="container mx-auto flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <div class名称="flex min-w-0 items-center gap-3">
           <Sheet open={navOpen} onOpenChange={setNavOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Open navigation menu</span>
+                <Menu class名称="h-5 w-5" />
+                <span class名称="sr-only">Open navigation menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-64 flex flex-col">
+            <SheetContent side="left" class名称="w-64 flex flex-col">
               <SheetHeader>
-                <SheetTitle>JobOps</SheetTitle>
+                <Sheet标题>JobOps</Sheet标题>
               </SheetHeader>
-              <nav className="mt-6 flex flex-col gap-2">
+              <nav class名称="mt-6 flex flex-col gap-2">
                 {NAV_LINKS.map(({ to, label, icon: NavIcon, activePaths }) => (
                   <button
                     key={to}
                     type="button"
                     onClick={() => handleNavClick(to, activePaths)}
-                    className={cn(
+                    class名称={cn(
                       "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground text-left",
                       isNavActive(location.pathname, to, activePaths)
                         ? "bg-accent text-accent-foreground"
                         : "text-muted-foreground",
                     )}
                   >
-                    <NavIcon className="h-4 w-4" />
+                    <NavIcon class名称="h-4 w-4" />
                     {label}
                   </button>
                 ))}
               </nav>
-              <div className="mt-auto space-y-4 pt-6 pb-2">
-                <div className="space-y-2 border-t border-border/60 pt-4">
+              <div class名称="mt-auto space-y-4 pt-6 pb-2">
+                <div class名称="space-y-2 border-t border-border/60 pt-4">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
                         type="button"
                         variant="outline"
                         size="sm"
-                        className="h-8 w-full justify-start gap-2 px-2 text-xs"
+                        class名称="h-8 w-full justify-start gap-2 px-2 text-xs"
                       >
-                        <UserRound className="h-3.5 w-3.5" />
+                        <UserRound class名称="h-3.5 w-3.5" />
                         <span>Account</span>
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="start" className="w-56">
+                    <DropdownMenuContent align="start" class名称="w-56">
                       <DropdownMenuLabel>Remembered</DropdownMenuLabel>
                       {rememberedUsers.length > 0 ? (
                         rememberedUsers.map((user) => (
@@ -177,15 +177,15 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                             onSelect={() =>
                               void handleRememberedUserClick(user.username)
                             }
-                            className="flex min-w-0 items-start gap-2"
+                            class名称="flex min-w-0 items-start gap-2"
                           >
-                            <UserRound className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
-                            <span className="min-w-0">
-                              <span className="block truncate font-medium">
-                                {user.displayName ?? user.username}
+                            <UserRound class名称="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                            <span class名称="min-w-0">
+                              <span class名称="block truncate font-medium">
+                                {user.display名称 ?? user.username}
                               </span>
-                              {user.displayName ? (
-                                <span className="block truncate text-xs text-muted-foreground">
+                              {user.display名称 ? (
+                                <span class名称="block truncate text-xs text-muted-foreground">
                                   {user.username}
                                 </span>
                               ) : null}
@@ -194,15 +194,15 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                         ))
                       ) : (
                         <DropdownMenuItem disabled>
-                          Sign in once to remember a username here.
+                          登录 once to remember a username here.
                         </DropdownMenuItem>
                       )}
                       <DropdownMenuSeparator />
                       <DropdownMenuItem
                         onSelect={() => void handleSignOut()}
-                        className="gap-2"
+                        class名称="gap-2"
                       >
-                        <LogOut className="h-3.5 w-3.5" />
+                        <LogOut class名称="h-3.5 w-3.5" />
                         <span>Sign out</span>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -210,21 +210,21 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                 </div>
                 {showVersionFooter && (
                   <TooltipProvider>
-                    <div className="flex flex-col items-start gap-2">
+                    <div class名称="flex flex-col items-start gap-2">
                       <a
                         href="https://github.com/DaKheera47/job-ops/releases"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex min-w-0 items-center gap-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
+                        class名称="flex min-w-0 items-center gap-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
                       >
-                        <span className="truncate">Version {version}</span>
+                        <span class名称="truncate">Version {version}</span>
                         {updateAvailable && (
                           <Tooltip>
                             <TooltipTrigger asChild>
-                              <span className="h-2 w-2 shrink-0 cursor-pointer rounded-full bg-emerald-500" />
+                              <span class名称="h-2 w-2 shrink-0 cursor-pointer rounded-full bg-emerald-500" />
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>Update available</p>
+                              <p>更新 available</p>
                             </TooltipContent>
                           </Tooltip>
                         )}
@@ -237,10 +237,10 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                           setNavOpen(false);
                           window.open("/docs", "_blank", "noopener,noreferrer");
                         }}
-                        className="h-7 gap-1.5 px-2 text-xs"
+                        class名称="h-7 gap-1.5 px-2 text-xs"
                       >
                         <span>Documentation</span>
-                        <ExternalLink className="h-3.5 w-3.5" />
+                        <ExternalLink class名称="h-3.5 w-3.5" />
                       </Button>
                     </div>
                   </TooltipProvider>
@@ -249,22 +249,22 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             </SheetContent>
           </Sheet>
 
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/60 bg-muted/30">
-            <Icon className="h-4 w-4 text-muted-foreground" />
+          <div class名称="flex h-9 w-9 items-center justify-center rounded-lg border border-border/60 bg-muted/30">
+            <Icon class名称="h-4 w-4 text-muted-foreground" />
           </div>
-          <div className="min-w-0 leading-tight">
-            <div className="text-sm font-semibold tracking-tight">{title}</div>
-            <div className="text-xs text-muted-foreground">{subtitle}</div>
+          <div class名称="min-w-0 leading-tight">
+            <div class名称="text-sm font-semibold tracking-tight">{title}</div>
+            <div class名称="text-xs text-muted-foreground">{subtitle}</div>
           </div>
           {badge && (
-            <Badge variant="outline" className="uppercase tracking-wide">
+            <Badge variant="outline" class名称="uppercase tracking-wide">
               {badge}
             </Badge>
           )}
           {statusIndicator}
         </div>
 
-        <div className="flex w-full min-w-0 flex-wrap items-center gap-2 sm:w-auto sm:flex-nowrap sm:justify-end">
+        <div class名称="flex w-full min-w-0 flex-wrap items-center gap-2 sm:w-auto sm:flex-nowrap sm:justify-end">
           {actions}
         </div>
       </div>
@@ -272,25 +272,25 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   );
 };
 
-export const StatusIndicator = StatusBadgeIndicator;
+export const 状态Indicator = 状态BadgeIndicator;
 
 // ============================================================================
 // Split Layout (List + Detail panels)
 // ============================================================================
 
 interface SplitLayoutProps {
-  children: React.ReactNode;
-  className?: string;
+  children: React.React否de;
+  class名称?: string;
 }
 
 export const SplitLayout: React.FC<SplitLayoutProps> = ({
   children,
-  className,
+  class名称,
 }) => (
   <section
-    className={cn(
+    class名称={cn(
       "grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]",
-      className,
+      class名称,
     )}
   >
     {children}
@@ -302,32 +302,32 @@ export const SplitLayout: React.FC<SplitLayoutProps> = ({
 // ============================================================================
 
 interface ListPanelProps {
-  children: React.ReactNode;
-  header?: React.ReactNode;
-  footer?: React.ReactNode;
-  className?: string;
+  children: React.React否de;
+  header?: React.React否de;
+  footer?: React.React否de;
+  class名称?: string;
 }
 
 export const ListPanel: React.FC<ListPanelProps> = ({
   children,
   header,
   footer,
-  className,
+  class名称,
 }) => (
   <div
-    className={cn(
+    class名称={cn(
       "min-w-0 rounded-xl border border-border/60 bg-card/40 flex flex-col",
-      className,
+      class名称,
     )}
   >
     {header && (
-      <div className="border-b border-border/60 px-4 py-3">{header}</div>
+      <div class名称="border-b border-border/60 px-4 py-3">{header}</div>
     )}
-    <div className="flex-1 divide-y divide-border/60 overflow-y-auto">
+    <div class名称="flex-1 divide-y divide-border/60 overflow-y-auto">
       {children}
     </div>
     {footer && (
-      <div className="border-t border-border/60 px-4 py-2">{footer}</div>
+      <div class名称="border-t border-border/60 px-4 py-2">{footer}</div>
     )}
   </div>
 );
@@ -339,23 +339,23 @@ export const ListPanel: React.FC<ListPanelProps> = ({
 interface ListItemProps {
   selected?: boolean;
   onClick?: () => void;
-  children: React.ReactNode;
-  className?: string;
+  children: React.React否de;
+  class名称?: string;
 }
 
 export const ListItem: React.FC<ListItemProps> = ({
   selected,
   onClick,
   children,
-  className,
+  class名称,
 }) => (
   <button
     type="button"
     onClick={onClick}
-    className={cn(
+    class名称={cn(
       "flex w-full items-start gap-4 px-4 py-3 text-left transition-colors",
       selected ? "bg-muted/40" : "hover:bg-muted/30",
-      className,
+      class名称,
     )}
     aria-pressed={selected}
   >
@@ -368,21 +368,21 @@ export const ListItem: React.FC<ListItemProps> = ({
 // ============================================================================
 
 interface DetailPanelProps {
-  children: React.ReactNode;
-  className?: string;
+  children: React.React否de;
+  class名称?: string;
   sticky?: boolean;
 }
 
 export const DetailPanel: React.FC<DetailPanelProps> = ({
   children,
-  className,
+  class名称,
   sticky = true,
 }) => (
   <div
-    className={cn(
+    class名称={cn(
       "min-w-0 rounded-xl border border-border/60 bg-card/40 p-4",
       sticky && "lg:sticky lg:top-24 lg:self-start",
-      className,
+      class名称,
     )}
   >
     {children}
@@ -397,7 +397,7 @@ interface EmptyStateProps {
   icon?: LucideIcon;
   title: string;
   description?: string;
-  action?: React.ReactNode;
+  action?: React.React否de;
 }
 
 export const EmptyState: React.FC<EmptyStateProps> = ({
@@ -406,13 +406,13 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   description,
   action,
 }) => (
-  <div className="flex flex-col items-center justify-center gap-2 px-6 py-12 text-center">
-    {Icon && <Icon className="h-10 w-10 text-muted-foreground/50 mb-2" />}
-    <div className="text-base font-semibold">{title}</div>
+  <div class名称="flex flex-col items-center justify-center gap-2 px-6 py-12 text-center">
+    {Icon && <Icon class名称="h-10 w-10 text-muted-foreground/50 mb-2" />}
+    <div class名称="text-base font-semibold">{title}</div>
     {description && (
-      <p className="max-w-md text-sm text-muted-foreground">{description}</p>
+      <p class名称="max-w-md text-sm text-muted-foreground">{description}</p>
     )}
-    {action && <div className="mt-2">{action}</div>}
+    {action && <div class名称="mt-2">{action}</div>}
   </div>
 );
 
@@ -437,20 +437,20 @@ export const ScoreMeter: React.FC<ScoreMeterProps> = ({
   showLabel = true,
 }) => {
   if (score == null) {
-    return <span className="text-xs text-muted-foreground">Not scored</span>;
+    return <span class名称="text-xs text-muted-foreground">否t scored</span>;
   }
 
   const tokens = getScoreTokens(score);
   return (
-    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-      <div className="h-1.5 w-12 rounded-full bg-muted/40">
+    <div class名称="flex items-center gap-2 text-xs text-muted-foreground">
+      <div class名称="h-1.5 w-12 rounded-full bg-muted/40">
         <div
-          className={cn("h-1.5 rounded-full", tokens.bar)}
+          class名称={cn("h-1.5 rounded-full", tokens.bar)}
           style={{ width: `${Math.max(4, Math.min(100, score))}%` }}
         />
       </div>
       {showLabel && (
-        <span className="tabular-nums text-foreground">{score}%</span>
+        <span class名称="tabular-nums text-foreground">{score}%</span>
       )}
     </div>
   );
@@ -461,9 +461,9 @@ export const ScoreMeter: React.FC<ScoreMeterProps> = ({
 // ============================================================================
 
 interface FullHeightSplitProps {
-  sidebar: React.ReactNode;
+  sidebar: React.React否de;
   sidebarWidth?: string;
-  children: React.ReactNode;
+  children: React.React否de;
 }
 
 export const FullHeightSplit: React.FC<FullHeightSplitProps> = ({
@@ -471,16 +471,16 @@ export const FullHeightSplit: React.FC<FullHeightSplitProps> = ({
   sidebarWidth = "lg:w-[420px]",
   children,
 }) => (
-  <div className="flex flex-1 flex-col overflow-hidden lg:flex-row">
+  <div class名称="flex flex-1 flex-col overflow-hidden lg:flex-row">
     <div
-      className={cn(
+      class名称={cn(
         "flex w-full flex-col border-b lg:border-b-0 lg:border-r",
         sidebarWidth,
       )}
     >
       {sidebar}
     </div>
-    <div className="flex-1 overflow-y-auto">{children}</div>
+    <div class名称="flex-1 overflow-y-auto">{children}</div>
   </div>
 );
 
@@ -489,18 +489,18 @@ export const FullHeightSplit: React.FC<FullHeightSplitProps> = ({
 // ============================================================================
 
 interface SectionCardProps {
-  children: React.ReactNode;
-  className?: string;
+  children: React.React否de;
+  class名称?: string;
 }
 
 export const SectionCard: React.FC<SectionCardProps> = ({
   children,
-  className,
+  class名称,
 }) => (
   <section
-    className={cn(
+    class名称={cn(
       "rounded-xl border border-border/60 bg-card/40 p-4",
-      className,
+      class名称,
     )}
   >
     {children}
@@ -512,13 +512,13 @@ export const SectionCard: React.FC<SectionCardProps> = ({
 // ============================================================================
 
 interface PageMainProps {
-  children: React.ReactNode;
-  className?: string;
+  children: React.React否de;
+  class名称?: string;
 }
 
-export const PageMain: React.FC<PageMainProps> = ({ children, className }) => (
+export const PageMain: React.FC<PageMainProps> = ({ children, class名称 }) => (
   <main
-    className={cn("container mx-auto space-y-6 px-4 py-6 pb-12", className)}
+    class名称={cn("container mx-auto space-y-6 px-4 py-6 pb-12", class名称)}
   >
     {children}
   </main>

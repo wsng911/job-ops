@@ -13,7 +13,7 @@ describe("error-format", () => {
     ).toBe("Validation failed.");
   });
 
-  it("maps jobDescription zod errors to a friendly message", () => {
+  it("maps job描述 zod errors to a friendly message", () => {
     const raw = JSON.stringify([
       {
         code: "too_small",
@@ -22,7 +22,7 @@ describe("error-format", () => {
         inclusive: true,
         exact: false,
         message: "String must contain at least 1 character(s)",
-        path: ["jobDescription"],
+        path: ["job描述"],
       },
     ]);
 

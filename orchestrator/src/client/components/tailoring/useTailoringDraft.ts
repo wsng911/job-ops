@@ -3,11 +3,11 @@ import type { Job, ResumeProjectCatalogItem } from "@shared/types.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   createTailoredSkillDraftId,
-  type EditableSkillGroup,
-  fromEditableSkillGroups,
+  type 编辑ableSkillGroup,
+  from编辑ableSkillGroups,
   parseTailoredSkills,
   serializeTailoredSkills,
-  toEditableSkillGroups,
+  to编辑ableSkillGroups,
 } from "../tailoring-utils";
 
 const parseSelectedIds = (value: string | null | undefined) =>
@@ -23,23 +23,23 @@ const hasSelectionDiff = (current: Set<string>, saved: Set<string>) => {
   return false;
 };
 
-export interface TailoringSavePayload {
+export interface Tailoring保存Payload {
   tailoredSummary: string;
   tailoredHeadline: string;
   tailoredSkills: string;
-  jobDescription: string;
+  job描述: string;
   selectedProjectIds: string;
   tracerLinksEnabled: boolean;
 }
 
-export const getTailoringSavePayloadKey = (
-  payload: TailoringSavePayload,
+export const getTailoring保存PayloadKey = (
+  payload: Tailoring保存Payload,
 ): string =>
   JSON.stringify({
     tailoredSummary: payload.tailoredSummary,
     tailoredHeadline: payload.tailoredHeadline,
     tailoredSkills: payload.tailoredSkills,
-    jobDescription: payload.jobDescription,
+    job描述: payload.job描述,
     selectedProjectIds: toSelectedIdsCsv(
       parseSelectedIds(payload.selectedProjectIds),
     ),
@@ -49,13 +49,13 @@ export const getTailoringSavePayloadKey = (
 const parseIncomingDraft = (incomingJob: Job) => {
   const summary = incomingJob.tailoredSummary || "";
   const headline = incomingJob.tailoredHeadline || "";
-  const description = incomingJob.jobDescription || "";
+  const description = incomingJob.job描述 || "";
   const selectedIds = parseSelectedIds(incomingJob.selectedProjectIds);
-  const skillsDraft = toEditableSkillGroups(
+  const skillsDraft = to编辑ableSkillGroups(
     parseTailoredSkills(incomingJob.tailoredSkills),
   );
   const skillsJson = serializeTailoredSkills(
-    fromEditableSkillGroups(skillsDraft),
+    from编辑ableSkillGroups(skillsDraft),
   );
   const tracerLinksEnabled = Boolean(incomingJob.tracerLinksEnabled);
 
@@ -83,34 +83,34 @@ export function useTailoringDraft({
   const [isCatalogLoading, setIsCatalogLoading] = useState(true);
   const [summary, setSummary] = useState(job.tailoredSummary || "");
   const [headline, setHeadline] = useState(job.tailoredHeadline || "");
-  const [jobDescription, setJobDescription] = useState(
-    job.jobDescription || "",
+  const [job描述, setJob描述] = useState(
+    job.job描述 || "",
   );
   const [selectedIds, setSelectedIds] = useState<Set<string>>(() =>
     parseSelectedIds(job.selectedProjectIds),
   );
-  const [skillsDraft, setSkillsDraft] = useState<EditableSkillGroup[]>(() =>
-    toEditableSkillGroups(parseTailoredSkills(job.tailoredSkills)),
+  const [skillsDraft, setSkillsDraft] = useState<编辑ableSkillGroup[]>(() =>
+    to编辑ableSkillGroups(parseTailoredSkills(job.tailoredSkills)),
   );
   const [openSkillGroupId, setOpenSkillGroupId] = useState<string>("");
   const [tracerLinksEnabled, setTracerLinksEnabled] = useState(
     Boolean(job.tracerLinksEnabled),
   );
 
-  const [savedSummary, setSavedSummary] = useState(job.tailoredSummary || "");
-  const [savedHeadline, setSavedHeadline] = useState(
+  const [savedSummary, set保存dSummary] = useState(job.tailoredSummary || "");
+  const [savedHeadline, set保存dHeadline] = useState(
     job.tailoredHeadline || "",
   );
-  const [savedDescription, setSavedDescription] = useState(
-    job.jobDescription || "",
+  const [saved描述, set保存d描述] = useState(
+    job.job描述 || "",
   );
-  const [savedSelectedIds, setSavedSelectedIds] = useState<Set<string>>(() =>
+  const [savedSelectedIds, set保存dSelectedIds] = useState<Set<string>>(() =>
     parseSelectedIds(job.selectedProjectIds),
   );
-  const [savedSkillsJson, setSavedSkillsJson] = useState(() =>
+  const [savedSkillsJson, set保存dSkillsJson] = useState(() =>
     serializeTailoredSkills(parseTailoredSkills(job.tailoredSkills)),
   );
-  const [savedTracerLinksEnabled, setSavedTracerLinksEnabled] = useState(
+  const [savedTracerLinksEnabled, set保存dTracerLinksEnabled] = useState(
     Boolean(job.tracerLinksEnabled),
   );
 
@@ -118,7 +118,7 @@ export function useTailoringDraft({
   const jobRef = useRef(job);
 
   const skillsJson = useMemo(
-    () => serializeTailoredSkills(fromEditableSkillGroups(skillsDraft)),
+    () => serializeTailoredSkills(from编辑ableSkillGroups(skillsDraft)),
     [skillsDraft],
   );
 
@@ -130,7 +130,7 @@ export function useTailoringDraft({
   const isDirty = useMemo(() => {
     if (summary !== savedSummary) return true;
     if (headline !== savedHeadline) return true;
-    if (jobDescription !== savedDescription) return true;
+    if (job描述 !== saved描述) return true;
     if (skillsJson !== savedSkillsJson) return true;
     if (tracerLinksEnabled !== savedTracerLinksEnabled) return true;
     return hasSelectionDiff(selectedIds, savedSelectedIds);
@@ -139,8 +139,8 @@ export function useTailoringDraft({
     savedSummary,
     headline,
     savedHeadline,
-    jobDescription,
-    savedDescription,
+    job描述,
+    saved描述,
     skillsJson,
     savedSkillsJson,
     tracerLinksEnabled,
@@ -151,11 +151,11 @@ export function useTailoringDraft({
 
   const savedPayloadKey = useMemo(
     () =>
-      getTailoringSavePayloadKey({
+      getTailoring保存PayloadKey({
         tailoredSummary: savedSummary,
         tailoredHeadline: savedHeadline,
         tailoredSkills: savedSkillsJson,
-        jobDescription: savedDescription,
+        job描述: saved描述,
         selectedProjectIds: toSelectedIdsCsv(savedSelectedIds),
         tracerLinksEnabled: savedTracerLinksEnabled,
       }),
@@ -163,7 +163,7 @@ export function useTailoringDraft({
       savedSummary,
       savedHeadline,
       savedSkillsJson,
-      savedDescription,
+      saved描述,
       savedSelectedIds,
       savedTracerLinksEnabled,
     ],
@@ -173,35 +173,35 @@ export function useTailoringDraft({
     const next = parseIncomingDraft(incomingJob);
     setSummary(next.summary);
     setHeadline(next.headline);
-    setJobDescription(next.description);
+    setJob描述(next.description);
     setSelectedIds(next.selectedIds);
     setSkillsDraft(next.skillsDraft);
-    setSavedSummary(next.summary);
-    setSavedHeadline(next.headline);
-    setSavedDescription(next.description);
-    setSavedSelectedIds(next.selectedIds);
-    setSavedSkillsJson(next.skillsJson);
+    set保存dSummary(next.summary);
+    set保存dHeadline(next.headline);
+    set保存d描述(next.description);
+    set保存dSelectedIds(next.selectedIds);
+    set保存dSkillsJson(next.skillsJson);
     setTracerLinksEnabled(next.tracerLinksEnabled);
-    setSavedTracerLinksEnabled(next.tracerLinksEnabled);
+    set保存dTracerLinksEnabled(next.tracerLinksEnabled);
   }, []);
 
-  const markSavedSnapshot = useCallback((snapshot: TailoringSavePayload) => {
-    setSavedSummary(snapshot.tailoredSummary);
-    setSavedHeadline(snapshot.tailoredHeadline);
-    setSavedDescription(snapshot.jobDescription);
-    setSavedSelectedIds(parseSelectedIds(snapshot.selectedProjectIds));
-    setSavedSkillsJson(snapshot.tailoredSkills);
-    setSavedTracerLinksEnabled(snapshot.tracerLinksEnabled);
+  const mark保存dSnapshot = useCallback((snapshot: Tailoring保存Payload) => {
+    set保存dSummary(snapshot.tailoredSummary);
+    set保存dHeadline(snapshot.tailoredHeadline);
+    set保存d描述(snapshot.job描述);
+    set保存dSelectedIds(parseSelectedIds(snapshot.selectedProjectIds));
+    set保存dSkillsJson(snapshot.tailoredSkills);
+    set保存dTracerLinksEnabled(snapshot.tracerLinksEnabled);
   }, []);
 
-  const markSavedJob = useCallback((incomingJob: Job) => {
+  const mark保存dJob = useCallback((incomingJob: Job) => {
     const next = parseIncomingDraft(incomingJob);
-    setSavedSummary(next.summary);
-    setSavedHeadline(next.headline);
-    setSavedDescription(next.description);
-    setSavedSelectedIds(next.selectedIds);
-    setSavedSkillsJson(next.skillsJson);
-    setSavedTracerLinksEnabled(next.tracerLinksEnabled);
+    set保存dSummary(next.summary);
+    set保存dHeadline(next.headline);
+    set保存d描述(next.description);
+    set保存dSelectedIds(next.selectedIds);
+    set保存dSkillsJson(next.skillsJson);
+    set保存dTracerLinksEnabled(next.tracerLinksEnabled);
   }, []);
 
   const loadCatalog = useCallback(async (silently = false) => {
@@ -270,7 +270,7 @@ export function useTailoringDraft({
     });
   }, []);
 
-  const handleAddSkillGroup = useCallback(() => {
+  const handle添加SkillGroup = useCallback(() => {
     const nextId = createTailoredSkillDraftId();
     setSkillsDraft((prev) => [
       ...prev,
@@ -279,7 +279,7 @@ export function useTailoringDraft({
     setOpenSkillGroupId(nextId);
   }, []);
 
-  const handleUpdateSkillGroup = useCallback(
+  const handle更新SkillGroup = useCallback(
     (id: string, key: "name" | "keywordsText", value: string) => {
       setSkillsDraft((prev) =>
         prev.map((group) =>
@@ -290,7 +290,7 @@ export function useTailoringDraft({
     [],
   );
 
-  const handleRemoveSkillGroup = useCallback((id: string) => {
+  const handle移除SkillGroup = useCallback((id: string) => {
     setSkillsDraft((prev) => prev.filter((group) => group.id !== id));
   }, []);
 
@@ -301,8 +301,8 @@ export function useTailoringDraft({
     setSummary,
     headline,
     setHeadline,
-    jobDescription,
-    setJobDescription,
+    job描述,
+    setJob描述,
     selectedIds,
     selectedIdsCsv,
     skillsDraft,
@@ -315,11 +315,11 @@ export function useTailoringDraft({
     isDirty,
     savedPayloadKey,
     applyIncomingDraft,
-    markSavedSnapshot,
-    markSavedJob,
+    mark保存dSnapshot,
+    mark保存dJob,
     handleToggleProject,
-    handleAddSkillGroup,
-    handleUpdateSkillGroup,
-    handleRemoveSkillGroup,
+    handle添加SkillGroup,
+    handle更新SkillGroup,
+    handle移除SkillGroup,
   };
 }

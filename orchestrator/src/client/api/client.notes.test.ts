@@ -35,7 +35,7 @@ describe("job notes API client", () => {
     );
     vi.spyOn(Date, "now").mockReturnValue(1_700_000_000_000);
 
-    await expect(api.getJobNotes("job-1")).resolves.toEqual([
+    await expect(api.getJob否tes("job-1")).resolves.toEqual([
       {
         id: "note-1",
         jobId: "job-1",
@@ -73,7 +73,7 @@ describe("job notes API client", () => {
     );
 
     await expect(
-      api.createJobNote("job-1", {
+      api.createJob否te("job-1", {
         title: "Recruiter contact",
         content: "- Alex\n- alex@example.com",
       }),
@@ -106,7 +106,7 @@ describe("job notes API client", () => {
           id: "note-2",
           jobId: "job-1",
           title: "Recruiter contact",
-          content: "Updated note",
+          content: "更新d note",
           createdAt: "2026-01-02T00:00:00.000Z",
           updatedAt: "2026-01-03T00:00:00.000Z",
         },
@@ -115,15 +115,15 @@ describe("job notes API client", () => {
     );
 
     await expect(
-      api.updateJobNote("job-1", "note-2", {
+      api.updateJob否te("job-1", "note-2", {
         title: "Recruiter contact",
-        content: "Updated note",
+        content: "更新d note",
       }),
     ).resolves.toEqual({
       id: "note-2",
       jobId: "job-1",
       title: "Recruiter contact",
-      content: "Updated note",
+      content: "更新d note",
       createdAt: "2026-01-02T00:00:00.000Z",
       updatedAt: "2026-01-03T00:00:00.000Z",
     });
@@ -134,7 +134,7 @@ describe("job notes API client", () => {
         method: "PATCH",
         body: JSON.stringify({
           title: "Recruiter contact",
-          content: "Updated note",
+          content: "更新d note",
         }),
       }),
     );
@@ -149,7 +149,7 @@ describe("job notes API client", () => {
       }),
     );
 
-    await expect(api.deleteJobNote("job-1", "note-2")).resolves.toBeUndefined();
+    await expect(api.deleteJob否te("job-1", "note-2")).resolves.toBeUndefined();
 
     expect(fetchSpy).toHaveBeenCalledWith(
       "/api/jobs/job-1/notes/note-2",

@@ -1,9 +1,9 @@
 import * as api from "@client/api";
-import { SettingsInput } from "@client/pages/settings/components/SettingsInput";
-import { SettingsSectionFrame } from "@client/pages/settings/components/SettingsSectionFrame";
-import type { EnvSettingsValues } from "@client/pages/settings/types";
+import { 设置Input } from "@client/pages/settings/components/设置Input";
+import { 设置SectionFrame } from "@client/pages/settings/components/设置SectionFrame";
+import type { Env设置Values } from "@client/pages/settings/types";
 import { formatSecretHint } from "@client/pages/settings/utils";
-import type { UpdateSettingsInput } from "@shared/settings-schema.js";
+import type { 更新设置Input } from "@shared/settings-schema.js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type React from "react";
 import { useState } from "react";
@@ -16,8 +16,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 
-type EnvironmentSettingsSectionProps = {
-  values: EnvSettingsValues;
+type Environment设置SectionProps = {
+  values: Env设置Values;
   isLoading: boolean;
   isSaving: boolean;
   layoutMode?: "accordion" | "panel";
@@ -28,10 +28,10 @@ const currentAuthUserQueryKey = ["auth", "me"] as const;
 
 function AccountManagementSection() {
   const queryClient = useQueryClient();
-  const [username, setUsername] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [password, setPassword] = useState("");
-  const [resetPasswordByUserId, setResetPasswordByUserId] = useState<
+  const [username, set用户名] = useState("");
+  const [display名称, setDisplay名称] = useState("");
+  const [password, set密码] = useState("");
+  const [reset密码ByUserId, setReset密码ByUserId] = useState<
     Record<string, string>
   >({});
 
@@ -49,9 +49,9 @@ function AccountManagementSection() {
   const createUserMutation = useMutation({
     mutationFn: api.createWorkspaceUser,
     onSuccess: async () => {
-      setUsername("");
-      setDisplayName("");
-      setPassword("");
+      set用户名("");
+      setDisplay名称("");
+      set密码("");
       await queryClient.invalidateQueries({ queryKey: workspaceUsersQueryKey });
       toast.success("User created");
     },
@@ -72,15 +72,15 @@ function AccountManagementSection() {
     },
   });
 
-  const resetPasswordMutation = useMutation({
+  const reset密码Mutation = useMutation({
     mutationFn: (input: { userId: string; password: string }) =>
-      api.resetWorkspaceUserPassword(input.userId, input.password),
+      api.resetWorkspaceUser密码(input.userId, input.password),
     onSuccess: async (_data, variables) => {
-      setResetPasswordByUserId((current) => ({
+      setReset密码ByUserId((current) => ({
         ...current,
         [variables.userId]: "",
       }));
-      toast.success("Password reset");
+      toast.success("密码 reset");
     },
     onError: (error) => {
       showErrorToast(error, "Failed to reset password");
@@ -89,9 +89,9 @@ function AccountManagementSection() {
 
   if (!meQuery.data?.isSystemAdmin) {
     return (
-      <div className="space-y-2">
-        <div className="text-sm font-semibold">Workspace</div>
-        <p className="text-sm text-muted-foreground">
+      <div class名称="space-y-2">
+        <div class名称="text-sm font-semibold">Workspace</div>
+        <p class名称="text-sm text-muted-foreground">
           Signed in as {meQuery.data?.username ?? "a workspace user"}.
         </p>
       </div>
@@ -101,29 +101,29 @@ function AccountManagementSection() {
   const users = usersQuery.data ?? [];
 
   return (
-    <div className="space-y-5">
-      <div className="space-y-1">
-        <div className="text-sm font-semibold">Workspace Users</div>
-        <p className="text-sm text-muted-foreground">
+    <div class名称="space-y-5">
+      <div class名称="space-y-1">
+        <div class名称="text-sm font-semibold">Workspace Users</div>
+        <p class名称="text-sm text-muted-foreground">
           Each user gets a private workspace with isolated jobs and settings.
         </p>
       </div>
 
-      <div className="grid gap-3 md:grid-cols-[1fr_1fr_1fr_auto]">
+      <div class名称="grid gap-3 md:grid-cols-[1fr_1fr_1fr_auto]">
         <Input
-          value={displayName}
-          onChange={(event) => setDisplayName(event.currentTarget.value)}
-          placeholder="Name"
+          value={display名称}
+          onChange={(event) => setDisplay名称(event.currentTarget.value)}
+          placeholder="名称"
         />
         <Input
           value={username}
-          onChange={(event) => setUsername(event.currentTarget.value)}
-          placeholder="Username"
+          onChange={(event) => set用户名(event.currentTarget.value)}
+          placeholder="用户名"
           autoComplete="off"
         />
         <Input
           value={password}
-          onChange={(event) => setPassword(event.currentTarget.value)}
+          onChange={(event) => set密码(event.currentTarget.value)}
           placeholder="Temporary password"
           type="password"
           autoComplete="new-password"
@@ -133,7 +133,7 @@ function AccountManagementSection() {
           onClick={() =>
             createUserMutation.mutate({
               username,
-              displayName: displayName || username,
+              display名称: display名称 || username,
               password,
             })
           }
@@ -143,22 +143,22 @@ function AccountManagementSection() {
             password.length < 8
           }
         >
-          Create
+          创建
         </Button>
       </div>
 
-      <div className="divide-y divide-border rounded-md border border-border">
+      <div class名称="divide-y divide-border rounded-md border border-border">
         {users.map((user) => {
-          const resetPassword = resetPasswordByUserId[user.id] ?? "";
+          const reset密码 = reset密码ByUserId[user.id] ?? "";
           return (
             <div
-              className="grid gap-3 p-3 md:grid-cols-[minmax(0,1fr)_auto_auto] md:items-center"
+              class名称="grid gap-3 p-3 md:grid-cols-[minmax(0,1fr)_auto_auto] md:items-center"
               key={user.id}
             >
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="truncate text-sm font-medium">
-                    {user.displayName || user.username}
+              <div class名称="min-w-0">
+                <div class名称="flex flex-wrap items-center gap-2">
+                  <span class名称="truncate text-sm font-medium">
+                    {user.display名称 || user.username}
                   </span>
                   <Badge variant="outline">{user.username}</Badge>
                   {user.isSystemAdmin ? (
@@ -168,35 +168,35 @@ function AccountManagementSection() {
                     <Badge variant="destructive">Disabled</Badge>
                   ) : null}
                 </div>
-                <div className="mt-1 text-xs text-muted-foreground">
-                  {user.workspaceName}
+                <div class名称="mt-1 text-xs text-muted-foreground">
+                  {user.workspace名称}
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div class名称="flex gap-2">
                 <Input
-                  value={resetPassword}
+                  value={reset密码}
                   onChange={(event) =>
-                    setResetPasswordByUserId((current) => ({
+                    setReset密码ByUserId((current) => ({
                       ...current,
                       [user.id]: event.currentTarget.value,
                     }))
                   }
-                  placeholder="New password"
+                  placeholder="新建 password"
                   type="password"
                   autoComplete="new-password"
-                  className="h-8 w-40"
+                  class名称="h-8 w-40"
                 />
                 <Button
                   type="button"
                   size="sm"
                   variant="outline"
                   disabled={
-                    resetPasswordMutation.isPending || resetPassword.length < 8
+                    reset密码Mutation.isPending || reset密码.length < 8
                   }
                   onClick={() =>
-                    resetPasswordMutation.mutate({
+                    reset密码Mutation.mutate({
                       userId: user.id,
-                      password: resetPassword,
+                      password: reset密码,
                     })
                   }
                 >
@@ -223,8 +223,8 @@ function AccountManagementSection() {
           );
         })}
         {users.length === 0 ? (
-          <div className="p-3 text-sm text-muted-foreground">
-            No users found.
+          <div class名称="p-3 text-sm text-muted-foreground">
+            否 users found.
           </div>
         ) : null}
       </div>
@@ -232,64 +232,64 @@ function AccountManagementSection() {
   );
 }
 
-export const EnvironmentSettingsSection: React.FC<
-  EnvironmentSettingsSectionProps
+export const Environment设置Section: React.FC<
+  Environment设置SectionProps
 > = ({ values, isLoading, isSaving, layoutMode }) => {
   const {
     register,
     control,
     watch,
     formState: { errors },
-  } = useFormContext<UpdateSettingsInput>();
+  } = useFormContext<更新设置Input>();
   const { private: privateValues } = values;
 
   const isBasicAuthEnabled = watch("enableBasicAuth");
 
   return (
-    <SettingsSectionFrame
+    <设置SectionFrame
       mode={layoutMode}
       title="Environment & Workspaces"
       value="environment"
     >
-      <div className="space-y-8">
-        <div className="space-y-6">
-          <div className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+      <div class名称="space-y-8">
+        <div class名称="space-y-6">
+          <div class名称="text-sm font-bold uppercase tracking-wider text-muted-foreground">
             Service Accounts
           </div>
 
-          <div className="space-y-4">
-            <div className="text-sm font-semibold">UKVisaJobs</div>
-            <div className="grid gap-4 md:grid-cols-2">
-              <SettingsInput
-                label="Email"
-                inputProps={register("ukvisajobsEmail")}
+          <div class名称="space-y-4">
+            <div class名称="text-sm font-semibold">UKVisaJobs</div>
+            <div class名称="grid gap-4 md:grid-cols-2">
+              <设置Input
+                label="邮箱"
+                inputProps={register("ukvisajobs邮箱")}
                 placeholder="you@example.com"
                 disabled={isLoading || isSaving}
-                error={errors.ukvisajobsEmail?.message as string | undefined}
+                error={errors.ukvisajobs邮箱?.message as string | undefined}
               />
-              <SettingsInput
-                label="Password"
-                inputProps={register("ukvisajobsPassword")}
+              <设置Input
+                label="密码"
+                inputProps={register("ukvisajobs密码")}
                 type="password"
                 placeholder="Enter new password"
                 disabled={isLoading || isSaving}
-                error={errors.ukvisajobsPassword?.message as string | undefined}
-                current={formatSecretHint(privateValues.ukvisajobsPasswordHint)}
+                error={errors.ukvisajobs密码?.message as string | undefined}
+                current={formatSecretHint(privateValues.ukvisajobs密码Hint)}
               />
             </div>
           </div>
 
-          <div className="space-y-4">
-            <div className="text-sm font-semibold">Adzuna</div>
-            <div className="grid gap-4 md:grid-cols-2">
-              <SettingsInput
+          <div class名称="space-y-4">
+            <div class名称="text-sm font-semibold">Adzuna</div>
+            <div class名称="grid gap-4 md:grid-cols-2">
+              <设置Input
                 label="App ID"
                 inputProps={register("adzunaAppId")}
                 placeholder="your-app-id"
                 disabled={isLoading || isSaving}
                 error={errors.adzunaAppId?.message as string | undefined}
               />
-              <SettingsInput
+              <设置Input
                 label="App Key"
                 inputProps={register("adzunaAppKey")}
                 type="password"
@@ -304,13 +304,13 @@ export const EnvironmentSettingsSection: React.FC<
 
         <Separator />
 
-        <div className="space-y-4">
-          <div className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+        <div class名称="space-y-4">
+          <div class名称="text-sm font-bold uppercase tracking-wider text-muted-foreground">
             Security
           </div>
           <AccountManagementSection />
           <Separator />
-          <div className="flex items-start space-x-3">
+          <div class名称="flex items-start space-x-3">
             <Controller
               name="enableBasicAuth"
               control={control}
@@ -323,14 +323,14 @@ export const EnvironmentSettingsSection: React.FC<
                 />
               )}
             />
-            <div className="flex flex-col gap-1.5">
+            <div class名称="flex flex-col gap-1.5">
               <label
                 htmlFor="enableBasicAuth"
-                className="cursor-pointer text-sm font-medium leading-none"
+                class名称="cursor-pointer text-sm font-medium leading-none"
               >
                 Enable authentication
               </label>
-              <p className="text-xs text-muted-foreground">
+              <p class名称="text-xs text-muted-foreground">
                 Require a username and password to sign in and access protected
                 routes.
               </p>
@@ -338,27 +338,27 @@ export const EnvironmentSettingsSection: React.FC<
           </div>
 
           {isBasicAuthEnabled && (
-            <div className="grid gap-4 pt-2 md:grid-cols-2">
-              <SettingsInput
-                label="Username"
+            <div class名称="grid gap-4 pt-2 md:grid-cols-2">
+              <设置Input
+                label="用户名"
                 inputProps={register("basicAuthUser")}
                 placeholder="username"
                 disabled={isLoading || isSaving}
                 error={errors.basicAuthUser?.message as string | undefined}
               />
 
-              <SettingsInput
-                label="Password"
-                inputProps={register("basicAuthPassword")}
+              <设置Input
+                label="密码"
+                inputProps={register("basicAuth密码")}
                 type="password"
                 placeholder="Enter new password"
                 disabled={isLoading || isSaving}
-                error={errors.basicAuthPassword?.message as string | undefined}
+                error={errors.basicAuth密码?.message as string | undefined}
               />
             </div>
           )}
         </div>
       </div>
-    </SettingsSectionFrame>
+    </设置SectionFrame>
   );
 };

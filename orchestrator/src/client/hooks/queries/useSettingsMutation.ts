@@ -1,14 +1,14 @@
 import * as api from "@client/api";
-import type { UpdateSettingsInput } from "@shared/settings-schema";
+import type { 更新设置Input } from "@shared/settings-schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { invalidateSettingsData } from "./invalidate";
+import { invalidate设置Data } from "./invalidate";
 
-export function useUpdateSettingsMutation() {
+export function use更新设置Mutation() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: UpdateSettingsInput) => api.updateSettings(payload),
+    mutationFn: (payload: 更新设置Input) => api.update设置(payload),
     onSuccess: async () => {
-      await invalidateSettingsData(queryClient);
+      await invalidate设置Data(queryClient);
     },
   });
 }

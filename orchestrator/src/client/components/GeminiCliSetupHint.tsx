@@ -10,49 +10,49 @@ const AUTH_DOC =
  */
 export const GeminiCliSetupHint: React.FC = () => {
   return (
-    <div className="rounded-lg border border-dashed border-border/60 bg-muted/20 px-4 py-3 text-sm text-muted-foreground">
-      <p className="font-medium text-foreground">Gemini CLI on this machine</p>
-      <p className="mt-2">
+    <div class名称="rounded-lg border border-dashed border-border/60 bg-muted/20 px-4 py-3 text-sm text-muted-foreground">
+      <p class名称="font-medium text-foreground">Gemini CLI on this machine</p>
+      <p class名称="mt-2">
         Install{" "}
         <a
-          className="text-foreground underline decoration-border underline-offset-4"
+          class名称="text-foreground underline decoration-border underline-offset-4"
           href="https://www.npmjs.com/package/@google/gemini-cli"
           target="_blank"
           rel="noopener noreferrer"
         >
           @google/gemini-cli
         </a>
-        , then run <code className="rounded bg-muted px-1 py-0.5">gemini</code>{" "}
+        , then run <code class名称="rounded bg-muted px-1 py-0.5">gemini</code>{" "}
         in a terminal and complete Google sign-in (OAuth), or set{" "}
-        <code className="rounded bg-muted px-1 py-0.5">GEMINI_API_KEY</code> for
+        <code class名称="rounded bg-muted px-1 py-0.5">GEMINI_API_KEY</code> for
         the CLI. JobOps spawns the CLI in headless mode and reuses those
         credentials — no JobOps API key field.
       </p>
-      <p className="mt-2">
+      <p class名称="mt-2">
         <a
-          className="inline-flex items-center gap-1 text-foreground underline decoration-border underline-offset-4"
+          class名称="inline-flex items-center gap-1 text-foreground underline decoration-border underline-offset-4"
           href={AUTH_DOC}
           target="_blank"
           rel="noopener noreferrer"
         >
           Authentication guide
-          <ExternalLink className="size-3.5 shrink-0 opacity-70" aria-hidden />
+          <ExternalLink class名称="size-3.5 shrink-0 opacity-70" aria-hidden />
         </a>
         . In Docker, mount your CLI config (for example{" "}
-        <code className="rounded bg-muted px-1 py-0.5">~/.gemini</code>) into
+        <code class名称="rounded bg-muted px-1 py-0.5">~/.gemini</code>) into
         the container or run{" "}
-        <code className="rounded bg-muted px-1 py-0.5">gemini</code> via{" "}
-        <code className="rounded bg-muted px-1 py-0.5">
+        <code class名称="rounded bg-muted px-1 py-0.5">gemini</code> via{" "}
+        <code class名称="rounded bg-muted px-1 py-0.5">
           docker compose exec
         </code>
         . Optional:{" "}
-        <code className="rounded bg-muted px-1 py-0.5">GEMINI_CLI_BIN</code> to
+        <code class名称="rounded bg-muted px-1 py-0.5">GEMINI_CLI_BIN</code> to
         override the binary path;{" "}
-        <code className="rounded bg-muted px-1 py-0.5">
+        <code class名称="rounded bg-muted px-1 py-0.5">
           GEMINI_CLI_TRUST_WORKSPACE=true
         </code>{" "}
         to omit{" "}
-        <code className="rounded bg-muted px-1 py-0.5">--skip-trust</code>.
+        <code class名称="rounded bg-muted px-1 py-0.5">--skip-trust</code>.
       </p>
     </div>
   );

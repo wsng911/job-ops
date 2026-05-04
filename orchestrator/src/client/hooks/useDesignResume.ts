@@ -1,6 +1,6 @@
 import type {
   DesignResumeDocument,
-  DesignResumeStatusResponse,
+  DesignResume状态Response,
 } from "@shared/types";
 import { useQuery } from "@tanstack/react-query";
 import { queryClient as appQueryClient } from "@/client/lib/queryClient";
@@ -14,9 +14,9 @@ export function useDesignResume() {
     retry: false,
   });
 
-  const statusQuery = useQuery<DesignResumeStatusResponse>({
+  const statusQuery = useQuery<DesignResume状态Response>({
     queryKey: queryKeys.designResume.status(),
-    queryFn: api.getDesignResumeStatus,
+    queryFn: api.getDesignResume状态,
   });
 
   return {

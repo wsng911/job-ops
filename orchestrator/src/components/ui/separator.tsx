@@ -8,22 +8,22 @@ const Separator = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>
 >(
   (
-    { className, orientation = "horizontal", decorative = true, ...props },
+    { class名称, orientation = "horizontal", decorative = true, ...props },
     ref,
   ) => (
     <SeparatorPrimitive.Root
       ref={ref}
       decorative={decorative}
       orientation={orientation}
-      className={cn(
+      class名称={cn(
         "shrink-0 bg-border",
         orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
-        className,
+        class名称,
       )}
       {...props}
     />
   ),
 );
-Separator.displayName = SeparatorPrimitive.Root.displayName;
+Separator.display名称 = SeparatorPrimitive.Root.display名称;
 
 export { Separator };

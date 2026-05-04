@@ -2,14 +2,14 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { ButtonHTMLAttributes } from "react";
 import * as React from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { SearchableDropdown } from "./searchable-dropdown";
+import { 搜索ableDropdown } from "./searchable-dropdown";
 
 vi.mock("@/components/ui/button", () => ({
   Button: React.forwardRef<
     HTMLButtonElement,
     ButtonHTMLAttributes<HTMLButtonElement>
-  >(({ className, children, ...props }, ref) => (
-    <button ref={ref} className={className} {...props}>
+  >(({ class名称, children, ...props }, ref) => (
+    <button ref={ref} class名称={class名称} {...props}>
       {children}
     </button>
   )),
@@ -65,14 +65,14 @@ const buildOptions = (count: number) =>
     label: `Option ${index}`,
   }));
 
-describe("SearchableDropdown", () => {
+describe("搜索ableDropdown", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   it("only mounts the visible window for large option sets", async () => {
     render(
-      <SearchableDropdown
+      <搜索ableDropdown
         value=""
         options={buildOptions(150)}
         onValueChange={vi.fn()}
@@ -100,7 +100,7 @@ describe("SearchableDropdown", () => {
     const onValueChange = vi.fn();
 
     render(
-      <SearchableDropdown
+      <搜索ableDropdown
         value=""
         options={buildOptions(120)}
         onValueChange={onValueChange}
@@ -113,7 +113,7 @@ describe("SearchableDropdown", () => {
 
     await screen.findByRole("listbox");
 
-    const input = screen.getByPlaceholderText("Search...");
+    const input = screen.getByPlaceholderText("搜索...");
     fireEvent.keyDown(input, { key: "End" });
 
     await waitFor(() => {
@@ -131,7 +131,7 @@ describe("SearchableDropdown", () => {
     const onValueChange = vi.fn();
 
     render(
-      <SearchableDropdown
+      <搜索ableDropdown
         value=""
         options={[
           { value: "disabled", label: "Disabled option", disabled: true },
@@ -144,7 +144,7 @@ describe("SearchableDropdown", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Choose option" }));
-    fireEvent.change(screen.getByPlaceholderText("Search..."), {
+    fireEvent.change(screen.getByPlaceholderText("搜索..."), {
       target: { value: "Custom company" },
     });
 
@@ -165,7 +165,7 @@ describe("SearchableDropdown", () => {
 
   it("keeps aria-selected tied to the selected value instead of focus", async () => {
     render(
-      <SearchableDropdown
+      <搜索ableDropdown
         value="option-1"
         options={buildOptions(30)}
         onValueChange={vi.fn()}
@@ -178,7 +178,7 @@ describe("SearchableDropdown", () => {
 
     await screen.findByRole("listbox");
 
-    const input = screen.getByPlaceholderText("Search...");
+    const input = screen.getByPlaceholderText("搜索...");
     fireEvent.keyDown(input, { key: "ArrowDown" });
 
     const selectedOption = screen.getByRole("option", { name: "Option 1" });

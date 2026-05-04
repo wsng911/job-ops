@@ -1,14 +1,14 @@
 import type { ManualImportResult } from "@client/components/ManualImportFlow";
 import { ManualImportFlow } from "@client/components/ManualImportFlow";
-import type { AppSettings, JobSource } from "@shared/types";
+import type { App设置, JobSource } from "@shared/types";
 import type React from "react";
 import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
+  Sheet描述,
   SheetHeader,
-  SheetTitle,
+  Sheet标题,
 } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AutomaticRunTab } from "./AutomaticRunTab";
@@ -18,7 +18,7 @@ import type { RunMode } from "./run-mode";
 interface RunModeModalProps {
   open: boolean;
   mode: RunMode;
-  settings: AppSettings | null;
+  settings: App设置 | null;
   enabledSources: JobSource[];
   pipelineSources: JobSource[];
   onToggleSource: (source: JobSource, checked: boolean) => void;
@@ -26,7 +26,7 @@ interface RunModeModalProps {
   isPipelineRunning: boolean;
   onOpenChange: (open: boolean) => void;
   onModeChange: (mode: RunMode) => void;
-  onSaveAndRunAutomatic: (values: AutomaticRunValues) => Promise<void>;
+  on保存AndRunAutomatic: (values: AutomaticRunValues) => Promise<void>;
   onManualImported: (result: ManualImportResult) => Promise<void>;
 }
 
@@ -41,39 +41,39 @@ export const RunModeModal: React.FC<RunModeModalProps> = ({
   isPipelineRunning,
   onOpenChange,
   onModeChange,
-  onSaveAndRunAutomatic,
+  on保存AndRunAutomatic,
   onManualImported,
 }) => {
   const isManualMode = mode === "manual";
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:max-w-2xl">
-        <div className="flex h-full flex-col">
+      <SheetContent side="right" class名称="w-full sm:max-w-2xl">
+        <div class名称="flex h-full flex-col">
           <SheetHeader>
-            <SheetTitle className="flex items-center gap-2">
+            <Sheet标题 class名称="flex items-center gap-2">
               {isManualMode ? "Review job details" : "Run jobs"}
-            </SheetTitle>
-            <SheetDescription>
+            </Sheet标题>
+            <Sheet描述>
               {isManualMode
-                ? "Add a job description, review the extracted details, then import."
+                ? "添加 a job description, review the extracted details, then import."
                 : "Configure an automatic pipeline run."}
-            </SheetDescription>
+            </Sheet描述>
           </SheetHeader>
 
-          <Separator className="my-4" />
+          <Separator class名称="my-4" />
 
           <Tabs
             value={mode}
             onValueChange={(value) => onModeChange(value as RunMode)}
-            className="flex min-h-0 flex-1 flex-col"
+            class名称="flex min-h-0 flex-1 flex-col"
           >
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList class名称="grid w-full grid-cols-2">
               <TabsTrigger value="automatic">Automatic</TabsTrigger>
               <TabsTrigger value="manual">Manual</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="automatic" className="min-h-0 flex-1">
+            <TabsContent value="automatic" class名称="min-h-0 flex-1">
               <AutomaticRunTab
                 open={open}
                 settings={settings}
@@ -82,15 +82,15 @@ export const RunModeModal: React.FC<RunModeModalProps> = ({
                 onToggleSource={onToggleSource}
                 onSetPipelineSources={onSetPipelineSources}
                 isPipelineRunning={isPipelineRunning}
-                onSaveAndRun={onSaveAndRunAutomatic}
+                on保存AndRun={on保存AndRunAutomatic}
               />
             </TabsContent>
 
-            <TabsContent value="manual" className="min-h-0 flex-1">
+            <TabsContent value="manual" class名称="min-h-0 flex-1">
               <ManualImportFlow
                 active={open && mode === "manual"}
                 onImported={onManualImported}
-                onClose={() => onOpenChange(false)}
+                on关闭={() => onOpenChange(false)}
                 showReviewIntro={false}
               />
             </TabsContent>

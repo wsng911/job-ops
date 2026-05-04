@@ -5,7 +5,7 @@ import {
   deriveExtractorLimits,
   inferAutomaticPresetSelection,
   loadAutomaticRunMemory,
-  parseSearchTermsInput,
+  parse搜索TermsInput,
   RUN_MEMORY_STORAGE_KEY,
 } from "./automatic-run";
 
@@ -197,7 +197,7 @@ describe("automatic-run utilities", () => {
   });
 
   it("parses comma and newline separated search terms", () => {
-    expect(parseSearchTermsInput("backend, platform\napi\n\n")).toEqual([
+    expect(parse搜索TermsInput("backend, platform\napi\n\n")).toEqual([
       "backend",
       "platform",
       "api",

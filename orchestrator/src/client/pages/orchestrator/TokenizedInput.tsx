@@ -94,7 +94,7 @@ export const TokenizedInput: React.FC<TokenizedInputProps> = ({
   });
 
   return (
-    <div className="space-y-3">
+    <div class名称="space-y-3">
       <Input
         id={id}
         value={draft}
@@ -126,11 +126,11 @@ export const TokenizedInput: React.FC<TokenizedInputProps> = ({
         disabled={disabled}
       />
       {helperText ? (
-        <p className="text-xs text-muted-foreground">{helperText}</p>
+        <p class名称="text-xs text-muted-foreground">{helperText}</p>
       ) : null}
       {values.length > 0 ? (
         <motion.div
-          className="relative overflow-hidden"
+          class名称="relative overflow-hidden"
           animate={{
             height: isFocused ? tokensHeight : collapsedTokensHeight,
           }}
@@ -140,7 +140,7 @@ export const TokenizedInput: React.FC<TokenizedInputProps> = ({
             aria-hidden={!isFocused}
             ref={tokensRef}
             data-testid={`${id}-expanded-tokens`}
-            className="absolute inset-x-0 top-0 flex flex-wrap gap-2"
+            class名称="absolute inset-x-0 top-0 flex flex-wrap gap-2"
             animate={{
               opacity: isFocused ? 1 : 0,
               y: isFocused ? 0 : -4,
@@ -161,7 +161,7 @@ export const TokenizedInput: React.FC<TokenizedInputProps> = ({
                   <Button
                     type="button"
                     variant="outline"
-                    className={`h-auto ${TOKEN_PILL_CLASS_NAME}`}
+                    class名称={`h-auto ${TOKEN_PILL_CLASS_NAME}`}
                     aria-label={`${removeLabelPrefix} ${value}`}
                     disabled={disabled}
                     onPointerDown={(event) => event.preventDefault()}
@@ -172,7 +172,7 @@ export const TokenizedInput: React.FC<TokenizedInputProps> = ({
                     }
                   >
                     {value}
-                    <X className="ml-1 h-3 w-3" />
+                    <X class名称="ml-1 h-3 w-3" />
                   </Button>
                 </motion.div>
               ))}
@@ -182,7 +182,7 @@ export const TokenizedInput: React.FC<TokenizedInputProps> = ({
             aria-hidden={isFocused}
             ref={collapsedTokensRef}
             data-testid={`${id}-collapsed-tokens`}
-            className="absolute inset-x-0 top-0 flex flex-wrap gap-2"
+            class名称="absolute inset-x-0 top-0 flex flex-wrap gap-2"
             animate={{
               opacity: isFocused ? 0 : 1,
               y: isFocused ? 4 : 0,
@@ -191,12 +191,12 @@ export const TokenizedInput: React.FC<TokenizedInputProps> = ({
             style={{ pointerEvents: "none" }}
           >
             {collapsedPreview.visibleValues.map((value) => (
-              <span key={value} className={TOKEN_PILL_CLASS_NAME}>
+              <span key={value} class名称={TOKEN_PILL_CLASS_NAME}>
                 {value}
               </span>
             ))}
             {collapsedPreview.hiddenCount > 0 ? (
-              <span className={TOKEN_PILL_CLASS_NAME}>
+              <span class名称={TOKEN_PILL_CLASS_NAME}>
                 +{collapsedPreview.hiddenCount} more
               </span>
             ) : null}

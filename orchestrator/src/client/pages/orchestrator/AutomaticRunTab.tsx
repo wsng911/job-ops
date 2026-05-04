@@ -6,14 +6,14 @@ import {
 } from "@shared/location-intelligence.js";
 import type {
   LocationMatchStrictness,
-  LocationSearchScope,
+  Location搜索Scope,
 } from "@shared/location-preferences.js";
 import {
   formatCountryLabel,
   normalizeCountryKey,
   SUPPORTED_COUNTRY_KEYS,
 } from "@shared/location-support.js";
-import type { AppSettings, JobSource } from "@shared/types";
+import type { App设置, JobSource } from "@shared/types";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Info, Loader2, Sparkles } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -24,15 +24,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, Alert描述, Alert标题 } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, Card标题 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { SearchableDropdown } from "@/components/ui/searchable-dropdown";
+import { 搜索ableDropdown } from "@/components/ui/searchable-dropdown";
 import { Separator } from "@/components/ui/separator";
 import { getDetectedCountryKey } from "@/lib/user-location";
 import { sourceLabel } from "@/lib/utils";
@@ -47,7 +47,7 @@ import {
   normalizeWorkplaceTypes,
   parseCityLocationsInput,
   parseCityLocationsSetting,
-  parseSearchTermsInput,
+  parse搜索TermsInput,
   SEARCH_SCOPE_OPTIONS,
   saveAutomaticRunMemory,
   summarizeLocationPreferences,
@@ -58,13 +58,13 @@ import { TokenizedInput } from "./TokenizedInput";
 
 interface AutomaticRunTabProps {
   open: boolean;
-  settings: AppSettings | null;
+  settings: App设置 | null;
   enabledSources: JobSource[];
   pipelineSources: JobSource[];
   onToggleSource: (source: JobSource, checked: boolean) => void;
   onSetPipelineSources: (sources: JobSource[]) => void;
   isPipelineRunning: boolean;
-  onSaveAndRun: (values: AutomaticRunValues) => Promise<void>;
+  on保存AndRun: (values: AutomaticRunValues) => Promise<void>;
 }
 
 const DEFAULT_VALUES: AutomaticRunValues = {
@@ -87,7 +87,7 @@ interface AutomaticRunFormValues {
   cityLocations: string[];
   cityLocationDraft: string;
   workplaceTypes: WorkplaceType[];
-  searchScope: LocationSearchScope;
+  searchScope: Location搜索Scope;
   matchStrictness: LocationMatchStrictness;
   searchTerms: string[];
   searchTermDraft: string;
@@ -96,7 +96,7 @@ interface AutomaticRunFormValues {
 const GLASSDOOR_COUNTRY_REASON =
   "Glassdoor is not available for the selected country.";
 const GLASSDOOR_LOCATION_REASON =
-  "Add at least one city in Location preferences to enable Glassdoor.";
+  "添加 at least one city in Location preferences to enable Glassdoor.";
 const HIDDEN_COUNTRY_KEYS = new Set(["usa/ca"]);
 const MIN_RUN_BUDGET = 50;
 const MAX_RUN_BUDGET = 1000;
@@ -129,7 +129,7 @@ function getKnownJobSource(
   return source in EXTRACTOR_SOURCE_METADATA ? (source as JobSource) : null;
 }
 
-function getSourceStatus(args: {
+function getSource状态(args: {
   countrySelected: boolean;
   plan: LocationSourcePlan;
 }): {
@@ -143,7 +143,7 @@ function getSourceStatus(args: {
   const countryLabel = requestedCountry
     ? formatCountryLabel(requestedCountry)
     : "";
-  const sourceName = knownSource ? sourceLabel[knownSource] : source;
+  const source名称 = knownSource ? sourceLabel[knownSource] : source;
   const isUkOnlySource = knownSource
     ? Boolean(EXTRACTOR_SOURCE_METADATA[knownSource]?.ukOnly)
     : false;
@@ -199,7 +199,7 @@ function getSourceStatus(args: {
   if (isUkOnlySource && !plan.canRun) {
     return {
       badgeLabel: "UK only",
-      detail: `${sourceName} is available only when country is United Kingdom.`,
+      detail: `${source名称} is available only when country is United Kingdom.`,
       available: false,
     };
   }
@@ -207,7 +207,7 @@ function getSourceStatus(args: {
   if (!plan.canRun) {
     return {
       badgeLabel: "Blocked",
-      detail: `${sourceName} is not available for ${countryLabel || "the selected country"}.`,
+      detail: `${source名称} is not available for ${countryLabel || "the selected country"}.`,
       available: false,
     };
   }
@@ -222,10 +222,10 @@ function getSourceStatus(args: {
 interface SourcePickerRow {
   source: JobSource;
   selected: boolean;
-  status: ReturnType<typeof getSourceStatus>;
+  status: ReturnType<typeof getSource状态>;
 }
 
-function getRadioOptionClassName(selected: boolean): string {
+function getRadioOptionClass名称(selected: boolean): string {
   return `flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-3 text-sm transition-colors ${
     selected
       ? "border-border/70 bg-muted/20 text-foreground"
@@ -241,7 +241,7 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
   onToggleSource,
   onSetPipelineSources,
   isPipelineRunning,
-  onSaveAndRun,
+  on保存AndRun,
 }) => {
   const [isSaving, setIsSaving] = useState(false);
   const [advancedOpen, setAdvancedOpen] = useState(false);
@@ -333,8 +333,8 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
     const rememberedWorkplaceTypes = normalizeWorkplaceTypes(
       settings?.workplaceTypes?.value,
     );
-    const rememberedSearchScope =
-      settings?.locationSearchScope?.value ?? DEFAULT_VALUES.searchScope;
+    const remembered搜索Scope =
+      settings?.location搜索Scope?.value ?? DEFAULT_VALUES.searchScope;
     const rememberedMatchStrictness =
       settings?.locationMatchStrictness?.value ??
       DEFAULT_VALUES.matchStrictness;
@@ -348,7 +348,7 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
       cityLocations: rememberedLocations,
       cityLocationDraft: "",
       workplaceTypes: rememberedWorkplaceTypes,
-      searchScope: rememberedSearchScope,
+      searchScope: remembered搜索Scope,
       matchStrictness: rememberedMatchStrictness,
       searchTerms: settings?.searchTerms?.value ?? DEFAULT_VALUES.searchTerms,
       searchTermDraft: "",
@@ -471,7 +471,7 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
           {
             source,
             selected: pipelineSources.includes(source),
-            status: getSourceStatus({
+            status: getSource状态({
               countrySelected: !countrySelectionInvalid,
               plan,
             }),
@@ -592,7 +592,7 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
     setValue("runBudget", String(preset.runBudget), { shouldDirty: true });
   };
 
-  const handleSaveAndRun = async () => {
+  const handle保存AndRun = async () => {
     setIsSaving(true);
     try {
       saveAutomaticRunMemory({
@@ -601,7 +601,7 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
         runBudget: values.runBudget,
         presetId: selectedPreset,
       });
-      await onSaveAndRun(values);
+      await on保存AndRun(values);
     } finally {
       setIsSaving(false);
     }
@@ -619,13 +619,13 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
   );
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
-      <div className="min-h-0 space-y-4 overflow-y-auto pr-1">
+    <div class名称="flex h-full min-h-0 flex-col">
+      <div class名称="min-h-0 space-y-4 overflow-y-auto pr-1">
         <Card>
-          <CardContent className="space-y-6 pt-6">
-            <div className="grid items-center gap-3 md:grid-cols-[120px_1fr]">
-              <Label className="text-base font-semibold">Preset</Label>
-              <div className="flex flex-wrap gap-2">
+          <CardContent class名称="space-y-6 pt-6">
+            <div class名称="grid items-center gap-3 md:grid-cols-[120px_1fr]">
+              <Label class名称="text-base font-semibold">Preset</Label>
+              <div class名称="flex flex-wrap gap-2">
                 <Button
                   type="button"
                   size="sm"
@@ -675,27 +675,27 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
               type="single"
               collapsible
               defaultValue="location-intent"
-              className="w-full"
+              class名称="w-full"
             >
-              <AccordionItem value="location-intent" className="border-b-0">
+              <AccordionItem value="location-intent" class名称="border-b-0">
                 <AccordionTrigger
                   aria-label="Review and edit location intent"
-                  className="gap-4 py-2 hover:no-underline"
+                  class名称="gap-4 py-2 hover:no-underline"
                 >
-                  <div className="flex w-full flex-col gap-3 text-left sm:flex-row sm:items-center sm:justify-between">
-                    <div className="min-w-0 space-y-1">
-                      <p className="py-0 text-base font-semibold hover:no-underline">
+                  <div class名称="flex w-full flex-col gap-3 text-left sm:flex-row sm:items-center sm:justify-between">
+                    <div class名称="min-w-0 space-y-1">
+                      <p class名称="py-0 text-base font-semibold hover:no-underline">
                         Location preferences
                       </p>
-                      <p className="truncate text-sm text-muted-foreground whitespace-pre-wrap">
+                      <p class名称="truncate text-sm text-muted-foreground whitespace-pre-wrap">
                         {locationSummary}
                       </p>
                     </div>
-                    <div className="flex shrink-0 flex-wrap gap-2">
+                    <div class名称="flex shrink-0 flex-wrap gap-2">
                       {countrySuggestion ? (
                         <Badge
                           variant="outline"
-                          className="rounded-full border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-200"
+                          class名称="rounded-full border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-200"
                         >
                           Browser suggestion
                         </Badge>
@@ -703,16 +703,16 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                     </div>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="space-y-4 pt-4">
+                <AccordionContent class名称="space-y-4 pt-4">
                   {countrySuggestion ? (
-                    <Alert className="border-sky-500/20 bg-sky-500/5">
-                      <Info className="h-4 w-4" />
-                      <AlertTitle>Detected from your browser</AlertTitle>
-                      <AlertDescription>
-                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                          <p className="text-sm leading-6 text-muted-foreground">
+                    <Alert class名称="border-sky-500/20 bg-sky-500/5">
+                      <Info class名称="h-4 w-4" />
+                      <Alert标题>Detected from your browser</Alert标题>
+                      <Alert描述>
+                        <div class名称="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                          <p class名称="text-sm leading-6 text-muted-foreground">
                             We detected{" "}
-                            <span className="font-medium text-foreground">
+                            <span class名称="font-medium text-foreground">
                               {formatCountryLabel(countrySuggestion)}
                             </span>{" "}
                             as a helpful starting point. Apply it to unlock
@@ -722,7 +722,7 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                             type="button"
                             variant="outline"
                             size="sm"
-                            className="shrink-0"
+                            class名称="shrink-0"
                             onClick={() =>
                               setValue("country", countrySuggestion, {
                                 shouldDirty: true,
@@ -732,14 +732,14 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                             Use suggestion
                           </Button>
                         </div>
-                      </AlertDescription>
+                      </Alert描述>
                     </Alert>
                   ) : null}
 
-                  <div className="grid gap-4 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-                    <div className="space-y-2">
-                      <Label className="text-base font-semibold">Country</Label>
-                      <SearchableDropdown
+                  <div class名称="grid gap-4 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+                    <div class名称="space-y-2">
+                      <Label class名称="text-base font-semibold">Country</Label>
+                      <搜索ableDropdown
                         value={values.country}
                         options={countryOptions}
                         onValueChange={(country) =>
@@ -748,9 +748,9 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                           })
                         }
                         placeholder="Select country"
-                        searchPlaceholder="Search country..."
-                        emptyText="No matching countries."
-                        triggerClassName="h-10 w-full"
+                        searchPlaceholder="搜索 country..."
+                        emptyText="否 matching countries."
+                        triggerClass名称="h-10 w-full"
                         ariaLabel={
                           values.country
                             ? formatCountryLabel(values.country)
@@ -758,7 +758,7 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                         }
                       />
                       {countrySelectionInvalid ? (
-                        <p className="text-xs text-destructive">
+                        <p class名称="text-xs text-destructive">
                           {countrySuggestion
                             ? "Select a country or use the browser suggestion."
                             : "Select a country."}
@@ -766,10 +766,10 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                       ) : null}
                     </div>
 
-                    <div className="space-y-2">
+                    <div class名称="space-y-2">
                       <Label
                         htmlFor="city-locations-input"
-                        className="text-base font-semibold"
+                        class名称="text-base font-semibold"
                       >
                         Cities
                       </Label>
@@ -787,16 +787,16 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                           })
                         }
                         placeholder='e.g. "London"'
-                        removeLabelPrefix="Remove city"
+                        removeLabelPrefix="移除 city"
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-3">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  <div class名称="space-y-3">
+                    <p class名称="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                       Work arrangement
                     </p>
-                    <div className="flex flex-wrap gap-2 gap-x-4">
+                    <div class名称="flex flex-wrap gap-2 gap-x-4">
                       {WORKPLACE_TYPE_OPTIONS.map((workplaceType) => {
                         const checkboxId = `workplace-type-${workplaceType}`;
                         const checked = workplaceTypes.includes(workplaceType);
@@ -805,7 +805,7 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                           <label
                             key={workplaceType}
                             htmlFor={checkboxId}
-                            className="flex cursor-pointer items-center gap-3 text-sm transition-colors"
+                            class名称="flex cursor-pointer items-center gap-3 text-sm transition-colors"
                           >
                             <Checkbox
                               id={checkboxId}
@@ -823,24 +823,24 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                       })}
                     </div>
                     {workplaceTypeSelectionInvalid ? (
-                      <p className="text-xs text-destructive">
+                      <p class名称="text-xs text-destructive">
                         Select at least one workplace type.
                       </p>
                     ) : null}
                   </div>
 
-                  <div className="space-y-3">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  <div class名称="space-y-3">
+                    <p class名称="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                       Location scope
                     </p>
                     <RadioGroup
                       value={searchScope}
                       onValueChange={(value) =>
-                        setValue("searchScope", value as LocationSearchScope, {
+                        setValue("searchScope", value as Location搜索Scope, {
                           shouldDirty: true,
                         })
                       }
-                      className="gap-2"
+                      class名称="gap-2"
                     >
                       {SEARCH_SCOPE_OPTIONS.map((option) => {
                         const id = `search-scope-${option.value}`;
@@ -849,10 +849,10 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                           <label
                             key={option.value}
                             htmlFor={id}
-                            className={getRadioOptionClassName(selected)}
+                            class名称={getRadioOptionClass名称(selected)}
                           >
                             <RadioGroupItem value={option.value} id={id} />
-                            <span className="text-sm font-medium">
+                            <span class名称="text-sm font-medium">
                               {option.label}
                             </span>
                           </label>
@@ -861,8 +861,8 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                     </RadioGroup>
                   </div>
 
-                  <div className="space-y-3">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  <div class名称="space-y-3">
+                    <p class名称="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                       Match strictness
                     </p>
                     <RadioGroup
@@ -876,7 +876,7 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                           },
                         )
                       }
-                      className="gap-2"
+                      class名称="gap-2"
                     >
                       {MATCH_STRICTNESS_OPTIONS.map((option) => {
                         const id = `match-strictness-${option.value}`;
@@ -885,10 +885,10 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                           <label
                             key={option.value}
                             htmlFor={id}
-                            className={getRadioOptionClassName(selected)}
+                            class名称={getRadioOptionClass名称(selected)}
                           >
                             <RadioGroupItem value={option.value} id={id} />
-                            <span className="text-sm font-medium">
+                            <span class名称="text-sm font-medium">
                               {option.label}
                             </span>
                           </label>
@@ -906,13 +906,13 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
               value={advancedOpen ? "advanced" : ""}
               onValueChange={(value) => setAdvancedOpen(value === "advanced")}
             >
-              <AccordionItem value="advanced" className="border-b-0">
-                <AccordionTrigger className="py-0 text-base font-semibold hover:no-underline">
+              <AccordionItem value="advanced" class名称="border-b-0">
+                <AccordionTrigger class名称="py-0 text-base font-semibold hover:no-underline">
                   Run settings
                 </AccordionTrigger>
-                <AccordionContent className="pt-4">
-                  <div className="grid gap-4 md:grid-cols-3">
-                    <div className="space-y-2">
+                <AccordionContent class名称="pt-4">
+                  <div class名称="grid gap-4 md:grid-cols-3">
+                    <div class名称="space-y-2">
                       <Label htmlFor="top-n">Resumes tailored</Label>
                       <Input
                         id="top-n"
@@ -926,7 +926,7 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                         }}
                       />
                     </div>
-                    <div className="space-y-2">
+                    <div class名称="space-y-2">
                       <Label htmlFor="min-score">Min suitability score</Label>
                       <Input
                         id="min-score"
@@ -940,7 +940,7 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                         }}
                       />
                     </div>
-                    <div className="space-y-2">
+                    <div class名称="space-y-2">
                       <Label htmlFor="jobs-per-term">Max jobs discovered</Label>
                       <Input
                         id="jobs-per-term"
@@ -962,48 +962,48 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
         </Card>
 
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle>Search terms</CardTitle>
+          <CardHeader class名称="pb-3">
+            <Card标题>搜索 terms</Card标题>
           </CardHeader>
           <CardContent>
             <TokenizedInput
               id="search-terms-input"
               values={searchTerms}
               draft={searchTermDraft}
-              parseInput={parseSearchTermsInput}
+              parseInput={parse搜索TermsInput}
               onDraftChange={(value) => setValue("searchTermDraft", value)}
               onValuesChange={(value) =>
                 setValue("searchTerms", value, { shouldDirty: true })
               }
               placeholder="Type and press Enter"
-              helperText="Add multiple terms by separating with commas or pressing Enter."
-              removeLabelPrefix="Remove"
+              helperText="添加 multiple terms by separating with commas or pressing Enter."
+              removeLabelPrefix="移除"
             />
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader className="pb-1">
-            <CardTitle>Sources</CardTitle>
+          <CardHeader class名称="pb-1">
+            <Card标题>Sources</Card标题>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="sources" className="border-b-0">
+          <CardContent class名称="space-y-3">
+            <Accordion type="single" collapsible class名称="w-full">
+              <AccordionItem value="sources" class名称="border-b-0">
                 <AccordionTrigger
                   aria-label="Review and edit sources"
-                  className="gap-4 py-2 hover:no-underline"
+                  class名称="gap-4 py-2 hover:no-underline"
                 >
                   <motion.div
                     layout
                     transition={sourceMotionTransition}
-                    className="flex w-full flex-col gap-3 text-left sm:flex-row sm:items-center sm:justify-between"
+                    class名称="flex w-full flex-col gap-3 text-left sm:flex-row sm:items-center sm:justify-between"
                   >
                     <motion.div
                       layout
                       transition={sourceMotionTransition}
-                      className="min-w-0 space-y-1"
+                      class名称="min-w-0 space-y-1"
                     >
-                      <p className="text-sm font-semibold text-foreground">
+                      <p class名称="text-sm font-semibold text-foreground">
                         {selectedSourceRows.length === 0
                           ? "Choose sources for this run"
                           : `${selectedSourceRows.length} source${selectedSourceRows.length === 1 ? "" : "s"} selected`}
@@ -1012,12 +1012,12 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                     <motion.div
                       layout
                       transition={sourceMotionTransition}
-                      className="flex shrink-0 flex-wrap gap-2"
+                      class名称="flex shrink-0 flex-wrap gap-2"
                     >
-                      <Badge variant="outline" className="rounded-full">
+                      <Badge variant="outline" class名称="rounded-full">
                         {selectedSourceRows.length} selected
                       </Badge>
-                      <Badge variant="outline" className="rounded-full">
+                      <Badge variant="outline" class名称="rounded-full">
                         {
                           sourceRows.filter((row) => row.status.available)
                             .length
@@ -1025,37 +1025,37 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                         available
                       </Badge>
                       {unavailableSourceRows.length > 0 ? (
-                        <Badge variant="outline" className="rounded-full">
+                        <Badge variant="outline" class名称="rounded-full">
                           {unavailableSourceRows.length} unavailable
                         </Badge>
                       ) : null}
                     </motion.div>
                   </motion.div>
                 </AccordionTrigger>
-                <AccordionContent className="pt-4">
+                <AccordionContent class名称="pt-4">
                   <motion.div
                     initial={sourceSectionInitial}
                     animate={sourceSectionAnimate}
                     transition={sourceMotionTransition}
-                    className="space-y-5"
+                    class名称="space-y-5"
                   >
                     {selectedSourceRows.length > 0 ? (
                       <motion.div
                         layout
                         transition={sourceMotionTransition}
-                        className="space-y-2"
+                        class名称="space-y-2"
                       >
                         <motion.p
                           layout
                           transition={sourceMotionTransition}
-                          className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground"
+                          class名称="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground"
                         >
                           Selected
                         </motion.p>
                         <motion.div
                           layout
                           transition={sourceMotionTransition}
-                          className="grid gap-2 md:grid-cols-2"
+                          class名称="grid gap-2 md:grid-cols-2"
                         >
                           <AnimatePresence initial={false} mode="popLayout">
                             {selectedSourceRows.map((row) => (
@@ -1073,13 +1073,13 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                                   aria-label={sourceLabel[row.source]}
                                   aria-pressed
                                   title="Included in this run."
-                                  className="flex h-auto w-full items-center justify-between gap-3 rounded-xl border border-primary/20 bg-primary/10 px-3 py-3 text-left text-foreground transition-colors duration-200 hover:bg-primary/15"
+                                  class名称="flex h-auto w-full items-center justify-between gap-3 rounded-xl border border-primary/20 bg-primary/10 px-3 py-3 text-left text-foreground transition-colors duration-200 hover:bg-primary/15"
                                   onClick={() =>
                                     handleSourceToggle(row.source, false)
                                   }
                                 >
-                                  <span className="min-w-0">
-                                    <span className="block text-sm font-semibold">
+                                  <span class名称="min-w-0">
+                                    <span class名称="block text-sm font-semibold">
                                       {sourceLabel[row.source]}
                                     </span>
                                   </span>
@@ -1095,19 +1095,19 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                       <motion.div
                         layout
                         transition={sourceMotionTransition}
-                        className="space-y-2"
+                        class名称="space-y-2"
                       >
                         <motion.p
                           layout
                           transition={sourceMotionTransition}
-                          className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground"
+                          class名称="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground"
                         >
                           Available
                         </motion.p>
                         <motion.div
                           layout
                           transition={sourceMotionTransition}
-                          className="grid gap-2 md:grid-cols-2"
+                          class名称="grid gap-2 md:grid-cols-2"
                         >
                           <AnimatePresence initial={false} mode="popLayout">
                             {readySourceRows.map((row) => (
@@ -1125,13 +1125,13 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                                   aria-label={sourceLabel[row.source]}
                                   aria-pressed={false}
                                   title="Available for this location setup."
-                                  className="flex h-auto w-full items-center justify-between gap-3 rounded-xl border border-border/60 bg-background/60 px-3 py-3 text-left text-foreground transition-colors duration-200 hover:bg-muted/40"
+                                  class名称="flex h-auto w-full items-center justify-between gap-3 rounded-xl border border-border/60 bg-background/60 px-3 py-3 text-left text-foreground transition-colors duration-200 hover:bg-muted/40"
                                   onClick={() =>
                                     handleSourceToggle(row.source, true)
                                   }
                                 >
-                                  <span className="min-w-0">
-                                    <span className="block text-sm font-semibold">
+                                  <span class名称="min-w-0">
+                                    <span class名称="block text-sm font-semibold">
                                       {sourceLabel[row.source]}
                                     </span>
                                   </span>
@@ -1147,19 +1147,19 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                       <motion.div
                         layout
                         transition={sourceMotionTransition}
-                        className="space-y-2"
+                        class名称="space-y-2"
                       >
                         <motion.p
                           layout
                           transition={sourceMotionTransition}
-                          className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground"
+                          class名称="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground"
                         >
                           Currently unavailable
                         </motion.p>
                         <motion.div
                           layout
                           transition={sourceMotionTransition}
-                          className="grid gap-2 md:grid-cols-2"
+                          class名称="grid gap-2 md:grid-cols-2"
                         >
                           <AnimatePresence initial={false} mode="popLayout">
                             {unavailableSourceRows.map((row) => (
@@ -1177,19 +1177,19 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
                                   disabled
                                   aria-label={sourceLabel[row.source]}
                                   title={row.status.detail}
-                                  className="flex h-auto w-full items-start justify-between gap-3 rounded-xl border border-border/50 bg-transparent px-3 py-3 text-left text-foreground/80 disabled:pointer-events-none disabled:opacity-100"
+                                  class名称="flex h-auto w-full items-start justify-between gap-3 rounded-xl border border-border/50 bg-transparent px-3 py-3 text-left text-foreground/80 disabled:pointer-events-none disabled:opacity-100"
                                 >
-                                  <span className="min-w-0 space-y-1">
-                                    <span className="block text-sm font-semibold">
+                                  <span class名称="min-w-0 space-y-1">
+                                    <span class名称="block text-sm font-semibold">
                                       {sourceLabel[row.source]}
                                     </span>
-                                    <span className="block text-xs leading-5 text-muted-foreground whitespace-pre-wrap">
+                                    <span class名称="block text-xs leading-5 text-muted-foreground whitespace-pre-wrap">
                                       {row.status.detail}
                                     </span>
                                   </span>
                                   <Badge
                                     variant="outline"
-                                    className="shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em]"
+                                    class名称="shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em]"
                                   >
                                     {row.status.badgeLabel}
                                   </Badge>
@@ -1208,22 +1208,22 @@ export const AutomaticRunTab: React.FC<AutomaticRunTabProps> = ({
         </Card>
       </div>
 
-      <div className="mt-3 flex shrink-0 items-center justify-between border-t border-border/60 bg-background pt-3">
-        <div className="hidden text-sm text-muted-foreground md:block">
+      <div class名称="mt-3 flex shrink-0 items-center justify-between border-t border-border/60 bg-background pt-3">
+        <div class名称="hidden text-sm text-muted-foreground md:block">
           Est: {estimate.discovered.min}-{estimate.discovered.max} jobs, ~
           {values.topN} resumes
         </div>
-        <div className="ml-auto flex items-center gap-2">
+        <div class名称="ml-auto flex items-center gap-2">
           <Button
             type="button"
-            className="gap-2"
+            class名称="gap-2"
             disabled={runDisabled}
-            onClick={() => void handleSaveAndRun()}
+            onClick={() => void handle保存AndRun()}
           >
             {isSaving ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <Loader2 class名称="h-4 w-4 animate-spin" />
             ) : (
-              <Sparkles className="h-4 w-4" />
+              <Sparkles class名称="h-4 w-4" />
             )}
             Start run now
           </Button>

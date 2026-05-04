@@ -9,7 +9,7 @@ type ComposerProps = {
   disabled?: boolean;
   isStreaming: boolean;
   canReset: boolean;
-  noteContextSelector?: React.ReactNode;
+  noteContextSelector?: React.React否de;
   onStop: () => Promise<void>;
   onSend: (content: string) => Promise<void>;
   onReset: () => void;
@@ -34,7 +34,7 @@ export const Composer: React.FC<ComposerProps> = ({
   };
 
   return (
-    <div className="space-y-2">
+    <div class名称="space-y-2">
       <Textarea
         placeholder="Ask anything about this job..."
         value={value}
@@ -46,16 +46,16 @@ export const Composer: React.FC<ComposerProps> = ({
             void submit();
           }
         }}
-        className="min-h-[84px]"
+        class名称="min-h-[84px]"
       />
-      <div className="flex items-center justify-between">
-        <div className="flex min-w-0 items-center gap-2">
+      <div class名称="flex items-center justify-between">
+        <div class名称="flex min-w-0 items-center gap-2">
           {noteContextSelector}
-          <div className="text-[10px] text-muted-foreground">
+          <div class名称="text-[10px] text-muted-foreground">
             {getMetaShortcutLabel("Enter")} to send
           </div>
         </div>
-        <div className="flex items-center gap-1">
+        <div class名称="flex items-center gap-1">
           <Button
             size="icon"
             variant="outline"
@@ -63,9 +63,9 @@ export const Composer: React.FC<ComposerProps> = ({
             disabled={disabled || !canReset}
             aria-label="Start over"
             title="Start over"
-            className="text-destructive hover:text-destructive"
+            class名称="text-destructive hover:text-destructive"
           >
-            <Eraser className="h-3.5 w-3.5" />
+            <Eraser class名称="h-3.5 w-3.5" />
           </Button>
 
           {isStreaming && (
@@ -76,7 +76,7 @@ export const Composer: React.FC<ComposerProps> = ({
               aria-label="Stop generating"
               title="Stop generating"
             >
-              <Square className="h-3.5 w-3.5" />
+              <Square class名称="h-3.5 w-3.5" />
             </Button>
           )}
 
@@ -87,7 +87,7 @@ export const Composer: React.FC<ComposerProps> = ({
             aria-label="Send message"
             title="Send message"
           >
-            <Send className="h-3.5 w-3.5" />
+            <Send class名称="h-3.5 w-3.5" />
           </Button>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import type { ReactNode } from "react";
+import type { React否de } from "react";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { DEFAULT_SORT } from "./constants";
@@ -14,13 +14,13 @@ const createWrapper = (initialEntry: string) => {
     return null;
   };
 
-  const Wrapper = ({ children }: { children: ReactNode }) => (
+  const Wrapper = ({ children }: { children: React否de }) => (
     <MemoryRouter initialEntries={[initialEntry]}>
       <LocationWatcher />
       {children}
     </MemoryRouter>
   );
-  Wrapper.displayName = "RouterWrapper";
+  Wrapper.display名称 = "RouterWrapper";
   return { Wrapper, getLocation: () => latestLocation };
 };
 

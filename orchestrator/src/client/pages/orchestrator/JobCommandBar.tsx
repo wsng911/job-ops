@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 import { CommandDialog, CommandInput } from "@/components/ui/command";
-import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { Dialog描述, Dialog标题 } from "@/components/ui/dialog";
 import { bucketQueryLength, trackProductEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import type { FilterTab } from "./constants";
@@ -25,7 +25,7 @@ import {
   lockLabel,
   orderCommandGroups,
   resolveLockFromAliasPrefix,
-  type StatusLock,
+  type 状态Lock,
   stripLeadingAtToken,
 } from "./JobCommandBar.utils";
 import { JobCommandBarLockBadge } from "./JobCommandBarLockBadge";
@@ -49,7 +49,7 @@ const ROW_HEIGHT_ESTIMATES: Record<CommandBarRow["kind"], number> = {
 const LOCK_ROW_HEIGHT_ESTIMATE = 56;
 const RESULTS_LIST_ID = "job-command-bar-results";
 
-const lockDialogAccentClass: Record<StatusLock, string> = {
+const lockDialogAccentClass: Record<状态Lock, string> = {
   ready:
     "border-emerald-500/50 shadow-[0_0_0_1px_rgba(16,185,129,0.2),0_0_36px_-12px_rgba(16,185,129,0.55)]",
   discovered:
@@ -126,7 +126,7 @@ export const JobCommandBar: React.FC<JobCommandBarProps> = ({
 }) => {
   const [internalOpen, setInternalOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [activeLock, setActiveLock] = useState<StatusLock | null>(null);
+  const [activeLock, setActiveLock] = useState<状态Lock | null>(null);
   const [activeRowId, setActiveRowId] = useState<string | null>(null);
   const [scrollTop, setScrollTop] = useState(0);
   const resultsScrollRef = useRef<HTMLDivElement | null>(null);
@@ -298,7 +298,7 @@ export const JobCommandBar: React.FC<JobCommandBarProps> = ({
     }
   }, [activeRowIndex, estimatedLayout, scrollToIndex, virtualItems.length]);
 
-  const applyLock = useCallback((lock: StatusLock) => {
+  const applyLock = useCallback((lock: 状态Lock) => {
     setActiveLock(lock);
     setQuery((current) => stripLeadingAtToken(current));
   }, []);
@@ -411,7 +411,7 @@ export const JobCommandBar: React.FC<JobCommandBarProps> = ({
       return;
     }
 
-    if (event.key === "Backspace" && query.length === 0 && activeLock) {
+    if (event.key === "返回space" && query.length === 0 && activeLock) {
       event.preventDefault();
       setActiveLock(null);
     }
@@ -434,14 +434,14 @@ export const JobCommandBar: React.FC<JobCommandBarProps> = ({
         event.preventDefault();
         setActiveLock(null);
       }}
-      contentClassName={`max-w-4xl transition-[border-color,box-shadow] duration-200 ${activeLock ? lockDialogAccentClass[activeLock] : ""}`}
+      contentClass名称={`max-w-4xl transition-[border-color,box-shadow] duration-200 ${activeLock ? lockDialogAccentClass[activeLock] : ""}`}
     >
-      <DialogTitle className="sr-only">Job Search</DialogTitle>
-      <DialogDescription className="sr-only">
-        Search jobs across all states by job title or company name.
-      </DialogDescription>
+      <Dialog标题 class名称="sr-only">Job 搜索</Dialog标题>
+      <Dialog描述 class名称="sr-only">
+        搜索 jobs across all states by job title or company name.
+      </Dialog描述>
       <CommandInput
-        placeholder="Search jobs by job title or company name..."
+        placeholder="搜索 jobs by job title or company name..."
         value={query}
         onValueChange={setQuery}
         onKeyDown={handleInputKeyDown}
@@ -456,14 +456,14 @@ export const JobCommandBar: React.FC<JobCommandBarProps> = ({
         role="combobox"
         aria-expanded={isOpen}
       />
-      <div className="px-3 py-1 text-[11px] text-muted-foreground border-b">
-        Use <span className="font-mono">@</span> + status + Tab/Enter to lock a
-        status. Backspace on empty search clears the lock.
+      <div class名称="px-3 py-1 text-[11px] text-muted-foreground border-b">
+        Use <span class名称="font-mono">@</span> + status + Tab/Enter to lock a
+        status. 返回space on empty search clears the lock.
       </div>
 
       {rows.length === 0 ? (
-        <output className="block py-6 text-center text-sm" aria-live="polite">
-          No jobs found.
+        <output class名称="block py-6 text-center text-sm" aria-live="polite">
+          否 jobs found.
         </output>
       ) : (
         <div
@@ -474,7 +474,7 @@ export const JobCommandBar: React.FC<JobCommandBarProps> = ({
             240,
             Math.round(window.innerHeight * 0.65),
           )}
-          className="max-h-[65vh] overflow-y-auto overflow-x-hidden"
+          class名称="max-h-[65vh] overflow-y-auto overflow-x-hidden"
           role="listbox"
           aria-label="Job search results"
           onScroll={(event) => {
@@ -482,7 +482,7 @@ export const JobCommandBar: React.FC<JobCommandBarProps> = ({
           }}
         >
           <div
-            className="relative w-full"
+            class名称="relative w-full"
             style={{ height: `${renderedTotalSize}px` }}
           >
             {renderedVirtualItems.map((virtualItem) => {
@@ -510,12 +510,12 @@ export const JobCommandBar: React.FC<JobCommandBarProps> = ({
                   {row.kind === "groupHeading" ? (
                     <div
                       cmdk-group-heading=""
-                      className="px-2 py-1.5 text-xs font-medium text-muted-foreground"
+                      class名称="px-2 py-1.5 text-xs font-medium text-muted-foreground"
                     >
                       {row.heading}
                     </div>
                   ) : row.kind === "separator" ? (
-                    <hr className="-mx-1 h-px border-0 bg-border" />
+                    <hr class名称="-mx-1 h-px border-0 bg-border" />
                   ) : row.optionKind === "lockSuggestion" && row.lock ? (
                     <div
                       cmdk-item=""
@@ -523,7 +523,7 @@ export const JobCommandBar: React.FC<JobCommandBarProps> = ({
                       tabIndex={-1}
                       aria-selected={row.id === activeRowId}
                       data-selected={row.id === activeRowId}
-                      className={cn(
+                      class名称={cn(
                         "relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
                       )}
                       onMouseEnter={() => setActiveRowId(row.id)}
@@ -535,9 +535,9 @@ export const JobCommandBar: React.FC<JobCommandBarProps> = ({
                         selectRow(row);
                       }}
                     >
-                      <div className="flex min-w-0 flex-1 items-center gap-2">
+                      <div class名称="flex min-w-0 flex-1 items-center gap-2">
                         <span
-                          className={cn(
+                          class名称={cn(
                             "h-1.5 w-1.5 rounded-full",
                             row.lock === "ready" && "bg-emerald-400",
                             row.lock === "discovered" && "bg-sky-400",
@@ -547,7 +547,7 @@ export const JobCommandBar: React.FC<JobCommandBarProps> = ({
                             row.lock === "expired" && "bg-muted-foreground",
                           )}
                         />
-                        <span className="truncate text-sm font-medium">
+                        <span class名称="truncate text-sm font-medium">
                           Lock to @{lockLabel[row.lock]}
                         </span>
                       </div>
@@ -559,7 +559,7 @@ export const JobCommandBar: React.FC<JobCommandBarProps> = ({
                       tabIndex={-1}
                       aria-selected={row.id === activeRowId}
                       data-selected={row.id === activeRowId}
-                      className={cn(
+                      class名称={cn(
                         "relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
                       )}
                       onMouseEnter={() => setActiveRowId(row.id)}

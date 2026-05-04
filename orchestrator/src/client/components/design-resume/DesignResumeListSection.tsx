@@ -3,12 +3,12 @@ import { useMemo, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
+  AlertDialog取消,
   AlertDialogContent,
-  AlertDialogDescription,
+  AlertDialog描述,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialog标题,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { DesignResumeSection } from "./DesignResumeSection";
@@ -18,17 +18,17 @@ import { getByPath, toBoolean, toText } from "./utils";
 type DesignResumeListSectionProps = {
   definition: ItemDefinition;
   items: Record<string, unknown>[];
-  onAdd: () => void;
-  onEdit: (index: number) => void;
-  onUpdateItems: (nextItems: Record<string, unknown>[]) => void;
+  on添加: () => void;
+  on编辑: (index: number) => void;
+  on更新Items: (nextItems: Record<string, unknown>[]) => void;
 };
 
 export function DesignResumeListSection({
   definition,
   items,
-  onAdd,
-  onEdit,
-  onUpdateItems,
+  on添加,
+  on编辑,
+  on更新Items,
 }: DesignResumeListSectionProps) {
   const [pendingRemovalIndex, setPendingRemovalIndex] = useState<number | null>(
     null,
@@ -47,7 +47,7 @@ export function DesignResumeListSection({
 
   const confirmRemoval = () => {
     if (pendingRemovalIndex == null) return;
-    onUpdateItems(
+    on更新Items(
       items.filter((_, currentIndex) => currentIndex !== pendingRemovalIndex),
     );
     setPendingRemovalIndex(null);
@@ -60,58 +60,58 @@ export function DesignResumeListSection({
       subtitle={definition.description}
       badge={items.length === 0 ? "Empty" : `${items.length}`}
     >
-      <div className="space-y-3">
-        <div className="flex items-center justify-between rounded-lg border border-border/60 bg-muted/20 px-4 py-3">
+      <div class名称="space-y-3">
+        <div class名称="flex items-center justify-between rounded-lg border border-border/60 bg-muted/20 px-4 py-3">
           <div>
-            <div className="text-sm font-medium text-foreground">
+            <div class名称="text-sm font-medium text-foreground">
               {items.length} item{items.length === 1 ? "" : "s"}
             </div>
-            <div className="text-xs text-muted-foreground">
-              Add entries, reorder them, or hide the ones you do not want to
+            <div class名称="text-xs text-muted-foreground">
+              添加 entries, reorder them, or hide the ones you do not want to
               show.
             </div>
           </div>
-          <Button type="button" variant="outline" onClick={onAdd}>
-            <Plus className="mr-2 h-4 w-4" />
-            Add
+          <Button type="button" variant="outline" onClick={on添加}>
+            <Plus class名称="mr-2 h-4 w-4" />
+            添加
           </Button>
         </div>
 
         {items.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-border/60 bg-muted/20 px-4 py-5 text-sm text-muted-foreground">
-            No items yet.
+          <div class名称="rounded-lg border border-dashed border-border/60 bg-muted/20 px-4 py-5 text-sm text-muted-foreground">
+            否 items yet.
           </div>
         ) : (
           items.map((item, index) => (
             <div
               key={toText(item.id, `${definition.key}-${index}`)}
-              className="rounded-lg border border-border/60 bg-background/60 px-4 py-3"
+              class名称="rounded-lg border border-border/60 bg-background/60 px-4 py-3"
             >
-              <div className="flex items-start justify-between gap-3">
+              <div class名称="flex items-start justify-between gap-3">
                 <div>
-                  <div className="text-sm font-semibold text-foreground">
+                  <div class名称="text-sm font-semibold text-foreground">
                     {toText(
                       getByPath(item, definition.primaryField),
                       "Untitled",
                     )}
                   </div>
                   {definition.secondaryField ? (
-                    <div className="text-xs text-muted-foreground">
+                    <div class名称="text-xs text-muted-foreground">
                       {toText(getByPath(item, definition.secondaryField))}
                     </div>
                   ) : null}
                 </div>
-                <div className="rounded-full border border-border/60 px-2 py-0.5 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                <div class名称="rounded-full border border-border/60 px-2 py-0.5 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                   {toBoolean(item.hidden, false) ? "Hidden" : "Visible"}
                 </div>
               </div>
-              <div className="mt-3 flex flex-wrap items-center gap-2">
+              <div class名称="mt-3 flex flex-wrap items-center gap-2">
                 <Button
                   type="button"
                   variant="ghost"
-                  onClick={() => onEdit(index)}
+                  onClick={() => on编辑(index)}
                 >
-                  Edit
+                  编辑
                 </Button>
                 <Button
                   type="button"
@@ -122,7 +122,7 @@ export function DesignResumeListSection({
                       ...nextItems[index],
                       hidden: !toBoolean(nextItems[index].hidden, false),
                     };
-                    onUpdateItems(nextItems);
+                    on更新Items(nextItems);
                   }}
                 >
                   {toBoolean(item.hidden, false) ? "Show" : "Hide"}
@@ -135,7 +135,7 @@ export function DesignResumeListSection({
                     const nextItems = [...items];
                     const [currentItem] = nextItems.splice(index, 1);
                     nextItems.splice(index - 1, 0, currentItem);
-                    onUpdateItems(nextItems);
+                    on更新Items(nextItems);
                   }}
                 >
                   Up
@@ -148,7 +148,7 @@ export function DesignResumeListSection({
                     const nextItems = [...items];
                     const [currentItem] = nextItems.splice(index, 1);
                     nextItems.splice(index + 1, 0, currentItem);
-                    onUpdateItems(nextItems);
+                    on更新Items(nextItems);
                   }}
                 >
                   Down
@@ -156,10 +156,10 @@ export function DesignResumeListSection({
                 <Button
                   type="button"
                   variant="ghost"
-                  className="text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"
+                  class名称="text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"
                   onClick={() => setPendingRemovalIndex(index)}
                 >
-                  Remove
+                  移除
                 </Button>
               </div>
             </div>
@@ -175,22 +175,22 @@ export function DesignResumeListSection({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              Remove {definition.singularTitle.toLowerCase()}?
-            </AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialog标题>
+              移除 {definition.singular标题.toLowerCase()}?
+            </AlertDialog标题>
+            <AlertDialog描述>
               This will remove {pendingRemovalLabel} from your Design Resume.
               You can add it again later, but this change will be saved.
-            </AlertDialogDescription>
+            </AlertDialog描述>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialog取消>取消</AlertDialog取消>
             <AlertDialogAction
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              class名称="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               onClick={confirmRemoval}
             >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Remove
+              <Trash2 class名称="mr-2 h-4 w-4" />
+              移除
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

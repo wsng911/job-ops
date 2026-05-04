@@ -1,6 +1,6 @@
 import * as api from "@client/api";
 import { PageHeader } from "@client/components/layout";
-import { useUpdateSettingsMutation } from "@client/hooks/queries/useSettingsMutation";
+import { use更新设置Mutation } from "@client/hooks/queries/use设置Mutation";
 import { useRxResumeConfigState } from "@client/hooks/useRxResumeConfigState";
 import { useTracerReadiness } from "@client/hooks/useTracerReadiness";
 import {
@@ -12,16 +12,16 @@ import {
   toRxResumeValidationPayload,
   validateAndMaybePersistRxResumeMode,
 } from "@client/lib/rxresume-config";
-import { BackupSettingsSection } from "@client/pages/settings/components/BackupSettingsSection";
-import { ChatSettingsSection } from "@client/pages/settings/components/ChatSettingsSection";
+import { 返回up设置Section } from "@client/pages/settings/components/返回up设置Section";
+import { Chat设置Section } from "@client/pages/settings/components/Chat设置Section";
 import { DangerZoneSection } from "@client/pages/settings/components/DangerZoneSection";
-import { DisplaySettingsSection } from "@client/pages/settings/components/DisplaySettingsSection";
-import { EnvironmentSettingsSection } from "@client/pages/settings/components/EnvironmentSettingsSection";
-import { ModelSettingsSection } from "@client/pages/settings/components/ModelSettingsSection";
+import { Display设置Section } from "@client/pages/settings/components/Display设置Section";
+import { Environment设置Section } from "@client/pages/settings/components/Environment设置Section";
+import { Model设置Section } from "@client/pages/settings/components/Model设置Section";
 import { PromptTemplatesSection } from "@client/pages/settings/components/PromptTemplatesSection";
 import { ReactiveResumeSection } from "@client/pages/settings/components/ReactiveResumeSection";
-import { ScoringSettingsSection } from "@client/pages/settings/components/ScoringSettingsSection";
-import { TracerLinksSettingsSection } from "@client/pages/settings/components/TracerLinksSettingsSection";
+import { Scoring设置Section } from "@client/pages/settings/components/Scoring设置Section";
+import { TracerLinks设置Section } from "@client/pages/settings/components/TracerLinks设置Section";
 import { WebhooksSection } from "@client/pages/settings/components/WebhooksSection";
 import {
   type LlmProviderId,
@@ -31,18 +31,18 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { normalizeStringArray } from "@shared/normalize-string-array.js";
 import {
-  type UpdateSettingsInput,
-  updateSettingsSchema,
+  type 更新设置Input,
+  update设置Schema,
 } from "@shared/settings-schema.js";
 import type {
-  AppSettings,
-  JobStatus,
+  App设置,
+  Job状态,
   ResumeProjectCatalogItem,
-  ResumeProjectsSettings,
+  ResumeProjects设置,
   ValidationResult,
 } from "@shared/types.js";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Search, Settings } from "lucide-react";
+import { 搜索, 设置 } from "lucide-react";
 import type React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -67,7 +67,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const DEFAULT_FORM_VALUES: UpdateSettingsInput = {
+const DEFAULT_FORM_VALUES: 更新设置Input = {
   model: "",
   modelScorer: "",
   modelTailoring: "",
@@ -81,11 +81,11 @@ const DEFAULT_FORM_VALUES: UpdateSettingsInput = {
   pdfRenderer: "rxresume",
   rxresumeBaseResumeId: null,
   showSponsorInfo: null,
-  renderMarkdownInJobDescriptions: null,
+  renderMarkdownInJob描述s: null,
   chatStyleTone: "",
   chatStyleFormality: "",
   chatStyleConstraints: "",
-  chatStyleDoNotUse: "",
+  chatStyleDo否tUse: "",
   ghostwriterStopSlopEnabled: null,
   chatStyleSummaryMaxWords: null,
   chatStyleMaxKeywordsPerSkill: null,
@@ -94,9 +94,9 @@ const DEFAULT_FORM_VALUES: UpdateSettingsInput = {
   rxresumeUrl: "",
   rxresumeApiKey: "",
   basicAuthUser: "",
-  basicAuthPassword: "",
-  ukvisajobsEmail: "",
-  ukvisajobsPassword: "",
+  basicAuth密码: "",
+  ukvisajobs邮箱: "",
+  ukvisajobs密码: "",
   adzunaAppId: "",
   adzunaAppKey: "",
   webhookSecret: "",
@@ -107,7 +107,7 @@ const DEFAULT_FORM_VALUES: UpdateSettingsInput = {
   penalizeMissingSalary: null,
   missingSalaryPenalty: null,
   autoSkipScoreThreshold: null,
-  blockedCompanyKeywords: [],
+  blocked公司Keywords: [],
   scoringInstructions: "",
   ghostwriterSystemPromptTemplate: "",
   tailoringPromptTemplate: "",
@@ -128,7 +128,7 @@ const EMPTY_RXRESUME_VALIDATION_BADGE_STATE: RxResumeValidationBadgeState = {
   status: null,
 };
 
-type SettingsSectionId =
+type 设置SectionId =
   | "model"
   | "chat"
   | "prompt-templates"
@@ -141,7 +141,7 @@ type SettingsSectionId =
   | "backup"
   | "danger-zone";
 
-type SettingsGroupId =
+type 设置GroupId =
   | "ai"
   | "scoring"
   | "integrations"
@@ -150,20 +150,20 @@ type SettingsGroupId =
   | "backups"
   | "danger";
 
-type SettingsSectionDescriptor = {
-  id: SettingsSectionId;
+type 设置SectionDescriptor = {
+  id: 设置SectionId;
   label: string;
   description: string;
   searchTerms: string[];
 };
 
-type SettingsNavGroup = {
-  id: SettingsGroupId;
-  items: SettingsSectionDescriptor[];
+type 设置NavGroup = {
+  id: 设置GroupId;
+  items: 设置SectionDescriptor[];
   label: string;
 };
 
-const SETTINGS_NAV_GROUPS: SettingsNavGroup[] = [
+const SETTINGS_NAV_GROUPS: 设置NavGroup[] = [
   {
     id: "ai",
     label: "AI",
@@ -260,11 +260,11 @@ const SETTINGS_NAV_GROUPS: SettingsNavGroup[] = [
   },
   {
     id: "backups",
-    label: "Backups",
+    label: "返回ups",
     items: [
       {
         id: "backup",
-        label: "Backups",
+        label: "返回ups",
         description: "Automatic schedules, retention, and manual snapshots.",
         searchTerms: ["recovery", "database", "restore", "schedule"],
       },
@@ -277,7 +277,7 @@ const SETTINGS_NAV_GROUPS: SettingsNavGroup[] = [
       {
         id: "danger-zone",
         label: "Danger Zone",
-        description: "Delete jobs, runs, or the full local database.",
+        description: "删除 jobs, runs, or the full local database.",
         searchTerms: ["delete", "clear", "cleanup", "destructive"],
       },
     ],
@@ -285,8 +285,8 @@ const SETTINGS_NAV_GROUPS: SettingsNavGroup[] = [
 ];
 
 const SECTION_FIELD_MAP: Record<
-  SettingsSectionId,
-  Array<keyof UpdateSettingsInput>
+  设置SectionId,
+  Array<keyof 更新设置Input>
 > = {
   model: [
     "llmProvider",
@@ -301,7 +301,7 @@ const SECTION_FIELD_MAP: Record<
     "chatStyleTone",
     "chatStyleFormality",
     "chatStyleConstraints",
-    "chatStyleDoNotUse",
+    "chatStyleDo否tUse",
     "ghostwriterStopSlopEnabled",
     "chatStyleLanguageMode",
     "chatStyleManualLanguage",
@@ -315,7 +315,7 @@ const SECTION_FIELD_MAP: Record<
     "penalizeMissingSalary",
     "missingSalaryPenalty",
     "autoSkipScoreThreshold",
-    "blockedCompanyKeywords",
+    "blocked公司Keywords",
     "scoringInstructions",
   ],
   "reactive-resume": [
@@ -328,22 +328,22 @@ const SECTION_FIELD_MAP: Record<
   webhooks: ["pipelineWebhookUrl", "jobCompleteWebhookUrl", "webhookSecret"],
   "tracer-links": [],
   environment: [
-    "ukvisajobsEmail",
-    "ukvisajobsPassword",
+    "ukvisajobs邮箱",
+    "ukvisajobs密码",
     "adzunaAppId",
     "adzunaAppKey",
     "enableBasicAuth",
     "basicAuthUser",
-    "basicAuthPassword",
+    "basicAuth密码",
   ],
-  display: ["showSponsorInfo", "renderMarkdownInJobDescriptions"],
+  display: ["showSponsorInfo", "renderMarkdownInJob描述s"],
   backup: ["backupEnabled", "backupHour", "backupMaxCount"],
   "danger-zone": [],
 };
 
-function matchesSettingsSearch(
+function matches设置搜索(
   searchTerm: string,
-  item: SettingsSectionDescriptor,
+  item: 设置SectionDescriptor,
 ): boolean {
   if (!searchTerm) return true;
   const normalized = searchTerm.toLowerCase();
@@ -353,7 +353,7 @@ function matchesSettingsSearch(
   return haystack.toLowerCase().includes(normalized);
 }
 
-const getRxResumeValidationFields = (): Array<keyof UpdateSettingsInput> => [
+const getRxResumeValidationFields = (): Array<keyof 更新设置Input> => [
   "rxresumeApiKey",
   "rxresumeUrl",
 ];
@@ -370,7 +370,7 @@ const normalizeLlmProviderValue = (
   value: string | null | undefined,
 ): LlmProviderValue => (value ? normalizeLlmProvider(value) : null);
 
-const NULL_SETTINGS_PAYLOAD: UpdateSettingsInput = {
+const NULL_SETTINGS_PAYLOAD: 更新设置Input = {
   model: null,
   modelScorer: null,
   modelTailoring: null,
@@ -384,11 +384,11 @@ const NULL_SETTINGS_PAYLOAD: UpdateSettingsInput = {
   pdfRenderer: null,
   rxresumeBaseResumeId: null,
   showSponsorInfo: null,
-  renderMarkdownInJobDescriptions: null,
+  renderMarkdownInJob描述s: null,
   chatStyleTone: null,
   chatStyleFormality: null,
   chatStyleConstraints: null,
-  chatStyleDoNotUse: null,
+  chatStyleDo否tUse: null,
   ghostwriterStopSlopEnabled: null,
   chatStyleSummaryMaxWords: null,
   chatStyleMaxKeywordsPerSkill: null,
@@ -397,9 +397,9 @@ const NULL_SETTINGS_PAYLOAD: UpdateSettingsInput = {
   rxresumeUrl: null,
   rxresumeApiKey: null,
   basicAuthUser: null,
-  basicAuthPassword: null,
-  ukvisajobsEmail: null,
-  ukvisajobsPassword: null,
+  basicAuth密码: null,
+  ukvisajobs邮箱: null,
+  ukvisajobs密码: null,
   adzunaAppId: null,
   adzunaAppKey: null,
   adzunaMaxJobsPerTerm: null,
@@ -411,14 +411,14 @@ const NULL_SETTINGS_PAYLOAD: UpdateSettingsInput = {
   penalizeMissingSalary: null,
   missingSalaryPenalty: null,
   autoSkipScoreThreshold: null,
-  blockedCompanyKeywords: null,
+  blocked公司Keywords: null,
   scoringInstructions: null,
   ghostwriterSystemPromptTemplate: null,
   tailoringPromptTemplate: null,
   scoringPromptTemplate: null,
 };
 
-const mapSettingsToForm = (data: AppSettings): UpdateSettingsInput => ({
+const map设置ToForm = (data: App设置): 更新设置Input => ({
   model: data.model.override ?? "",
   modelScorer: data.modelScorer.override ?? "",
   modelTailoring: data.modelTailoring.override ?? "",
@@ -434,12 +434,12 @@ const mapSettingsToForm = (data: AppSettings): UpdateSettingsInput => ({
   pdfRenderer: data.pdfRenderer.override ?? data.pdfRenderer.value,
   rxresumeBaseResumeId: data.rxresumeBaseResumeId,
   showSponsorInfo: data.showSponsorInfo.override,
-  renderMarkdownInJobDescriptions:
-    data.renderMarkdownInJobDescriptions.override,
+  renderMarkdownInJob描述s:
+    data.renderMarkdownInJob描述s.override,
   chatStyleTone: data.chatStyleTone.override ?? "",
   chatStyleFormality: data.chatStyleFormality.override ?? "",
   chatStyleConstraints: data.chatStyleConstraints.override ?? "",
-  chatStyleDoNotUse: data.chatStyleDoNotUse.override ?? "",
+  chatStyleDo否tUse: data.chatStyleDo否tUse.override ?? "",
   ghostwriterStopSlopEnabled: data.ghostwriterStopSlopEnabled.override,
   chatStyleSummaryMaxWords: data.chatStyleSummaryMaxWords.override ?? null,
   chatStyleMaxKeywordsPerSkill:
@@ -449,9 +449,9 @@ const mapSettingsToForm = (data: AppSettings): UpdateSettingsInput => ({
   rxresumeUrl: data.rxresumeUrl ?? "",
   rxresumeApiKey: "",
   basicAuthUser: data.basicAuthUser ?? "",
-  basicAuthPassword: data.basicAuthPassword ?? "",
-  ukvisajobsEmail: data.ukvisajobsEmail ?? "",
-  ukvisajobsPassword: "",
+  basicAuth密码: data.basicAuth密码 ?? "",
+  ukvisajobs邮箱: data.ukvisajobs邮箱 ?? "",
+  ukvisajobs密码: "",
   adzunaAppId: data.adzunaAppId ?? "",
   adzunaAppKey: "",
   webhookSecret: "",
@@ -462,7 +462,7 @@ const mapSettingsToForm = (data: AppSettings): UpdateSettingsInput => ({
   penalizeMissingSalary: data.penalizeMissingSalary.override,
   missingSalaryPenalty: data.missingSalaryPenalty.override,
   autoSkipScoreThreshold: data.autoSkipScoreThreshold.override,
-  blockedCompanyKeywords: data.blockedCompanyKeywords.override ?? [],
+  blocked公司Keywords: data.blocked公司Keywords.override ?? [],
   scoringInstructions: data.scoringInstructions.override ?? "",
   ghostwriterSystemPromptTemplate:
     data.ghostwriterSystemPromptTemplate.value ?? "",
@@ -491,8 +491,8 @@ const nullIfSame = <T,>(value: T | null | undefined, defaultValue: T) =>
 
 const normalizeResumeProjectsForCatalog = (
   catalog: ResumeProjectCatalogItem[],
-  current: ResumeProjectsSettings | null,
-): ResumeProjectsSettings | null => {
+  current: ResumeProjects设置 | null,
+): ResumeProjects设置 | null => {
   const allowed = new Set(catalog.map((project) => project.id));
 
   const base = current ?? {
@@ -523,7 +523,7 @@ const normalizeResumeProjectsForCatalog = (
   return { maxProjects, lockedProjectIds, aiSelectableProjectIds };
 };
 
-const getDerivedSettings = (settings: AppSettings | null) => {
+const getDerived设置 = (settings: App设置 | null) => {
   const profileProjects = settings?.profileProjects ?? [];
 
   return {
@@ -556,9 +556,9 @@ const getDerivedSettings = (settings: AppSettings | null) => {
         effective: settings?.showSponsorInfo?.value ?? true,
         default: settings?.showSponsorInfo?.default ?? true,
       },
-      renderMarkdownInJobDescriptions: {
-        effective: settings?.renderMarkdownInJobDescriptions?.value ?? true,
-        default: settings?.renderMarkdownInJobDescriptions?.default ?? true,
+      renderMarkdownInJob描述s: {
+        effective: settings?.renderMarkdownInJob描述s?.value ?? true,
+        default: settings?.renderMarkdownInJob描述s?.default ?? true,
       },
     },
     chat: {
@@ -574,9 +574,9 @@ const getDerivedSettings = (settings: AppSettings | null) => {
         effective: settings?.chatStyleConstraints?.value ?? "",
         default: settings?.chatStyleConstraints?.default ?? "",
       },
-      doNotUse: {
-        effective: settings?.chatStyleDoNotUse?.value ?? "",
-        default: settings?.chatStyleDoNotUse?.default ?? "",
+      do否tUse: {
+        effective: settings?.chatStyleDo否tUse?.value ?? "",
+        default: settings?.chatStyleDo否tUse?.default ?? "",
       },
       stopSlopEnabled: {
         effective: settings?.ghostwriterStopSlopEnabled?.value ?? false,
@@ -599,17 +599,17 @@ const getDerivedSettings = (settings: AppSettings | null) => {
         default: settings?.chatStyleMaxKeywordsPerSkill?.default ?? null,
       },
     },
-    envSettings: {
+    env设置: {
       readable: {
-        ukvisajobsEmail: settings?.ukvisajobsEmail ?? "",
+        ukvisajobs邮箱: settings?.ukvisajobs邮箱 ?? "",
         adzunaAppId: settings?.adzunaAppId ?? "",
         basicAuthUser: settings?.basicAuthUser ?? "",
-        basicAuthPassword: settings?.basicAuthPassword ?? "",
+        basicAuth密码: settings?.basicAuth密码 ?? "",
       },
       private: {
-        ukvisajobsPasswordHint: settings?.ukvisajobsPasswordHint ?? null,
+        ukvisajobs密码Hint: settings?.ukvisajobs密码Hint ?? null,
         adzunaAppKeyHint: settings?.adzunaAppKeyHint ?? null,
-        basicAuthPasswordHint: settings?.basicAuthPasswordHint ?? null,
+        basicAuth密码Hint: settings?.basicAuth密码Hint ?? null,
         webhookSecretHint: settings?.webhookSecretHint ?? null,
       },
       basicAuthActive: settings?.basicAuthActive ?? false,
@@ -646,9 +646,9 @@ const getDerivedSettings = (settings: AppSettings | null) => {
         effective: settings?.autoSkipScoreThreshold?.value ?? null,
         default: settings?.autoSkipScoreThreshold?.default ?? null,
       },
-      blockedCompanyKeywords: {
-        effective: settings?.blockedCompanyKeywords?.value ?? [],
-        default: settings?.blockedCompanyKeywords?.default ?? [],
+      blocked公司Keywords: {
+        effective: settings?.blocked公司Keywords?.value ?? [],
+        default: settings?.blocked公司Keywords?.default ?? [],
       },
       scoringInstructions: {
         effective: settings?.scoringInstructions?.value ?? "",
@@ -672,21 +672,21 @@ const getDerivedSettings = (settings: AppSettings | null) => {
   };
 };
 
-export const SettingsPage: React.FC = () => {
+export const 设置Page: React.FC = () => {
   const queryClient = useQueryClient();
   const location = useLocation();
-  const [settings, setSettings] = useState<AppSettings | null>(null);
+  const [settings, set设置] = useState<App设置 | null>(null);
   const [activeSection, setActiveSection] =
-    useState<SettingsSectionId>("model");
-  const [openGroups, setOpenGroups] = useState<SettingsGroupId[]>([]);
+    useState<设置SectionId>("model");
+  const [openGroups, setOpenGroups] = useState<设置GroupId[]>([]);
 
   useEffect(() => {
     const hash = location.hash.replace(/^#/, "");
     const allSectionIds = SETTINGS_NAV_GROUPS.flatMap((g) =>
       g.items.map((i) => i.id),
     );
-    if (hash && allSectionIds.includes(hash as SettingsSectionId)) {
-      setActiveSection(hash as SettingsSectionId);
+    if (hash && allSectionIds.includes(hash as 设置SectionId)) {
+      setActiveSection(hash as 设置SectionId);
       const parentGroup = SETTINGS_NAV_GROUPS.find((g) =>
         g.items.some((i) => i.id === hash),
       );
@@ -698,13 +698,13 @@ export const SettingsPage: React.FC = () => {
     }
   }, [location.hash]);
 
-  const [settingsSearch, setSettingsSearch] = useState("");
+  const [settings搜索, set设置搜索] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-  const [rxresumeValidationStatus, setRxresumeValidationStatus] =
+  const [rxresumeValidation状态, setRxresumeValidation状态] =
     useState<RxResumeValidationBadgeState>(
       EMPTY_RXRESUME_VALIDATION_BADGE_STATE,
     );
-  const [statusesToClear, setStatusesToClear] = useState<JobStatus[]>([
+  const [statusesToClear, set状态esToClear] = useState<Job状态[]>([
     "discovered",
   ]);
   const [rxResumeBaseResumeIdDraft, setRxResumeBaseResumeIdDraft] = useState<
@@ -716,9 +716,9 @@ export const SettingsPage: React.FC = () => {
   const [isFetchingRxResumeProjects, setIsFetchingRxResumeProjects] =
     useState(false);
 
-  // Backup state
-  const [isCreatingBackup, setIsCreatingBackup] = useState(false);
-  const [isDeletingBackup, setIsDeletingBackup] = useState(false);
+  // 返回up state
+  const [isCreating返回up, setIsCreating返回up] = useState(false);
+  const [isDeleting返回up, setIsDeleting返回up] = useState(false);
   const {
     readiness: tracerReadiness,
     isLoading: isTracerReadinessLoading,
@@ -726,17 +726,17 @@ export const SettingsPage: React.FC = () => {
     refreshReadiness,
   } = useTracerReadiness();
 
-  const methods = useForm<UpdateSettingsInput>({
+  const methods = useForm<更新设置Input>({
     resolver: zodResolver(
-      updateSettingsSchema,
-    ) as Resolver<UpdateSettingsInput>,
+      update设置Schema,
+    ) as Resolver<更新设置Input>,
     mode: "onChange",
     defaultValues: DEFAULT_FORM_VALUES,
   });
 
   const {
     clearErrors,
-    handleSubmit,
+    handle提交,
     reset,
     setError,
     setValue,
@@ -748,29 +748,29 @@ export const SettingsPage: React.FC = () => {
 
   const settingsQuery = useQuery({
     queryKey: queryKeys.settings.current(),
-    queryFn: api.getSettings,
+    queryFn: api.get设置,
   });
   const backupsQuery = useQuery({
     queryKey: queryKeys.backups.list(),
-    queryFn: api.getBackups,
+    queryFn: api.get返回ups,
   });
-  const updateSettingsMutation = useUpdateSettingsMutation();
+  const update设置Mutation = use更新设置Mutation();
   const isLoading = settingsQuery.isLoading;
   const backups = backupsQuery.data?.backups ?? [];
   const nextScheduled = backupsQuery.data?.nextScheduled ?? null;
-  const isLoadingBackups = backupsQuery.isLoading;
+  const isLoading返回ups = backupsQuery.isLoading;
   useQueryErrorToast(backupsQuery.error, "Failed to load backups");
 
   const resumeProjectsValue = useWatch({
     control,
     name: "resumeProjects",
   });
-  const hasRxResumeAccess = Boolean(rxresumeValidationStatus.valid);
+  const hasRxResumeAccess = Boolean(rxresumeValidation状态.valid);
 
   useEffect(() => {
     if (!settingsQuery.data) return;
-    setSettings(settingsQuery.data);
-    reset(mapSettingsToForm(settingsQuery.data));
+    set设置(settingsQuery.data);
+    reset(map设置ToForm(settingsQuery.data));
   }, [settingsQuery.data, reset]);
 
   useQueryErrorToast(settingsQuery.error, "Failed to load settings");
@@ -831,7 +831,7 @@ export const SettingsPage: React.FC = () => {
     };
   }, [rxResumeBaseResumeIdDraft, hasRxResumeAccess, getValues, setValue]);
 
-  const derived = getDerivedSettings(settings);
+  const derived = getDerived设置(settings);
   const {
     model,
     pipelineWebhook,
@@ -839,7 +839,7 @@ export const SettingsPage: React.FC = () => {
     reactiveResume,
     display,
     chat,
-    envSettings,
+    env设置,
     defaultResumeProjects,
     profileProjects,
     backup,
@@ -847,35 +847,35 @@ export const SettingsPage: React.FC = () => {
     promptTemplates,
   } = derived;
 
-  const handleCreateBackup = async () => {
-    setIsCreatingBackup(true);
+  const handle创建返回up = async () => {
+    setIsCreating返回up(true);
     try {
-      await api.createManualBackup();
-      toast.success("Backup created successfully");
+      await api.createManual返回up();
+      toast.success("返回up created successfully");
       await queryClient.invalidateQueries({ queryKey: queryKeys.backups.all });
     } catch (error) {
       showErrorToast(error, "Failed to create backup");
     } finally {
-      setIsCreatingBackup(false);
+      setIsCreating返回up(false);
     }
   };
 
-  const handleDeleteBackup = async (filename: string) => {
+  const handle删除返回up = async (filename: string) => {
     const confirmed = window.confirm(
-      `Delete backup "${filename}"? This action cannot be undone.`,
+      `删除 backup "${filename}"? This action cannot be undone.`,
     );
     if (!confirmed) {
       return;
     }
-    setIsDeletingBackup(true);
+    setIsDeleting返回up(true);
     try {
-      await api.deleteBackup(filename);
-      toast.success("Backup deleted successfully");
+      await api.delete返回up(filename);
+      toast.success("返回up deleted successfully");
       await queryClient.invalidateQueries({ queryKey: queryKeys.backups.all });
     } catch (error) {
       showErrorToast(error, "Failed to delete backup");
     } finally {
-      setIsDeletingBackup(false);
+      setIsDeleting返回up(false);
     }
   };
 
@@ -897,15 +897,15 @@ export const SettingsPage: React.FC = () => {
     }
   }, [refreshReadiness]);
 
-  const setRxResumeValidationStatus = useCallback(
+  const setRxResumeValidation状态 = useCallback(
     (validation: ValidationResult) => {
-      setRxresumeValidationStatus(toRxResumeValidationBadgeState(validation));
+      setRxresumeValidation状态(toRxResumeValidationBadgeState(validation));
     },
     [],
   );
 
   const clearRxResumeValidationFeedback = useCallback(() => {
-    setRxresumeValidationStatus(EMPTY_RXRESUME_VALIDATION_BADGE_STATE);
+    setRxresumeValidation状态(EMPTY_RXRESUME_VALIDATION_BADGE_STATE);
     clearErrors(["rxresumeApiKey"]);
   }, [clearErrors]);
 
@@ -919,7 +919,7 @@ export const SettingsPage: React.FC = () => {
         stored: storedRxResume,
         draft: draftCredentials,
         validate: api.validateRxresume,
-        persist: api.updateSettings,
+        persist: api.update设置,
         persistOnSuccess,
         skipPrecheck: silent,
         getPrecheckMessage: (failure) => RXRESUME_PRECHECK_MESSAGES[failure],
@@ -929,13 +929,13 @@ export const SettingsPage: React.FC = () => {
           formatUserFacingError(error, "RxResume validation failed"),
       });
 
-      setRxResumeValidationStatus(result.validation);
+      setRxResumeValidation状态(result.validation);
 
-      if (result.updatedSettings) {
-        setSettings(result.updatedSettings);
+      if (result.updated设置) {
+        set设置(result.updated设置);
         queryClient.setQueryData(
           queryKeys.settings.current(),
-          result.updatedSettings,
+          result.updated设置,
         );
         if (notify) {
           toast.success(`Reactive Resume validation passed`);
@@ -959,32 +959,32 @@ export const SettingsPage: React.FC = () => {
         result.validation.message || `Reactive Resume validation failed`,
       );
     },
-    [getValues, queryClient, setRxResumeValidationStatus, storedRxResume],
+    [getValues, queryClient, setRxResumeValidation状态, storedRxResume],
   );
 
   useEffect(() => {
     if (!settings) return;
 
-    if (!rxresumeValidationStatus.checked) {
+    if (!rxresumeValidation状态.checked) {
       void validateRxresume({ silent: true, persistOnSuccess: false });
     }
-  }, [rxresumeValidationStatus, settings, validateRxresume]);
+  }, [rxresumeValidation状态, settings, validateRxresume]);
 
-  const effectiveProfileProjects = rxResumeProjectsOverride ?? profileProjects;
-  const effectiveMaxProjectsTotal = effectiveProfileProjects.length;
+  const effective个人资料Projects = rxResumeProjectsOverride ?? profileProjects;
+  const effectiveMaxProjectsTotal = effective个人资料Projects.length;
 
   const lockedCount = resumeProjectsValue?.lockedProjectIds.length ?? 0;
 
-  const canSave = isDirty && isValid;
+  const can保存 = isDirty && isValid;
 
-  const onSave = async (data: UpdateSettingsInput) => {
+  const on保存 = async (data: 更新设置Input) => {
     if (!settings) return;
     if (data.enableBasicAuth && !settings.basicAuthActive) {
-      const password = data.basicAuthPassword?.trim() ?? "";
+      const password = data.basicAuth密码?.trim() ?? "";
       if (!password) {
-        setError("basicAuthPassword", {
+        setError("basicAuth密码", {
           type: "manual",
-          message: "Password is required when authentication is enabled",
+          message: "密码 is required when authentication is enabled",
         });
         return;
       }
@@ -1001,14 +1001,14 @@ export const SettingsPage: React.FC = () => {
           ? null
           : resumeProjectsData;
 
-      const envPayload: Partial<UpdateSettingsInput> = {};
+      const envPayload: Partial<更新设置Input> = {};
 
       if (dirtyFields.rxresumeUrl) {
         envPayload.rxresumeUrl = normalizeString(data.rxresumeUrl);
       }
 
-      if (dirtyFields.ukvisajobsEmail || dirtyFields.ukvisajobsPassword) {
-        envPayload.ukvisajobsEmail = normalizeString(data.ukvisajobsEmail);
+      if (dirtyFields.ukvisajobs邮箱 || dirtyFields.ukvisajobs密码) {
+        envPayload.ukvisajobs邮箱 = normalizeString(data.ukvisajobs邮箱);
       }
 
       if (dirtyFields.adzunaAppId || dirtyFields.adzunaAppKey) {
@@ -1017,19 +1017,19 @@ export const SettingsPage: React.FC = () => {
 
       if (data.enableBasicAuth === false) {
         envPayload.basicAuthUser = null;
-        envPayload.basicAuthPassword = null;
+        envPayload.basicAuth密码 = null;
       } else if (
         dirtyFields.enableBasicAuth ||
         dirtyFields.basicAuthUser ||
-        dirtyFields.basicAuthPassword
+        dirtyFields.basicAuth密码
       ) {
         // If enabling authentication or changing either field, ensure we send at least the username
         // to keep the pair consistent in the backend.
         envPayload.basicAuthUser = normalizeString(data.basicAuthUser);
 
-        if (dirtyFields.basicAuthPassword) {
-          const value = normalizePrivateInput(data.basicAuthPassword);
-          if (value !== undefined) envPayload.basicAuthPassword = value;
+        if (dirtyFields.basicAuth密码) {
+          const value = normalizePrivateInput(data.basicAuth密码);
+          if (value !== undefined) envPayload.basicAuth密码 = value;
         }
       }
 
@@ -1051,9 +1051,9 @@ export const SettingsPage: React.FC = () => {
         if (value !== undefined) envPayload.rxresumeApiKey = value;
       }
 
-      if (dirtyFields.ukvisajobsPassword) {
-        const value = normalizePrivateInput(data.ukvisajobsPassword);
-        if (value !== undefined) envPayload.ukvisajobsPassword = value;
+      if (dirtyFields.ukvisajobs密码) {
+        const value = normalizePrivateInput(data.ukvisajobs密码);
+        if (value !== undefined) envPayload.ukvisajobs密码 = value;
       }
 
       if (dirtyFields.adzunaAppKey) {
@@ -1066,7 +1066,7 @@ export const SettingsPage: React.FC = () => {
         if (value !== undefined) envPayload.webhookSecret = value;
       }
 
-      const payload: Partial<UpdateSettingsInput> = {
+      const payload: Partial<更新设置Input> = {
         model: dirtyFields.llmProvider
           ? dirtyFields.model
             ? normalizeString(data.model)
@@ -1101,14 +1101,14 @@ export const SettingsPage: React.FC = () => {
           data.showSponsorInfo,
           display.showSponsorInfo.default,
         ),
-        renderMarkdownInJobDescriptions: nullIfSame(
-          data.renderMarkdownInJobDescriptions,
-          display.renderMarkdownInJobDescriptions.default,
+        renderMarkdownInJob描述s: nullIfSame(
+          data.renderMarkdownInJob描述s,
+          display.renderMarkdownInJob描述s.default,
         ),
         chatStyleTone: normalizeString(data.chatStyleTone),
         chatStyleFormality: normalizeString(data.chatStyleFormality),
         chatStyleConstraints: normalizeString(data.chatStyleConstraints),
-        chatStyleDoNotUse: normalizeString(data.chatStyleDoNotUse),
+        chatStyleDo否tUse: normalizeString(data.chatStyleDo否tUse),
         ghostwriterStopSlopEnabled: nullIfSame(
           data.ghostwriterStopSlopEnabled,
           chat.stopSlopEnabled.default,
@@ -1144,10 +1144,10 @@ export const SettingsPage: React.FC = () => {
           data.autoSkipScoreThreshold,
           scoring.autoSkipScoreThreshold.default,
         ),
-        blockedCompanyKeywords: (() => {
-          const normalized = normalizeStringArray(data.blockedCompanyKeywords);
+        blocked公司Keywords: (() => {
+          const normalized = normalizeStringArray(data.blocked公司Keywords);
           const normalizedDefault = normalizeStringArray(
-            scoring.blockedCompanyKeywords.default,
+            scoring.blocked公司Keywords.default,
           );
           return stringArraysEqual(normalized, normalizedDefault)
             ? null
@@ -1172,12 +1172,12 @@ export const SettingsPage: React.FC = () => {
         ...envPayload,
       };
 
-      const shouldValidateRxResumeBeforeSave = Boolean(
+      const shouldValidateRxResumeBefore保存 = Boolean(
         dirtyFields.rxresumeUrl || dirtyFields.rxresumeApiKey,
       );
-      let rxResumeSaveWarningMessage: string | null = null;
+      let rxResume保存WarningMessage: string | null = null;
 
-      if (shouldValidateRxResumeBeforeSave) {
+      if (shouldValidateRxResumeBefore保存) {
         const validationDraft = getRxResumeCredentialDrafts(data);
         const precheckFailure = getRxResumeCredentialPrecheckFailure({
           stored: storedRxResume,
@@ -1197,7 +1197,7 @@ export const SettingsPage: React.FC = () => {
             }),
           });
 
-          setRxResumeValidationStatus(validation);
+          setRxResumeValidation状态(validation);
 
           if (isRxResumeBlockingValidationFailure(validation)) {
             clearErrors(getRxResumeValidationFields());
@@ -1211,18 +1211,18 @@ export const SettingsPage: React.FC = () => {
 
           clearErrors(getRxResumeValidationFields());
           if (isRxResumeAvailabilityValidationFailure(validation)) {
-            rxResumeSaveWarningMessage =
-              "Settings saved, but JobOps could not verify Reactive Resume because the instance is unavailable.";
+            rxResume保存WarningMessage =
+              "设置 saved, but JobOps could not verify Reactive Resume because the instance is unavailable.";
           }
         }
       }
 
-      const updated = await updateSettingsMutation.mutateAsync(payload);
-      setSettings(updated);
-      reset(mapSettingsToForm(updated));
-      toast.success("Settings saved");
-      if (rxResumeSaveWarningMessage) {
-        toast.info(rxResumeSaveWarningMessage);
+      const updated = await update设置Mutation.mutateAsync(payload);
+      set设置(updated);
+      reset(map设置ToForm(updated));
+      toast.success("设置 saved");
+      if (rxResume保存WarningMessage) {
+        toast.info(rxResume保存WarningMessage);
       }
     } catch (error) {
       showErrorToast(error, "Failed to save settings");
@@ -1236,7 +1236,7 @@ export const SettingsPage: React.FC = () => {
       setIsSaving(true);
       const result = await api.clearDatabase();
       toast.success("Database cleared", {
-        description: `Deleted ${result.jobsDeleted} jobs.`,
+        description: `删除d ${result.jobs删除d} jobs.`,
       });
     } catch (error) {
       showErrorToast(error, "Failed to clear database");
@@ -1245,31 +1245,31 @@ export const SettingsPage: React.FC = () => {
     }
   };
 
-  const handleClearByStatuses = async () => {
+  const handleClearBy状态es = async () => {
     if (statusesToClear.length === 0) {
-      toast.error("No statuses selected");
+      toast.error("否 statuses selected");
       return;
     }
     try {
       setIsSaving(true);
-      let totalDeleted = 0;
+      let total删除d = 0;
       const results: string[] = [];
 
       for (const status of statusesToClear) {
-        const result = await api.deleteJobsByStatus(status);
-        totalDeleted += result.count;
+        const result = await api.deleteJobsBy状态(status);
+        total删除d += result.count;
         if (result.count > 0) {
           results.push(`${result.count} ${status}`);
         }
       }
 
-      if (totalDeleted > 0) {
+      if (total删除d > 0) {
         toast.success("Jobs cleared", {
-          description: `Deleted ${totalDeleted} jobs: ${results.join(", ")}`,
+          description: `删除d ${total删除d} jobs: ${results.join(", ")}`,
         });
       } else {
-        toast.info("No jobs found", {
-          description: `No jobs with selected statuses found`,
+        toast.info("否 jobs found", {
+          description: `否 jobs with selected statuses found`,
         });
       }
     } catch (error) {
@@ -1286,11 +1286,11 @@ export const SettingsPage: React.FC = () => {
 
       if (result.count > 0) {
         toast.success("Jobs cleared", {
-          description: `Deleted ${result.count} jobs with score below ${threshold}. Applied jobs were preserved.`,
+          description: `删除d ${result.count} jobs with score below ${threshold}. Applied jobs were preserved.`,
         });
       } else {
-        toast.info("No jobs found", {
-          description: `No jobs with score below ${threshold} found`,
+        toast.info("否 jobs found", {
+          description: `否 jobs with score below ${threshold} found`,
         });
       }
     } catch (error) {
@@ -1300,8 +1300,8 @@ export const SettingsPage: React.FC = () => {
     }
   };
 
-  const toggleStatusToClear = (status: JobStatus) => {
-    setStatusesToClear((prev) =>
+  const toggle状态ToClear = (status: Job状态) => {
+    set状态esToClear((prev) =>
       prev.includes(status)
         ? prev.filter((s) => s !== status)
         : [...prev, status],
@@ -1310,11 +1310,11 @@ export const SettingsPage: React.FC = () => {
   const handleReset = async () => {
     try {
       setIsSaving(true);
-      const updated = await updateSettingsMutation.mutateAsync(
+      const updated = await update设置Mutation.mutateAsync(
         NULL_SETTINGS_PAYLOAD,
       );
-      setSettings(updated);
-      reset(mapSettingsToForm(updated));
+      set设置(updated);
+      reset(map设置ToForm(updated));
       toast.success("Reset to default");
     } catch (error) {
       showErrorToast(error, "Failed to reset settings");
@@ -1325,7 +1325,7 @@ export const SettingsPage: React.FC = () => {
 
   const handleDiscardChanges = () => {
     if (!settings) return;
-    reset(mapSettingsToForm(settings));
+    reset(map设置ToForm(settings));
     toast.success("Discarded unsaved changes");
   };
 
@@ -1334,10 +1334,10 @@ export const SettingsPage: React.FC = () => {
       SETTINGS_NAV_GROUPS.map((group) => ({
         ...group,
         items: group.items.filter((item) =>
-          matchesSettingsSearch(settingsSearch, item),
+          matches设置搜索(settings搜索, item),
         ),
       })).filter((group) => group.items.length > 0),
-    [settingsSearch],
+    [settings搜索],
   );
 
   const visibleSectionIds = useMemo(
@@ -1362,12 +1362,12 @@ export const SettingsPage: React.FC = () => {
       group.items.some((item) => item.id === activeSection),
     ) ?? SETTINGS_NAV_GROUPS[0];
 
-  const sectionHasDirtyState = (sectionId: SettingsSectionId) =>
+  const sectionHasDirtyState = (sectionId: 设置SectionId) =>
     SECTION_FIELD_MAP[sectionId].some((field) => Boolean(dirtyFields[field]));
-  const sectionHasErrors = (sectionId: SettingsSectionId) =>
+  const sectionHasErrors = (sectionId: 设置SectionId) =>
     SECTION_FIELD_MAP[sectionId].some((field) => Boolean(errors[field]));
 
-  const getSectionBadge = (sectionId: SettingsSectionId) => {
+  const getSectionBadge = (sectionId: 设置SectionId) => {
     if (sectionId === "danger-zone") {
       return { label: "Sensitive", variant: "destructive" as const };
     }
@@ -1398,7 +1398,7 @@ export const SettingsPage: React.FC = () => {
           : { label: "Using defaults", variant: "secondary" as const };
       case "scoring":
         return scoring.autoSkipScoreThreshold.effective != null ||
-          scoring.blockedCompanyKeywords.effective.length > 0 ||
+          scoring.blocked公司Keywords.effective.length > 0 ||
           scoring.scoringInstructions.effective
           ? { label: "Customized", variant: "outline" as const }
           : { label: "Default rules", variant: "secondary" as const };
@@ -1415,11 +1415,11 @@ export const SettingsPage: React.FC = () => {
           ? { label: "Ready", variant: "outline" as const }
           : tracerReadiness
             ? { label: "Check required", variant: "secondary" as const }
-            : { label: "Not configured", variant: "secondary" as const };
+            : { label: "否t configured", variant: "secondary" as const };
       case "environment":
-        return envSettings.readable.ukvisajobsEmail ||
-          envSettings.readable.adzunaAppId ||
-          envSettings.basicAuthActive
+        return env设置.readable.ukvisajobs邮箱 ||
+          env设置.readable.adzunaAppId ||
+          env设置.basicAuthActive
           ? { label: "Configured", variant: "outline" as const }
           : null;
       case "display":
@@ -1439,11 +1439,11 @@ export const SettingsPage: React.FC = () => {
   ).filter((item) => sectionHasDirtyState(item.id)).length;
   const activeSectionIsDirty = sectionHasDirtyState(activeSection);
 
-  let activeSectionContent: React.ReactNode;
+  let activeSectionContent: React.React否de;
   switch (activeSection) {
     case "model":
       activeSectionContent = (
-        <ModelSettingsSection
+        <Model设置Section
           values={model}
           isLoading={isLoading}
           isSaving={isSaving}
@@ -1453,7 +1453,7 @@ export const SettingsPage: React.FC = () => {
       break;
     case "chat":
       activeSectionContent = (
-        <ChatSettingsSection
+        <Chat设置Section
           values={chat}
           isLoading={isLoading}
           isSaving={isSaving}
@@ -1473,7 +1473,7 @@ export const SettingsPage: React.FC = () => {
       break;
     case "scoring":
       activeSectionContent = (
-        <ScoringSettingsSection
+        <Scoring设置Section
           values={scoring}
           isLoading={isLoading}
           isSaving={isSaving}
@@ -1491,9 +1491,9 @@ export const SettingsPage: React.FC = () => {
             setValue("rxresumeBaseResumeId", value, { shouldDirty: true });
           }}
           hasRxResumeAccess={hasRxResumeAccess}
-          onCredentialFieldEdit={clearRxResumeValidationFeedback}
-          validationStatus={rxresumeValidationStatus}
-          profileProjects={effectiveProfileProjects}
+          onCredentialField编辑={clearRxResumeValidationFeedback}
+          validation状态={rxresumeValidation状态}
+          profileProjects={effective个人资料Projects}
           lockedCount={lockedCount}
           maxProjectsTotal={effectiveMaxProjectsTotal}
           isProjectsLoading={isFetchingRxResumeProjects}
@@ -1508,7 +1508,7 @@ export const SettingsPage: React.FC = () => {
         <WebhooksSection
           pipelineWebhook={pipelineWebhook}
           jobCompleteWebhook={jobCompleteWebhook}
-          webhookSecretHint={envSettings.private.webhookSecretHint}
+          webhookSecretHint={env设置.private.webhookSecretHint}
           isLoading={isLoading}
           isSaving={isSaving}
           layoutMode="panel"
@@ -1517,19 +1517,19 @@ export const SettingsPage: React.FC = () => {
       break;
     case "tracer-links":
       activeSectionContent = (
-        <TracerLinksSettingsSection
+        <TracerLinks设置Section
           readiness={tracerReadiness}
           isLoading={isLoading || isTracerReadinessLoading}
           isChecking={isTracerReadinessChecking}
-          onVerifyNow={handleVerifyTracerReadiness}
+          onVerify否w={handleVerifyTracerReadiness}
           layoutMode="panel"
         />
       );
       break;
     case "environment":
       activeSectionContent = (
-        <EnvironmentSettingsSection
-          values={envSettings}
+        <Environment设置Section
+          values={env设置}
           isLoading={isLoading}
           isSaving={isSaving}
           layoutMode="panel"
@@ -1538,7 +1538,7 @@ export const SettingsPage: React.FC = () => {
       break;
     case "display":
       activeSectionContent = (
-        <DisplaySettingsSection
+        <Display设置Section
           values={display}
           isLoading={isLoading}
           isSaving={isSaving}
@@ -1548,16 +1548,16 @@ export const SettingsPage: React.FC = () => {
       break;
     case "backup":
       activeSectionContent = (
-        <BackupSettingsSection
+        <返回up设置Section
           values={backup}
           backups={backups}
           nextScheduled={nextScheduled}
-          isLoading={isLoading || isLoadingBackups}
+          isLoading={isLoading || isLoading返回ups}
           isSaving={isSaving}
-          onCreateBackup={handleCreateBackup}
-          onDeleteBackup={handleDeleteBackup}
-          isCreatingBackup={isCreatingBackup}
-          isDeletingBackup={isDeletingBackup}
+          on创建返回up={handle创建返回up}
+          on删除返回up={handle删除返回up}
+          isCreating返回up={isCreating返回up}
+          isDeleting返回up={isDeleting返回up}
           layoutMode="panel"
         />
       );
@@ -1566,8 +1566,8 @@ export const SettingsPage: React.FC = () => {
       activeSectionContent = (
         <DangerZoneSection
           statusesToClear={statusesToClear}
-          toggleStatusToClear={toggleStatusToClear}
-          handleClearByStatuses={handleClearByStatuses}
+          toggle状态ToClear={toggle状态ToClear}
+          handleClearBy状态es={handleClearBy状态es}
           handleClearDatabase={handleClearDatabase}
           handleClearByScore={handleClearByScore}
           isLoading={isLoading}
@@ -1583,52 +1583,52 @@ export const SettingsPage: React.FC = () => {
   return (
     <FormProvider {...methods}>
       <PageHeader
-        icon={Settings}
-        title="Settings"
+        icon={设置}
+        title="设置"
         subtitle="Configure AI, scoring, integrations, and recovery from one focused workspace."
       />
 
-      <main className="container mx-auto px-4 py-6 pb-12">
-        <div className="grid gap-6 lg:grid-cols-[300px_minmax(0,1fr)]">
-          <aside className="lg:sticky lg:top-6 lg:self-start">
-            <div className="overflow-hidden rounded-2xl border border-border/70 bg-background/95">
-              <div className="border-b px-4 py-4">
-                <div className="relative">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      <main class名称="container mx-auto px-4 py-6 pb-12">
+        <div class名称="grid gap-6 lg:grid-cols-[300px_minmax(0,1fr)]">
+          <aside class名称="lg:sticky lg:top-6 lg:self-start">
+            <div class名称="overflow-hidden rounded-2xl border border-border/70 bg-background/95">
+              <div class名称="border-b px-4 py-4">
+                <div class名称="relative">
+                  <搜索 class名称="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
-                    value={settingsSearch}
-                    onChange={(event) => setSettingsSearch(event.target.value)}
-                    placeholder="Search settings"
-                    className="pl-9"
-                    aria-label="Search settings"
+                    value={settings搜索}
+                    onChange={(event) => set设置搜索(event.target.value)}
+                    placeholder="搜索 settings"
+                    class名称="pl-9"
+                    aria-label="搜索 settings"
                   />
                 </div>
               </div>
-              <div className="p-2">
+              <div class名称="p-2">
                 {filteredNavGroups.length > 0 ? (
                   <Accordion
                     type="multiple"
                     value={
-                      settingsSearch.trim()
+                      settings搜索.trim()
                         ? filteredNavGroups.map((group) => group.id)
                         : openGroups
                     }
                     onValueChange={(value) =>
-                      setOpenGroups(value as SettingsGroupId[])
+                      setOpenGroups(value as 设置GroupId[])
                     }
-                    className="space-y-1"
+                    class名称="space-y-1"
                   >
                     {filteredNavGroups.map((group) => (
                       <AccordionItem
                         key={group.id}
                         value={group.id}
-                        className="border-b border-border/60 px-2 last:border-b-0"
+                        class名称="border-b border-border/60 px-2 last:border-b-0"
                       >
-                        <AccordionTrigger className="py-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground hover:no-underline">
+                        <AccordionTrigger class名称="py-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground hover:no-underline">
                           {group.label}
                         </AccordionTrigger>
-                        <AccordionContent className="pb-3">
-                          <div className="space-y-1">
+                        <AccordionContent class名称="pb-3">
+                          <div class名称="space-y-1">
                             {group.items.map((item) => {
                               const isActive = item.id === activeSection;
                               return (
@@ -1636,7 +1636,7 @@ export const SettingsPage: React.FC = () => {
                                   key={item.id}
                                   type="button"
                                   variant="ghost"
-                                  className={`h-9 w-full justify-start rounded-md px-3 text-left text-sm font-medium ${
+                                  class名称={`h-9 w-full justify-start rounded-md px-3 text-left text-sm font-medium ${
                                     isActive
                                       ? "border border-orange-400/40 bg-orange-500/12 text-orange-100 hover:bg-orange-500/18 hover:text-orange-50"
                                       : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
@@ -1653,26 +1653,26 @@ export const SettingsPage: React.FC = () => {
                     ))}
                   </Accordion>
                 ) : (
-                  <div className="rounded-xl border border-dashed p-4 text-sm text-muted-foreground">
-                    No settings matched “{settingsSearch.trim()}”.
+                  <div class名称="rounded-xl border border-dashed p-4 text-sm text-muted-foreground">
+                    否 settings matched “{settings搜索.trim()}”.
                   </div>
                 )}
               </div>
             </div>
           </aside>
 
-          <section className="space-y-4">
-            <header className="space-y-4 border-b border-border/70 pb-5">
-              <div className="flex flex-wrap items-center gap-2 text-[11px] font-medium uppercase tracking-[0.24em] text-muted-foreground">
+          <section class名称="space-y-4">
+            <header class名称="space-y-4 border-b border-border/70 pb-5">
+              <div class名称="flex flex-wrap items-center gap-2 text-[11px] font-medium uppercase tracking-[0.24em] text-muted-foreground">
                 <span>{activeGroup.label}</span>
                 <span>/</span>
                 <span>{activeSectionMeta.label}</span>
               </div>
 
-              <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h2 className="text-2xl font-semibold tracking-tight">
+              <div class名称="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+                <div class名称="space-y-2">
+                  <div class名称="flex flex-wrap items-center gap-2">
+                    <h2 class名称="text-2xl font-semibold tracking-tight">
                       {activeSectionMeta.label}
                     </h2>
                     {selectedSectionBadge ? (
@@ -1687,17 +1687,17 @@ export const SettingsPage: React.FC = () => {
                       </Badge>
                     ) : null}
                   </div>
-                  <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
+                  <p class名称="max-w-2xl text-sm leading-6 text-muted-foreground">
                     {activeSectionMeta.description}
                   </p>
                 </div>
 
-                <div className="flex shrink-0 flex-nowrap gap-2 self-start">
+                <div class名称="flex shrink-0 flex-nowrap gap-2 self-start">
                   {activeSectionIsDirty ? (
                     <Button
                       type="button"
                       variant="outline"
-                      className="whitespace-nowrap"
+                      class名称="whitespace-nowrap"
                       onClick={handleDiscardChanges}
                       disabled={isLoading || isSaving || !isDirty}
                     >
@@ -1707,7 +1707,7 @@ export const SettingsPage: React.FC = () => {
                   <Button
                     type="button"
                     variant="outline"
-                    className="whitespace-nowrap"
+                    class名称="whitespace-nowrap"
                     onClick={handleReset}
                     disabled={isLoading || isSaving || !settings}
                   >
@@ -1715,11 +1715,11 @@ export const SettingsPage: React.FC = () => {
                   </Button>
                   <Button
                     type="button"
-                    className="whitespace-nowrap"
-                    onClick={handleSubmit(onSave)}
-                    disabled={isLoading || isSaving || !canSave}
+                    class名称="whitespace-nowrap"
+                    onClick={handle提交(on保存)}
+                    disabled={isLoading || isSaving || !can保存}
                   >
-                    {isSaving ? "Saving..." : "Save changes"}
+                    {isSaving ? "Saving..." : "保存 changes"}
                   </Button>
                 </div>
               </div>
@@ -1728,7 +1728,7 @@ export const SettingsPage: React.FC = () => {
             {activeSectionContent}
 
             {Object.keys(errors).length > 0 && (
-              <div className="rounded-xl border border-destructive/30 bg-destructive/[0.03] px-4 py-3 text-sm text-destructive">
+              <div class名称="rounded-xl border border-destructive/30 bg-destructive/[0.03] px-4 py-3 text-sm text-destructive">
                 Please fix the highlighted errors before saving.
               </div>
             )}

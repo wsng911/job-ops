@@ -15,7 +15,7 @@ import {
   canRescore,
   canSkip,
   getFailedJobIds,
-} from "./jobActions";
+} from "./job操作";
 import { clampNumber } from "./utils";
 
 const MAX_JOB_ACTION_JOB_IDS = 100;
@@ -32,17 +32,17 @@ const jobActionSuccessLabel: Record<JobAction, string> = {
   rescore: "matches recalculated",
 };
 
-interface UseJobSelectionActionsArgs {
+interface UseJobSelection操作Args {
   activeJobs: JobListItem[];
   activeTab: FilterTab;
   loadJobs: () => Promise<void>;
 }
 
-export function useJobSelectionActions({
+export function useJobSelection操作({
   activeJobs,
   activeTab,
   loadJobs,
-}: UseJobSelectionActionsArgs) {
+}: UseJobSelection操作Args) {
   const [selectedJobIds, setSelectedJobIds] = useState<Set<string>>(
     () => new Set(),
   );
@@ -138,7 +138,7 @@ export function useJobSelectionActions({
         failed: 0,
       };
 
-      const getProgressTitle = () => {
+      const getProgress标题 = () => {
         const safeRequested = Math.max(latestProgress.requested, 1);
         const safeCompleted = clampNumber(
           latestProgress.completed,
@@ -149,7 +149,7 @@ export function useJobSelectionActions({
       };
 
       const upsertProgressToast = () => {
-        progressToastId = toast.loading(getProgressTitle(), {
+        progressToastId = toast.loading(getProgress标题(), {
           description: (
             <JobActionProgressToast
               requested={latestProgress.requested}

@@ -6,21 +6,21 @@ import { KbdHint } from "./KbdHint";
 
 interface OpenJobListingButtonProps {
   href: string;
-  className?: string;
+  class名称?: string;
   shortcut?: string;
 }
 
 export const OpenJobListingButton: React.FC<OpenJobListingButtonProps> = ({
   href,
-  className,
+  class名称,
   shortcut,
 }) => {
   return (
-    <Button asChild variant="outline" className={cn("gap-1", className)}>
+    <Button asChild variant="outline" class名称={cn("gap-1", class名称)}>
       <a href={href} target="_blank" rel="noopener noreferrer">
-        <ExternalLink className="h-3.5 w-3.5 shrink-0" />
-        <span className="truncate">Open Job Listing</span>
-        {shortcut ? <KbdHint shortcut={shortcut} className="ml-auto" /> : null}
+        <ExternalLink class名称="h-3.5 w-3.5 shrink-0" />
+        <span class名称="truncate">Open Job Listing</span>
+        {shortcut ? <KbdHint shortcut={shortcut} class名称="ml-auto" /> : null}
       </a>
     </Button>
   );

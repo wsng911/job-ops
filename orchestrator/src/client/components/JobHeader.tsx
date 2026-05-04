@@ -5,7 +5,7 @@ import {
   DollarSign,
   Loader2,
   MapPin,
-  Search,
+  搜索,
 } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";
@@ -19,37 +19,37 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn, formatDate, sourceLabel } from "@/lib/utils";
-import { useSettings } from "../hooks/useSettings";
+import { use设置 } from "../hooks/use设置";
 import { appliedDuplicateIndicator } from "../pages/orchestrator/constants";
 import {
-  getJobStatusIndicator,
-  getTracerStatusIndicator,
-  StatusIndicator,
-} from "./StatusIndicator";
+  getJob状态Indicator,
+  getTracer状态Indicator,
+  状态Indicator,
+} from "./状态Indicator";
 
 interface JobHeaderProps {
   job: Job;
-  className?: string;
+  class名称?: string;
   onCheckSponsor?: () => Promise<void>;
 }
 
 const ScoreMeter: React.FC<{
   score: number | null;
-  tooltip?: React.ReactNode;
+  tooltip?: React.React否de;
 }> = ({ score, tooltip }) => {
   if (score == null) {
-    return <span className="text-[10px] text-muted-foreground/60">-</span>;
+    return <span class名称="text-[10px] text-muted-foreground/60">-</span>;
   }
 
   const content = (
-    <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground/70">
-      <div className="h-1 w-12 rounded-full bg-muted/30">
+    <div class名称="flex items-center gap-1.5 text-[10px] text-muted-foreground/70">
+      <div class名称="h-1 w-12 rounded-full bg-muted/30">
         <div
-          className="h-1 rounded-full bg-primary/50"
+          class名称="h-1 rounded-full bg-primary/50"
           style={{ width: `${Math.max(4, Math.min(100, score))}%` }}
         />
       </div>
-      <span className="tabular-nums">{score}</span>
+      <span class名称="tabular-nums">{score}</span>
     </div>
   );
 
@@ -61,7 +61,7 @@ const ScoreMeter: React.FC<{
     <TooltipProvider>
       <Tooltip delayDuration={0}>
         <TooltipTrigger asChild>{content}</TooltipTrigger>
-        <TooltipContent side="top" className="max-w-xs">
+        <TooltipContent side="top" class名称="max-w-xs">
           {tooltip}
         </TooltipContent>
       </Tooltip>
@@ -78,7 +78,7 @@ interface SponsorPillProps {
 const SponsorPill: React.FC<SponsorPillProps> = ({ score, names, onCheck }) => {
   const [isChecking, setIsChecking] = useState(false);
 
-  const parsedNames = useMemo(() => {
+  const parsed名称s = useMemo(() => {
     if (!names) return [];
     try {
       return JSON.parse(names) as string[];
@@ -106,22 +106,22 @@ const SponsorPill: React.FC<SponsorPillProps> = ({ score, names, onCheck }) => {
             <Button
               size="sm"
               variant="ghost"
-              className="h-5 px-1.5 text-xs font-medium text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
+              class名称="h-5 px-1.5 text-xs font-medium text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
               onClick={handleCheck}
               disabled={isChecking}
             >
               {isChecking ? (
-                <Loader2 className="h-2 w-2 animate-spin" />
+                <Loader2 class名称="h-2 w-2 animate-spin" />
               ) : (
-                <Search className="h-2 w-2" />
+                <搜索 class名称="h-2 w-2" />
               )}
               <span>
-                {isChecking ? "Checking..." : "Check Sponsorship Status"}
+                {isChecking ? "Checking..." : "Check Sponsorship 状态"}
               </span>
             </Button>
           </TooltipTrigger>
           <TooltipContent side="top">
-            <p className="text-xs">Check if employer is a visa sponsor</p>
+            <p class名称="text-xs">Check if employer is a visa sponsor</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -132,10 +132,10 @@ const SponsorPill: React.FC<SponsorPillProps> = ({ score, names, onCheck }) => {
     return null;
   }
 
-  const getStatus = (s: number) => {
+  const get状态 = (s: number) => {
     if (s >= 95)
       return {
-        label: "Confirmed Sponsor",
+        label: "确认ed Sponsor",
         dot: "bg-emerald-500",
         color: "text-emerald-400",
       };
@@ -146,32 +146,32 @@ const SponsorPill: React.FC<SponsorPillProps> = ({ score, names, onCheck }) => {
         color: "text-amber-400",
       };
     return {
-      label: "Sponsor Not Found",
+      label: "Sponsor 否t Found",
       dot: "bg-slate-500",
       color: "text-slate-400",
     };
   };
 
-  const status = getStatus(score);
+  const status = get状态(score);
   const tooltip = (
     <>
-      {parsedNames.length > 0 && (
-        <p className="text-xs font-medium space-x-1">
-          <span className="opacity-70">Matched</span>
-          <span>{parsedNames.join(", ")}</span>
+      {parsed名称s.length > 0 && (
+        <p class名称="text-xs font-medium space-x-1">
+          <span class名称="opacity-70">Matched</span>
+          <span>{parsed名称s.join(", ")}</span>
         </p>
       )}
-      <p className="opacity-80 mt-1 text-[10px]">{`${score}% match`}</p>
+      <p class名称="opacity-80 mt-1 text-[10px]">{`${score}% match`}</p>
     </>
   );
 
   return (
-    <StatusIndicator
+    <状态Indicator
       dotColor={status.dot}
       label={status.label}
-      className="cursor-help"
+      class名称="cursor-help"
       tooltip={tooltip}
-      tooltipClassName="max-w-xs"
+      tooltipClass名称="max-w-xs"
     />
   );
 };
@@ -185,87 +185,87 @@ const AppliedDuplicatePill: React.FC<{
 
   const appliedDate = formatDate(match.appliedAt) ?? "Unknown date";
   const tooltip = (
-    <div className="space-y-1">
-      <p className="text-xs font-medium">{match.title}</p>
-      <p className="text-xs opacity-80">{match.employer}</p>
-      <p className="text-[10px] opacity-80">
+    <div class名称="space-y-1">
+      <p class名称="text-xs font-medium">{match.title}</p>
+      <p class名称="text-xs opacity-80">{match.employer}</p>
+      <p class名称="text-[10px] opacity-80">
         Applied {appliedDate} · {match.score}% match
       </p>
     </div>
   );
 
   return (
-    <StatusIndicator
+    <状态Indicator
       dotColor={appliedDuplicateIndicator.dot}
       label={appliedDuplicateIndicator.label}
-      className="cursor-help"
+      class名称="cursor-help"
       tooltip={tooltip}
-      tooltipClassName="max-w-xs"
+      tooltipClass名称="max-w-xs"
     />
   );
 };
 
 export const JobHeader: React.FC<JobHeaderProps> = ({
   job,
-  className,
+  class名称,
   onCheckSponsor,
 }) => {
-  const jobStatus = getJobStatusIndicator(job.status);
-  const tracerStatus = getTracerStatusIndicator(job.tracerLinksEnabled);
-  const { showSponsorInfo } = useSettings();
+  const job状态 = getJob状态Indicator(job.status);
+  const tracer状态 = getTracer状态Indicator(job.tracerLinksEnabled);
+  const { showSponsorInfo } = use设置();
   const location = useLocation();
   const { pathname } = location;
   const isJobPage = pathname.startsWith("/job/");
   const jobPageLinkState = isJobPage
     ? undefined
-    : { jobPageBackTo: `${location.pathname}${location.search}` };
+    : { jobPage返回To: `${location.pathname}${location.search}` };
   const deadline = formatDate(job.deadline);
-  const jobStatusTooltip =
+  const job状态Tooltip =
     job.status === "discovered" ? (
-      <p className="text-xs">Found by the pipeline. Not tailored yet.</p>
+      <p class名称="text-xs">Found by the pipeline. 否t tailored yet.</p>
     ) : job.status === "ready" ? (
-      <p className="text-xs">Tailored and ready to apply.</p>
+      <p class名称="text-xs">Tailored and ready to apply.</p>
     ) : undefined;
-  const tracerStatusTooltip = !job.tracerLinksEnabled ? (
-    <p className="text-xs">
+  const tracer状态Tooltip = !job.tracerLinksEnabled ? (
+    <p class名称="text-xs">
       Tracer links are turned off for this job, so click tracking will not be
       recorded.
     </p>
   ) : undefined;
   const scoreTooltip =
     job.suitabilityScore == null ? undefined : (
-      <p className="text-xs">
+      <p class名称="text-xs">
         Suitability score: {job.suitabilityScore}/100. Higher is better.
       </p>
     );
 
   return (
-    <div className={cn("space-y-3", className)}>
+    <div class名称={cn("space-y-3", class名称)}>
       {/* Detail header: lighter weight than list items */}
-      <div className="flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
-        <div className="min-w-0 w-full sm:w-auto sm:flex-1">
+      <div class名称="flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
+        <div class名称="min-w-0 w-full sm:w-auto sm:flex-1">
           <Link
             to={`/job/${job.id}`}
             state={jobPageLinkState}
-            className="block text-base font-semibold leading-snug text-foreground/90 underline-offset-2 break-words hover:underline"
+            class名称="block text-base font-semibold leading-snug text-foreground/90 underline-offset-2 break-words hover:underline"
           >
             {job.title}
           </Link>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <div class名称="flex items-center gap-2 text-xs text-muted-foreground">
             <span>{job.employer}</span>
           </div>
         </div>
-        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:justify-end">
+        <div class名称="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:justify-end">
           <Badge
             variant="outline"
-            className="text-[10px] uppercase tracking-wide text-muted-foreground border-border/50"
+            class名称="text-[10px] uppercase tracking-wide text-muted-foreground border-border/50"
           >
             {sourceLabel[job.source]}
           </Badge>
           {job.isRemote === true && (
             <Badge
               variant="outline"
-              className="text-[10px] uppercase tracking-wide text-muted-foreground border-border/50"
+              class名称="text-[10px] uppercase tracking-wide text-muted-foreground border-border/50"
             >
               Remote
             </Badge>
@@ -275,11 +275,11 @@ export const JobHeader: React.FC<JobHeaderProps> = ({
               asChild
               size="sm"
               variant="ghost"
-              className="h-6 px-2 text-[10px] uppercase tracking-wide"
+              class名称="h-6 px-2 text-[10px] uppercase tracking-wide"
             >
               <Link to={`/job/${job.id}`} state={jobPageLinkState}>
                 View
-                <ArrowUpRight className="h-3 w-3" />
+                <ArrowUpRight class名称="h-3 w-3" />
               </Link>
             </Button>
           )}
@@ -287,49 +287,49 @@ export const JobHeader: React.FC<JobHeaderProps> = ({
       </div>
 
       {/* Tertiary metadata - subdued */}
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground/70">
+      <div class名称="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground/70">
         {job.location && (
-          <span className="flex items-center gap-1">
-            <MapPin className="h-3 w-3" />
+          <span class名称="flex items-center gap-1">
+            <MapPin class名称="h-3 w-3" />
             {job.location}
           </span>
         )}
         {deadline && (
-          <span className="flex items-center gap-1">
-            <Calendar className="h-3 w-3" />
+          <span class名称="flex items-center gap-1">
+            <Calendar class名称="h-3 w-3" />
             {deadline}
           </span>
         )}
         {job.salary && (
-          <span className="flex items-center gap-1">
-            <DollarSign className="h-3 w-3" />
+          <span class名称="flex items-center gap-1">
+            <DollarSign class名称="h-3 w-3" />
             {job.salary}
           </span>
         )}
       </div>
 
-      {/* Status and score: single line, subdued */}
-      <div className="flex items-center justify-between gap-2 py-1 border-y border-border/30">
-        <div className="flex items-center gap-4">
-          <StatusIndicator
-            dotColor={jobStatus.dotColor}
-            label={jobStatus.label}
-            tooltip={jobStatusTooltip}
-            tooltipClassName="max-w-xs"
-            className={jobStatusTooltip ? "cursor-help" : undefined}
+      {/* 状态 and score: single line, subdued */}
+      <div class名称="flex items-center justify-between gap-2 py-1 border-y border-border/30">
+        <div class名称="flex items-center gap-4">
+          <状态Indicator
+            dotColor={job状态.dotColor}
+            label={job状态.label}
+            tooltip={job状态Tooltip}
+            tooltipClass名称="max-w-xs"
+            class名称={job状态Tooltip ? "cursor-help" : undefined}
           />
-          <StatusIndicator
-            dotColor={tracerStatus.dotColor}
-            label={tracerStatus.label}
-            tooltip={tracerStatusTooltip}
-            tooltipClassName="max-w-xs"
-            className={tracerStatusTooltip ? "cursor-help" : undefined}
+          <状态Indicator
+            dotColor={tracer状态.dotColor}
+            label={tracer状态.label}
+            tooltip={tracer状态Tooltip}
+            tooltipClass名称="max-w-xs"
+            class名称={tracer状态Tooltip ? "cursor-help" : undefined}
           />
           <AppliedDuplicatePill match={job.appliedDuplicateMatch} />
           {showSponsorInfo && (
             <SponsorPill
               score={job.sponsorMatchScore}
-              names={job.sponsorMatchNames}
+              names={job.sponsorMatch名称s}
               onCheck={onCheckSponsor}
             />
           )}

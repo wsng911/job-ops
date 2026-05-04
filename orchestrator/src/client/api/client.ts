@@ -3,22 +3,22 @@
  */
 
 import { redirectToSignIn } from "@client/lib/auth-navigation";
-import type { UpdateSettingsInput } from "@shared/settings-schema";
+import type { 更新设置Input } from "@shared/settings-schema";
 import type {
   ApiResponse,
   ApplicationStage,
   ApplicationTask,
-  AppSettings,
-  BackupInfo,
+  App设置,
+  返回upInfo,
   BranchInfo,
-  CreateJobNoteInput,
+  创建Job否teInput,
   DemoInfoResponse,
   DesignResumeDocument,
   DesignResumeExportResponse,
   DesignResumeJson,
   DesignResumePatchRequest,
   DesignResumePdfResponse,
-  DesignResumeStatusResponse,
+  DesignResume状态Response,
   Job,
   JobActionRequest,
   JobActionResponse,
@@ -27,21 +27,21 @@ import type {
   JobChatStreamEvent,
   JobChatThread,
   JobListItem,
-  JobNote,
+  Job否te,
   JobOutcome,
   JobSource,
   JobsListResponse,
   JobsRevisionResponse,
   JobTracerLinksResponse,
   LocationMatchStrictness,
-  LocationSearchScope,
+  Location搜索Scope,
   ManualJobDraft,
   ManualJobFetchResponse,
   ManualJobInferenceResponse,
   PipelineProgressState,
   PipelineRun,
   PipelineRunInsights,
-  PipelineStatusResponse,
+  Pipeline状态Response,
   PostApplicationAction,
   PostApplicationActionResponse,
   PostApplicationInboxItem,
@@ -49,20 +49,20 @@ import type {
   PostApplicationProviderActionResponse,
   PostApplicationRouterStageTarget,
   PostApplicationSyncRun,
-  ProfileStatusResponse,
-  ResumeProfile,
+  个人资料状态Response,
+  Resume个人资料,
   ResumeProjectCatalogItem,
-  SearchTermsSuggestionResponse,
+  搜索TermsSuggestionResponse,
   StageEvent,
   StageEventMetadata,
   StageTransitionTarget,
   TracerAnalyticsResponse,
   TracerReadinessResponse,
-  UpdateJobNoteInput,
+  更新Job否teInput,
   ValidationResult,
   VisaSponsor,
-  VisaSponsorSearchResponse,
-  VisaSponsorStatusResponse,
+  VisaSponsor搜索Response,
+  VisaSponsor状态Response,
 } from "@shared/types";
 import { formatUserFacingError } from "@/client/lib/error-format";
 import {
@@ -106,14 +106,14 @@ type LegacyApiResponse<T> =
 
 type StreamSseInput =
   | JobActionRequest
-  | { content: string; selectedNoteIds?: string[]; stream: true }
-  | { selectedNoteIds?: string[]; stream: true };
+  | { content: string; selected否teIds?: string[]; stream: true }
+  | { selected否teIds?: string[]; stream: true };
 
-export type CodexAuthStatusResponse = {
+export type CodexAuth状态Response = {
   authenticated: boolean;
   username: string | null;
   validationMessage: string | null;
-  flowStatus: string;
+  flow状态: string;
   loginInProgress: boolean;
   verificationUrl: string | null;
   userCode: string | null;
@@ -130,16 +130,16 @@ export type AuthCredentials = {
 export type AuthUser = {
   id: string;
   username: string;
-  displayName: string | null;
+  display名称: string | null;
   isSystemAdmin: boolean;
   isDisabled: boolean;
   workspaceId: string;
-  workspaceName: string;
+  workspace名称: string;
   createdAt: string;
   updatedAt: string;
 };
 
-export type AuthBootstrapStatus = {
+export type AuthBootstrap状态 = {
   setupRequired: boolean;
 };
 
@@ -289,19 +289,19 @@ export async function signInWithCredentials(
       ? parsed.data?.token
       : (parsed.data as { token?: string } | undefined)?.token;
   if (!token) {
-    throw new Error("No token returned");
+    throw new Error("否 token returned");
   }
   setAuthenticatedSession(token);
 }
 
-export async function getAuthBootstrapStatus(): Promise<AuthBootstrapStatus> {
-  return fetchApi<AuthBootstrapStatus>("/auth/bootstrap-status");
+export async function getAuthBootstrap状态(): Promise<AuthBootstrap状态> {
+  return fetchApi<AuthBootstrap状态>("/auth/bootstrap-status");
 }
 
 export async function setupFirstAdmin(input: {
   username: string;
   password: string;
-  displayName?: string;
+  display名称?: string;
 }): Promise<AuthUser> {
   const res = await fetch("/api/auth/setup", {
     method: "POST",
@@ -410,7 +410,7 @@ export async function listWorkspaceUsers(): Promise<AuthUser[]> {
 export async function createWorkspaceUser(input: {
   username: string;
   password: string;
-  displayName?: string;
+  display名称?: string;
   isSystemAdmin?: boolean;
 }): Promise<AuthUser> {
   const result = await fetchApi<{ user: AuthUser }>("/workspaces/users", {
@@ -434,7 +434,7 @@ export async function setWorkspaceUserDisabled(
   return result.user;
 }
 
-export async function resetWorkspaceUserPassword(
+export async function resetWorkspaceUser密码(
   userId: string,
   password: string,
 ): Promise<void> {
@@ -447,7 +447,7 @@ export async function resetWorkspaceUserPassword(
   );
 }
 
-export async function changeOwnPassword(password: string): Promise<void> {
+export async function changeOwn密码(password: string): Promise<void> {
   await fetchApi<{ userId: string }>("/workspaces/me/password", {
     method: "POST",
     body: JSON.stringify({ password }),
@@ -730,7 +730,7 @@ export async function getJobs(options?: {
   statuses?: string[];
   view?: "full" | "list";
 }): Promise<JobsListResponse<Job> | JobsListResponse<JobListItem>> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   if (options?.statuses?.length)
     params.set("status", options.statuses.join(","));
   if (options?.view) params.set("view", options.view);
@@ -743,7 +743,7 @@ export async function getJobs(options?: {
 export async function getJobsRevision(options?: {
   statuses?: string[];
 }): Promise<JobsRevisionResponse> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   if (options?.statuses?.length)
     params.set("status", options.statuses.join(","));
   const query = params.toString();
@@ -766,32 +766,32 @@ export async function updateJob(
   });
 }
 
-export async function getJobNotes(id: string): Promise<JobNote[]> {
-  return fetchApi<JobNote[]>(`/jobs/${id}/notes?t=${Date.now()}`);
+export async function getJob否tes(id: string): Promise<Job否te[]> {
+  return fetchApi<Job否te[]>(`/jobs/${id}/notes?t=${Date.now()}`);
 }
 
-export async function createJobNote(
+export async function createJob否te(
   jobId: string,
-  input: CreateJobNoteInput,
-): Promise<JobNote> {
-  return fetchApi<JobNote>(`/jobs/${jobId}/notes`, {
+  input: 创建Job否teInput,
+): Promise<Job否te> {
+  return fetchApi<Job否te>(`/jobs/${jobId}/notes`, {
     method: "POST",
     body: JSON.stringify(input),
   });
 }
 
-export async function updateJobNote(
+export async function updateJob否te(
   jobId: string,
   noteId: string,
-  input: UpdateJobNoteInput,
-): Promise<JobNote> {
-  return fetchApi<JobNote>(`/jobs/${jobId}/notes/${noteId}`, {
+  input: 更新Job否teInput,
+): Promise<Job否te> {
+  return fetchApi<Job否te>(`/jobs/${jobId}/notes/${noteId}`, {
     method: "PATCH",
     body: JSON.stringify(input),
   });
 }
 
-export async function deleteJobNote(
+export async function deleteJob否te(
   jobId: string,
   noteId: string,
 ): Promise<void> {
@@ -803,7 +803,7 @@ export async function deleteJobNote(
 export async function uploadJobPdf(
   id: string,
   input: {
-    fileName: string;
+    file名称: string;
     mediaType?: string;
     dataBase64: string;
   },
@@ -825,7 +825,7 @@ export async function getTracerAnalytics(options?: {
   includeBots?: boolean;
   limit?: number;
 }): Promise<TracerAnalyticsResponse> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   if (options?.jobId) params.set("jobId", options.jobId);
   if (typeof options?.from === "number") {
     params.set("from", String(options.from));
@@ -849,7 +849,7 @@ export async function getTracerAnalytics(options?: {
 export async function getTracerReadiness(options?: {
   force?: boolean;
 }): Promise<TracerReadinessResponse> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   if (options?.force) params.set("force", "1");
   const query = params.toString();
   return fetchApi<TracerReadinessResponse>(
@@ -865,7 +865,7 @@ export async function getJobTracerLinks(
     includeBots?: boolean;
   },
 ): Promise<JobTracerLinksResponse> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   if (typeof options?.from === "number") {
     params.set("from", String(options.from));
   }
@@ -1000,9 +1000,9 @@ export async function listJobGhostwriterMessages(
 ): Promise<{
   messages: JobChatMessage[];
   branches: BranchInfo[];
-  selectedNoteIds: string[];
+  selected否teIds: string[];
 }> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   if (typeof options?.limit === "number") {
     params.set("limit", String(options.limit));
   }
@@ -1013,15 +1013,15 @@ export async function listJobGhostwriterMessages(
   return fetchApi<{
     messages: JobChatMessage[];
     branches: BranchInfo[];
-    selectedNoteIds: string[];
+    selected否teIds: string[];
   }>(`/jobs/${jobId}/chat/messages${query ? `?${query}` : ""}`);
 }
 
 export async function updateJobGhostwriterContext(
   jobId: string,
-  input: { selectedNoteIds: string[] },
-): Promise<{ selectedNoteIds: string[] }> {
-  return fetchApi<{ selectedNoteIds: string[] }>(
+  input: { selected否teIds: string[] },
+): Promise<{ selected否teIds: string[] }> {
+  return fetchApi<{ selected否teIds: string[] }>(
     `/jobs/${jobId}/chat/context`,
     {
       method: "PATCH",
@@ -1047,7 +1047,7 @@ export async function listJobChatMessages(
   threadId: string,
   options?: { limit?: number; offset?: number },
 ): Promise<{ messages: JobChatMessage[] }> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   if (typeof options?.limit === "number") {
     params.set("limit", String(options.limit));
   }
@@ -1063,7 +1063,7 @@ export async function listJobChatMessages(
 export async function sendJobChatMessage(
   jobId: string,
   threadId: string,
-  input: { content: string; selectedNoteIds?: string[] },
+  input: { content: string; selected否teIds?: string[] },
 ): Promise<{
   userMessage: JobChatMessage;
   assistantMessage: JobChatMessage | null;
@@ -1082,7 +1082,7 @@ export async function sendJobChatMessage(
 export async function streamJobChatMessage(
   jobId: string,
   threadId: string,
-  input: { content: string; selectedNoteIds?: string[]; signal?: AbortSignal },
+  input: { content: string; selected否teIds?: string[]; signal?: AbortSignal },
   handlers: {
     onEvent: (event: JobChatStreamEvent) => void;
   },
@@ -1091,7 +1091,7 @@ export async function streamJobChatMessage(
     `/jobs/${jobId}/chat/threads/${threadId}/messages`,
     {
       content: input.content,
-      selectedNoteIds: input.selectedNoteIds,
+      selected否teIds: input.selected否teIds,
       stream: true,
     },
     {
@@ -1103,7 +1103,7 @@ export async function streamJobChatMessage(
 
 export async function streamJobGhostwriterMessage(
   jobId: string,
-  input: { content: string; selectedNoteIds?: string[]; signal?: AbortSignal },
+  input: { content: string; selected否teIds?: string[]; signal?: AbortSignal },
   handlers: {
     onEvent: (event: JobChatStreamEvent) => void;
   },
@@ -1112,7 +1112,7 @@ export async function streamJobGhostwriterMessage(
     `/jobs/${jobId}/chat/messages`,
     {
       content: input.content,
-      selectedNoteIds: input.selectedNoteIds,
+      selected否teIds: input.selected否teIds,
       stream: true,
     },
     {
@@ -1179,14 +1179,14 @@ export async function streamRegenerateJobChatMessage(
   jobId: string,
   threadId: string,
   assistantMessageId: string,
-  input: { selectedNoteIds?: string[]; signal?: AbortSignal },
+  input: { selected否teIds?: string[]; signal?: AbortSignal },
   handlers: {
     onEvent: (event: JobChatStreamEvent) => void;
   },
 ): Promise<void> {
   return streamSseEvents(
     `/jobs/${jobId}/chat/threads/${threadId}/messages/${assistantMessageId}/regenerate`,
-    { selectedNoteIds: input.selectedNoteIds, stream: true },
+    { selected否teIds: input.selected否teIds, stream: true },
     {
       onEvent: handlers.onEvent,
       signal: input.signal,
@@ -1197,14 +1197,14 @@ export async function streamRegenerateJobChatMessage(
 export async function streamRegenerateJobGhostwriterMessage(
   jobId: string,
   assistantMessageId: string,
-  input: { selectedNoteIds?: string[]; signal?: AbortSignal },
+  input: { selected否teIds?: string[]; signal?: AbortSignal },
   handlers: {
     onEvent: (event: JobChatStreamEvent) => void;
   },
 ): Promise<void> {
   return streamSseEvents(
     `/jobs/${jobId}/chat/messages/${assistantMessageId}/regenerate`,
-    { selectedNoteIds: input.selectedNoteIds, stream: true },
+    { selected否teIds: input.selected否teIds, stream: true },
     {
       onEvent: handlers.onEvent,
       signal: input.signal,
@@ -1215,7 +1215,7 @@ export async function streamRegenerateJobGhostwriterMessage(
 export async function editJobGhostwriterMessage(
   jobId: string,
   messageId: string,
-  input: { content: string; selectedNoteIds?: string[]; signal?: AbortSignal },
+  input: { content: string; selected否teIds?: string[]; signal?: AbortSignal },
   handlers: {
     onEvent: (event: JobChatStreamEvent) => void;
   },
@@ -1224,7 +1224,7 @@ export async function editJobGhostwriterMessage(
     `/jobs/${jobId}/chat/messages/${messageId}/edit`,
     {
       content: input.content,
-      selectedNoteIds: input.selectedNoteIds,
+      selected否teIds: input.selected否teIds,
       stream: true,
     },
     {
@@ -1377,7 +1377,7 @@ export async function getJobTasks(
   id: string,
   options?: { includeCompleted?: boolean },
 ): Promise<ApplicationTask[]> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   if (options?.includeCompleted) params.set("includeCompleted", "1");
   params.set("t", Date.now().toString());
   const query = params.toString();
@@ -1435,8 +1435,8 @@ export async function updateJobOutcome(
 }
 
 // Pipeline API
-export async function getPipelineStatus(): Promise<PipelineStatusResponse> {
-  return fetchApi<PipelineStatusResponse>("/pipeline/status");
+export async function getPipeline状态(): Promise<Pipeline状态Response> {
+  return fetchApi<Pipeline状态Response>("/pipeline/status");
 }
 
 export async function getPipelineProgressSnapshot(): Promise<PipelineProgressState> {
@@ -1493,7 +1493,7 @@ export async function runPipeline(config?: {
   country?: string;
   cityLocations?: string[];
   workplaceTypes?: Array<"remote" | "hybrid" | "onsite">;
-  searchScope?: LocationSearchScope;
+  searchScope?: Location搜索Scope;
   matchStrictness?: LocationMatchStrictness;
 }): Promise<{ message: string }> {
   return fetchApi<{ message: string }>("/pipeline/run", {
@@ -1543,7 +1543,7 @@ export async function postApplicationGmailOauthStart(input?: {
   authorizationUrl: string;
   state: string;
 }> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   if (input?.accountKey) params.set("accountKey", input.accountKey);
   const query = params.toString();
   return fetchApi<{
@@ -1574,7 +1574,7 @@ export async function postApplicationGmailOauthExchange(input: {
   );
 }
 
-export async function postApplicationProviderStatus(input?: {
+export async function postApplicationProvider状态(input?: {
   provider?: PostApplicationProvider;
   accountKey?: string;
 }): Promise<PostApplicationProviderActionResponse> {
@@ -1635,7 +1635,7 @@ export async function getPostApplicationInbox(input?: {
   accountKey?: string;
   limit?: number;
 }): Promise<{ items: PostApplicationInboxItem[]; total: number }> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   params.set("provider", input?.provider ?? "gmail");
   params.set("accountKey", input?.accountKey ?? "default");
   if (typeof input?.limit === "number")
@@ -1722,7 +1722,7 @@ export async function getPostApplicationRuns(input?: {
   accountKey?: string;
   limit?: number;
 }): Promise<{ runs: PostApplicationSyncRun[]; total: number }> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   params.set("provider", input?.provider ?? "gmail");
   params.set("accountKey", input?.accountKey ?? "default");
   if (typeof input?.limit === "number")
@@ -1743,7 +1743,7 @@ export async function getPostApplicationRunMessages(input: {
   items: PostApplicationInboxItem[];
   total: number;
 }> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   params.set("provider", input.provider ?? "gmail");
   params.set("accountKey", input.accountKey ?? "default");
   if (typeof input.limit === "number") params.set("limit", String(input.limit));
@@ -1772,7 +1772,7 @@ export async function fetchJobFromUrl(input: {
 }
 
 export async function inferManualJob(input: {
-  jobDescription: string;
+  job描述: string;
 }): Promise<ManualJobInferenceResponse> {
   return fetchApi<ManualJobInferenceResponse>("/manual-jobs/infer", {
     method: "POST",
@@ -1789,13 +1789,13 @@ export async function importManualJob(input: {
   });
 }
 
-// Settings & Profile API
-let settingsPromise: Promise<AppSettings> | null = null;
+// 设置 & 个人资料 API
+let settingsPromise: Promise<App设置> | null = null;
 
-export async function getSettings(): Promise<AppSettings> {
+export async function get设置(): Promise<App设置> {
   if (settingsPromise) return settingsPromise;
 
-  settingsPromise = fetchApi<AppSettings>("/settings").finally(() => {
+  settingsPromise = fetchApi<App设置>("/settings").finally(() => {
     // Clear the promise after a short delay to allow subsequent fresh fetches
     // but coalesce simultaneous requests.
     setTimeout(() => {
@@ -1806,7 +1806,7 @@ export async function getSettings(): Promise<AppSettings> {
   return settingsPromise;
 }
 
-export async function getProfileProjects(): Promise<
+export async function get个人资料Projects(): Promise<
   ResumeProjectCatalogItem[]
 > {
   return fetchApi<ResumeProjectCatalogItem[]>("/profile/projects");
@@ -1817,19 +1817,19 @@ export async function getResumeProjectsCatalog(): Promise<
 > {
   // Always resolve from /profile/projects so local Design Resume edits
   // propagate to active and future application tailoring flows.
-  return getProfileProjects();
+  return get个人资料Projects();
 }
 
-export async function getProfile(): Promise<ResumeProfile> {
-  return fetchApi<ResumeProfile>("/profile");
+export async function get个人资料(): Promise<Resume个人资料> {
+  return fetchApi<Resume个人资料>("/profile");
 }
 
 export async function getDesignResume(): Promise<DesignResumeDocument> {
   return fetchApi<DesignResumeDocument>("/design-resume");
 }
 
-export async function getDesignResumeStatus(): Promise<DesignResumeStatusResponse> {
-  return fetchApi<DesignResumeStatusResponse>("/design-resume/status");
+export async function getDesignResume状态(): Promise<DesignResume状态Response> {
+  return fetchApi<DesignResume状态Response>("/design-resume/status");
 }
 
 export async function importDesignResumeFromRxResume(): Promise<DesignResumeDocument> {
@@ -1839,7 +1839,7 @@ export async function importDesignResumeFromRxResume(): Promise<DesignResumeDocu
 }
 
 export async function importDesignResumeFromFile(input: {
-  fileName: string;
+  file名称: string;
   mediaType?: string;
   dataBase64: string;
 }): Promise<DesignResumeDocument> {
@@ -1859,7 +1859,7 @@ export async function updateDesignResume(
 }
 
 export async function uploadDesignResumePicture(input: {
-  fileName: string;
+  file名称: string;
   dataUrl: string;
   baseRevision?: number;
   document?: DesignResumeJson;
@@ -1911,12 +1911,12 @@ export async function getDesignResumePdfBlob(): Promise<Blob> {
   return fetchBlobApi("/design-resume/pdf");
 }
 
-export async function getProfileStatus(): Promise<ProfileStatusResponse> {
-  return fetchApi<ProfileStatusResponse>("/profile/status");
+export async function get个人资料状态(): Promise<个人资料状态Response> {
+  return fetchApi<个人资料状态Response>("/profile/status");
 }
 
-export async function refreshProfile(): Promise<ResumeProfile> {
-  return fetchApi<ResumeProfile>("/profile/refresh", {
+export async function refresh个人资料(): Promise<Resume个人资料> {
+  return fetchApi<Resume个人资料>("/profile/refresh", {
     method: "POST",
   });
 }
@@ -1944,14 +1944,14 @@ export async function getLlmModels(input?: {
   return data.models;
 }
 
-export async function getCodexAuthStatus(): Promise<CodexAuthStatusResponse> {
-  return fetchApi<CodexAuthStatusResponse>("/settings/codex-auth");
+export async function getCodexAuth状态(): Promise<CodexAuth状态Response> {
+  return fetchApi<CodexAuth状态Response>("/settings/codex-auth");
 }
 
 export async function startCodexAuth(input?: {
   forceRestart?: boolean;
-}): Promise<CodexAuthStatusResponse> {
-  return fetchApi<CodexAuthStatusResponse>("/settings/codex-auth/start", {
+}): Promise<CodexAuth状态Response> {
+  return fetchApi<CodexAuth状态Response>("/settings/codex-auth/start", {
     method: "POST",
     body: JSON.stringify({
       forceRestart: input?.forceRestart ?? false,
@@ -1959,8 +1959,8 @@ export async function startCodexAuth(input?: {
   });
 }
 
-export async function disconnectCodexAuth(): Promise<CodexAuthStatusResponse> {
-  return fetchApi<CodexAuthStatusResponse>("/settings/codex-auth/disconnect", {
+export async function disconnectCodexAuth(): Promise<CodexAuth状态Response> {
+  return fetchApi<CodexAuth状态Response>("/settings/codex-auth/disconnect", {
     method: "POST",
   });
 }
@@ -1979,8 +1979,8 @@ export async function validateResumeConfig(): Promise<ValidationResult> {
   return fetchApi<ValidationResult>("/onboarding/validate/resume");
 }
 
-export async function suggestOnboardingSearchTerms(): Promise<SearchTermsSuggestionResponse> {
-  return fetchApi<SearchTermsSuggestionResponse>(
+export async function suggestOnboarding搜索Terms(): Promise<搜索TermsSuggestionResponse> {
+  return fetchApi<搜索TermsSuggestionResponse>(
     "/onboarding/search-terms/suggest",
     {
       method: "POST",
@@ -1988,10 +1988,10 @@ export async function suggestOnboardingSearchTerms(): Promise<SearchTermsSuggest
   );
 }
 
-export async function updateSettings(
-  update: Partial<UpdateSettingsInput>,
-): Promise<AppSettings> {
-  return fetchApi<AppSettings>("/settings", {
+export async function update设置(
+  update: Partial<更新设置Input>,
+): Promise<App设置> {
+  return fetchApi<App设置>("/settings", {
     method: "PATCH",
     body: JSON.stringify(update),
   });
@@ -2018,19 +2018,19 @@ export async function getRxResumeProjects(
 // Database API
 export async function clearDatabase(): Promise<{
   message: string;
-  jobsDeleted: number;
-  runsDeleted: number;
+  jobs删除d: number;
+  runs删除d: number;
 }> {
   return fetchApi<{
     message: string;
-    jobsDeleted: number;
-    runsDeleted: number;
+    jobs删除d: number;
+    runs删除d: number;
   }>("/database", {
     method: "DELETE",
   });
 }
 
-export async function deleteJobsByStatus(status: string): Promise<{
+export async function deleteJobsBy状态(status: string): Promise<{
   message: string;
   count: number;
 }> {
@@ -2057,8 +2057,8 @@ export async function deleteJobsBelowScore(threshold: number): Promise<{
 }
 
 // Visa Sponsors API
-export async function getVisaSponsorStatus(): Promise<VisaSponsorStatusResponse> {
-  return fetchApi<VisaSponsorStatusResponse>("/visa-sponsors/status");
+export async function getVisaSponsor状态(): Promise<VisaSponsor状态Response> {
+  return fetchApi<VisaSponsor状态Response>("/visa-sponsors/status");
 }
 
 export async function searchVisaSponsors(input: {
@@ -2066,7 +2066,7 @@ export async function searchVisaSponsors(input: {
   limit?: number;
   minScore?: number;
   country?: string;
-}): Promise<VisaSponsorSearchResponse> {
+}): Promise<VisaSponsor搜索Response> {
   if (input.query?.trim()) {
     trackProductEvent("visa_sponsor_search", {
       query_length_bucket: bucketQueryLength(input.query.trim()),
@@ -2075,7 +2075,7 @@ export async function searchVisaSponsors(input: {
       country: input.country ?? "all",
     });
   }
-  return fetchApi<VisaSponsorSearchResponse>("/visa-sponsors/search", {
+  return fetchApi<VisaSponsor搜索Response>("/visa-sponsors/search", {
     method: "POST",
     body: JSON.stringify(input),
   });
@@ -2085,7 +2085,7 @@ export async function getVisaSponsorOrganization(
   name: string,
   providerId?: string,
 ): Promise<VisaSponsor[]> {
-  const params = new URLSearchParams();
+  const params = new URL搜索Params();
   if (providerId) params.set("providerId", providerId);
   return fetchApi<VisaSponsor[]>(
     `/visa-sponsors/organization/${encodeURIComponent(name)}${params.size ? `?${params.toString()}` : ""}`,
@@ -2094,11 +2094,11 @@ export async function getVisaSponsorOrganization(
 
 export async function updateVisaSponsorList(): Promise<{
   message: string;
-  status: VisaSponsorStatusResponse;
+  status: VisaSponsor状态Response;
 }> {
   return fetchApi<{
     message: string;
-    status: VisaSponsorStatusResponse;
+    status: VisaSponsor状态Response;
   }>("/visa-sponsors/update", {
     method: "POST",
   });
@@ -2106,23 +2106,23 @@ export async function updateVisaSponsorList(): Promise<{
 
 // Multi-job operations (intentionally none - processing is manual)
 
-// Backup API
-export interface BackupListResponse {
-  backups: BackupInfo[];
+// 返回up API
+export interface 返回upListResponse {
+  backups: 返回upInfo[];
   nextScheduled: string | null;
 }
 
-export async function getBackups(): Promise<BackupListResponse> {
-  return fetchApi<BackupListResponse>("/backups");
+export async function get返回ups(): Promise<返回upListResponse> {
+  return fetchApi<返回upListResponse>("/backups");
 }
 
-export async function createManualBackup(): Promise<BackupInfo> {
-  return fetchApi<BackupInfo>("/backups", {
+export async function createManual返回up(): Promise<返回upInfo> {
+  return fetchApi<返回upInfo>("/backups", {
     method: "POST",
   });
 }
 
-export async function deleteBackup(filename: string): Promise<void> {
+export async function delete返回up(filename: string): Promise<void> {
   await fetchApi<void>(`/backups/${encodeURIComponent(filename)}`, {
     method: "DELETE",
   });

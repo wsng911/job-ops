@@ -49,7 +49,7 @@ describe("MessageList", () => {
         isStreaming={false}
         streamingMessageId={null}
         onRegenerate={vi.fn()}
-        onEdit={vi.fn()}
+        on编辑={vi.fn()}
         onSwitchBranch={vi.fn()}
       />,
     );
@@ -91,7 +91,7 @@ describe("MessageList", () => {
         isStreaming={false}
         streamingMessageId={null}
         onRegenerate={vi.fn()}
-        onEdit={vi.fn()}
+        on编辑={vi.fn()}
         onSwitchBranch={vi.fn()}
       />,
     );
@@ -132,7 +132,7 @@ describe("MessageList", () => {
         isStreaming={false}
         streamingMessageId={null}
         onRegenerate={vi.fn()}
-        onEdit={vi.fn()}
+        on编辑={vi.fn()}
         onSwitchBranch={vi.fn()}
       />,
     );

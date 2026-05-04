@@ -20,13 +20,13 @@ export type ModelValues = EffectiveDefault<string> & {
 export type WebhookValues = EffectiveDefault<string>;
 export type DisplayValues = {
   showSponsorInfo: EffectiveDefault<boolean>;
-  renderMarkdownInJobDescriptions: EffectiveDefault<boolean>;
+  renderMarkdownInJob描述s: EffectiveDefault<boolean>;
 };
 export type ChatValues = {
   tone: EffectiveDefault<string>;
   formality: EffectiveDefault<string>;
   constraints: EffectiveDefault<string>;
-  doNotUse: EffectiveDefault<string>;
+  do否tUse: EffectiveDefault<string>;
   languageMode: EffectiveDefault<ChatStyleLanguageMode>;
   manualLanguage: EffectiveDefault<ChatStyleManualLanguage>;
   stopSlopEnabled: EffectiveDefault<boolean>;
@@ -34,23 +34,23 @@ export type ChatValues = {
   maxKeywordsPerSkill: EffectiveDefault<number | null>;
 };
 
-export type EnvSettingsValues = {
+export type Env设置Values = {
   readable: {
-    ukvisajobsEmail: string;
+    ukvisajobs邮箱: string;
     adzunaAppId: string;
     basicAuthUser: string;
-    basicAuthPassword: string;
+    basicAuth密码: string;
   };
   private: {
-    ukvisajobsPasswordHint: string | null;
+    ukvisajobs密码Hint: string | null;
     adzunaAppKeyHint: string | null;
-    basicAuthPasswordHint: string | null;
+    basicAuth密码Hint: string | null;
     webhookSecretHint: string | null;
   };
   basicAuthActive: boolean;
 };
 
-export type BackupValues = {
+export type 返回upValues = {
   backupEnabled: EffectiveDefault<boolean>;
   backupHour: EffectiveDefault<number>;
   backupMaxCount: EffectiveDefault<number>;
@@ -60,7 +60,7 @@ export type ScoringValues = {
   penalizeMissingSalary: EffectiveDefault<boolean>;
   missingSalaryPenalty: EffectiveDefault<number>;
   autoSkipScoreThreshold: EffectiveDefault<number | null>;
-  blockedCompanyKeywords: EffectiveDefault<string[]>;
+  blocked公司Keywords: EffectiveDefault<string[]>;
   scoringInstructions: EffectiveDefault<string>;
 };
 

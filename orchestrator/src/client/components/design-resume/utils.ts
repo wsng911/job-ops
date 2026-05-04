@@ -58,14 +58,14 @@ export function fieldId(...parts: string[]): string {
   return `design-resume-${parts.join("-").replaceAll(/[^a-zA-Z0-9_-]/g, "-")}`;
 }
 
-export function makeDownload(fileName: string, payload: unknown) {
+export function makeDownload(file名称: string, payload: unknown) {
   const blob = new Blob([JSON.stringify(payload, null, 2)], {
     type: "application/json",
   });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = fileName;
+  anchor.download = file名称;
   anchor.click();
   setTimeout(() => {
     URL.revokeObjectURL(url);

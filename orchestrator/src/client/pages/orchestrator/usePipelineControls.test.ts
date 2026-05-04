@@ -1,11 +1,11 @@
-import { useSettings } from "@client/hooks/useSettings";
+import { use设置 } from "@client/hooks/use设置";
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { trackProductEvent } from "@/lib/analytics";
 import { usePipelineControls } from "./usePipelineControls";
 
-vi.mock("@client/hooks/useSettings", () => ({
-  useSettings: vi.fn(),
+vi.mock("@client/hooks/use设置", () => ({
+  use设置: vi.fn(),
 }));
 
 vi.mock("@/lib/analytics", () => ({
@@ -15,8 +15,8 @@ vi.mock("@/lib/analytics", () => ({
 describe("usePipelineControls", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(useSettings).mockReturnValue({
-      refreshSettings: vi.fn().mockResolvedValue(null),
+    vi.mocked(use设置).mockReturnValue({
+      refresh设置: vi.fn().mockResolvedValue(null),
     } as never);
   });
 

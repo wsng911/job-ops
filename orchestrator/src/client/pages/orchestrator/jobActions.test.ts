@@ -6,9 +6,9 @@ import {
   canRescore,
   canSkip,
   getFailedJobIds,
-} from "./jobActions";
+} from "./job操作";
 
-describe("jobActions", () => {
+describe("job操作", () => {
   it("computes eligibility for skip, move-to-ready, and rescore", () => {
     expect(
       canSkip([

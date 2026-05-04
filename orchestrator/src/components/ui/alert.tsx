@@ -24,38 +24,38 @@ const alertVariants = cva(
 const Alert = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
->(({ className, variant, ...props }, ref) => (
+>(({ class名称, variant, ...props }, ref) => (
   <div
     ref={ref}
     role="alert"
-    className={cn(alertVariants({ variant }), className)}
+    class名称={cn(alertVariants({ variant }), class名称)}
     {...props}
   />
 ));
-Alert.displayName = "Alert";
+Alert.display名称 = "Alert";
 
-const AlertTitle = React.forwardRef<
+const Alert标题 = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
+>(({ class名称, ...props }, ref) => (
   <h5
     ref={ref}
-    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+    class名称={cn("mb-1 font-medium leading-none tracking-tight", class名称)}
     {...props}
   />
 ));
-AlertTitle.displayName = "AlertTitle";
+Alert标题.display名称 = "Alert标题";
 
-const AlertDescription = React.forwardRef<
+const Alert描述 = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
+>(({ class名称, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-sm [&_p]:leading-relaxed", className)}
+    class名称={cn("text-sm [&_p]:leading-relaxed", class名称)}
     {...props}
   />
 ));
-AlertDescription.displayName = "AlertDescription";
+Alert描述.display名称 = "Alert描述";
 
-export { Alert, AlertTitle, AlertDescription };
+export { Alert, Alert标题, Alert描述 };

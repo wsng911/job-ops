@@ -1,11 +1,11 @@
 import { KbdHint } from "@client/components/KbdHint";
 import { getDisplayKey, SHORTCUTS } from "@client/lib/shortcut-map";
 import type { JobSource } from "@shared/types.js";
-import { Filter, Search } from "lucide-react";
+import { Filter, 搜索 } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, Card标题 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -19,9 +19,9 @@ import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
+  Sheet描述,
   SheetHeader,
-  SheetTitle,
+  Sheet标题,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -77,7 +77,7 @@ const sponsorOptions: Array<{
   label: string;
 }> = [
   { value: "all", label: "All statuses" },
-  { value: "confirmed", label: "Confirmed sponsor" },
+  { value: "confirmed", label: "确认ed sponsor" },
   { value: "potential", label: "Potential sponsor" },
   { value: "not_found", label: "Sponsor not found" },
   { value: "unknown", label: "Unchecked sponsor" },
@@ -106,11 +106,11 @@ const sortFieldLabels: Record<JobSort["key"], string> = {
   date: "Date",
   discoveredAt: "Discovered",
   salary: "Salary",
-  title: "Title",
-  employer: "Company",
+  title: "标题",
+  employer: "公司",
 };
 
-const tabDescriptions: Partial<Record<FilterTab, string>> = {
+const tab描述s: Partial<Record<FilterTab, string>> = {
   discovered: "Jobs searched, ready to be tailored",
   ready: "Jobs with tailored CVs, ready to apply",
   applied: "Jobs you've marked as applied",
@@ -243,21 +243,21 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
       value={activeTab}
       onValueChange={(value) => onTabChange(value as FilterTab)}
     >
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+      <div class名称="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <TooltipProvider delayDuration={0}>
-          <TabsList className="h-auto w-full flex-wrap justify-start gap-1 lg:w-auto">
+          <TabsList class名称="h-auto w-full flex-wrap justify-start gap-1 lg:w-auto">
             {tabs.map((tab, index) => {
-              const description = tabDescriptions[tab.id];
+              const description = tab描述s[tab.id];
               const trigger = (
                 <TabsTrigger
                   key={tab.id}
                   value={tab.id}
-                  className="flex-1 flex items-center lg:flex-none gap-1.5"
+                  class名称="flex-1 flex items-center lg:flex-none gap-1.5"
                 >
-                  <KbdHint shortcut={String(index + 1)} className="mr-0.5" />
+                  <KbdHint shortcut={String(index + 1)} class名称="mr-0.5" />
                   <span>{tab.label}</span>
                   {counts[tab.id] > 0 && (
-                    <span className="text-[10px] mt-[2px] tabular-nums opacity-60">
+                    <span class名称="text-[10px] mt-[2px] tabular-nums opacity-60">
                       {counts[tab.id]}
                     </span>
                   )}
@@ -271,7 +271,7 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
               return (
                 <Tooltip key={tab.id}>
                   <TooltipTrigger asChild>{trigger}</TooltipTrigger>
-                  <TooltipContent className="max-w-xs text-center">
+                  <TooltipContent class名称="max-w-xs text-center">
                     <p>{description}</p>
                   </TooltipContent>
                 </Tooltip>
@@ -280,18 +280,18 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
           </TabsList>
         </TooltipProvider>
 
-        <div className="flex lg:flex-nowrap flex-wrap items-center justify-end gap-2">
+        <div class名称="flex lg:flex-nowrap flex-wrap items-center justify-end gap-2">
           <Button
             type="button"
             variant="ghost"
             size="sm"
             onClick={onOpenCommandBar}
-            aria-label="Search jobs"
-            className="h-8 gap-1.5 text-xs text-muted-foreground hover:text-foreground w-auto"
+            aria-label="搜索 jobs"
+            class名称="h-8 gap-1.5 text-xs text-muted-foreground hover:text-foreground w-auto"
           >
-            <Search className="h-3.5 w-3.5" />
-            Search
-            <span className="rounded border border-border/70 px-1 py-0.5 font-mono text-xs leading-none text-muted-foreground">
+            <搜索 class名称="h-3.5 w-3.5" />
+            搜索
+            <span class名称="rounded border border-border/70 px-1 py-0.5 font-mono text-xs leading-none text-muted-foreground">
               {commandShortcutLabel}
             </span>
           </Button>
@@ -301,43 +301,43 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-8 gap-1.5 text-xs text-muted-foreground hover:text-foreground w-auto"
+                class名称="h-8 gap-1.5 text-xs text-muted-foreground hover:text-foreground w-auto"
               >
-                <Filter className="h-3.5 w-3.5" />
+                <Filter class名称="h-3.5 w-3.5" />
                 Filters
                 {activeFilterCount > 0 && (
-                  <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-primary/20 px-1 text-[10px] font-semibold tabular-nums text-primary">
+                  <span class名称="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-primary/20 px-1 text-[10px] font-semibold tabular-nums text-primary">
                     {activeFilterCount}
                   </span>
                 )}
               </Button>
             </SheetTrigger>
 
-            <SheetContent side="right" className="w-full sm:max-w-2xl">
-              <div className="flex h-full min-h-0 flex-col">
+            <SheetContent side="right" class名称="w-full sm:max-w-2xl">
+              <div class名称="flex h-full min-h-0 flex-col">
                 <SheetHeader>
-                  <SheetTitle className="flex items-center gap-2">
+                  <Sheet标题 class名称="flex items-center gap-2">
                     Filters
                     {activeFilterCount > 0 && (
-                      <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary/20 px-1 text-[11px] font-semibold tabular-nums text-primary">
+                      <span class名称="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary/20 px-1 text-[11px] font-semibold tabular-nums text-primary">
                         {activeFilterCount}
                       </span>
                     )}
-                  </SheetTitle>
-                  <SheetDescription>
+                  </Sheet标题>
+                  <Sheet描述>
                     Use the right-side filter panel to refine jobs across every
                     tab.
-                  </SheetDescription>
+                  </Sheet描述>
                 </SheetHeader>
 
-                <Separator className="my-4" />
+                <Separator class名称="my-4" />
 
-                <div className="min-h-0 flex-1 space-y-4 overflow-y-auto pr-1">
+                <div class名称="min-h-0 flex-1 space-y-4 overflow-y-auto pr-1">
                   <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle>Sources</CardTitle>
+                    <CardHeader class名称="pb-3">
+                      <Card标题>Sources</Card标题>
                     </CardHeader>
-                    <CardContent className="flex flex-wrap gap-2">
+                    <CardContent class名称="flex flex-wrap gap-2">
                       <Button
                         type="button"
                         size="sm"
@@ -363,11 +363,11 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                   </Card>
 
                   <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle>Dates</CardTitle>
+                    <CardHeader class名称="pb-3">
+                      <Card标题>Dates</Card标题>
                     </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="flex flex-wrap gap-2">
+                    <CardContent class名称="space-y-3">
+                      <div class名称="flex flex-wrap gap-2">
                         {dateFilterDimensionOrder.map((dimension) => (
                           <Button
                             key={dimension}
@@ -391,7 +391,7 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
 
                       {dateFilter.dimensions.length > 0 && (
                         <>
-                          <div className="flex flex-wrap gap-2">
+                          <div class名称="flex flex-wrap gap-2">
                             {datePresetOptions.map((option) => (
                               <Button
                                 key={option.value}
@@ -415,8 +415,8 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                             ))}
                           </div>
 
-                          <div className="grid gap-3 md:grid-cols-2">
-                            <div className="space-y-1">
+                          <div class名称="grid gap-3 md:grid-cols-2">
+                            <div class名称="space-y-1">
                               <Label htmlFor="date-start-filter">
                                 Start date
                               </Label>
@@ -434,7 +434,7 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                               />
                             </div>
 
-                            <div className="space-y-1">
+                            <div class名称="space-y-1">
                               <Label htmlFor="date-end-filter">End date</Label>
                               <Input
                                 id="date-end-filter"
@@ -474,10 +474,10 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                   </Card>
 
                   <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle>Sponsor status</CardTitle>
+                    <CardHeader class名称="pb-3">
+                      <Card标题>Sponsor status</Card标题>
                     </CardHeader>
-                    <CardContent className="flex flex-wrap gap-2">
+                    <CardContent class名称="flex flex-wrap gap-2">
                       {sponsorOptions.map((option) => (
                         <Button
                           key={option.value}
@@ -497,11 +497,11 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                   </Card>
 
                   <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle>Salary</CardTitle>
+                    <CardHeader class名称="pb-3">
+                      <Card标题>Salary</Card标题>
                     </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                    <CardContent class名称="space-y-3">
+                      <div class名称="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
                         <span>Salary is</span>
                         <Select
                           value={salaryFilter.mode}
@@ -533,7 +533,7 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                           <SelectTrigger
                             id="salary-mode"
                             aria-label="Salary range specifier"
-                            className="h-8 w-[170px] text-foreground"
+                            class名称="h-8 w-[170px] text-foreground"
                           >
                             <SelectValue />
                           </SelectTrigger>
@@ -551,14 +551,14 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                       </div>
 
                       <div
-                        className={
+                        class名称={
                           showSalaryMin && showSalaryMax
                             ? "grid gap-3 md:grid-cols-2"
                             : "space-y-3"
                         }
                       >
                         {showSalaryMin && (
-                          <div className="space-y-1">
+                          <div class名称="space-y-1">
                             <Label htmlFor="salary-min-filter">Minimum</Label>
                             <Input
                               id="salary-min-filter"
@@ -585,7 +585,7 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                         )}
 
                         {showSalaryMax && (
-                          <div className="space-y-1">
+                          <div class名称="space-y-1">
                             <Label htmlFor="salary-max-filter">Maximum</Label>
                             <Input
                               id="salary-max-filter"
@@ -615,13 +615,13 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                   </Card>
 
                   <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle>Sort</CardTitle>
+                    <CardHeader class名称="pb-3">
+                      <Card标题>Sort</Card标题>
                     </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center">
-                        <div className="flex items-center gap-2">
-                          <span className="whitespace-nowrap">Sort by</span>
+                    <CardContent class名称="space-y-3">
+                      <div class名称="flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center">
+                        <div class名称="flex items-center gap-2">
+                          <span class名称="whitespace-nowrap">Sort by</span>
                           <Select
                             value={sort.key}
                             onValueChange={(value) =>
@@ -635,7 +635,7 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                             <SelectTrigger
                               id="sort-key"
                               aria-label="Sort field"
-                              className="h-8 flex-1 sm:w-[180px] text-foreground"
+                              class名称="h-8 flex-1 sm:w-[180px] text-foreground"
                             >
                               <SelectValue
                                 placeholder={sortFieldLabels[sort.key]}
@@ -651,8 +651,8 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                           </Select>
                         </div>
 
-                        <div className="flex items-center gap-2">
-                          <span className="whitespace-nowrap">and</span>
+                        <div class名称="flex items-center gap-2">
+                          <span class名称="whitespace-nowrap">and</span>
                           <Select
                             value={sort.direction}
                             onValueChange={(value) =>
@@ -665,7 +665,7 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                             <SelectTrigger
                               id="sort-direction"
                               aria-label="Sort order"
-                              className="h-8 flex-1 sm:w-[180px] text-foreground"
+                              class名称="h-8 flex-1 sm:w-[180px] text-foreground"
                             >
                               <SelectValue
                                 placeholder={
@@ -692,7 +692,7 @@ export const OrchestratorFilters: React.FC<OrchestratorFiltersProps> = ({
                   </Card>
                 </div>
 
-                <div className="mt-3 flex shrink-0 items-center justify-between border-t border-border/60 bg-background pt-3">
+                <div class名称="mt-3 flex shrink-0 items-center justify-between border-t border-border/60 bg-background pt-3">
                   <Button
                     type="button"
                     variant="outline"

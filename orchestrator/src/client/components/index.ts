@@ -8,6 +8,6 @@ export { PipelineProgress } from "./PipelineProgress";
 export { ReadyPanel } from "./ReadyPanel";
 export { ScoreIndicator } from "./ScoreIndicator";
 export { Stats } from "./Stats";
-export { StatusBadge } from "./StatusBadge";
+export { 状态Badge } from "./状态Badge";
 export { TailoredSummary } from "./TailoredSummary";
-export { TailoringEditor } from "./TailoringEditor";
+export { Tailoring编辑or } from "./Tailoring编辑or";

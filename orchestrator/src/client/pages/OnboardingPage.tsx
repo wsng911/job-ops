@@ -9,9 +9,9 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
+  Card描述,
   CardHeader,
-  CardTitle,
+  Card标题,
 } from "@/components/ui/card";
 import { OnboardingStepContent } from "./onboarding/components/OnboardingStepContent";
 import { OnboardingStepRail } from "./onboarding/components/OnboardingStepRail";
@@ -38,13 +38,13 @@ export const OnboardingPage: React.FC = () => {
         subtitle="Connect your workspace before the pipeline starts running."
       />
 
-      <PageMain className="space-y-4">
-        <div className="grid gap-4 lg:grid-cols-[320px_minmax(0,1fr)]">
-          <Card className="border-border/60 bg-card/40 shadow-none">
-            <CardHeader className="space-y-3">
-              <CardTitle>Getting started</CardTitle>
+      <PageMain class名称="space-y-4">
+        <div class名称="grid gap-4 lg:grid-cols-[320px_minmax(0,1fr)]">
+          <Card class名称="border-border/60 bg-card/40 shadow-none">
+            <CardHeader class名称="space-y-3">
+              <Card标题>Getting started</Card标题>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent class名称="space-y-4">
               <OnboardingStepRail
                 currentStep={flow.currentStep}
                 onStepSelect={flow.setCurrentStep}
@@ -54,23 +54,23 @@ export const OnboardingPage: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-border/60 bg-card/40 shadow-none">
+          <Card class名称="border-border/60 bg-card/40 shadow-none">
             {flow.settingsLoading || !flow.currentStep ? (
-              <CardContent className="flex min-h-[24rem] items-center justify-center text-sm text-muted-foreground">
+              <CardContent class名称="flex min-h-[24rem] items-center justify-center text-sm text-muted-foreground">
                 Loading onboarding...
               </CardContent>
             ) : (
               <form
-                className="flex min-h-[32rem] flex-col"
-                onSubmit={async (event) => {
+                class名称="flex min-h-[32rem] flex-col"
+                on提交={async (event) => {
                   event.preventDefault();
-                  const savedSettings = await flow.handlePrimaryAction();
+                  const saved设置 = await flow.handlePrimaryAction();
 
                   if (
-                    savedSettings &&
+                    saved设置 &&
                     isOnboardingComplete({
                       demoMode: flow.demoMode,
-                      settings: savedSettings,
+                      settings: saved设置,
                       llmValid: flow.llmValidated,
                       baseResumeValid: flow.baseResumeValidation.valid,
                       searchTermsValid: flow.searchTermsComplete,
@@ -81,8 +81,8 @@ export const OnboardingPage: React.FC = () => {
                   }
                 }}
               >
-                <CardHeader className="space-y-4 border-b border-border/60">
-                  <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                <CardHeader class名称="space-y-4 border-b border-border/60">
+                  <div class名称="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
                     <Badge variant="secondary">
                       {flow.currentCopy.eyebrow}
                     </Badge>
@@ -91,30 +91,30 @@ export const OnboardingPage: React.FC = () => {
                       {flow.steps.length} complete
                     </span>
                   </div>
-                  <div className="space-y-2">
-                    <CardTitle className="text-2xl leading-tight sm:text-3xl">
+                  <div class名称="space-y-2">
+                    <Card标题 class名称="text-2xl leading-tight sm:text-3xl">
                       {flow.currentCopy.title}
-                    </CardTitle>
-                    <CardDescription className="max-w-2xl leading-6">
+                    </Card标题>
+                    <Card描述 class名称="max-w-2xl leading-6">
                       {flow.currentCopy.description}
-                    </CardDescription>
+                    </Card描述>
                   </div>
                 </CardHeader>
 
-                <CardContent className="flex flex-1 flex-col gap-6 pt-6">
+                <CardContent class名称="flex flex-1 flex-col gap-6 pt-6">
                   <OnboardingStepContent
                     baseResumeValidation={flow.baseResumeValidation}
                     baseResumeValue={flow.baseResumeValue}
                     basicAuthChoice={flow.basicAuthChoice}
-                    basicAuthPassword={flow.watch("basicAuthPassword")}
+                    basicAuth密码={flow.watch("basicAuth密码")}
                     basicAuthUser={flow.watch("basicAuthUser")}
                     control={flow.control}
                     currentStep={flow.currentStep}
-                    hasSavedSearchTermsInSession={
-                      flow.hasSavedSearchTermsInSession
+                    has保存d搜索TermsInSession={
+                      flow.has保存d搜索TermsInSession
                     }
                     isBusy={flow.isBusy}
-                    isGeneratingSearchTerms={flow.isGeneratingSearchTerms}
+                    isGenerating搜索Terms={flow.isGenerating搜索Terms}
                     isImportingResume={flow.isImportingResume}
                     isResumeReady={flow.baseResumeValidation.valid}
                     isRxResumeSelfHosted={flow.isRxResumeSelfHosted}
@@ -131,14 +131,14 @@ export const OnboardingPage: React.FC = () => {
                     searchTermsStale={flow.searchTermsStale}
                     selectedProvider={flow.selectedProvider}
                     onBasicAuthChoiceChange={flow.setBasicAuthChoice}
-                    onBasicAuthPasswordChange={(value) =>
-                      flow.setValue("basicAuthPassword", value)
+                    onBasicAuth密码Change={(value) =>
+                      flow.setValue("basicAuth密码", value)
                     }
                     onBasicAuthUserChange={(value) =>
                       flow.setValue("basicAuthUser", value)
                     }
                     onImportResumeFile={flow.handleImportResumeFile}
-                    onRegenerateSearchTerms={flow.handleRegenerateSearchTerms}
+                    onRegenerate搜索Terms={flow.handleRegenerate搜索Terms}
                     onResumeSetupModeChange={flow.setResumeSetupMode}
                     onRxresumeApiKeyChange={(value) =>
                       flow.setValue("rxresumeApiKey", value)
@@ -149,10 +149,10 @@ export const OnboardingPage: React.FC = () => {
                     onRxresumeUrlChange={(value) =>
                       flow.setValue("rxresumeUrl", value)
                     }
-                    onSearchTermDraftChange={(value) =>
+                    on搜索TermDraftChange={(value) =>
                       flow.setValue("searchTermDraft", value)
                     }
-                    onSearchTermsChange={(values) =>
+                    on搜索TermsChange={(values) =>
                       flow.setValue("searchTerms", values, {
                         shouldDirty: true,
                       })
@@ -161,21 +161,21 @@ export const OnboardingPage: React.FC = () => {
                   />
                 </CardContent>
 
-                <div className="flex flex-col gap-3 border-t border-border/60 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+                <div class名称="flex flex-col gap-3 border-t border-border/60 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
                   <Button
                     type="button"
                     variant="ghost"
-                    onClick={flow.handleBack}
-                    disabled={!flow.canGoBack || flow.isBusy}
+                    onClick={flow.handle返回}
+                    disabled={!flow.canGo返回 || flow.isBusy}
                   >
-                    <ArrowLeft className="h-4 w-4" />
-                    Back
+                    <ArrowLeft class名称="h-4 w-4" />
+                    返回
                   </Button>
 
-                  <div className="flex flex-col items-start gap-2 sm:items-end">
+                  <div class名称="flex flex-col items-start gap-2 sm:items-end">
                     <Button type="submit" disabled={flow.isBusy}>
                       {flow.primaryLabel}
-                      <ArrowRight className="h-4 w-4" />
+                      <ArrowRight class名称="h-4 w-4" />
                     </Button>
                   </div>
                 </div>

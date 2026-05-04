@@ -22,11 +22,11 @@ describe("useRescoreJob", () => {
   });
 
   it("rescoring updates the job and shows a toast", async () => {
-    const onJobUpdated = vi.fn().mockResolvedValue(undefined);
+    const onJob更新d = vi.fn().mockResolvedValue(undefined);
     vi.mocked(api.rescoreJob).mockResolvedValue({} as any);
 
     const { result } = renderHookWithQueryClient(() =>
-      useRescoreJob(onJobUpdated),
+      useRescoreJob(onJob更新d),
     );
 
     await act(async () => {
@@ -34,7 +34,7 @@ describe("useRescoreJob", () => {
     });
 
     expect(api.rescoreJob).toHaveBeenCalledWith("job-1");
-    expect(onJobUpdated).toHaveBeenCalled();
+    expect(onJob更新d).toHaveBeenCalled();
     expect(toast.success).toHaveBeenCalledWith("Match recalculated");
   });
 });

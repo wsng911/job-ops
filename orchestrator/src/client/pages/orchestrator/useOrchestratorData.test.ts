@@ -28,7 +28,7 @@ vi.mock("@client/api", () => ({
   getJobs: vi.fn(),
   getJobsRevision: vi.fn(),
   getJob: vi.fn(),
-  getPipelineStatus: vi.fn(),
+  getPipeline状态: vi.fn(),
 }));
 
 vi.mock("@client/lib/sse", () => ({
@@ -44,7 +44,7 @@ vi.mock("sonner", () => ({
 const makeResponse = (jobId: string, revision = `rev-${jobId}`) => ({
   jobs: [{ id: jobId }],
   total: 1,
-  byStatus: {
+  by状态: {
     discovered: 1,
     processing: 0,
     ready: 0,
@@ -95,7 +95,7 @@ describe("useOrchestratorData", () => {
     );
     vi.mocked(api.getJobsRevision).mockResolvedValue({
       revision: "rev-initial",
-      latestUpdatedAt: "2026-01-01T00:00:00.000Z",
+      latest更新dAt: "2026-01-01T00:00:00.000Z",
       total: 1,
       statusFilter: null,
     } as any);
@@ -103,7 +103,7 @@ describe("useOrchestratorData", () => {
       id: "initial",
       updatedAt: "2026-01-01T00:00:00.000Z",
     } as any);
-    vi.mocked(api.getPipelineStatus).mockResolvedValue({
+    vi.mocked(api.getPipeline状态).mockResolvedValue({
       isRunning: false,
     } as any);
   });
@@ -163,7 +163,7 @@ describe("useOrchestratorData", () => {
     );
     vi.mocked(api.getJobsRevision).mockResolvedValue({
       revision: "rev-steady",
-      latestUpdatedAt: "2026-01-01T00:00:00.000Z",
+      latest更新dAt: "2026-01-01T00:00:00.000Z",
       total: 1,
       statusFilter: null,
     } as any);
@@ -192,13 +192,13 @@ describe("useOrchestratorData", () => {
     vi.mocked(api.getJobsRevision)
       .mockResolvedValueOnce({
         revision: "rev-new",
-        latestUpdatedAt: "2026-01-02T00:00:00.000Z",
+        latest更新dAt: "2026-01-02T00:00:00.000Z",
         total: 1,
         statusFilter: null,
       } as any)
       .mockResolvedValue({
         revision: "rev-new",
-        latestUpdatedAt: "2026-01-02T00:00:00.000Z",
+        latest更新dAt: "2026-01-02T00:00:00.000Z",
         total: 1,
         statusFilter: null,
       } as any);
@@ -350,7 +350,7 @@ describe("useOrchestratorData", () => {
   });
 
   it("does not publish terminal on reload when status and SSE report the same completed run", async () => {
-    vi.mocked(api.getPipelineStatus).mockResolvedValue({
+    vi.mocked(api.getPipeline状态).mockResolvedValue({
       isRunning: false,
       lastRun: {
         id: "run-1",
@@ -432,7 +432,7 @@ describe("useOrchestratorData", () => {
 
   it("publishes one terminal event when polling observes running then completed", async () => {
     vi.useFakeTimers();
-    vi.mocked(api.getPipelineStatus)
+    vi.mocked(api.getPipeline状态)
       .mockResolvedValueOnce({
         isRunning: true,
         lastRun: null,
@@ -475,7 +475,7 @@ describe("useOrchestratorData", () => {
 
   it("dedupes the same terminal run reported by status and SSE", async () => {
     vi.useFakeTimers();
-    vi.mocked(api.getPipelineStatus)
+    vi.mocked(api.getPipeline状态)
       .mockResolvedValueOnce({
         isRunning: true,
         lastRun: null,
@@ -569,7 +569,7 @@ describe("useOrchestratorData", () => {
     await act(async () => {
       await Promise.resolve();
     });
-    vi.mocked(api.getPipelineStatus).mockClear();
+    vi.mocked(api.getPipeline状态).mockClear();
 
     const sse = getSse();
     act(() => {
@@ -582,7 +582,7 @@ describe("useOrchestratorData", () => {
       await Promise.resolve();
     });
 
-    expect(api.getPipelineStatus).toHaveBeenCalledTimes(1);
+    expect(api.getPipeline状态).toHaveBeenCalledTimes(1);
   });
 
   it("runs a safety full refresh every 10 minutes when visible", async () => {
@@ -592,7 +592,7 @@ describe("useOrchestratorData", () => {
     );
     vi.mocked(api.getJobsRevision).mockResolvedValue({
       revision: "rev-steady",
-      latestUpdatedAt: "2026-01-01T00:00:00.000Z",
+      latest更新dAt: "2026-01-01T00:00:00.000Z",
       total: 1,
       statusFilter: null,
     } as any);
@@ -664,7 +664,7 @@ describe("useOrchestratorData", () => {
         },
       ],
       total: 1,
-      byStatus: {
+      by状态: {
         discovered: 1,
         processing: 0,
         ready: 0,

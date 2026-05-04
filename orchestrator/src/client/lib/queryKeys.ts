@@ -1,4 +1,4 @@
-import type { JobStatus, PostApplicationProvider } from "@shared/types";
+import type { Job状态, PostApplicationProvider } from "@shared/types";
 
 export const queryKeys = {
   designResume: {
@@ -37,9 +37,9 @@ export const queryKeys = {
     all: ["jobs"] as const,
     inProgressBoard: () =>
       [...queryKeys.jobs.all, "in-progress-board"] as const,
-    list: (options?: { statuses?: JobStatus[]; view?: "list" | "full" }) =>
+    list: (options?: { statuses?: Job状态[]; view?: "list" | "full" }) =>
       [...queryKeys.jobs.all, "list", options ?? {}] as const,
-    revision: (options?: { statuses?: JobStatus[] }) =>
+    revision: (options?: { statuses?: Job状态[] }) =>
       [...queryKeys.jobs.all, "revision", options ?? {}] as const,
     detail: (id: string) => [...queryKeys.jobs.all, "detail", id] as const,
     stageEvents: (id: string) =>
@@ -77,7 +77,7 @@ export const queryKeys = {
   },
   postApplication: {
     all: ["post-application"] as const,
-    providerStatus: (provider: PostApplicationProvider, accountKey: string) =>
+    provider状态: (provider: PostApplicationProvider, accountKey: string) =>
       [
         ...queryKeys.postApplication.all,
         "provider-status",

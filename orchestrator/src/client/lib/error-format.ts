@@ -18,13 +18,13 @@ function toIssuePath(path: Array<string | number> | undefined): string {
   return path.map((segment) => String(segment)).join(".");
 }
 
-function normalizeSectionName(section: string): string {
+function normalizeSection名称(section: string): string {
   return section.endsWith("s") ? section.slice(0, -1) : section;
 }
 
 function toFriendlyFieldLabel(path: string): string | null {
   if (!path) return null;
-  if (path === "jobDescription") return "job description";
+  if (path === "job描述") return "job description";
   if (path === "job.jobUrl" || path === "jobUrl") return "job URL";
   if (path === "applicationLink" || path === "job.applicationLink") {
     return "application link";
@@ -36,7 +36,7 @@ function toFriendlyFieldLabel(path: string): string | null {
   const sectionMatch =
     /^sections\.([a-z-]+)\.items\.\d+\.([a-zA-Z0-9_-]+)$/.exec(path);
   if (sectionMatch) {
-    const section = normalizeSectionName(sectionMatch[1] ?? "item");
+    const section = normalizeSection名称(sectionMatch[1] ?? "item");
     const field = (sectionMatch[2] ?? "field")
       .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
       .replace(/_/g, " ")
@@ -61,7 +61,7 @@ function toFriendlyIssueMessage(issue: ZodLikeIssue): string | null {
   const path = toIssuePath(issue.path);
   const label = toFriendlyFieldLabel(path);
 
-  if (path === "jobDescription") {
+  if (path === "job描述") {
     return "Please enter a job description before continuing.";
   }
 
